@@ -46,7 +46,7 @@ const SupplierSidebar = () => {
                 </p>
                 {item.links.map((link) => (
                   <NavLink
-                    to={`/${link.to}`}
+                    to={`/${link.name}`}
                     key={link.name}
                     onClick={handleCloseSideBar}
                     style={({ isActive }) => ({

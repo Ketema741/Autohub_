@@ -25,20 +25,20 @@ const EditItem = () => {
         </div>
         <div className="p-4">
         <form>
-          <div class="mb-4">
-            <label class="block font-semibold text-gray-700" for="header-input">
+          <div className="mb-4">
+            <label className="block font-semibold text-gray-700" for="header-input">
               Header
             </label>
-            <input class="form-input mt-1 block w-full rounded-md border-gray-300" id="header-input" type="text" name="header" placeholder="Enter header" required />
+            <input className="form-input mt-1 block w-full rounded-md border-gray-300" id="header-input" type="text" name="header" placeholder="Enter header" required />
           </div>
-          <div class="mb-4">
-            <label class="block font-semibold text-gray-700" for="description-input">
+          <div className="mb-4">
+            <label className="block font-semibold text-gray-700" for="description-input">
               Description
             </label>
-            <textarea class="form-textarea mt-1 block w-full rounded-md border-gray-300" id="description-input" name="description" rows="3" placeholder="Enter description" required></textarea>
+            <textarea className="form-textarea mt-1 block w-full rounded-md border-gray-300" id="description-input" name="description" rows="3" placeholder="Enter description" required></textarea>
           </div>
-          <div class="mt-8">
-            <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md" type="submit">
+          <div className="mt-8">
+            <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md" type="submit">
               Update Item
             </button>
           </div>
