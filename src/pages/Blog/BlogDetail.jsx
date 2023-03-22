@@ -5,7 +5,7 @@ import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import DetailCard from './DetailCard'
 import '../../App.css';
 import { useStateContext } from '../../contexts/ContextProvider';
-
+import product8 from '../../data/product8.jpg';
 const BlogDetail = () => {
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings } = useStateContext();
 

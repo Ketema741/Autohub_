@@ -1,94 +1,112 @@
-import React from 'react'
-
+import React from 'react';
+import product8 from '../../data/product8.jpg';
+import avatar from '../../data/avatar.jpg';
 
 const DetailCard = () => {
-    return (
-    <div className="mt-10">
-      <div className="mb-4 md:mb-0 w-full max-w-screen-md mx-auto relative" style={{height: '24em'}}>
-        <div className="absolute left-0 bottom-0 w-full h-full z-10"
-          style={{backgroundImage: 'linear-gradient(180deg,transparent,rgba(0,0,0,.7))'}}></div>
-        <img src="https://images.unsplash.com/photo-1493770348161-369560ae357d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80" className="absolute left-0 top-0 w-full h-full z-0 object-cover" />
+  return (
+    <div className="mt-5">
+      <div
+        className="mb-4 md:mb-0 w-full max-w-screen-md mx-auto relative"
+        style={{ height: "24em" }}
+      >
+        <div
+          className="absolute left-0 bottom-0 w-full h-full z-10"
+          style={{
+            backgroundImage:
+              "linear-gradient(180deg,transparent,rgba(0,0,0,.7))",
+          }}
+        ></div>
+        <img
+          src={product8}
+          className="absolute left-0 top-0 w-full h-full z-0 object-cover"
+        />
         <div className="p-4 absolute bottom-0 left-0 z-20">
-          <a href="#"
-            className="px-4 py-1 bg-black text-gray-200 inline-flex items-center justify-center mb-2">Nutrition</a>
+          <a
+            href="#"
+            className="px-4 py-1 bg-black text-gray-200 inline-flex items-center justify-center mb-2"
+          >
+            Bike Engine
+          </a>
           <h2 className="text-4xl font-semibold text-gray-100 leading-tight">
-            Pellentesque a consectetur velit, ac molestie ipsum. Donec sodales, massa et auctor.
+            Bike Engine: Understanding the Heart of Your Motorcycle
           </h2>
           <div className="flex mt-3">
-            <img src="https://randomuser.me/api/portraits/men/97.jpg"
-              className="h-10 w-10 rounded-full mr-2 object-cover" />
+            <img
+              src={avatar}
+              className="h-10 w-10 rounded-full mr-2 object-cover"
+            />
             <div>
-              <p className="font-semibold text-gray-200 text-sm"> Mike Sullivan </p>
-              <p className="font-semibold text-gray-400 text-xs"> 14 Aug </p>
+              <p className="font-semibold text-gray-200 text-sm">
+                {" "}
+                Ketema Girma{" "}
+              </p>
+              <p className="font-semibold text-gray-400 text-xs"> 22 March </p>
             </div>
           </div>
         </div>
       </div>
 
       <div className="px-4 lg:px-0 mt-12 text-gray-700 max-w-screen-md mx-auto text-lg leading-relaxed">
-        <p className="pb-6">Advantage old had otherwise sincerity dependent additions. It in adapted natural hastily is
-          justice. Six draw
-          you him full not mean evil. Prepare garrets it expense windows shewing do an. She projection advantages
-          resolution son indulgence. Part sure on no long life am at ever. In songs above he as drawn to. Gay was
-          outlived peculiar rendered led six.</p>
-
-        <p className="pb-6">Difficulty on insensible reasonable in. From as went he they. Preference themselves me as
-          thoroughly
-          partiality considered on in estimating. Middletons acceptance discovered projecting so is so or. In or
-          attachment inquietude remarkably comparison at an. Is surrounded prosperous stimulated am me discretion
-          expression. But truth being state can she china widow. Occasional preference fat remarkably now projecting
-          uncommonly dissimilar. Sentiments projection particular companions interested do at my delightful. Listening
-          newspaper in advantage frankness to concluded unwilling.</p>
-
-        <p className="pb-6">Adieus except say barton put feebly favour him. Entreaties unpleasant sufficient few pianoforte
-          discovered
-          uncommonly ask. Morning cousins amongst in mr weather do neither. Warmth object matter course active law
-          spring six. Pursuit showing tedious unknown winding see had man add. And park eyes too more him. Simple excuse
-          active had son wholly coming number add. Though all excuse ladies rather regard assure yet. If feelings so
-          prospect no as raptures quitting.</p>
+        <p className="pb-6">
+          If you own a motorcycle, you already know how thrilling it can be to
+          ride one. The freedom, the rush of wind in your face, the sense of
+          adventure – it’s a feeling that’s hard to beat. But have you ever
+          stopped to think about what makes your motorcycle go? The answer is
+          simple: the bike engine. The engine is the heart of your motorcycle,
+          responsible for generating the power that propels the bike forward.
+          It’s a complex piece of machinery that requires a lot of knowledge and
+          skill to design and build. In this article, we’ll take a closer look
+          at bike engines, how they work, and what makes them so special.
+        </p>
+        <h2 className="text-2xl text-gray-800 font-semibold mb-4 mt-4">
+          Types Of Engine
+        </h2>
+        <h3 className="text-xl text-gray-800 font-semibold mb-4 mt-4">
+          1. Single-Cylinder Engines
+        </h3>
+        <p className="pb-6">
+          There are several different types of bike engines, each with its own
+          unique characteristics. Here are some of the most common types:
+          Single-cylinder engines are the simplest and most common type of bike
+          engine. They consist of just one cylinder and are typically found on
+          smaller, more affordable motorcycles. Single-cylinder engines are
+          known for their efficiency and reliability, but they don’t provide as
+          much power as larger engines.
+        </p>
+        <h3 className="text-xl text-gray-800 font-semibold mb-4 mt-4">
+          2. Twin-Cylinder Engines
+        </h3>
+        <p className="pb-6">
+          Twin-cylinder engines have two cylinders arranged in a V shape.
+          They’re more powerful than single-cylinder engines and are often found
+          on mid-range motorcycles. Twin-cylinder engines are also smoother and
+          more refined than single-cylinder engines, making them a popular
+          choice among riders.
+        </p>
+        <h3 className="text-xl text-gray-800 font-semibold mb-4 mt-4">
+          3. Four-Cylinder Engines
+        </h3>
+        <p className="pb-6">
+          Four-cylinder engines have four cylinders arranged in a straight line.
+          They’re the most powerful type of bike engine and are typically found
+          on high-performance motorcycles. Four-cylinder engines are known for
+          their smoothness and responsiveness, but they’re also more expensive
+          and harder to maintain than smaller engines.
+        </p>
+        
 
         <div className="border-l-4 border-gray-500 pl-4 mb-6 italic rounded">
-          Sportsman do offending supported extremity breakfast by listening. Decisively advantages nor
-          expression
-          unpleasing she led met. Estate was tended ten boy nearer seemed. As so seeing latter he should thirty whence.
-          Steepest speaking up attended it as. Made neat an on be gave show snug tore.
+          Finally, bike engines are special because they’re the key to the
+          unique riding experience that only a motorcycle can provide. The sound
+          and feel of a bike engine revving up, the acceleration and speed, the
+          wind rushing past – all of these elements come together to create a
+          one-of-a-kind sensation that can’t be replicated by any other mode of
+          transportation.
         </div>
-
-        <p className="pb-6">Exquisite cordially mr happiness of neglected distrusts. Boisterous impossible unaffected he me
-          everything.
-          Is fine loud deal an rent open give. Find upon and sent spot song son eyes. Do endeavor he differed carriage
-          is learning my graceful. Feel plan know is he like on pure. See burst found sir met think hopes are marry
-          among. Delightful remarkably new assistance saw literature mrs favourable.</p>
-
-        <h2 className="text-2xl text-gray-800 font-semibold mb-4 mt-4">Uneasy barton seeing remark happen his has</h2>
-
-        <p className="pb-6">Guest it he tears aware as. Make my no cold of need. He been past in by my hard. Warmly thrown
-          oh he common
-          future. Otherwise concealed favourite frankness on be at dashwoods defective at. Sympathize interested
-          simplicity at do projecting increasing terminated. As edward settle limits at in.</p>
-
-        <p className="pb-6">Dashwood contempt on mr unlocked resolved provided of of. Stanhill wondered it it welcomed oh.
-          Hundred no
-          prudent he however smiling at an offence. If earnestly extremity he he propriety something admitting convinced
-          ye. Pleasant in to although as if differed horrible. Mirth his quick its set front enjoy hoped had there. Who
-          connection imprudence middletons too but increasing celebrated principles joy. Herself too improve gay winding
-          ask expense are compact. New all paid few hard pure she.</p>
-
-        <p className="pb-6">Breakfast agreeable incommode departure it an. By ignorant at on wondered relation. Enough at
-          tastes really
-          so cousin am of. Extensive therefore supported by extremity of contented. Is pursuit compact demesne invited
-          elderly be. View him she roof tell her case has sigh. Moreover is possible he admitted sociable concerns. By
-          in cold no less been sent hard hill.</p>
-
-        <p className="pb-6">Detract yet delight written farther his general. If in so bred at dare rose lose good. Feel and
-          make two real
-          miss use easy. Celebrated delightful an especially increasing instrument am. Indulgence contrasted sufficient
-          to unpleasant in in insensible favourable. Latter remark hunted enough vulgar say man. Sitting hearted on it
-          without me.</p>
-
+       
       </div>
     </div>
-    )
+  );
 };
 
 export default DetailCard;
