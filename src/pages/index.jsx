@@ -10,6 +10,8 @@ export { default as Orders } from './Supplier/Orders';
 export { default as Jobs } from './Job/Jobs';
 export { default as JobCard } from './Job/JobCard';
 
+export { default as ItemDetail } from './Item/ItemDetail';
+
 export { default as Blogs } from './Blog/Blogs';
 export { default as BlogCard } from './Blog/BlogCard';
 

@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
-import {AboutUs, Home, Jobs, Blogs, Drivers, Supplier, ServiceProviders, Ecommerce, Orders, Calendar, Employees, Stacked, Pyramid, Customers, Kanban, Line, Area, Bar, Pie, Financial, ColorPicker, ColorMapping, Editor } from './pages';
+import {AboutUs, Home, Jobs, Blogs, Drivers, Supplier, ItemDetail, ServiceProviders, Ecommerce, Orders, Calendar, Employees, Stacked, Pyramid, Customers, Kanban, Line, Area, Bar, Pie, Financial, ColorPicker, ColorMapping, Editor } from './pages';
 import './App.css';
 
 import { useStateContext } from './contexts/ContextProvider';
@@ -55,6 +55,7 @@ const App = () => {
                 <Route path="/drivers" element={<Drivers />} />
                 <Route path="/serviceproviders" element={<ServiceProviders />} />
                 <Route path="/aboutus" element={<AboutUs />} />
+                <Route path="/Item-detail" element={<ItemDetail />} />
                 {/* <Route path="/faq" element={<FAQ />} /> */}
 
               </Routes>
