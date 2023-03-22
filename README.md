@@ -1,11 +1,9 @@
 ![Design preview of Autohub.com](./src/data/design.jpg)
 
 # Welcome! 👋
-*** Thank you for choosing `Autohub` - we're here to make `car care` easy and stress-free for you. ***
-
+***Thank you for choosing `Autohub` - we're here to make `car care` easy and stress-free for you.***
 ## AutoHub
-`Autohub` is a web application designed to provide a centralized vehicle service for car repair, a blog to learn about vehicles, and an e-commerce platform to buy cars or accessories. The goal of `Autohub` is to provide a *** one-stop solution for all things related to cars. ***
-
+`Autohub` is a web application designed to provide a centralized vehicle service for car repair, a blog to learn about vehicles, and an e-commerce platform to buy cars or accessories. The goal of `Autohub` is to provide a ***one-stop solution for all things related to cars.***
 ## Features
 ### Vehicle Service
 `Autohub` provides a comprehensive vehicle service for car repairs. Users can create an account, schedule appointments, and track their repair progress. The service includes a database of local mechanics and repair shops, as well as a rating system to help users choose the best mechanic for their needs.
@@ -39,4 +37,4 @@ To use `Autohub`, simply visit the website at `www.Autohub.com` and create an ac
 3. Gatwech Tap
 4. Dema Amano
 
-*** If you have any questions or feedback, please contact us at `contact@autohub.com.` ***
+***If you have any questions or feedback, please contact us at `contact@autohub.com.`**
