@@ -518,11 +518,7 @@ export const links = [
         url: 'editor',
         icon: <FiEdit />,
       },
-      {
-        name: 'color-picker',
-        url: 'color-picker',
-        icon: <BiColorFill />,
-      },
+      
     ],
   },
   {
@@ -554,11 +550,7 @@ export const links = [
         url: 'financial',
         icon: <RiStockLine />,
       },
-      {
-        name: 'color-mapping',
-        url: 'color-mapping',
-        icon: <BsBarChart />,
-      },
+      
       {
         name: 'pyramid',
         url: 'pyramid',
