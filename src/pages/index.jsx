@@ -14,6 +14,7 @@ export { default as ItemDetail } from './Item/ItemDetail';
 
 export { default as Blogs } from './Blog/Blogs';
 export { default as BlogCard } from './Blog/BlogCard';
+export { default as BlogDetail } from './Blog/BlogDetail';
 
 export { default as Drivers } from './Driver/Drivers';
 export { default as DriverCard } from './Driver/DriverCard';

@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import product1 from "../../data/product9.jpg";
 import product2 from "../../data/product10.jpg";
 import product3 from "../../data/product11.jpg";
+import { useStateContext } from '../../contexts/ContextProvider';
 
 const ItemOverview = () => {
+  
+const { currentColor, activeMenu, setActiveMenu, screenSize } = useStateContext();
   const [currentImage, setCurrentImage] = useState(0);
 
   const images = [product1, product2, product3];
@@ -69,7 +72,7 @@ const ItemOverview = () => {
         <p className="text-gray-500">Lorem ipsum, dolor sit, amet consectetur adipisicing elit. Vitae exercitationem porro saepe ea harum corrupti vero id laudantium enim, libero blanditiis expedita cupiditate a est.</p>
 
         <div className="flex py-4 space-x-4">
-          <button type="button" className="h-14 px-6 py-2 font-semibold rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white">
+          <button style={{backgroundColor:currentColor}} type="button" className="h-14 px-6 py-2 font-semibold rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white">
             Add to Cart
           </button>
         </div>

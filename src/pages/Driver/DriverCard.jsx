@@ -1,71 +1,31 @@
-import React from 'react';
+import React from "react";
+import product1 from "../../data/product9.jpg";
 
-
-const DriverCard = () => {
-
-    return (
-        <div className="holder">
-            <div className="card border w-96 hover:shadow-none relative flex flex-col mx-auto shadow-lg m-5">
-                <img className="max-h-20 w-full opacity-80 absolute top-0"   src="https://unsplash.com/photos/h0Vxgz5tyXA/download?force=true&w=640" alt="" />
-                <div className="profile w-full flex m-3 ml-4 text-black">
-                    <img className="w-28 h-28 p-1 bg-white rounded-full"  style={{ zIndex: 0 }} src="https://images.pexels.com/photos/61100/pexels-photo-61100.jpeg?crop=faces&fit=crop&h=200&w=200&auto=compress&cs=tinysrgb" alt=""/>
-                    <div className="title mt-11 ml-3 font-bold flex flex-col">
-                        <div className="name break-word text-white" style={{ zIndex: 1 }}>Sarah</div>
-                        {/* add [dark] className for bright background  */}
-                        <div className="add font-semibold text-sm italic dark">Model</div>
-                    </div>
-                    </div>
-                    <div className="buttons flex absolute bottom-0 font-bold right-0 text-xs text-gray-500 space-x-0 my-3.5 mr-3">
-                    <div className="add border rounded-l-2xl rounded-r-sm border-gray-300 p-1 px-4 cursor-pointer hover:bg-gray-700 hover:text-white">Contact</div>
-                </div>
-            </div>
-            {/* <!-- card end --> */}
-            <div className="card border w-96 hover:shadow-none relative flex flex-col mx-auto shadow-lg m-5">
-                <img className="max-h-20 w-full opacity-80 absolute top-0"  src="https://unsplash.com/photos/iFPBRwZ4I-M/download?force=true&w=640" alt="" />
-                <div className="profile w-full flex m-3 ml-4 text-black">
-                    <img className="w-28 h-28 p-1 bg-white rounded-full" style={{ zIndex: 0 }} src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?crop=faces&fit=crop&h=200&w=200&auto=compress&cs=tinysrgb" alt=""/>
-                    <div className="title mt-11 ml-3 font-bold flex flex-col">
-                        <div className="name break-words text-white" style={{ zIndex: 1 }}>Ricky</div>
-                        <div className="add font-semibold text-sm italic dark">Designer</div>
-                    </div>
-                    </div>
-                    <div className="buttons flex absolute bottom-0 font-bold right-0 text-xs text-gray-500 space-x-0 my-3.5 mr-3">
-                    <div className="add border rounded-l-2xl rounded-r-sm border-gray-300 p-1 px-4 cursor-pointer hover:bg-gray-700 hover:text-white">Contact</div>
-                </div>
-            </div>
-            {/* <!-- card end --> */}
-            <div className="card border w-96 hover:shadow-none relative flex flex-col mx-auto shadow-lg m-5">
-                <img className="max-h-20 w-full opacity-80 absolute top-0"   src="https://unsplash.com/photos/w1_4YH5IhDg/download?force=true&w=640" alt="" />
-                <div className="profile w-full flex m-3 ml-4 text-black">
-                <img className="w-28 h-28 p-1 bg-white rounded-full" style={{ zIndex: 0 }} src="https://i.imgur.com/JFHjdNr.jpg" alt=""/>
-                <div className="title mt-11 ml-3 font-bold flex flex-col">
-                    <div className="name break-words text-white " style={{ zIndex: 1 }}>Dexter</div>
-                    {/* <!--  add [dark] className for bright background --> */}
-                    <div className="add font-semibold  text-sm italic dark">Director</div>
-                </div>
-                </div>
-                <div className="buttons flex absolute bottom-0 font-bold right-0 text-xs text-gray-500 space-x-0 my-3.5 mr-3">
-                <div className="add border rounded-l-2xl rounded-r-sm border-gray-300 p-1 px-4 cursor-pointer hover:bg-gray-700 hover:text-white">Contact</div>
-                </div>
-            </div>
-            {/* <!-- card end --> */}
-            <div className="card border w-96 hover:shadow-none relative flex flex-col mx-auto shadow-lg m-5">
-                <img className="max-h-20 w-full opacity-80 absolute top-0" src="https://unsplash.com/photos/TMxUnMAAwFA/download?force=true&w=640" alt="" />
-                <div className="profile w-full flex m-3 ml-4 text-black">
-                <img className="w-28 h-28 p-1 bg-white rounded-full" style={{ zIndex: 0 }} src="https://i.imgur.com/zLCYdR9.jpg" alt=""/>
-                <div className="title mt-11 ml-3 font-bold flex flex-col">
-                    <p className="name break-words  text-white" style={{ zIndex: 1 }}>Jhon</p>
-                    {/* <!--  add [dark] className for bright background --> */}
-                    <div className="add font-semibold text-sm italic ">CEO</div>
-                </div>
-                </div>
-                <div className="buttons flex absolute bottom-0 font-bold right-0 text-xs text-gray-500 space-x-0 my-3.5 mr-3">
-                <div className="add border rounded-l-2xl rounded-r-sm border-gray-300 p-1 px-4 cursor-pointer hover:bg-gray-700 hover:text-white">Contact</div>
-                </div>
-            </div>
-        {/* <!-- card end --> */}
+const DriverCard = ({name, vehicle, phone, experience,imageUrl, address}) => {
+  return (
+    
+    <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
+      <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+        <div className="overflow-hidden"></div>
+        <div className="flex items-center border border-gray-300 shadow-md rounded-lg p-4">
+          <div className="w-16 h-16 rounded-full overflow-hidden">
+            <img
+              src={product1}
+              alt={name}
+              className="object-cover w-full h-full"
+            />
+          </div>
+          <div className="ml-4">
+            <h2 className="text-lg font-medium">{name}</h2>
+            <p className="text-gray-600">{vehicle}</p>
+            <p className="text-gray-600">{experience} years of experience</p>
+            <p className="text-gray-600">{phone}</p>
+            <p className="text-gray-600">{address}</p>
+          </div>
         </div>
-    )
-}
+      </div>
+    </div>
+  );
+};
 
-export default DriverCard
+export default DriverCard;

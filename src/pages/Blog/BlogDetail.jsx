@@ -1,15 +1,12 @@
 import React, { useEffect } from 'react';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
-import { Header, Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
-import { JobCard } from '../index'
+import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
+import DetailCard from './DetailCard'
 import '../../App.css';
 import { useStateContext } from '../../contexts/ContextProvider';
 
-import { GridComponent, ColumnsDirective, ColumnDirective, Resize, Sort, ContextMenu, Filter, Page, ExcelExport, PdfExport, Edit, Inject } from '@syncfusion/ej2-react-grids';
-import { ordersData, contextMenuItems, ordersGrid } from '../../data/dummy';
-
-const Jobs = () => {
+const BlogDetail = () => {
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings } = useStateContext();
 
   useEffect(() => {
@@ -23,6 +20,7 @@ const Jobs = () => {
 
   const editing = { allowDeleting: true, allowEditing: true };
   return (
+
 
     <div className={currentMode === 'Dark' ? 'dark' : ''}>
         <div className="flex relative dark:bg-main-dark-bg">
@@ -62,8 +60,10 @@ const Jobs = () => {
               <Navbar />
             </div>
             {themeSettings && (<ThemeSettings />)}
-            <div className="mt-24 container px-5 mx-auto">
-              <JobCard />
+            <div className="mt-24 container mx-auto">
+              <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
+              <DetailCard />
+              </div>
             </div>
             <Footer />
           </div>
@@ -72,4 +72,4 @@ const Jobs = () => {
     
   );
 };
-export default Jobs;
+export default BlogDetail;
