@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import product1 from "../../data/product9.jpg";
-import product2 from "../../data/product2.jpg";
-import product3 from "../../data/product3.jpg";
+import product2 from "../../data/product10.jpg";
+import product3 from "../../data/product11.jpg";
 
 const ItemOverview = () => {
   const [currentImage, setCurrentImage] = useState(0);
