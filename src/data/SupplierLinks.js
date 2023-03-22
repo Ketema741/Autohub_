@@ -475,7 +475,7 @@ export const links = [
     links: [
       {
         name: 'ecommerce',
-        to: '/',
+        url: 'ecommerce',
         icon: <FiShoppingBag />,
       },
     ],
@@ -486,17 +486,17 @@ export const links = [
     links: [
       {
         name: 'orders',
-        to: 'orders',
+        url: 'orders',
         icon: <AiOutlineShoppingCart />,
       },
       {
         name: 'employees',
-        to: 'employees',
+        url: 'employees',
         icon: <IoMdContacts />,
       },
       {
         name: 'customers', 
-        to: 'customers', 
+        url: 'customers', 
         icon: <RiContactsLine />,
       },
     ],
@@ -506,22 +506,22 @@ export const links = [
     links: [
       {
         name: 'calendar',
-        to: 'calendar',
+        url: 'calendar',
         icon: <AiOutlineCalendar />,
       },
       {
         name: 'kanban',
-        to: 'kanban',
+        url: 'kanban',
         icon: <BsKanban />,
       },
       {
         name: 'editor',
-        to: 'editor',
+        url: 'editor',
         icon: <FiEdit />,
       },
       {
         name: 'color-picker',
-        to: 'color-picker',
+        url: 'color-picker',
         icon: <BiColorFill />,
       },
     ],
@@ -531,43 +531,43 @@ export const links = [
     links: [
       {
         name: 'line',
-        to: 'line',
+        url: 'line',
         icon: <AiOutlineStock />,
       },
       {
         name: 'area',
-        to: 'area',
+        url: 'area',
         icon: <AiOutlineAreaChart />,
       },
 
       {
         name: 'bar',
-        to: 'bar',
+        url: 'bar',
         icon: <AiOutlineBarChart />,
       },
       {
         name: 'pie',
-        to: 'pie',
+        url: 'pie',
         icon: <FiPieChart />,
       },
       {
         name: 'financial',
-        to: 'financial',
+        url: 'financial',
         icon: <RiStockLine />,
       },
       {
         name: 'color-mapping',
-        to: 'color-mapping',
+        url: 'color-mapping',
         icon: <BsBarChart />,
       },
       {
         name: 'pyramid',
-        to: 'pyramid',
+        url: 'pyramid',
         icon: <GiLouvrePyramid />,
       },
       {
         name: 'stacked',
-        to: 'stacked',
+        url: 'stacked',
         icon: <AiOutlineBarChart />,
       },
     ],
@@ -1503,7 +1503,7 @@ export const employeesData = [
     Name: 'Nancy Davolio',
     Title: 'Sales Representative',
     HireDate: '01/02/2021',
-    Country: 'USA',
+    Country: 'USFA',
     ReportsTo: 'Carson',
     EmployeeImage:
     avatar3,
