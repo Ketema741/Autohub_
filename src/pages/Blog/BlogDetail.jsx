@@ -3,6 +3,7 @@ import { FiSettings } from "react-icons/fi";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 import { Navbar, Footer, Sidebar, ThemeSettings } from "../../components";
 import DetailCard from "./DetailCard";
+import CommentSection from './Comment'
 import "../../App.css";
 import { useStateContext } from "../../contexts/ContextProvider";
 
@@ -91,73 +92,8 @@ const BlogDetail = () => {
             <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
               <DetailCard />
             </div>
-            <div className="max-w-lg mx-auto my-8">
-              <h2 className="text-xl font-bold mb-4">Comments</h2>
-              <form onSubmit={handleSubmit}>
-                <div className="mb-4">
-                  <label htmlFor="comment" className="block font-medium mb-2">
-                    Add a comment:
-                  </label>
-                  <textarea
-                    id="comment"
-                    name="comment"
-                    rows="3"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  ></textarea>
-                </div>
-                <button
-                  type="submit"
-                  className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                >
-                  Submit
-                </button>
-              </form>
-              <ul className="mt-6 space-y-6">
-                {comments.map((comment) => (
-                  <li key={comment.id}>
-                    <div className="bg-white rounded-lg shadow-md p-4">
-                      <p className="text-gray-800">{comment.text}</p>
-                      {comment.replies.length > 0 && (
-                        <ul className="mt-4 space-y-2">
-                          {comment.replies.map((reply) => (
-                            <li key={reply.id}>
-                              <div className="bg-gray-100 rounded-lg shadow-md p-3">
-                                <p className="text-gray-800">{reply.text}</p>
-                              </div>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                      <form
-                        onSubmit={(event) =>
-                          handleReplySubmit(event, comment.id)
-                        }
-                      >
-                        <div className="mt-4">
-                          <label
-                            htmlFor={`reply-${comment.id}`}
-                            className="block font-medium mb-2"
-                          >
-                            Reply:
-                          </label>
-                          <textarea
-                            id={`reply-${comment.id}`}
-                            name="reply"
-                            rows="2"
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                          ></textarea>
-                        </div>
-                        <button
-                          type="submit"
-                          className="bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                        >
-                          Reply
-                        </button>
-                      </form>
-                    </div>
-                  </li>
-                ))}
-              </ul>
+            <div className="px-2 max-w-lg mx-auto my-8">
+              <CommentSection />
             </div>
           </div>
           <Footer />
