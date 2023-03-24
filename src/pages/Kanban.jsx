@@ -4,7 +4,7 @@ import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import { Navbar, Footer, SupplierSidebar, ThemeSettings } from '../components';
 import '../App.css';
 
-import { useStateContext } from '../contexts/ContextProvider';
+import { useStateContext } from '../context/ContextProvider';
 import { Header } from '../components';
 import { KanbanComponent, ColumnsDirective, ColumnDirective } from '@syncfusion/ej2-react-kanban';
 

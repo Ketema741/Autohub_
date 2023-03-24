@@ -10,7 +10,7 @@ import {
 } from "../../components";
 import { DriverCard } from "../index";
 import "../../App.css";
-import { useStateContext } from "../../contexts/ContextProvider";
+import { useStateContext } from "../../context/ContextProvider";
 
 import {
   GridComponent,

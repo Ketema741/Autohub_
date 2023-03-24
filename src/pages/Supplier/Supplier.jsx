@@ -3,7 +3,7 @@ import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import { Navbar, Footer, SupplierSidebar, ThemeSettings, EditItem } from '../../components';
 import '../../App.css';
-import { useStateContext } from '../../contexts/ContextProvider';
+import { useStateContext } from '../../context/ContextProvider';
 import {SupplierData } from '../index';
 
 const Supplier = () => {

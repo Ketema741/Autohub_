@@ -5,7 +5,7 @@ import { Navbar, Footer, Sidebar, ThemeSettings } from "../../components";
 import DetailCard from "./DetailCard";
 import CommentSection from './Comment'
 import "../../App.css";
-import { useStateContext } from "../../contexts/ContextProvider";
+import { useStateContext } from "../../context/ContextProvider";
 
 const BlogDetail = () => {
   const [comments, setComments] = useState([]);

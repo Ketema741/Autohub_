@@ -3,7 +3,7 @@ import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import { Header, Navbar, Footer, SupplierSidebar, ThemeSettings } from '../../components';
 import '../../App.css';
-import { useStateContext } from '../../contexts/ContextProvider';
+import { useStateContext } from '../../context/ContextProvider';
 
 import { GridComponent, ColumnsDirective, ColumnDirective, Resize, Sort, ContextMenu, Filter, Page, ExcelExport, PdfExport, Edit, Inject } from '@syncfusion/ej2-react-grids';
 import { ordersData, contextMenuItems, ordersGrid } from '../../data/dummy';

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import md5 from "crypto-js/md5";
-import { useStateContext } from "../../contexts/ContextProvider";
+import { useStateContext } from "../../context/ContextProvider";
 const CommentSection = () => {
   const { currentColor, activeMenu, setActiveMenu, screenSize } =
     useStateContext();

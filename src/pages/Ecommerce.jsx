@@ -16,7 +16,7 @@ import {
   ecomPieChartData,
 } from "../data/dummy";
 
-import { useStateContext } from "../contexts/ContextProvider";
+import { useStateContext } from "../context/ContextProvider";
 import product9 from "../data/product9.jpg";
 
 const DropDown = ({ currentMode }) => (

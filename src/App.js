@@ -30,7 +30,7 @@ import {
 } from "./pages";
 import "./App.css";
 
-import { useStateContext } from "./contexts/ContextProvider";
+import { useStateContext } from "./context/ContextProvider";
 
 const App = () => {
   const {

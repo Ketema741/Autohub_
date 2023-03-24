@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import product1 from "../../data/product9.jpg";
 import product2 from "../../data/product10.jpg";
 import product3 from "../../data/product11.jpg";
-import { useStateContext } from '../../contexts/ContextProvider';
+import { useStateContext } from '../../context/ContextProvider';
 
 
 const ItemOverview = () => {
