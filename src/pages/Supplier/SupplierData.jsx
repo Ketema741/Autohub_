@@ -13,6 +13,7 @@ import {
   LineChart,
   SparkLine,
   EditItem,
+  DeleteItem,
 } from "../../components";
 import {
   earningData,
@@ -49,6 +50,12 @@ const SupplierData = () => {
     editItem,
     setEditItem,
   } = useStateContext();
+  const [showWarning, setShowWarning] = useState(false);
+
+  const handleDelete = () => {
+    onDelete();
+    setShowWarning(false);
+  };
 
   return (
     <div className="mt-24">
@@ -124,7 +131,7 @@ const SupplierData = () => {
                     <button
                       type="button"
                       style={{ color: "white", backgroundColor: currentColor }}
-                      onClick={() => setEditItem(true)}
+                      onClick={() => setShowWarning(true)}
                       className="text-white  focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 text-center "
                     >
                       Delete
@@ -135,6 +142,7 @@ const SupplierData = () => {
             </div>
           ))}
 
+          {showWarning && <DeleteItem setShowWarning={setShowWarning} />}
           {editItem && <EditItem />}
         </div>
       </div>

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import md5 from "crypto-js/md5";
-
+import { useStateContext } from "../../contexts/ContextProvider";
 const CommentSection = () => {
+  const { currentColor, activeMenu, setActiveMenu, screenSize } =
+    useStateContext();
   const [comments, setComments] = useState([]);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -78,6 +80,7 @@ const CommentSection = () => {
             ></textarea>
             <button
               type="submit"
+              style={{backgroundColor: currentColor}}
               className="bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2 px-4 rounded-lg mt-4"
             >
               Submit
@@ -136,6 +139,7 @@ const CommentSection = () => {
         ></textarea>
         <button
           type="submit"
+          style={{backgroundColor: currentColor}}
           className="bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2 px-4 rounded-lg mt-4"
         >
           Submit

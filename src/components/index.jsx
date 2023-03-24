@@ -17,5 +17,6 @@ export { default as ChartsHeader } from './ChartsHeader';
 export { default as Header } from './Header';
 export { default as EditItem } from './EditItem';
 export { default as ImageView } from './ImageView';
+export { default as DeleteItem } from './DeleteItem';
 export { default as ItemOverview } from '../pages/Item/ItemOverview';
 

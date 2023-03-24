@@ -1,6 +1,10 @@
 import React from "react";
 import { NavLink } from 'react-router-dom'
+import { useStateContext } from "../../contexts/ContextProvider";
+
 const BlogCard = () => {
+  const { currentColor, activeMenu, setActiveMenu, screenSize } =
+    useStateContext();
   return (
     <section className="text-gray-600 body-font">
       <div className="container px-5 py-24 mx-auto">
