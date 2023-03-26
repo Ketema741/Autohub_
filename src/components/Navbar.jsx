@@ -67,7 +67,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="flex justify-around flex-wrap bg-white dark:bg-gray-800 dark:border-gray-700 p-6 md:ml-6 md:mr-6 relative ">
+    <div className="flex justify-between bg-white dark:bg-gray-800 dark:border-gray-700 p-6 md:ml-6 md:mr-6 relative ">
       <NavButton
         title="Menu"
         customFunc={handleActiveMenu}
@@ -89,7 +89,7 @@ const Navbar = () => {
           <FaSearch className="text-gray-400" />
         </button>
       </div>
-      
+
       <div className="flex">
         <NavButton
           title="Cart"
@@ -97,20 +97,26 @@ const Navbar = () => {
           color={currentColor}
           icon={<FiShoppingCart />}
         />
-        <NavButton
-          title="Chat"
-          dotColor="#03C9D7"
-          customFunc={() => handleClick("chat")}
-          color={currentColor}
-          icon={<BsChatLeft />}
-        />
-        <NavButton
-          title="Notification"
-          dotColor="rgb(254, 201, 15)"
-          customFunc={() => handleClick("notification")}
-          color={currentColor}
-          icon={<RiNotification3Line />}
-        />
+
+        <div className="hidden sm:block">
+          <NavButton
+            title="Chat"
+            dotColor="#03C9D7"
+            customFunc={() => handleClick("chat")}
+            color={currentColor}
+            icon={<BsChatLeft />}
+          />
+        </div>
+
+        <div className="hidden sm:block">
+          <NavButton
+            title="Notification"
+            dotColor="rgb(254, 201, 15)"
+            customFunc={() => handleClick("notification")}
+            color={currentColor}
+            icon={<RiNotification3Line />}
+          />
+        </div>
         <TooltipComponent content="Profile" position="BottomCenter">
           <div
             className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg"
@@ -122,8 +128,8 @@ const Navbar = () => {
               alt="user-profile"
             />
             <p>
-              <span className="text-gray-400 text-14">Hi,</span>{" "}
-              <span className="text-gray-400 font-bold ml-1 text-14">
+              <span className="hidden sm:block text-gray-400 text-14">Hi,</span>{" "}
+              <span className="hidden sm:block text-gray-400 font-bold ml-1 text-14">
                 Ketema
               </span>
             </p>
