@@ -13,19 +13,27 @@
     "@syncfusion/ej2-react-popups": "^19.4.52",
     "@syncfusion/ej2-react-richtexteditor": "^19.4.50",
     "@syncfusion/ej2-react-schedule": "^19.4.50",
+    "axios": "^1.3.4",
     "crypto-js": "^4.1.1",
+    "formik": "^2.2.9",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
     "react-router-dom": "^6.2.1",
-    "react-scripts": "5.0.0",
-    "uuid": "^9.0.0"
+    "react-scripts": "^5.0.1",
+    "uuid": "^9.0.0",
+    "yup": "^1.0.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  },
+  "devServer": {
+    "allowedHosts": [
+      "localhost"
+    ]
   },
   "eslintConfig": {
     "extends": [
@@ -53,6 +61,7 @@
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
+    "http-proxy-middleware": "^2.0.6",
     "postcss": "^8.4.6",
     "tailwindcss": "^3.0.19"
   }

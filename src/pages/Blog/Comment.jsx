@@ -5,17 +5,17 @@ import { useStateContext } from '../../context/ContextProvider';
 const CommentSection = () => {
   const { currentColor } = useStateContext();
   const [comments, setComments] = useState([]);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [comment, setComment] = useState("");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [comment, setComment] = useState('');
 
   const handleSubmit = (e, parentCommentId) => {
     e.preventDefault();
     const newComment = { name, email, comment, parentCommentId };
     setComments([...comments, newComment]);
-    setName("");
-    setEmail("");
-    setComment("");
+    setName('');
+    setEmail('');
+    setComment('');
   };
 
   const renderComment = (comment) => {

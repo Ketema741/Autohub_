@@ -3,6 +3,7 @@ import product8 from '../../data/product8.jpg';
 import avatar from '../../data/avatar.jpg';
 
 const DetailCard = () => {
+  
   return (
     <div className="mt-5">
       <div

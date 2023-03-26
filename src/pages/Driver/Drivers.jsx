@@ -29,20 +29,20 @@ import { useStateContext } from '../../context/ContextProvider';
 const Drivers = () => {
   const drivers = [
     {
-      name: "John Doe",
-      vehicle: "Toyota Camry",
+      name: 'John Doe',
+      vehicle: 'Toyota Camry',
       experience: 5,
-      phone: "555-555-5555",
-      address: "123 Main St, Anytown USA",
-      imageUrl: "../../data/avatar4.jpg",
+      phone: '555-555-5555',
+      address: '123 Main St, Anytown USA',
+      imageUrl: '../../data/avatar4.jpg',
     },
     {
-      name: "Jane Smith",
-      vehicle: "Honda Civic",
+      name: 'Jane Smith',
+      vehicle: 'Honda Civic',
       experience: 3,
-      phone: "555-555-5555",
-      address: "456 Main St, Anytown USA",
-      imageUrl: "../../data/avatar4.jpg",
+      phone: '555-555-5555',
+      address: '456 Main St, Anytown USA',
+      imageUrl: '../../data/avatar4.jpg',
     },
   ];
 
@@ -57,8 +57,8 @@ const Drivers = () => {
   } = useStateContext();
 
   useEffect(() => {
-    const currentThemeColor = localStorage.getItem("colorMode");
-    const currentThemeMode = localStorage.getItem("themeMode");
+    const currentThemeColor = localStorage.getItem('colorMode');
+    const currentThemeMode = localStorage.getItem('themeMode');
     if (currentThemeColor && currentThemeMode) {
       setCurrentColor(currentThemeColor);
       setCurrentMode(currentThemeMode);

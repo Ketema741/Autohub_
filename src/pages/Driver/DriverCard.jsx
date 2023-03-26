@@ -1,5 +1,5 @@
-import React from "react";
-import product1 from "../../data/product9.jpg";
+import React from 'react';
+import product1 from '../../data/product9.jpg';
 
 const DriverCard = ({name, vehicle, phone, experience,imageUrl, address}) => {
   return (

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
-import { BlogCard } from '../index'
+import BlogCard  from './BlogCard'
 import { useStateContext } from '../../context/ContextProvider';
 
 const Blogs = () => {

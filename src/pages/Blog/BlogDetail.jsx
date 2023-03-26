@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { FiSettings } from "react-icons/fi";
-import { TooltipComponent } from "@syncfusion/ej2-react-popups";
-import { Navbar, Footer, Sidebar, ThemeSettings } from "../../components";
-import DetailCard from "./DetailCard";
+import { FiSettings } from 'react-icons/fi';
+import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
+import DetailCard from './DetailCard';
 import CommentSection from './Comment'
-import { useStateContext } from "../../context/ContextProvider";
+import { useStateContext } from '../../context/ContextProvider';
 
 const BlogDetail = () => {
   const [comments, setComments] = useState([]);
@@ -17,7 +17,7 @@ const BlogDetail = () => {
       replies: [],
     };
     setComments([...comments, newComment]);
-    event.target.comment.value = "";
+    event.target.comment.value = '';
   };
 
   const handleReplySubmit = (event, commentId) => {
@@ -29,7 +29,7 @@ const BlogDetail = () => {
     const updatedComments = [...comments];
     updatedComments[commentId - 1].replies.push(newReply);
     setComments(updatedComments);
-    event.target.reply.value = "";
+    event.target.reply.value = '';
   };
 
   const {
@@ -43,8 +43,8 @@ const BlogDetail = () => {
   } = useStateContext();
 
   useEffect(() => {
-    const currentThemeColor = localStorage.getItem("colorMode");
-    const currentThemeMode = localStorage.getItem("themeMode");
+    const currentThemeColor = localStorage.getItem('colorMode');
+    const currentThemeMode = localStorage.getItem('themeMode');
     if (currentThemeColor && currentThemeMode) {
       setCurrentColor(currentThemeColor);
       setCurrentMode(currentThemeMode);
@@ -55,7 +55,7 @@ const BlogDetail = () => {
   return (
     <div className={currentMode === "Dark" ? "dark" : ""}>
       <div className="flex relative dark:bg-main-dark-bg">
-        <div className="fixed right-4 bottom-4" style={{ zIndex: "1000" }}>
+        <div className="fixed right-4 bottom-4" style={{ zIndex: '1000' }}>
           <TooltipComponent content="Settings" position="Top">
             <button
               type="button"

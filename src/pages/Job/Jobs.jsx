@@ -17,8 +17,8 @@ const Jobs = () => {
   } = useStateContext();
 
   useEffect(() => {
-    const currentThemeColor = localStorage.getItem("colorMode");
-    const currentThemeMode = localStorage.getItem("themeMode");
+    const currentThemeColor = localStorage.getItem('colorMode');
+    const currentThemeMode = localStorage.getItem('themeMode');
     if (currentThemeColor && currentThemeMode) {
       setCurrentColor(currentThemeColor);
       setCurrentMode(currentThemeMode);
@@ -32,10 +32,10 @@ const Jobs = () => {
   };
 
   const [step, setStep] = useState(1);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [resumeLink, setResumeLink] = useState("");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [resumeLink, setResumeLink] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -51,14 +51,14 @@ const Jobs = () => {
   };
 
   return (
-    <div className={currentMode === "Dark" ? "dark" : ""}>
+    <div className={currentMode === 'Dark' ? 'dark' : ''}>
       <div className="flex relative dark:bg-main-dark-bg">
-        <div className="fixed right-4 bottom-4" style={{ zIndex: "1000" }}>
+        <div className="fixed right-4 bottom-4" style={{ zIndex: '1000' }}>
           <TooltipComponent content="Settings" position="Top">
             <button
               type="button"
               onClick={() => setThemeSettings(true)}
-              style={{ background: currentColor, borderRadius: "50%" }}
+              style={{ background: currentColor, borderRadius: '50%' }}
               className="text-3xl text-white p-3 hover:drop-shadow-xl hover:bg-light-gray"
             >
               <FiSettings />
@@ -77,8 +77,8 @@ const Jobs = () => {
         <div
           className={
             activeMenu
-              ? "dark:bg-main-dark-bg  bg-main-bg min-h-screen md:ml-72 w-full  "
-              : "bg-main-bg dark:bg-main-dark-bg  w-full min-h-screen flex-2 "
+              ? 'dark:bg-main-dark-bg  bg-main-bg min-h-screen md:ml-72 w-full  '
+              : 'bg-main-bg dark:bg-main-dark-bg  w-full min-h-screen flex-2 '
           }
         >
           <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full ">
@@ -90,10 +90,10 @@ const Jobs = () => {
 
             {isOpen && (
               <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center">
-                <div className="absolute w-full h-full bg-gray-900 opacity-50"></div>
-
+                <div className="absolute w-full h-full bg-gray-900 opacity-50" />
                 <div className="relative bg-white w-1/2 p-6 rounded-lg">
                   <button
+                  type="button"
                     onClick={togglePopup}
                     className="absolute top-0 right-0 mt-4 mr-4"
                   >
@@ -195,6 +195,7 @@ const Jobs = () => {
                       </div>
                       <div className="flex justify-between">
                         <button
+                        type="button"
                           className="bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600"
                           onClick={handlePrev}
                         >
