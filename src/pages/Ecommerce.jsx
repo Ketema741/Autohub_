@@ -1,13 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns';
 
+import '../App.css'
 import {
   earningData,
   dropdownData,
 } from '../data/dummy';
-
 import { useStateContext } from '../context/ContextProvider';
 import product9 from '../data/product9.jpg';
 

@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
-import { Navbar, Header, Footer, SupplierSidebar, ThemeSettings } from '../components';
-
-import { useStateContext } from '../context/ContextProvider';
 import { KanbanComponent, ColumnsDirective, ColumnDirective } from '@syncfusion/ej2-react-kanban';
 
+import '../App.css'
+import { Navbar, Header, Footer, SupplierSidebar, ThemeSettings } from '../components';
+import { useStateContext } from '../context/ContextProvider';
 import { kanbanData, kanbanGrid } from '../data/dummy';
 
 const Kanban = () => {

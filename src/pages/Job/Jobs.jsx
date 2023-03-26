@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { FiSettings } from "react-icons/fi";
-import { TooltipComponent } from "@syncfusion/ej2-react-popups";
-import { Navbar, Footer, Sidebar, ThemeSettings } from "../../components";
-import { JobCard } from "../index";
-import { useStateContext } from "../../context/ContextProvider";
+import React, { useEffect, useState } from 'react';
+import { FiSettings } from 'react-icons/fi';
+import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
+import JobCard from './JobCard';
+import { useStateContext } from '../../context/ContextProvider';
 
 const Jobs = () => {
   const {

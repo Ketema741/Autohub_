@@ -1,9 +1,10 @@
-import { GridComponent, ColumnsDirective, ColumnDirective, Page, Selection, Inject, Edit, Toolbar, Sort, Filter } from '@syncfusion/ej2-react-grids';
 import React, { useEffect } from 'react';
+import { GridComponent, ColumnsDirective, ColumnDirective, Page, Selection, Inject, Edit, Toolbar, Sort, Filter } from '@syncfusion/ej2-react-grids';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
-import { Navbar, Footer, SupplierSidebar, ThemeSettings } from '../components';
+import '../App.css'
 
+import { Navbar, Footer, SupplierSidebar, ThemeSettings } from '../components';
 import { useStateContext } from '../context/ContextProvider';
 import { customersData, customersGrid } from '../data/dummy';
 import { Header } from '../components';
