@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import md5 from "crypto-js/md5";
-import { useStateContext } from "../../context/ContextProvider";
+import React, { useState } from 'react';
+import md5 from 'crypto-js/md5';
+import { useStateContext } from '../../context/ContextProvider';
+
 const CommentSection = () => {
-  const { currentColor, activeMenu, setActiveMenu, screenSize } =
-    useStateContext();
+  const { currentColor } = useStateContext();
   const [comments, setComments] = useState([]);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

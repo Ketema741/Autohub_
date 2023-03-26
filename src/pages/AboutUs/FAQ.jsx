@@ -3,7 +3,6 @@ import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import FAQCard from './FAQCard';
-import '../../App.css';
 import { useStateContext } from '../../context/ContextProvider';
 
 const FAQ = () => {
@@ -18,10 +17,8 @@ const FAQ = () => {
     }
   }, []);
 
-  const editing = { allowDeleting: true, allowEditing: true };
+  // const editing = { allowDeleting: true, allowEditing: true };
   return (
-
-
     <div className={currentMode === 'Dark' ? 'dark' : ''}>
         <div className="flex relative dark:bg-main-dark-bg">
           <div className="fixed right-4 bottom-4" style={{ zIndex: '1000' }}>

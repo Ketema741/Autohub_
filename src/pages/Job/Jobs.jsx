@@ -1,32 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { FiSettings } from "react-icons/fi";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
-import {
-  Header,
-  Navbar,
-  Footer,
-  Sidebar,
-  ThemeSettings,
-} from "../../components";
+import { Navbar, Footer, Sidebar, ThemeSettings } from "../../components";
 import { JobCard } from "../index";
-import "../../App.css";
 import { useStateContext } from "../../context/ContextProvider";
-
-import {
-  GridComponent,
-  ColumnsDirective,
-  ColumnDirective,
-  Resize,
-  Sort,
-  ContextMenu,
-  Filter,
-  Page,
-  ExcelExport,
-  PdfExport,
-  Edit,
-  Inject,
-} from "@syncfusion/ej2-react-grids";
-import { ordersData, contextMenuItems, ordersGrid } from "../../data/dummy";
 
 const Jobs = () => {
   const {

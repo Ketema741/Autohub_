@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
-import { FiSettings } from "react-icons/fi";
-import { TooltipComponent } from "@syncfusion/ej2-react-popups";
+import React, { useEffect } from 'react';
+import { FiSettings } from 'react-icons/fi';
+import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
-import { Navbar, Footer, Sidebar, ThemeSettings } from "../../components";
-import { useStateContext } from "../../context/ContextProvider";
-import ItemOverview from "./ItemOverview";
+import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
+import { useStateContext } from '../../context/ContextProvider';
+import ItemOverview from './ItemOverview';
 
 const ItemDetail = () => {
   const {
@@ -18,8 +18,8 @@ const ItemDetail = () => {
   } = useStateContext();
 
   useEffect(() => {
-    const currentThemeColor = localStorage.getItem("colorMode");
-    const currentThemeMode = localStorage.getItem("themeMode");
+    const currentThemeColor = localStorage.getItem('colorMode');
+    const currentThemeMode = localStorage.getItem('themeMode');
     if (currentThemeColor && currentThemeMode) {
       setCurrentColor(currentThemeColor);
       setCurrentMode(currentThemeMode);

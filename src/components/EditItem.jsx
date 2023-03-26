@@ -1,19 +1,15 @@
 import React from 'react';
 import { MdOutlineCancel } from 'react-icons/md';
-import { BsCheck } from 'react-icons/bs';
-import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import { useStateContext } from '../context/ContextProvider';
 
-import { themeColors } from '../data/dummy';
-
 const EditItem = () => {
-  const { setColor, setMode, currentMode, currentColor, setEditItem } = useStateContext();
+  const { currentColor, setEditItem } = useStateContext();
 
   return (
     <div className="bg-half-transparent w-screen fixed nav-item top-0 right-0" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <div className="float-right h-screen dark:text-gray-200 bg-white dark:bg-[#484B52] w-full sm:w-full md:w-full lg:w-full xl:w-1/2 2xl:w-1/3">
         <div className="flex justify-between items-center p-4 ml-4">
-          <p className="font-semibold text-lg">Edit Item</p>
+          <p className="font-semibold text-lg" style={{ backgroundColor:currentColor }}>Edit Item</p>
           <button
             type="button"
             onClick={()=> setEditItem(false)}

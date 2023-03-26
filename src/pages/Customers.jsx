@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import { Navbar, Footer, SupplierSidebar, ThemeSettings } from '../components';
-import '../App.css';
 
 import { useStateContext } from '../context/ContextProvider';
 import { customersData, customersGrid } from '../data/dummy';

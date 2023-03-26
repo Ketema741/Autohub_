@@ -4,7 +4,6 @@ import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 import { Navbar, Footer, Sidebar, ThemeSettings } from "../../components";
 import DetailCard from "./DetailCard";
 import CommentSection from './Comment'
-import "../../App.css";
 import { useStateContext } from "../../context/ContextProvider";
 
 const BlogDetail = () => {
