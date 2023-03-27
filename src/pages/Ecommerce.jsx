@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns';
 
 import '../App.css';
-import {
-  earningData,
-  dropdownData,
-} from '../data/dummy';
-import { useStateContext } from '../context/ContextProvider';
+import { earningData, dropdownData } from '../data/dummy';
 import product9 from '../data/product9.jpg';
+
+import { useStateContext } from '../context/ContextProvider';
+import ItemContext from '../context/item/itemContext';
 
 const DropDown = ({ currentMode }) => (
   <div className="w-28 border-1 border-color px-2 py-1 rounded-md">
@@ -25,20 +24,29 @@ const DropDown = ({ currentMode }) => (
 );
 
 const Ecommerce = () => {
-  const { currentColor, currentMode } = useStateContext();
+  const { currentColor } = useStateContext();
+  const itemContext = useContext(ItemContext)
+  const { filtered, publicItems, getPublicItems, loading } = itemContext
+
+  useEffect(() => {
+    getPublicItems()
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
 
   return (
     <div className="mt-24">
       <div className="flex flex-wrap lg:flex-nowrap justify-center ">
         <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
-          {earningData.map((item) => (
-            <div className="max-w-2xl mx-auto">
+          {publicItems && publicItems.map((item) => (
+            <div className="max-w-2xl mx-auto" key={item.id}>
               <div className="bg-white shadow-md rounded-lg max-w-sm dark:bg-gray-800 dark:border-gray-700">
-                <img className="rounded-t-lg p-8" src={product9} />
+                <img className="rounded-t-lg p-8 h-96 max-w-full object-cover" src={item.itemImages.length >= 1 ? item.itemImages[0].url: product9} />
                 <div className="px-5 pb-5">
                   <Link to="Item-detail">
                     <h3 className="text-gray-900 font-semibold text-xl tracking-tight dark:text-white">
-                      Bugatti Chiron
+                      {item.title}
                     </h3>
                   </Link>
                   <div className="flex items-center mt-2.5 mb-5">
@@ -88,11 +96,11 @@ const Ecommerce = () => {
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-3xl font-bold text-gray-900 dark:text-white">
-                      {item.amount} ETB
+                      {item.price} ETB
                     </span>
                     <button
                       type="button"
-                      style={{backgroundColor:currentColor}}
+                      style={{ backgroundColor: currentColor }}
                       className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     >
                       Add to cart

@@ -1,7 +1,7 @@
-import React, { useReducer } from "react";
-import axios from "axios";
-import itemContext from "./itemContext";
-import itemReducer from "./itemReducer";
+import React, { useReducer } from 'react';
+import axios from 'axios';
+import itemContext from './itemContext';
+import itemReducer from './itemReducer';
 
 import {
   GET_ITEMS,
@@ -16,7 +16,7 @@ import {
   CLEAR_ITEMS,
   CLEAR_FILTER,
   ITEM_ERROR,
-} from "../Types";
+} from '../Types';
 
 const Itemstate = (props) => {
   const initialState = {
@@ -32,7 +32,7 @@ const Itemstate = (props) => {
   // Get supplier items
   const getItems = async () => {
     try {
-      const res = await axios.get("api/items/supplieritems");
+      const res = await axios.get('api/items/supplieritems');
       dispatch({
         type: GET_ITEMS,
         payload: res.data,
@@ -48,7 +48,7 @@ const Itemstate = (props) => {
   // Get public items
   const getPublicItems = async () => {
     try {
-      const res = await axios.get("api/items");
+      const res = await axios.get('api/items');
       dispatch({
         type: GET_PUBLICITEMS,
         payload: res.data,
@@ -82,11 +82,11 @@ const Itemstate = (props) => {
     item.itemImages = images;
     const config = {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     };
     try {
-      const res = await axios.post("api/items", item, config);
+      const res = await axios.post('api/items', item, config);
 
       dispatch({ type: ADD_ITEM, payload: res.data });
     } catch (error) {
@@ -101,12 +101,11 @@ const Itemstate = (props) => {
 
     const config = {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     };
     try {
       const res = await axios.post(`api/items/image`, id_obj, config);
-      console.log(res);
     } catch (error) {
       dispatch({ type: ITEM_ERROR });
     }
@@ -134,7 +133,7 @@ const Itemstate = (props) => {
   const updateitem = async (item) => {
     const config = {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     };
 

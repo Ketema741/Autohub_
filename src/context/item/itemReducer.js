@@ -11,7 +11,7 @@ import {
   CLEAR_ITEMS,
   CLEAR_FILTER,
   ITEM_ERROR,
-} from "../Types";
+} from '../Types';
 
 const itemReducer = (state, action) => {
   switch (action.type) {
@@ -39,7 +39,7 @@ const itemReducer = (state, action) => {
       return {
         ...state,
         items: state.items.map((item) =>
-          item._id === action.payload._id ? action.payload : item
+          item._id === action.payload._id ? action.payload : item,
         ),
       };
     case DELETE_ITEM:

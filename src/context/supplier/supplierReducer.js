@@ -13,7 +13,7 @@ import {
   CLEAR_SUPPLIERS,
   CLEAR_FILTER,
   SUPPLIER_ERROR,
-} from "../Types";
+} from '../Types';
 
 const supplierReducer = (state, action) => {
   switch (action.type) {
@@ -53,14 +53,14 @@ const supplierReducer = (state, action) => {
       return {
         ...state,
         favourites: state.favourites.filter(
-          (favourite) => favourite._id !== action.payload
+          (favourite) => favourite._id !== action.payload,
         ),
       };
     case DELETE_SUPPLIER:
       return {
         ...state,
         suppliers: state.suppliers.filter(
-          (supplier) => supplier._id !== action.payload
+          (supplier) => supplier._id !== action.payload,
         ),
       };
     case CLEAR_SUPPLIERS:

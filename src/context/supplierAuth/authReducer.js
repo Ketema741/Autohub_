@@ -8,46 +8,46 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   CLEAR_ERRORS,
-} from "../Types";
+} from '../Types';
 
 const authReducer = (state, action) => {
   switch (action.type) {
     case SUPPLIER_LOADED:
       return {
         ...state,
-        
-isSupplierAuthenticated: true,
+
+        isSupplierAuthenticated: true,
         supplierLoading: false,
         supplier: action.payload,
       };
     case REGISTER_SUCCESS:
-      localStorage.setItem("token", action.payload.token);
+      localStorage.setItem('token', action.payload.token);
       return {
         ...state,
         ...action.payload,
-        
-isSupplierAuthenticated: true,
+
+        isSupplierAuthenticated: true,
         supplierLoading: false,
       };
     case LOGIN_SUCCESS:
-      localStorage.setItem("token", action.payload.token);
+      localStorage.setItem('token', action.payload.token);
       return {
         ...state,
         ...action.payload,
-        
-isSupplierAuthenticated: true,
+
+        isSupplierAuthenticated: true,
         supplierLoading: false,
       };
     case REGISTER_FAIL:
     case AUTH_ERROR:
     case LOGIN_FAIL:
     case LOGOUT:
-      localStorage.removeItem("token");
+      localStorage.removeItem('token');
       return {
         ...state,
         token: null,
-        
-isSupplierAuthenticated: false,
+
+        isSupplierAuthenticated: false,
         supplierLoading: false,
         supplier: null,
         error: action.payload,
@@ -60,8 +60,7 @@ isSupplierAuthenticated: false,
     case SET_CURRENT:
       return {
         ...state,
-        
-currentSupplier: action.payload,
+        currentSupplier: action.payload,
       };
     default:
       throw new Error(`Unsupported type of: ${action.type}`);

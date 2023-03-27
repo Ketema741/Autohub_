@@ -1,9 +1,9 @@
-import React, { useReducer, useEffect } from "react";
-import axios from "axios";
-import setAuthToken from "../../utils/setAuthToken";
+import React, { useReducer, useEffect } from 'react';
+import axios from 'axios';
+import setAuthToken from '../../utils/setAuthToken';
 
-import AuthContext from "./authContext";
-import authReducer from "./authReducer";
+import AuthContext from './authContext';
+import authReducer from './authReducer';
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -13,7 +13,7 @@ import {
   SET_CURRENT,
   LOGIN_FAIL,
   LOGOUT,
-} from "../Types";
+} from '../Types';
 
 const AuthState = (props) => {
   const initialState = {
@@ -35,11 +35,11 @@ const AuthState = (props) => {
 
     const config = {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     };
     try {
-      const res = await axios.post("api/suppliers", formData, config);
+      const res = await axios.post('api/suppliers', formData, config);
       dispatch({
         type: REGISTER_SUCCESS,
         payload: res.data,
@@ -59,7 +59,7 @@ const AuthState = (props) => {
 
     const config = {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     };
     try {
@@ -70,7 +70,7 @@ const AuthState = (props) => {
         type: LOGIN_FAIL,
         payload: err.response.data.msg,
       });
-      console.log("error ", err.response);
+      console.log('error ', err.response);
     }
   };
 
@@ -78,12 +78,12 @@ const AuthState = (props) => {
   const supplierLogin = async (formData) => {
     const config = {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     };
 
     try {
-      const res = await axios.post("api/authsupplier", formData, config);
+      const res = await axios.post('api/authsupplier', formData, config);
 
       dispatch({
         type: LOGIN_SUCCESS,
@@ -98,7 +98,7 @@ const AuthState = (props) => {
         payload: err.response.data.msg,
       });
 
-      console.log("error ", err.response);
+      console.log('error ', err.response);
     }
   };
 
@@ -111,7 +111,7 @@ const AuthState = (props) => {
       if (localStorage.token) {
         setAuthToken(localStorage.token);
       }
-      const res = await axios.get("api/authsupplier");
+      const res = await axios.get('api/authsupplier');
 
       try {
         dispatch({

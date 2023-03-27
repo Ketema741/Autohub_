@@ -1,8 +1,8 @@
-import React, { useReducer, useEffect, useContext } from "react";
-import axios from "axios";
-import supplierContext from "./supplierContext";
-import AuthContext from "../supplierAuth/authContext";
-import supplierReducer from "./supplierReducer";
+import React, { useReducer, useEffect, useContext } from 'react';
+import axios from 'axios';
+import supplierContext from './supplierContext';
+import AuthContext from '../supplierAuth/authContext';
+import supplierReducer from './supplierReducer';
 
 import {
   GET_SUPPLIERS,
@@ -19,7 +19,7 @@ import {
   CLEAR_SUPPLIERS,
   CLEAR_FILTER,
   SUPPLIER_ERROR,
-} from "../Types";
+} from '../Types';
 
 const SupplierState = (props) => {
   const initialState = {
@@ -38,7 +38,7 @@ const SupplierState = (props) => {
   // Get suppliers
   const getSuppliers = async () => {
     try {
-      const res = await axios.get("/api/suppliers");
+      const res = await axios.get('/api/suppliers');
       dispatch({
         type: GET_SUPPLIERS,
         payload: res.data,
@@ -72,11 +72,11 @@ const SupplierState = (props) => {
     item.itemImages = images;
     const config = {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     };
     try {
-      const res = await axios.post("api/suppliers", item, config);
+      const res = await axios.post('api/suppliers', item, config);
 
       dispatch({ type: ADD_SUPPLIER, payload: res.data });
     } catch (error) {
@@ -91,12 +91,11 @@ const SupplierState = (props) => {
 
     const config = {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     };
     try {
-      const res = await axios.post(`api/suppliers/image`, id_obj, config);
-      console.log(res);
+      await axios.post(`api/suppliers/image`, id_obj, config);
     } catch (error) {
       dispatch({ type: SUPPLIER_ERROR });
     }
@@ -124,7 +123,7 @@ const SupplierState = (props) => {
   const updateSupplier = async (supplier) => {
     const config = {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     };
 
@@ -145,10 +144,9 @@ const SupplierState = (props) => {
 
   // add To favourite
   const addToFavourite = async (supplier, item) => {
-    console.log(supplier._id);
     const config = {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     };
 
@@ -156,7 +154,7 @@ const SupplierState = (props) => {
       const res = await axios.put(
         `/api/suppliers/favourite/${supplier._id}`,
         JSON.stringify(item),
-        config
+        config,
       );
       dispatch({
         type: UPDATE_CHART,
@@ -171,14 +169,14 @@ const SupplierState = (props) => {
   const removeFavourite = async (supplierId, itemId) => {
     const config = {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     };
 
     try {
-      const res = await axios.put(
+      await axios.put(
         `/api/suppliers/removefavourite/${supplierId}`,
-        config
+        config,
       );
       dispatch({
         type: DELETE_CHART,
