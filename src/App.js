@@ -16,7 +16,6 @@ import {
   Supplier,
   ItemDetail,
   ServiceProviders,
-  Ecommerce,
   Orders,
   Calendar,
   Employees,
@@ -55,7 +54,7 @@ const App = () => {
               <Routes>
                 {/* dashboard  */}
                 <Route path="/" element={<Home />} />
-                <Route path="/" element={<Ecommerce />} />
+                <Route path="/home" element={<Home />} />
 
                 {/* pages  */}
                 <Route path="/orders" element={<Orders />} />

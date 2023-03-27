@@ -473,7 +473,7 @@ export const links = [
     links: [
       {
         name: 'ecommerce',
-        url: 'ecommerce',
+        url: 'home',
         icon: <FiShoppingBag />,
       },
     ],
