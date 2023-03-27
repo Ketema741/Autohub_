@@ -19,6 +19,7 @@ import {
   Orders,
   Login,
   Register,
+  Profile,
   Calendar,
   Employees,
   Stacked,
@@ -90,6 +91,7 @@ const App = () => {
                 <Route path="/blog-detail" element={<BlogDetail />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/profile" element={<Profile />} />
                 {/* <Route path="/faq" element={<FAQ />} /> */}
               </Routes>
             </Router>

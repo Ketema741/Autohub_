@@ -817,6 +817,7 @@ export const userProfileData = [
   {
     icon: <BsCurrencyDollar />,
     title: 'My Profile',
+    url: 'profile',
     desc: 'Account Settings',
     iconColor: '#03C9D7',
     iconBg: '#E5FAFB',
@@ -824,6 +825,7 @@ export const userProfileData = [
   {
     icon: <BsShield />,
     title: 'My Inbox',
+    url: 'profile',
     desc: 'Messages & Emails',
     iconColor: 'rgb(0, 194, 146)',
     iconBg: 'rgb(235, 250, 242)',
@@ -831,6 +833,7 @@ export const userProfileData = [
   {
     icon: <FiCreditCard />,
     title: 'My Tasks',
+    url: 'profile',
     desc: 'To-do and Daily Tasks',
     iconColor: 'rgb(255, 244, 229)',
     iconBg: 'rgb(254, 201, 15)',

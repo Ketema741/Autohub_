@@ -22,6 +22,7 @@ export { default as DriverCard } from './Driver/DriverCard';
 export { default as Login } from './Auth/Login';
 export { default as Register } from './Auth/Register';
 
+export { default as Profile } from './Profile/Profile';
 
 export { default as ServiceProviders } from './ServiceProvider/ServiceProviders';
 export { default as ServiceProviderCard } from './ServiceProvider/ServiceProviderCard';
