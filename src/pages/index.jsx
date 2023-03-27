@@ -19,6 +19,10 @@ export { default as BlogDetail } from './Blog/BlogDetail';
 export { default as Drivers } from './Driver/Drivers';
 export { default as DriverCard } from './Driver/DriverCard';
 
+export { default as Login } from './Auth/Login';
+export { default as Register } from './Auth/Register';
+
+
 export { default as ServiceProviders } from './ServiceProvider/ServiceProviders';
 export { default as ServiceProviderCard } from './ServiceProvider/ServiceProviderCard';
 

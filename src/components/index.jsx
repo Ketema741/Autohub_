@@ -2,6 +2,7 @@ export { default as Button } from './Button';
 export { default as ThemeSettings } from './ThemeSettings';
 export { default as Sidebar } from './Sidebar';
 export { default as SupplierSidebar } from './SupplierSidebar';
+
 // eslint-disable-next-line import/no-cycle
 export { default as Navbar } from './Navbar';
 export { default as Footer } from './Footer';
@@ -17,6 +18,6 @@ export { default as ChartsHeader } from './ChartsHeader';
 export { default as Header } from './Header';
 export { default as EditItem } from './EditItem';
 export { default as ImageView } from './ImageView';
-export { default as DeleteItem } from './DeleteItem';
+export { default as DeleteWarning } from './DeleteWarning';
 export { default as ItemOverview } from '../pages/Item/ItemOverview';
 

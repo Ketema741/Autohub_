@@ -12,7 +12,7 @@ import {
   LineChart,
   SparkLine,
   EditItem,
-  DeleteItem,
+  DeleteWarning,
 } from '../../components';
 import {
   earningData,
@@ -139,7 +139,7 @@ const SupplierData = () => {
             </div>
           ))}
 
-          {showWarning && <DeleteItem setShowWarning={setShowWarning} />}
+          {showWarning && <DeleteWarning setShowWarning={setShowWarning} />}
           {editItem && <EditItem />}
         </div>
       </div>

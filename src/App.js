@@ -17,6 +17,8 @@ import {
   ItemDetail,
   ServiceProviders,
   Orders,
+  Login,
+  Register,
   Calendar,
   Employees,
   Stacked,
@@ -86,6 +88,8 @@ const App = () => {
                 <Route path="/aboutus" element={<AboutUs />} />
                 <Route path="/Item-detail" element={<ItemDetail />} />
                 <Route path="/blog-detail" element={<BlogDetail />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
                 {/* <Route path="/faq" element={<FAQ />} /> */}
               </Routes>
             </Router>

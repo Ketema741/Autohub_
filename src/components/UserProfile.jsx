@@ -1,12 +1,12 @@
 import React from 'react';
 import { MdOutlineCancel } from 'react-icons/md';
 
-import { Button } from '.';
+import Button from './Button';
 import { userProfileData } from '../data/dummy';
 import { useStateContext } from '../context/ContextProvider';
 import avatar from '../data/avatar.jpg';
 
-const UserProfile = () => {
+const UserProfile = ({ onLogout }) => {
   const { currentColor } = useStateContext();
 
   return (
@@ -35,7 +35,7 @@ const UserProfile = () => {
       </div>
       <div>
         {userProfileData.map((item, index) => (
-          <div key={index} className="flex gap-5 border-b-1 border-color p-4 hover:bg-light-gray cursor-pointer  dark:hover:bg-[#42464D]">
+          <div key={index} className="flex gap-5 border-b-1 border-color p-4 hover:bg-light-gray cursor-pointer  dark:hover:bg-[#a5c2f4]">
             <button
               type="button"
               style={{ color: item.iconColor, backgroundColor: item.iconBg }}
@@ -52,13 +52,14 @@ const UserProfile = () => {
         ))}
       </div>
       <div className="mt-5">
-        <Button
-          color="white"
-          bgColor={currentColor}
-          text="Logout"
-          borderRadius="10px"
-          width="full"
-        />
+        <button
+          type="button"
+          onClick={() => onLogout()}
+          className=" p-3 w-full hover:drop-shadow-xl hover:bg-light-gray"
+          style={{ backgroundColor: currentColor, color: "white", borderRadius: "10px" }}
+        >
+          Logout
+        </button>
       </div>
     </div>
 
