@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { Fragment, useContext, useEffect } from 'react';
 
 import { useStateContext } from '../../context/ContextProvider';
 import ItemContext from '../../context/item/itemContext';
@@ -18,10 +18,24 @@ const Items = () => {
     return (
         <div tabIndex={0} className="focus:outline-none px-8">
             <div className="mx-auto container pt-24 ">
-                <div className="flex flex-wrap items-center lg:justify-between justify-center">
-                    {publicItems && publicItems.map((item) => (
-                        <ItemCard item={item} currentColor={currentColor} />
-                    ))}
+                <div className="flex flex-wrap items-center lg:justify-around justify-center">
+                    {publicItems !== null ? (
+                        <Fragment>
+                            {filtered !== null ?
+                                filtered.map((item) => (
+                                    <ItemCard item={item} currentColor={currentColor} />
+                                ))
+                                :
+                                publicItems.map((item) => (
+                                    <ItemCard item={item} currentColor={currentColor} />
+                                ))
+                            }
+
+                        </Fragment>
+                    )
+                        :
+                        <div>loading...</div>
+                    }
                 </div>
             </div>
         </div>

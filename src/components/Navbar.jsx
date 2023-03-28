@@ -5,7 +5,6 @@ import { FiShoppingCart } from 'react-icons/fi';
 import { BsChatLeft } from 'react-icons/bs';
 import { RiNotification3Line } from 'react-icons/ri';
 import { MdKeyboardArrowDown } from 'react-icons/md';
-import { FaSearch } from 'react-icons/fa';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 import avatar from '../data/avatar.jpg';
@@ -13,6 +12,7 @@ import Cart from './Cart';
 import Chat from './Chat';
 import Notification from './Notification';;
 import UserProfile from './UserProfile'
+import { ItemFilter } from '../pages';
 
 import AuthContext from "../context/supplierAuth/authContext";
 import SupplierContext from "../context/supplier/supplierContext";
@@ -88,13 +88,6 @@ const Navbar = () => {
 
   const handleActiveMenu = () => setActiveMenu(!activeMenu);
 
-  const [searchValue, setSearchValue] = useState("");
-  const [isFocused ,setIsFocused ] = useState(false)
-
-  const handleSearch = () => {
-    console.log(`Search clicked with value: ${searchValue}`);
-  };
-
   return (
     <div className="flex justify-between bg-white dark:bg-gray-800 dark:border-gray-700 p-6 md:ml-6 md:mr-6 relative ">
 
@@ -105,23 +98,9 @@ const Navbar = () => {
         icon={<AiOutlineMenu />}
       />
 
-      <div className="relative flex items-center">
-        <input
-          type="text"
-          className="w-40 md:w-48 h-8 px-3 pr-8 text-sm font-medium placeholder-gray-400 border border-gray-200 rounded-full focus:outline-none focus:ring focus:ring-blue-200 transition-all duration-300"
-          placeholder="Search"
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
-        />
-        <button className="absolute right-2 top-3.25" onClick={handleSearch}>
-          <FaSearch className="text-gray-400" />
-        </button>
-      </div>
+      <ItemFilter />
       <div className="flex">
         {isSupplierAuthenticated ?
-
           <Fragment>
             <NavButton
               title="Cart"
