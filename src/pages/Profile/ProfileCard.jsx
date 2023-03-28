@@ -1,21 +1,22 @@
 import React from 'react';
-import { FaCheckCircle } from "react-icons/fa";
+import avatar from '../../data/avatar.jpg'
 
-const ProfileCard = () => {
+const ProfileCard = ({ name, currentColor }) => {
   return (
-    <div className="bg-white p-3 border-t-4 border-green-400">
-      <div className="image overflow-hidden">
+    <div className={"bg-white p-3 border-t-4 b"} style={{ borderColor: currentColor }}>
+      <div style={{ height: "25rem" }} className="image overflow-hidden">
         <img
-          className="h-auto w-full mx-auto"
-          src="https://lavinephotography.com.au/wp-content/uploads/2017/01/PROFILE-Photography-112.jpg"
-          alt=""
+          className="h-full w-full mx-auto"
+          src={avatar}
+          alt="user profile image"
         />
       </div>
+
       <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">
-        Jane Doe
+        {name}
       </h1>
       <h3 className="text-gray-600 font-lg text-semibold leading-6">
-        Owner at Her Company Inc.
+        Owner at AutoHub Inc.
       </h3>
       <p className="text-sm text-gray-500 hover:text-gray-600 leading-6">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit,
@@ -25,7 +26,7 @@ const ProfileCard = () => {
         <li className="flex items-center py-3">
           <span>Status</span>
           <span className="ml-auto">
-            <span className="bg-green-500 py-1 px-2 rounded text-white text-sm">
+            <span className={`bg-${currentColor} py-1 px-2 rounded text-white text-sm`} style={{ backgroundColor: currentColor }}>
               Active
             </span>
           </span>

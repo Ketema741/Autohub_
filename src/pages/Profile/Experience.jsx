@@ -2,13 +2,13 @@ import React from 'react'
 import { FaBriefcase, FaGraduationCap } from 'react-icons/fa';
 
 
-const Experience = () => {
+const Experience = ({ currentColor }) => {
     return (
         <div className="bg-white p-3 shadow-sm rounded-sm">
             <div className="grid grid-cols-2">
                 <div>
                     <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
-                        <span className="text-green-500">
+                        <span style={{ color: currentColor }}>
                             <FaBriefcase className="h-5" />
                         </span>
                         <span className="tracking-wide">Experience</span>
@@ -34,7 +34,7 @@ const Experience = () => {
                 </div>
                 <div>
                     <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
-                        <span className="text-green-500">
+                        <span style={{color:currentColor}}>
                             <FaGraduationCap className="h-5" />
                         </span>
                         <span className="tracking-wide">Education</span>
@@ -45,7 +45,7 @@ const Experience = () => {
                             <div className="text-gray-500 text-xs">March 2020 - Now</div>
                         </li>
                         <li>
-                            <div className="text-teal-600">Bachelors Degreen in LPU</div>
+                            <div className="text-teal-600">Bachelors Degreen in AAU</div>
                             <div className="text-gray-500 text-xs">March 2020 - Now</div>
                         </li>
                     </ul>
