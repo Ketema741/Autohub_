@@ -41,7 +41,7 @@ const ItemFilter = () => {
                     onChange={onChange}
                     ref={text}
                 />
-                <button className="absolute right-2 top-4">
+                <button className="absolute right-2 top-6">
                     <FaSearch className="text-gray-400" />
                 </button>
             </form>
