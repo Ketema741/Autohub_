@@ -85,7 +85,7 @@ const RegistrationForm = () => {
                             <p>Certifications: {vehicleExpertInfo.certifications}</p>
                         </>
                     )}
-                    <button type="submit">Submit Registration</button>
+                    <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600" type="submit">Submit Registration</button>
                 </form>
             );
             break;
@@ -94,18 +94,13 @@ const RegistrationForm = () => {
     }
 
     return (
-        <div className="mt-24 container px-5 mx-auto">
-            <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center">
-                <div className="absolute w-full h-full bg-gray-900 opacity-50" />
-                <div className="relative bg-white w-1/2 p-6 rounded-lg">
-                    <h2 className="text-2xl font-bold mb-4">
-                        Autohub Registration
-                    </h2>
-                    {formComponent}
-                </div>
-            </div>
+
+        <div className="min-w-screen min-h-screen bg-gray-900 flex items-center justify-center px-5 py-5">
+            {formComponent}
         </div>
+
     );
+
 }
 
 export default RegistrationForm
