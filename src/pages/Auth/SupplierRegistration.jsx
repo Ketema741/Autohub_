@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 
 const SupplierRegistration = ({ onSubmit, handlePrev }) => {
     const [companyName, setCompanyName] = useState('');
-    const [contactInfo, setContactInfo] = useState('');
+    const [bio, setBio] = useState('');
+    const [address, setAddress] = useState('');
+    const [phone, setPhone] = useState('');
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -33,10 +35,28 @@ const SupplierRegistration = ({ onSubmit, handlePrev }) => {
                         </div>
                         <div className="flex -mx-3">
                             <div className="w-full px-3 mb-12">
-                                <label for="" className="text-xs font-semibold px-1">Contact Information</label>
+                                <label for="" className="text-xs font-semibold px-1">Phone</label>
                                 <div className="flex">
                                     <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
-                                    <input className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" type="text" value={contactInfo} onChange={(event) => setContactInfo(event.target.value)} />
+                                    <input className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" type="text" value={phone} onChange={(event) => setPhone(event.target.value)} />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="flex -mx-3">
+                            <div className="w-full px-3 mb-12">
+                                <label for="" className="text-xs font-semibold px-1">Address</label>
+                                <div className="flex">
+                                    <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
+                                    <input className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" type="text" value={address} onChange={(event) => setAddress(event.target.value)} />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="flex -mx-3">
+                            <div className="w-full px-3 mb-12">
+                                <label for="" className="text-xs font-semibold px-1">Bio</label>
+                                <div className="flex">
+                                    <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
+                                    <input className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" type="text" value={bio} onChange={(event) => setBio(event.target.value)} />
                                 </div>
                             </div>
                         </div>
