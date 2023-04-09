@@ -5,6 +5,7 @@ import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import { useStateContext } from '../../context/ContextProvider';
 import ItemOverview from './ItemOverview';
+import DropdownContainer from './Table';
 
 const ItemDetail = () => {
   const {
@@ -62,71 +63,7 @@ const ItemDetail = () => {
           </div>
           {themeSettings && <ThemeSettings />}
           <ItemOverview />
-          <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
-            <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-              <div className="overflow-hidden">
-                <table className="table-auto w-full">
-                  <thead>
-                    <tr className="bg-gray-200">
-                      <th className="px-4 py-2">Property</th>
-                      <th className="px-4 py-2">Description</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="bg-white">
-                      <td className="border px-4 py-2">Brand</td>
-                      <td className="border px-4 py-2">
-                        The brand or manufacturer of the item
-                      </td>
-                    </tr>
-                    <tr className="bg-gray">
-                      <td className="border px-4 py-2">Model</td>
-                      <td className="border px-4 py-2">
-                        The model of the item
-                      </td>
-                    </tr>
-                    <tr className="bg-white">
-                      <td className="border px-4 py-2">Type</td>
-                      <td className="border px-4 py-2">
-                        The type of the item (e.g. SUV, sedan, truck, etc.)
-                      </td>
-                    </tr>
-                    <tr className="bg-gray">
-                      <td className="border px-4 py-2">Year</td>
-                      <td className="border px-4 py-2">
-                        The year the item was manufactured
-                      </td>
-                    </tr>
-                    <tr className="bg-white">
-                      <td className="border px-4 py-2">Color</td>
-                      <td className="border px-4 py-2">
-                        The color of the item
-                      </td>
-                    </tr>
-                    <tr className="bg-gray">
-                      <td className="border px-4 py-2">Price</td>
-                      <td className="border px-4 py-2">
-                        The price of the item
-                      </td>
-                    </tr>
-                    <tr className="bg-white">
-                      <td className="border px-4 py-2">Description</td>
-                      <td className="border px-4 py-2">
-                        A detailed description of the item
-                      </td>
-                    </tr>
-                    <tr className="bg-gray">
-                      <td className="border px-4 py-2">Availability</td>
-                      <td className="border px-4 py-2">
-                        Whether the item is currently available for purchase or
-                        not
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
+          <DropdownContainer />
           <Footer />
         </div>
       </div>
