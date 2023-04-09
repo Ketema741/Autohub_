@@ -879,6 +879,39 @@ export const userProfileData = [
   },
 ];
 
+export const itemsGrid = [
+  {
+    headerText: 'Image',
+    template: gridOrderImage,
+    textAlign: 'Center',
+    width: '120',
+  },
+  
+  {
+    field: 'ItemName',
+    headerText: 'Item Name',
+    width: '150',
+    textAlign: 'Center',
+  },
+  {
+    field: 'Price',
+    headerText: 'Item Price',
+    format: 'C2',
+    textAlign: 'Center',
+    editType: 'numericedit',
+    width: '150',
+  },
+  {
+    headerText: 'Status',
+    template: gridOrderStatus,
+    field: 'OrderItems',
+    textAlign: 'Center',
+    width: '120',
+  },
+  
+];
+
+
 export const ordersGrid = [
   {
     headerText: 'Image',
@@ -2130,7 +2163,62 @@ export const employeesData = [
       avatar2,
   },
 ];
+export const supplierItems = [
+  {
+    Id: '1',
+    ItemName: 'Vinet',
+    Price: 32.38,
+    Status: 'pending',
+    StatusBg: '#FB9678',
+    ProductImage:
+      product6,
+  },
+  {
+    Id: '2',
+    ItemName: 'Carson Darrin',
+    Price: 56.34,
+    Status: 'Available',
+    StatusBg: '#03C9D7',
+    ProductImage:
+      product5,
+  },
+  {
+    Id: '3',
+    ItemName: 'Fran Perez',
+    Price: 93.31,
+    Status: 'Available',
+    StatusBg: '#03C9D7',
+    ProductImage:
+      product7,
+  },
+  {
+    ItemName: 'Anika Viseer',
+    Price: 93.31,
+    Status: 'Not Available',
+    StatusBg: '#FF5C8E',
+    ProductImage:
+      product4,
+  },
+  {
+    Id: '4',
+    ItemName: 'Miron Vitold',
+    Price: 23.99,
+    Status: 'Pending',
+    StatusBg: 'red',
+    ProductImage:
+      product1,
+  },
+  {
+    Id: '5',
+    ItemName: 'Omar Darobe',
+    Price: 95.99,
+    Status: 'Not Available',
+    StatusBg: '#FF5C8E',
+    ProductImage:
+      product2,
+  }]
 
+  
 export const ordersData = [
   {
     OrderID: 10248,

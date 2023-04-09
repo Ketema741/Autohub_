@@ -16,7 +16,7 @@ export { default as Stacked } from './Charts/Stacked';
 export { default as Pie } from './Charts/Pie';
 export { default as ChartsHeader } from './ChartsHeader';
 export { default as Header } from './Header';
-export { default as EditItem } from '../pages/Supplier/EditItem';
+export { default as EditItem } from '../pages/Supplier/EditItemForm';
 export { default as ImageView } from './ImageView';
 export { default as DeleteWarning } from './DeleteWarning';
 export { default as ItemOverview } from '../pages/Item/ItemOverview';

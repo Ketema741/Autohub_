@@ -1,8 +1,4 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-
-import { FaStar } from 'react-icons/fa';
-
+import React from 'react';
 import { GoPrimitiveDot } from 'react-icons/go';
 import { IoIosMore } from 'react-icons/io';
 import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns';
@@ -12,9 +8,7 @@ import {
   Pie,
   Button,
   LineChart,
-  SparkLine,
-  EditItem,
-  DeleteWarning,
+  SparkLine
 } from '../../components';
 import {
   earningData,
@@ -25,6 +19,7 @@ import {
   SparklineAreaData,
   ecomPieChartData,
 } from '../../data/dummy';
+
 import { useStateContext } from '../../context/ContextProvider';
 import product9 from '../../data/product9.jpg';
 
@@ -42,82 +37,15 @@ const DropDown = ({ currentMode }) => (
   </div>
 );
 
-const RatingIcon = ({ filled }) => {
-  const starColor = filled ? 'text-yellow-300' : 'text-gray-300';
 
-  return <FaStar className={`w-5 h-5 ${starColor}`} />;
-}
 const SupplierData = () => {
-
-
   const {
     currentMode,
     currentColor,
-    editItem,
-    setEditItem,
   } = useStateContext();
-  const [showWarning, setShowWarning] = useState(false);
-
-  // const handleDelete = () => {
-  //   onDelete();
-  //   setShowWarning(false);
-  // };
 
   return (
     <div className="mt-24">
-      <div className="flex flex-wrap lg:flex-nowrap justify-center ">
-        <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
-          {earningData.map((item) => (
-            <div key={item.title} className="max-w-2xl mx-auto">
-              <div className="bg-white shadow-md rounded-lg max-w-sm dark:bg-gray-800 dark:border-gray-700">
-                <img className="rounded-t-lg p-8" src={product9} />
-                <div className="px-5 pb-5">
-                  <Link to="#">
-                    <h3 className="text-gray-900 font-semibold text-xl tracking-tight dark:text-white">
-                      Apple Watch Series 7{item.title}
-                    </h3>
-                  </Link>
-                  <div className="flex items-center mt-2.5 mb-5">
-                      <RatingIcon filled={true} />
-                      <RatingIcon filled={true} />
-                      <RatingIcon filled={true} />
-                      <RatingIcon filled={false} />
-                      <RatingIcon filled={false} />
-                    <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">
-                      3.0
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-3xl font-bold text-gray-900 dark:text-white">
-                      {item.amount} ETB
-                    </span>
-                    <button
-                      type="button"
-                      style={{ color: "white", backgroundColor: currentColor }}
-                      onClick={() => setEditItem(true)}
-                      className="text-white  focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 text-center "
-                    >
-                      Edit
-                    </button>
-                    <button
-                      type="button"
-                      style={{ color: 'white', backgroundColor: currentColor }}
-                      onClick={() => setShowWarning(true)}
-                      className="text-white  focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 text-center "
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-
-          {showWarning && <DeleteWarning setShowWarning={setShowWarning} />}
-          {editItem && <EditItem />}
-        </div>
-      </div>
-
       <div className="flex flex-wrap lg:flex-nowrap justify-center ">
         <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
           {earningData.map((item) => (

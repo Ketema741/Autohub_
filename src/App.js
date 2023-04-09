@@ -14,6 +14,7 @@ import {
   BlogDetail,
   Drivers,
   Supplier,
+  EditItemDetail,
   ItemDetail,
   ServiceProviders,
   Orders,
@@ -79,6 +80,8 @@ const App = () => {
                 <Route path="/stacked" element={<Stacked />} />
 
                 <Route path="/supplier" element={<Supplier />} />
+                <Route path="supplier/edit-item-detail" element={<EditItemDetail />} />
+
                 <Route path="/jobs" element={<Jobs />} />
                 <Route path="/blogs" element={<Blogs />} />
                 <Route path="/drivers" element={<Drivers />} />

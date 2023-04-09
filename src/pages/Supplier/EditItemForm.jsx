@@ -2,7 +2,7 @@ import React from 'react';
 import { MdOutlineCancel } from 'react-icons/md';
 import { useStateContext } from '../../context/ContextProvider';
 
-const EditItem = () => {
+const EditItemForm = () => {
   const { currentColor, setEditItem } = useStateContext();
   const onChange = (e) => {
     console.log('onChange')
@@ -118,4 +118,4 @@ const EditItem = () => {
   );
 };
 
-export default EditItem;
+export default EditItemForm;

@@ -9,6 +9,9 @@ import {
 } from '../../components';
 import { useStateContext } from '../../context/ContextProvider';
 import SupplierData from './SupplierData';
+import ItemTable from './ItemTable'
+import { supplierItems } from '../../data/dummy';
+
 
 const Supplier = () => {
   const {
@@ -66,6 +69,9 @@ const Supplier = () => {
           </div>
           {themeSettings && <ThemeSettings />}
           <div>
+            
+              <ItemTable supplierItems={supplierItems} />
+            
             <SupplierData />
           </div>
           <Footer />
