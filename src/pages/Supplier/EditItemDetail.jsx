@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 import { FiSettings } from 'react-icons/fi';
-import { AiOutlineEdit } from 'react-icons/ai';
+import { AiOutlineEdit, AiOutlinePlus } from 'react-icons/ai';
 import EditItem from './EditItemForm'
 
 
@@ -29,14 +29,14 @@ const EditItemDetail = () => {
         <div className="m-2 md:m-10 mt-24 p-2 md:p-10">
             <div className="flex flex-wrap items-top">
                 <div className="w-full md:w-1/2 z-1 bg-gray-100 rounded shadow-lg overflow-hidden">
-                    <div className="text-lg font-medium text-blue-800 uppercase p-4 text-center border-b border-gray-200 tracking-wide">Edit Item</div>
+                    <div className="text-lg font-medium uppercase p-4 text-center border-b tracking-wide text-blue-800   border-gray-200">Edit Item</div>
                     <div className="block sm:flex lg:flex items-center justify-center">
                         <div className="mt-4 sm:m-8 md:m-0 md:mt-8 lg:m-8 text-center">
-                            <div className="text-3xl font-medium">20%</div>
+                            <div className="text-2xl font-medium">20%</div>
                             <div className="block text-sm text-gray-600 mt-2">discount</div>
                         </div>
                         <div className="mt-4 mb-8 sm:m-8 md:m-0 md:mt-4 md:mb-8 lg:m-8 text-center">
-                            <div className="text-3xl font-medium">234 ETB</div>
+                            <div className="text-2xl font-medium">234 ETB</div>
                             <div className="block text-sm text-gray-600 mt-2">price</div>
                         </div>
                     </div>
@@ -100,8 +100,6 @@ const EditItemDetail = () => {
                         </div>
                     </div>
 
-
-
                     <div className="flex justify-center mt-4">
                         <TooltipComponent content="Edit" position="BottomCenter">
 
@@ -116,9 +114,18 @@ const EditItemDetail = () => {
 
                 {/* gallery */}
                 <div className="w-full md:w-1/2 relative z-0 px-5 md:px-0 md:py-16">
-                    <div className="text-white rounded-b md:rounded-b-none md:rounded-r shadow-lg overflow-hidden" style={{ backgroundColor: currentColor, height: '400px', overflowY: 'scroll' }}>
-                        <div className="text-lg font-medium uppercase p-4 text-center border-b tracking-wide">Item Images</div>
+                    <div className="text-white rounded-b md:rounded-b-none md:rounded-r shadow-lg overflow-hidden" style={{ height: '400px', overflowY: 'scroll' }}>
+                        <div className="text-lg font-medium uppercase p-4 text-center border-b tracking-wide" style={{ backgroundColor: currentColor }}>Item Images</div>
                         <ImageGallery currentColor={currentColor} />
+                        <div class="flex justify-center pb-2 bg-gray-200">
+                            <TooltipComponent content="Add" position="RightCenter">
+                                <button type="button" class=" rounded-full hover:bg-blue-600 p-4 hover:shadow-lg" style={{ backgroundColor: currentColor }}>
+                                    <span class="font-medium text-white">
+                                        <AiOutlinePlus />
+                                    </span>
+                                </button>
+                            </TooltipComponent>
+                        </div>
                     </div>
                 </div>
 

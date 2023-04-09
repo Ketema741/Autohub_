@@ -9,19 +9,26 @@ import ItemState from './context/item/ItemState';
 import {
   AboutUs,
   Home,
+  ItemDetail,
+
   Jobs,
+
   Blogs,
   BlogDetail,
+
   Drivers,
+
   Supplier,
   EditItemDetail,
-  ItemDetail,
-  ServiceProviders,
+  AddItem,
   Orders,
+  Calendar,
+
+  ServiceProviders,
+
   Login,
   Register,
   Profile,
-  Calendar,
   Employees,
   Stacked,
   Pyramid,
@@ -81,14 +88,12 @@ const App = () => {
 
                 <Route path="/supplier" element={<Supplier />} />
                 <Route path="supplier/edit-item-detail" element={<EditItemDetail />} />
+                <Route path="supplier/add-item" element={<AddItem />} />
 
                 <Route path="/jobs" element={<Jobs />} />
                 <Route path="/blogs" element={<Blogs />} />
                 <Route path="/drivers" element={<Drivers />} />
-                <Route
-                  path="/serviceproviders"
-                  element={<ServiceProviders />}
-                />
+                <Route  path="/serviceproviders" element={<ServiceProviders />} />
                 <Route path="/aboutus" element={<AboutUs />} />
                 <Route path="/item-detail" element={<ItemDetail />} />
                 <Route path="/blog-detail" element={<BlogDetail />} />

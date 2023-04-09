@@ -102,16 +102,7 @@ const ItemImages = ({ currentColor }) => {
                     </div>
                 ))}
             </div>
-            <div class="flex justify-center mt-4">
-                <TooltipComponent content="Add" position="RightCenter">
-
-                    <button type="button" class=" rounded-full hover:bg-blue-600 p-4 hover:shadow-lg" style={{ backgroundColor: currentColor }}>
-                        <span class="font-medium text-white">
-                            <AiOutlinePlus />
-                        </span>
-                    </button>
-                </TooltipComponent>
-            </div>
+            
         </div>
     );
 }

@@ -6,6 +6,7 @@ export { default as Home } from './Ecommerce/Home';
 export { default as Supplier } from './Supplier/Supplier';
 export { default as SupplierData } from './Supplier/SupplierData';
 export { default as Orders } from './Supplier/Orders';
+export { default as AddItem } from './Supplier/AddItem/AddItem';
 export { default as EditItemDetail } from './Supplier/EditItemDetail';
 
 export { default as Jobs } from './Job/Jobs';

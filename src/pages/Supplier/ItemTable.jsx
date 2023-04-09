@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom'
+import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+
 import { FaTrashAlt, FaEdit } from 'react-icons/fa';
+import { AiOutlinePlus } from 'react-icons/ai';
 
 import { DeleteWarning } from '../../components';
 import { useStateContext } from '../../context/ContextProvider';
@@ -17,17 +20,26 @@ const ItemTable = ({ supplierItems }) => {
     // };
 
     return (
-        <div className="mt-24 overflow-hidden rounded-lg border border-gray-200 shadow-md m-5">
-            <div className="table-container overflow-x-auto">
+        <div className="mt-24  overflow-hidden rounded-lg border border-gray-200 shadow-md m-5">
+            <p className="p-5 font-semibold text-xl text-center">Supplier Items</p>
+            <div className="mx-2 mb-2 rounded-md table-container overflow-x-auto">
                 <table className="w-full border-collapse bg-white text-left text-sm text-gray-500">
-                    <thead className="bg-gray-50">
+                    <thead className="h-20 bg-gray-40">
                         <tr>
                             <th scope="col" className="px-6 py-4 font-medium text-gray-900">Item Image</th>
                             <th scope="col" className="px-6 py-4 font-medium text-gray-900">Item Name</th>
                             <th scope="col" className="px-6 py-4 font-medium text-gray-900">Status</th>
                             <th scope="col" className="px-6 py-4 font-medium text-gray-900">Item Price</th>
                             <th scope="col" className="px-6 py-4 font-medium text-gray-900">Rating</th>
-                            <th scope="col" className="px-6 py-4 font-medium text-gray-900"></th>
+                            <th scope="col" className="px-6 py-4 font-medium text-gray-900">
+                                <TooltipComponent content="Add Item" position="TopCenter">
+                                    <Link to="add-item" >
+                                        <span className="text-white inline-flex items-center  rounded-full bg-violet-50 p-2 text-xs font-semibold" style={{ backgroundColor: currentColor }}>
+                                            <AiOutlinePlus />
+                                        </span>
+                                    </Link>
+                                </TooltipComponent>
+                            </th>
                         </tr>
                     </thead>
                     {supplierItems.map((item) => (
@@ -60,7 +72,7 @@ const ItemTable = ({ supplierItems }) => {
                                     </div>
                                 </td>
                                 <td className="px-6 py-4">
-                                    <div className="flex gap-2">
+                                    <div className="flex">
                                         <span className="inline-flex items-center gap-1 rounded-full bg-violet-50 px-2 py-1 text-xs font-semibold text-violet-600">
                                             5
                                         </span>
@@ -68,12 +80,16 @@ const ItemTable = ({ supplierItems }) => {
                                 </td>
                                 <td className="px-6 py-4">
                                     <div className="flex justify-end gap-4">
-                                        <button type="button" style={{ color: currentColor }} onClick={() => setShowWarning(true)}>
-                                            <FaTrashAlt />
-                                        </button>
-                                        <Link to="edit-item-detail" style={{ color: currentColor }}>
-                                            <FaEdit />
-                                        </Link>
+                                        <TooltipComponent content="Delete Item" position="LeftCenter">
+                                            <button type="button" style={{ color: currentColor }} onClick={() => setShowWarning(true)}>
+                                                <FaTrashAlt />
+                                            </button>
+                                        </TooltipComponent>
+                                        <TooltipComponent content="Edit Item" position="TopCenter">
+                                            <Link to="edit-item-detail" style={{ color: currentColor }}>
+                                                <FaEdit />
+                                            </Link>
+                                        </TooltipComponent>
                                     </div>
                                 </td>
                             </tr>
