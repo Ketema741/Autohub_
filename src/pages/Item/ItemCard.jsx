@@ -11,7 +11,7 @@ const RatingIcon = ({ filled }) => {
 }
 const ItemCard = ({ item, currentColor }) => {
   return (
-    <div className="bg-white focus:outline-none mx-2 w-72 xl:mb-0 mb-8">
+    <div className="bg-white focus:outline-none mx-5 w-72 xl:mb-0 mb-8">
       <Link to="item-detail">
         <div>
           <img src={item.itemImages.length >= 1 ? item.itemImages[0].url : '/public/img/gal-1.jpeg'} alt={item.title} className="px-4 pt-4 focus:outline-none w-full h-48" />
@@ -51,7 +51,6 @@ const ItemCard = ({ item, currentColor }) => {
         </div>
       </div>
     </div>
-
   );
 };
 
