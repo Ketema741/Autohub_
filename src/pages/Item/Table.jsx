@@ -32,8 +32,11 @@ const Dropdown = ({ label, content }) => {
 
 const DropdownContainer = () => {
     return (
-        <div className="mt-18 flex justify-center">
-            <div className="w-full md:w-1/2  bg-gray-100 rounded shadow-lg overflow-hidden">
+        <div className="mt-20 flex justify-center">
+            <div className="w-full md:w-3/4  bg-gray-100 rounded shadow-lg overflow-hidden">
+                <p className="p-5 font-semibold text-xl text-center">
+                    Detail Description
+                </p>
                 <section className="shadow row border-gray-200">
                     <div className="border-b">
                         <Dropdown

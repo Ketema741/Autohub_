@@ -8,6 +8,7 @@ import ItemState from './context/item/ItemState';
 
 import {
   AboutUs,
+  FAQ,
   Home,
   ItemDetail,
 
@@ -100,7 +101,7 @@ const App = () => {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/profile" element={<Profile />} />
-                {/* <Route path="/faq" element={<FAQ />} /> */}
+                <Route path="/faq" element={<FAQ />} />
               </Routes>
             </Router>
           </AlertState>
