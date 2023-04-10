@@ -2,7 +2,7 @@ import React from "react";
 
 const AboutUsCard = () => {
   return (
-    <div className="py-16 bg-white">
+    <div className="mt-16 ">
       <div className="container m-auto px-6 text-gray-600 md:px-12 xl:px-6">
         <div className="space-y-6 md:space-y-0 md:flex md:gap-6 lg:items-center lg:gap-12">
           <div className="md:5/12 lg:w-5/12">
@@ -19,7 +19,7 @@ const AboutUsCard = () => {
               AutoHub Vehicle Service development is carried out by passionate
               developers
             </h2>
-            <p className="mt-6 text-gray-600">
+            <p className="mt-6 text-gray-600 text-base">
               Welcome to AutoHub, your one-stop-shop for everything related to
               your vehicle. We are a centralized system that provides a variety
               of services to make your vehicle ownership experience hassle-free
