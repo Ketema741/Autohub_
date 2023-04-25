@@ -20,12 +20,12 @@ import { useStateContext } from '../context/ContextProvider';
 
 
 const GuestLinks = (
-  <div className="flex  gap-5">
-    <Link className="p-5 cursor-pointer hover:bg-light-gray rounded-lg" to="/register">
+  <div className="flex  gap-x-5">
+    <Link className="pt-2 cursor-pointer hover:bg-light-gray rounded-lg" to="/register">
       Register
     </Link>
 
-    <Link className="p-5 cursor-pointer hover:bg-light-gray rounded-lg" to="/login">
+    <Link className=" pt-2 pr-5 cursor-pointer hover:bg-light-gray rounded-lg" to="/login">
       Login
     </Link>
   </div>
@@ -89,7 +89,7 @@ const Navbar = () => {
   const handleActiveMenu = () => setActiveMenu(!activeMenu);
 
   return (
-    <div className="flex justify-between bg-white dark:bg-gray-800 dark:border-gray-700 p-6 md:ml-6 md:mr-6 relative ">
+    <div className="flex justify-between bg-gray-100 dark:bg-gray-800 dark:border-gray-700 shadow-2xl relative ">
 
       <NavButton
         title="Menu"
@@ -98,7 +98,6 @@ const Navbar = () => {
         icon={<AiOutlineMenu />}
       />
 
-      <ItemFilter />
       <div className="flex">
         {isSupplierAuthenticated ?
           <Fragment>
@@ -138,12 +137,6 @@ const Navbar = () => {
                   src={avatar}
                   alt="user-profile"
                 />
-                <p>
-                  <span className="hidden sm:block text-gray-400 text-14">Hi,</span>{" "}
-                  <span className="hidden sm:block text-gray-400 font-bold ml-1 text-14">
-                    {supplier && supplier.name}
-                  </span>
-                </p>
                 <MdKeyboardArrowDown className="text-gray-400 text-14" />
               </div>
             </TooltipComponent>

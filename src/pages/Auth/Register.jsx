@@ -4,6 +4,7 @@ import SupplierRegistration from './SupplierRegistration';
 import DriverRegistration from './DriverRegistration';
 import VehicleExpertRegistration from './VehicleExpertRegistration';
 
+import welcome from '../../brands/undraw_welcome_cats_thqn.svg'
 
 const RegistrationForm = () => {
     const [step, setStep] = useState(1);
@@ -95,7 +96,7 @@ const RegistrationForm = () => {
 
     return (
 
-        <div className="min-w-screen min-h-screen bg-gray-900 flex items-center justify-center px-5 py-5">
+        <div className="mt-14 min-w-screen  bg-white flex items-center justify-center px-5 py-1">
             {formComponent}
         </div>
 

@@ -5,6 +5,7 @@ import SupplierAuthState from './context/supplierAuth/AuthState';
 import AlertState from './context/alert/AlertState';
 import SupplierState from './context/supplier/SupplierState';
 import ItemState from './context/item/ItemState';
+import BlogState from './context/blog/BlogState';
 
 import {
   AboutUs,
@@ -13,6 +14,7 @@ import {
   ItemDetail,
 
   Jobs,
+  Chat,
 
   Blogs,
   BlogDetail,
@@ -23,7 +25,6 @@ import {
   EditItemDetail,
   AddItem,
   Orders,
-  Calendar,
 
   ServiceProviders,
 
@@ -31,19 +32,21 @@ import {
   Register,
   Profile,
   Employees,
-  Stacked,
-  Pyramid,
   Customers,
-  Kanban,
   Line,
-  Area,
   Bar,
   Pie,
   Financial,
-  Editor,
 } from './pages';
 
 import { useStateContext } from './context/ContextProvider';
+
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+
+const client = new ApolloClient({
+  uri: "https://us-east-1-shared-usea1-02.cdn.hygraph.com/content/clghli57o1ujs01t3066xd2lw/master",
+  cache: new InMemoryCache()
+});
 
 const App = () => {
   const { setCurrentColor, setCurrentMode } = useStateContext();
@@ -58,56 +61,54 @@ const App = () => {
   }, []);
 
   return (
-    <SupplierAuthState>
-      <SupplierState>
-        <ItemState>
-          <AlertState>
-            <Router>
-              <Routes>
-                {/* dashboard  */}
-                <Route path="/" element={<Home />} />
-                <Route path="/home" element={<Home />} />
+    <ApolloProvider client={client}>
+      <SupplierAuthState>
+        <SupplierState>
+          <ItemState>
+            <BlogState>
+              <AlertState>
+                <Router>
+                  <Routes>
+                    {/* dashboard  */}
+                    <Route path="/" element={<Home />} />
+                    <Route path="/home" element={<Home />} />
 
-                {/* pages  */}
-                <Route path="/orders" element={<Orders />} />
-                <Route path="/employees" element={<Employees />} />
-                <Route path="/customers" element={<Customers />} />
+                    {/* pages  */}
+                    <Route path="/orders" element={<Orders />} />
+                    <Route path="/employees" element={<Employees />} />
+                    <Route path="/customers" element={<Customers />} />
 
-                {/* apps  */}
-                <Route path="/kanban" element={<Kanban />} />
-                <Route path="/editor" element={<Editor />} />
-                <Route path="/calendar" element={<Calendar />} />
+                    
+                    {/* charts  */}
+                    <Route path="/line" element={<Line />} />
+                    <Route path="/bar" element={<Bar />} />
+                    <Route path="/pie" element={<Pie />} />
+                    <Route path="/financial" element={<Financial />} />
 
-                {/* charts  */}
-                <Route path="/line" element={<Line />} />
-                <Route path="/area" element={<Area />} />
-                <Route path="/bar" element={<Bar />} />
-                <Route path="/pie" element={<Pie />} />
-                <Route path="/financial" element={<Financial />} />
-                <Route path="/pyramid" element={<Pyramid />} />
-                <Route path="/stacked" element={<Stacked />} />
+                    <Route path="/supplier" element={<Supplier />} />
+                    <Route path="supplier/edit-item-detail" element={<EditItemDetail />} />
+                    <Route path="supplier/add-item" element={<AddItem />} />
 
-                <Route path="/supplier" element={<Supplier />} />
-                <Route path="supplier/edit-item-detail" element={<EditItemDetail />} />
-                <Route path="supplier/add-item" element={<AddItem />} />
-
-                <Route path="/jobs" element={<Jobs />} />
-                <Route path="/blogs" element={<Blogs />} />
-                <Route path="/drivers" element={<Drivers />} />
-                <Route  path="/serviceproviders" element={<ServiceProviders />} />
-                <Route path="/aboutus" element={<AboutUs />} />
-                <Route path="/item-detail" element={<ItemDetail />} />
-                <Route path="/blog-detail" element={<BlogDetail />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/faq" element={<FAQ />} />
-              </Routes>
-            </Router>
-          </AlertState>
-        </ItemState>
-      </SupplierState>
-    </SupplierAuthState>
+                    <Route path="/jobs" element={<Jobs />} />
+                    <Route path="/blogs" element={<Blogs />} />
+                    <Route path="/drivers" element={<Drivers />} />
+                    <Route path="/serviceproviders" element={<ServiceProviders />} />
+                    <Route path="/aboutus" element={<AboutUs />} />
+                    <Route path="/item-detail" element={<ItemDetail />} />
+                    <Route path="/blog-detail" element={<BlogDetail />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/faq" element={<FAQ />} />
+                    <Route path="/chat" element={<Chat />} />
+                  </Routes>
+                </Router>
+              </AlertState>
+            </BlogState>
+          </ItemState>
+        </SupplierState>
+      </SupplierAuthState>
+    </ApolloProvider>
   );
 };
 

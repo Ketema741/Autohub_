@@ -3,7 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { GiCartwheel } from 'react-icons/gi';
 import { MdOutlineCancel } from 'react-icons/md';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
-
+import Logo from '../data/logo.svg'
 import { links } from '../data/SupplierLinks';
 import { useStateContext } from '../context/ContextProvider';
 
@@ -29,7 +29,7 @@ const SupplierSidebar = () => {
               onClick={handleCloseSideBar}
               className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-white text-slate-900"
             >
-              <GiCartwheel style={{ color:currentColor }} /> <span>AutoHub</span>
+              <img className="mt-6   rounded-xl" src={Logo} alt="logo AutoHub" style={{ height: "140px", width: "140px" }} />
             </Link>
             <TooltipComponent content="Menu" position="BottomCenter">
               <button

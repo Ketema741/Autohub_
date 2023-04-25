@@ -1,11 +1,12 @@
 import React from 'react';
-import product8 from '../../data/product8.jpg';
-import avatar from '../../data/avatar.jpg';
+import BlogTab from './BlogTab'
+
+import resume from '../../brands/undraw_road_to_knowledge_m8s0.svg'
 
 const DetailCard = () => {
-  
+
   return (
-    <div className="mt-5">
+    <div className="bg-white bg-opacity-50 p-4 mt-5 shadow-2xl rounded-t-lg">
       <div
         className="mb-4 md:mb-0 w-full max-w-screen-md mx-auto relative"
         style={{ height: "24em" }}
@@ -17,38 +18,18 @@ const DetailCard = () => {
               "linear-gradient(180deg,transparent,rgba(0,0,0,.7))",
           }}
         ></div>
-        <img
-          src={product8}
-          className="absolute left-0 top-0 w-full h-full z-0 object-cover"
-        />
+        <img src={resume} className="w-full h-full z-0  rounded-t-md object-cover" />
         <div className="p-4 absolute bottom-0 left-0 z-20">
-          <a
-            href="#"
-            className="px-4 py-1 bg-black text-gray-200 inline-flex items-center justify-center mb-2"
-          >
-            Bike Engine
-          </a>
+          
           <h2 className="text-4xl font-semibold text-gray-100 leading-tight">
-            Bike Engine: Understanding the Heart of Your Motorcycle
+            Lets See How You Have To Build Your Resume
           </h2>
-          <div className="flex mt-3">
-            <img
-              src={avatar}
-              className="h-10 w-10 rounded-full mr-2 object-cover"
-            />
-            <div>
-              <p className="font-semibold text-gray-200 text-sm">
-                {" "}
-                Ketema Girma{" "}
-              </p>
-              <p className="font-semibold text-gray-400 text-xs"> 22 March </p>
-            </div>
-          </div>
+          
         </div>
       </div>
 
-      <div className="px-4 lg:px-0 mt-12 text-gray-700 max-w-screen-md mx-auto text-lg leading-relaxed">
-        <p className="pb-6">
+      <div id="detail" className="flex flex-col space-y-6 p-4 lg:px-0 mt-12 text-black max-w-screen-md mx-auto text-lg leading-relaxed">
+        <p className="">
           If you own a motorcycle, you already know how thrilling it can be to
           ride one. The freedom, the rush of wind in your face, the sense of
           adventure – it’s a feeling that’s hard to beat. But have you ever
@@ -65,7 +46,7 @@ const DetailCard = () => {
         <h3 className="text-xl text-gray-800 font-semibold mb-4 mt-4">
           1. Single-Cylinder Engines
         </h3>
-        <p className="pb-6">
+        <p className="">
           There are several different types of bike engines, each with its own
           unique characteristics. Here are some of the most common types:
           Single-cylinder engines are the simplest and most common type of bike
@@ -77,7 +58,7 @@ const DetailCard = () => {
         <h3 className="text-xl text-gray-800 font-semibold mb-4 mt-4">
           2. Twin-Cylinder Engines
         </h3>
-        <p className="pb-6">
+        <p className="">
           Twin-cylinder engines have two cylinders arranged in a V shape.
           They’re more powerful than single-cylinder engines and are often found
           on mid-range motorcycles. Twin-cylinder engines are also smoother and
@@ -87,14 +68,15 @@ const DetailCard = () => {
         <h3 className="text-xl text-gray-800 font-semibold mb-4 mt-4">
           3. Four-Cylinder Engines
         </h3>
-        <p className="pb-6">
+        <p className="">
           Four-cylinder engines have four cylinders arranged in a straight line.
           They’re the most powerful type of bike engine and are typically found
           on high-performance motorcycles. Four-cylinder engines are known for
           their smoothness and responsiveness, but they’re also more expensive
           and harder to maintain than smaller engines.
         </p>
-        
+
+        <BlogTab />
 
         <div className="border-l-4 border-gray-500 pl-4 mb-6 italic rounded">
           Finally, bike engines are special because they’re the key to the
@@ -104,7 +86,7 @@ const DetailCard = () => {
           one-of-a-kind sensation that can’t be replicated by any other mode of
           transportation.
         </div>
-       
+
       </div>
     </div>
   );

@@ -1,9 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
 import JobCard from './JobCard';
 import { useStateContext } from '../../context/ContextProvider';
+
+
+import { FiSettings } from 'react-icons/fi';
+import { GiGraduateCap, GiLifeSupport, GiOfficeChair } from 'react-icons/gi'
+import { CgCommunity } from 'react-icons/cg'
+import { FcCollaboration } from 'react-icons/fc'
+import { FaConnectdevelop } from 'react-icons/fa'
+import { SiBookstack } from 'react-icons/si'
+
+import knowledge from '../../brands/undraw_road_to_knowledge_m8s0.svg'
+import assi from '../../brands/undraw_virtual_assistant_jjo2.svg'
+import learn from '../../brands/undraw_online_learning_re_qw08.svg'
+
 
 const Jobs = () => {
   const {
@@ -66,7 +78,7 @@ const Jobs = () => {
           </TooltipComponent>
         </div>
         {activeMenu ? (
-          <div className="w-72 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
+          <div className="w-52 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
             <Sidebar />
           </div>
         ) : (
@@ -77,23 +89,25 @@ const Jobs = () => {
         <div
           className={
             activeMenu
-              ? 'dark:bg-main-dark-bg  bg-main-bg min-h-screen md:ml-72 w-full  '
+              ? 'dark:bg-main-dark-bg  bg-main-bg min-h-screen md:ml-52 w-full  '
               : 'bg-main-bg dark:bg-main-dark-bg  w-full min-h-screen flex-2 '
           }
         >
           <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full ">
             <Navbar />
           </div>
-          {themeSettings && <ThemeSettings />}
+
+
           <div className="mt-24 container px-5 mx-auto">
             <JobCard isOpen={isOpen} togglePopup={togglePopup} />
+
 
             {isOpen && (
               <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center">
                 <div className="absolute w-full h-full bg-gray-900 opacity-50" />
                 <div className="relative bg-white w-1/2 p-6 rounded-lg">
                   <button
-                  type="button"
+                    type="button"
                     onClick={togglePopup}
                     className="absolute top-0 right-0 mt-4 mr-4"
                   >
@@ -195,7 +209,7 @@ const Jobs = () => {
                       </div>
                       <div className="flex justify-between">
                         <button
-                        type="button"
+                          type="button"
                           className="bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600"
                           onClick={handlePrev}
                         >
@@ -214,6 +228,8 @@ const Jobs = () => {
               </div>
             )}
           </div>
+
+
           <Footer />
         </div>
       </div>
