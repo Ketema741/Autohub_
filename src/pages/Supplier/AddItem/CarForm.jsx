@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { MdOutlineCancel } from 'react-icons/md';
 import { useStateContext } from '../../../context/ContextProvider';
+import Editor from './Editor'
 
 const CarForm = () => {
     const { currentColor, setEditItem } = useStateContext();
@@ -200,7 +201,8 @@ const CarForm = () => {
                                     className="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                 />
                             </div>
-
+                            
+                            <Editor />
                             <div>
                                 <button type='submit'
                                     className="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none"

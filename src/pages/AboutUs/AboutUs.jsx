@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
-import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components';
+import { Navbar, Footer, Sidebar } from '../../components';
 import { useStateContext } from '../../context/ContextProvider';
 import Ketema from '../../brands/me.png'
 import Gatwech from '../../data/avatar3.png'
@@ -14,8 +14,7 @@ const AboutUs = () => {
     currentMode,
     activeMenu,
     currentColor,
-    themeSettings,
-    setThemeSettings,
+    
   } = useStateContext();
 
   useEffect(() => {

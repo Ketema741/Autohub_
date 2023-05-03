@@ -46,8 +46,6 @@ const BlogDetail = () => {
     currentMode,
     activeMenu,
     currentColor,
-    themeSettings,
-    setThemeSettings,
   } = useStateContext();
 
   useEffect(() => {

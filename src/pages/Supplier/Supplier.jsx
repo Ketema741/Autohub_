@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
-import { FiSettings } from 'react-icons/fi';
-import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+
 import {
   Navbar,
   Footer,
   SupplierSidebar,
-  ThemeSettings,
 } from '../../components';
+
 import { useStateContext } from '../../context/ContextProvider';
 import SupplierData from './SupplierData';
 import ItemTable from './ItemTable'
@@ -20,8 +19,6 @@ const Supplier = () => {
     currentMode,
     activeMenu,
     currentColor,
-    themeSettings,
-    setThemeSettings,
   } = useStateContext();
 
   useEffect(() => {

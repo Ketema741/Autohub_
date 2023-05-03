@@ -5,7 +5,6 @@ import {
   Navbar,
   Footer,
   Sidebar,
-  ThemeSettings,
 } from '../../components';
 import { DriverCard } from '../index';
 import { useStateContext } from '../../context/ContextProvider';
@@ -52,8 +51,6 @@ const Drivers = () => {
     currentMode,
     activeMenu,
     currentColor,
-    themeSettings,
-    setThemeSettings,
   } = useStateContext();
 
   useEffect(() => {
@@ -69,18 +66,7 @@ const Drivers = () => {
   return (
     <div className={currentMode === "Dark" ? "dark" : ""}>
       <div className="flex relative dark:bg-main-dark-bg">
-        <div className="fixed right-4 bottom-4" style={{ zIndex: "1000" }}>
-          <TooltipComponent content="Settings" position="Top">
-            <button
-              type="button"
-              onClick={() => setThemeSettings(true)}
-              style={{ background: currentColor, borderRadius: "50%" }}
-              className="text-3xl text-white p-3 hover:drop-shadow-xl hover:bg-light-gray"
-            >
-              <FiSettings />
-            </button>
-          </TooltipComponent>
-        </div>
+        
 
         {activeMenu ? (
           <div className="w-72 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
@@ -101,7 +87,6 @@ const Drivers = () => {
           <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full ">
             <Navbar />
           </div>
-          {themeSettings && <ThemeSettings />}
           <div></div>
           <div className="mt-24 container px-5 mx-auto">
             <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5">

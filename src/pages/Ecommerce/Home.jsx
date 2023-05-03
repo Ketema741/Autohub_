@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
-import { Navbar, BottomNavbar, Footer, Sidebar, ThemeSettings } from '../../components';
+import { Navbar, BottomNavbar, Footer, Sidebar } from '../../components';
 import Items from '../Item/Items';
 
 import { useStateContext } from '../../context/ContextProvider';
@@ -15,8 +15,6 @@ const Home = () => {
     currentMode,
     activeMenu,
     currentColor,
-    themeSettings,
-    setThemeSettings,
   } = useStateContext();
 
   const itemContext = useContext(ItemContext)

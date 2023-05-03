@@ -29,7 +29,7 @@ import React, { useContext, useEffect, Fragment } from 'react';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
-import { Sidebar, ThemeSettings } from '../../components';
+import { Sidebar } from '../../components';
 
 import { useStateContext } from '../../context/ContextProvider';
 import AuthContext from "../../context/supplierAuth/authContext";
@@ -47,9 +47,7 @@ const Profile = () => {
         setCurrentMode,
         currentMode,
         activeMenu,
-        currentColor,
-        themeSettings,
-        setThemeSettings,
+        currentColor
     } = useStateContext();
 
 
@@ -69,18 +67,7 @@ const Profile = () => {
 
         <div className={currentMode === "Dark" ? "dark" : ""}>
             <div className="flex relative dark:bg-main-dark-bg">
-                <div className="fixed right-4 bottom-4" style={{ zIndex: "1000" }}>
-                    <TooltipComponent content="Settings" position="Top">
-                        <button
-                            type="button"
-                            onClick={() => setThemeSettings(true)}
-                            style={{ background: currentColor, borderRadius: "50%" }}
-                            className="text-3xl text-white p-3 hover:drop-shadow-xl hover:bg-light-gray"
-                        >
-                            <FiSettings />
-                        </button>
-                    </TooltipComponent>
-                </div>
+                
                 {activeMenu ? (
                     <div className="w-52 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
                         <Sidebar />
@@ -103,7 +90,6 @@ const Profile = () => {
                                 <Navbar name={supplier.name} currentColor={currentColor} />
                             </div>
                             <div>
-                                {themeSettings && <ThemeSettings />}
                                 <div className="mt-24 container mx-auto my-5 p-5">
                                     <div className="md:flex gap-2 no-wrap md:-mx-2 ">
                                         <div className="w-full md:w-3/12 md:mx-2">

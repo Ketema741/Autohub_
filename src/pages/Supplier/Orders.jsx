@@ -21,7 +21,7 @@ import {
   Navbar,
   Footer,
   SupplierSidebar,
-  ThemeSettings,
+  
 } from '../../components';
 import { useStateContext } from '../../context/ContextProvider';
 import { ordersData, contextMenuItems, ordersGrid } from '../../data/dummy';
@@ -33,8 +33,6 @@ const Orders = () => {
     currentMode,
     activeMenu,
     currentColor,
-    themeSettings,
-    setThemeSettings,
   } = useStateContext();
 
   useEffect(() => {
@@ -50,18 +48,7 @@ const Orders = () => {
   return (
     <div className={currentMode === 'Dark' ? 'dark' : ''}>
       <div className="flex relative dark:bg-main-dark-bg">
-        <div className="fixed right-4 bottom-4" style={{ zIndex: '1000' }}>
-          <TooltipComponent content="Settings" position="Top">
-            <button
-              type="button"
-              onClick={() => setThemeSettings(true)}
-              style={{ background: currentColor, borderRadius: '50%' }}
-              className="text-3xl text-white p-3 hover:drop-shadow-xl hover:bg-light-gray"
-            >
-              <FiSettings />
-            </button>
-          </TooltipComponent>
-        </div>
+        
         {activeMenu ? (
           <div className="w-72 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
             <SupplierSidebar />
@@ -81,7 +68,7 @@ const Orders = () => {
           <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full ">
             <Navbar />
           </div>
-          {themeSettings && <ThemeSettings />}
+          
           <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
             <Header category="Page" title="Orders" />
             <GridComponent
