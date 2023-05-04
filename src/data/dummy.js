@@ -3,7 +3,7 @@ import { AiFillCar } from 'react-icons/ai';
 import { FiShoppingBag, FiBarChart, FiCreditCard, FiStar, FiShoppingCart } from 'react-icons/fi';
 import { BsBoxSeam, BsCurrencyDollar, BsShield, BsChatLeft, BsCurrencyExchange } from 'react-icons/bs';
 import { RiContactsLine } from 'react-icons/ri';
-import { MdOutlineSupervisorAccount, MdOutlineWork, MdOutlineSupportAgent } from 'react-icons/md';
+import { MdOutlineSupervisorAccount, MdOutlineWork, MdOutlineSupportAgent,MdOutlineMail,MdOutlineManageAccounts } from 'react-icons/md';
 import { HiOutlineRefresh } from 'react-icons/hi';
 import { TiTick } from 'react-icons/ti';
 import { GrLocation, GrServices } from 'react-icons/gr';
@@ -910,7 +910,8 @@ export const themeColors = [
 
 export const userProfileData = [
   {
-    icon: <BsCurrencyDollar />,
+  
+    icon: <MdOutlineManageAccounts />,
     title: 'My Profile',
     url: 'profile',
     desc: 'Account Settings',
@@ -918,18 +919,10 @@ export const userProfileData = [
     iconBg: 'rgb(185, 237, 221)',
   },
   {
-    icon: <BsShield />,
+    icon: <MdOutlineMail />,
     title: 'My Inbox',
     url: 'profile',
-    desc: 'Messages & Emails',
-    iconColor: 'rgb(86, 157, 170)',
-    iconBg: '#3A98B9',
-  },
-  {
-    icon: <FiCreditCard />,
-    title: 'My Tasks',
-    url: 'profile',
-    desc: 'To-do and Daily Tasks',
+    desc: 'Messages',
     iconColor: '#A4BC92',
     iconBg: '#DDFFBB',
   },

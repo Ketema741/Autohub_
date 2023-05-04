@@ -8,7 +8,7 @@ const EditItemForm = () => {
     console.log('onChange')
   }
 
-  const onSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
   };
@@ -29,7 +29,7 @@ const EditItemForm = () => {
         </div>
 
         <div className="flex flex-col px-4 sm:px-6 md:px-8 lg:px-10 py-5 w-full">
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="flex flex-col mb-6">
               <label htmlFor="name" className="mb-1 text-xs sm:text-sm tracking-wide text-gray-600">Item Name</label>
               <div className="relative">

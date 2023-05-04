@@ -6,8 +6,8 @@ import { BsChatLeft } from 'react-icons/bs';
 import { RiNotification3Line } from 'react-icons/ri';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import { RxAvatar } from 'react-icons/rx'
 
-import avatar from '../data/avatar.jpg';
 import Cart from './Cart';
 import Chat from './Chat';
 import Notification from './Notification';;
@@ -111,7 +111,7 @@ const Navbar = () => {
             <div className="hidden sm:block">
               <NavButton
                 title="Chat"
-                dotColor="#03C9D7"
+                dotColor="#FF5C8E"
                 customFunc={() => handleClick("chat")}
                 color={currentColor}
                 icon={<BsChatLeft />}
@@ -121,7 +121,7 @@ const Navbar = () => {
             <div className="hidden sm:block">
               <NavButton
                 title="Notification"
-                dotColor="rgb(254, 201, 15)"
+                dotColor="#FF5C8E"
                 customFunc={() => handleClick("notification")}
                 color={currentColor}
                 icon={<RiNotification3Line />}
@@ -132,11 +132,13 @@ const Navbar = () => {
                 className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg"
                 onClick={() => handleClick("userProfile")}
               >
-                <img
-                  className="rounded-full w-8 h-8"
-                  src={avatar}
-                  alt="user-profile"
-                />
+                <NavButton
+                title="Profile"
+                dotColor=""
+                customFunc={() => handleClick("profile")}
+                color={currentColor}
+                icon={<RxAvatar />}
+              />
                 <MdKeyboardArrowDown className="text-gray-400 text-14" />
               </div>
             </TooltipComponent>

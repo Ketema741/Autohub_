@@ -6,16 +6,35 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { useStateContext } from '../../../context/ContextProvider';
 import CarForm from './CarForm'
 import AccessoryForm from './AccessoryForm'
+import CloudinaryUploadWidget from "../../../cloudinary/CloudinaryUploadWidget";
 
 
 const AddItemDetail = () => {
+    const [images, setImages] = useState([]);
+    const [imageToRemove, setImageToRemove] = useState();
+
+    const handleOpenWidget = (file) => {
+        const { secure_url, public_id } = file;
+        setImages((prev) => [...prev, { url: secure_url, public_id: public_id }]);
+        console.log("image uploaded successfully ", secure_url);
+    };
+
+    // delete item image
+    const handleDelete = (imgObj) => {
+        const public_id = imgObj.public_id;
+        setImageToRemove(public_id);
+        removeImage(public_id);
+        setImageToRemove(null);
+        setImages((prev) => prev.filter((img) => img.public_id !== public_id));
+    };
+
     const {
         currentColor,
         editItem,
         setEditItem,
     } = useStateContext();
 
-    const [uploadType, setUploadType] = useState('car'); 
+    const [uploadType, setUploadType] = useState('car');
     const handleRadioChange = (e) => {
         setUploadType(e.target.value);
     };
@@ -94,16 +113,13 @@ const AddItemDetail = () => {
                         {/* <ImageGallery currentColor={currentColor} /> */}
                         <div class="flex justify-center pb-2 bg-gray-200">
                             <TooltipComponent content="Add Images" position="RightCenter">
-                                <button type="button" class=" rounded-full hover:bg-blue-600 p-4 hover:shadow-lg" style={{ backgroundColor: currentColor }}>
-                                    <span class="font-medium text-white">
-                                        <AiOutlinePlus />
-                                    </span>
-                                </button>
+                                <CloudinaryUploadWidget handleOpenWidget={handleOpenWidget} />
                             </TooltipComponent>
                         </div>
                     </div>
                 </div>
             </div>
+            
             {editItem &&
                 <div>
                     {uploadType == "car" ?
