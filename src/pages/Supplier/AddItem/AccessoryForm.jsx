@@ -1,15 +1,45 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import { MdOutlineCancel } from 'react-icons/md';
+import { HtmlEditor, Inject, Link, QuickToolbar, RichTextEditorComponent, Table, Toolbar } from '@syncfusion/ej2-react-richtexteditor';
+
 import { useStateContext } from '../../../context/ContextProvider';
+import { customToolbarSettings } from './Toolbar';
+import ItemContext from '../../../context/item/itemContext';
+
 
 const CarForm = () => {
+  const itemContext = useContext(ItemContext);
+  const { addItem } = itemContext;
+
   const { currentColor, setEditItem } = useStateContext();
+
+  const [content, setContent] = useState('');
+  const [formData, setFormData] = useState({
+    title: '',
+    category: '',
+    brand: '',
+    model: '',
+    quantity: '',
+    material: '',
+    price: '',
+    color: '',
+    manufacturingDate: '',
+    description: '',
+  });
+
   const onChange = (e) => {
-    console.log('onChange')
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   }
 
-  const onSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
+    formData.description = content
+    console.log(formData);
+
+    // addItem(formData, images)
   };
 
   return (
@@ -29,7 +59,7 @@ const CarForm = () => {
 
         <div className="flex flex-col px-4 sm:px-6 md:px-8 lg:px-10 py-5 w-full">
           <div className="mx-auto w-full">
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="-mx-3 flex flex-wrap">
                 <div className="w-full px-3 sm:w-1/2">
                   <div className="mb-5">
@@ -43,6 +73,8 @@ const CarForm = () => {
                       type="text"
                       name="Title"
                       id="Title"
+                      value={formData.title}
+                      onChange={onChange}
                       placeholder="Item Title"
                       className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                     />
@@ -60,14 +92,14 @@ const CarForm = () => {
                       type="text"
                       name="category"
                       id="category"
+                      value={formData.category}
+                      onChange={onChange}
                       placeholder="Category"
                       className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                     />
                   </div>
                 </div>
               </div>
-
-
 
               <div className="-mx-3 flex flex-wrap">
                 <div className="w-full px-3 sm:w-1/2">
@@ -82,25 +114,29 @@ const CarForm = () => {
                       type="text"
                       name="brand"
                       id="brand"
+                      value={formData.brand}
+                      onChange={onChange}
                       className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                     />
                   </div>
                 </div>
                 <div className="mb-5">
-                <label
-                  htmlFor="material"
-                  className="mb-3 block text-base font-medium text-[#07074D]"
-                >
-                  Material
-                </label>
-                <input
-                  type="text"
-                  name="material"
-                  id="material"
-                  placeholder="e.g. Polyester"
-                  className="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                />
-              </div>
+                  <label
+                    htmlFor="material"
+                    className="mb-3 block text-base font-medium text-[#07074D]"
+                  >
+                    Material
+                  </label>
+                  <input
+                    type="text"
+                    name="material"
+                    id="material"
+                    value={formData.material}
+                    onChange={onChange}
+                    placeholder="e.g. Polyester"
+                    className="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  />
+                </div>
                 <div className="w-full px-3 sm:w-1/2">
                   <div className="mb-5">
                     <label
@@ -111,8 +147,10 @@ const CarForm = () => {
                     </label>
                     <input
                       type="text"
-                      name="Color"
-                      id="Color"
+                      name="color"
+                      id="color"
+                      value={formData.clor}
+                      onChange={onChange}
                       className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                     />
                   </div>
@@ -129,6 +167,8 @@ const CarForm = () => {
                   type="number"
                   name="quantity"
                   id="quantity"
+                  value={formData.quantity}
+                  onChange={onChange}
                   placeholder="5"
                   min="0"
                   className="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
@@ -147,6 +187,8 @@ const CarForm = () => {
                       type="number"
                       name="price"
                       id="price"
+                      value={formData.price}
+                      onChange={onChange}
                       className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                     />
                   </div>
@@ -163,6 +205,8 @@ const CarForm = () => {
                       type="date"
                       name="date"
                       id="date"
+                      value={formData.manufacturingDate}
+                      onChange={onChange}
                       className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                     />
                   </div>
@@ -170,22 +214,18 @@ const CarForm = () => {
               </div>
               <div className="mb-5">
                 <label
-                  htmlFor="description"
+                  htmlFor="quantity"
                   className="mb-3 block text-base font-medium text-[#07074D]"
                 >
-                  Description
+                  Detail Description
                 </label>
-                <input
-                  type="text"
-                  name="description"
-                  id="description"
-                  placeholder="Description"
-                  className="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                />
+                <RichTextEditorComponent change={args => setContent(args.value)} toolbarSettings={customToolbarSettings}>
+                  <Inject services={[HtmlEditor, Toolbar, Link, QuickToolbar, Table]} />
+                </RichTextEditorComponent>
               </div>
 
               <div>
-                <button
+                <button type='submit'
                   className="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none"
                   style={{ backgroundColor: currentColor }}
                 >

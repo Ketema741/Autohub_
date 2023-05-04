@@ -4,8 +4,6 @@ import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import { AiOutlinePlus } from 'react-icons/ai';
 
 import { useStateContext } from '../../../context/ContextProvider';
-
-
 import CarForm from './CarForm'
 import AccessoryForm from './AccessoryForm'
 
@@ -16,6 +14,7 @@ const AddItemDetail = () => {
         editItem,
         setEditItem,
     } = useStateContext();
+
     const [uploadType, setUploadType] = useState('car'); 
     const handleRadioChange = (e) => {
         setUploadType(e.target.value);
@@ -73,7 +72,6 @@ const AddItemDetail = () => {
 
 
                     {/* <ItemInfo /> */}
-
                     <div className="flex justify-center mt-4">
                         <TooltipComponent content="Add Item" position="LeftCenter">
                             <button type="button" onClick={() => setEditItem(true)} className="mb-4 rounded-full hover:bg-blue-600 p-4 hover:shadow-lg" style={{ backgroundColor: currentColor }}>

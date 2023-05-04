@@ -27,16 +27,7 @@ const EditItemDetail = () => {
             <div className="flex flex-wrap items-top">
                 <div className="w-full md:w-1/2 z-1 bg-gray-100 rounded shadow-lg overflow-hidden">
                     <div className="text-lg font-medium uppercase p-4 text-center border-b tracking-wide text-blue-800   border-gray-200">Edit Item</div>
-                    <div className="block sm:flex lg:flex items-center justify-center">
-                        <div className="mt-4 sm:m-8 md:m-0 md:mt-8 lg:m-8 text-center">
-                            <div className="text-2xl font-medium">20%</div>
-                            <div className="block text-sm text-gray-600 mt-2">discount</div>
-                        </div>
-                        <div className="mt-4 mb-8 sm:m-8 md:m-0 md:mt-4 md:mb-8 lg:m-8 text-center">
-                            <div className="text-2xl font-medium">234 ETB</div>
-                            <div className="block text-sm text-gray-600 mt-2">price</div>
-                        </div>
-                    </div>
+                 
                     <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
                         <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8 ">
                             <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
