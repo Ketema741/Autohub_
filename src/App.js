@@ -14,6 +14,8 @@ import {
   ItemDetail,
 
   Jobs,
+  JobDetail,
+
   Chat,
 
   Blogs,
@@ -29,6 +31,7 @@ import {
   Orders,
 
   ServiceProviders,
+  ServiceProviderDetail,
 
   Login,
   Register,
@@ -42,7 +45,6 @@ import {
 } from './pages';
 
 import { useStateContext } from './context/ContextProvider';
-
 
 
 
@@ -69,6 +71,7 @@ const App = () => {
                   {/* dashboard  */}
                   <Route path="/" element={<Home />} />
                   <Route path="/home" element={<Home />} />
+                  <Route path="/item-detail" element={<ItemDetail />} />
 
                   {/* pages  */}
                   <Route path="/orders" element={<Orders />} />
@@ -87,21 +90,26 @@ const App = () => {
                   <Route path="supplier/add-item" element={<AddItem />} />
 
                   <Route path="/jobs" element={<Jobs />} />
+                  <Route path="/job/:id" element={<JobDetail />} />
+
                   <Route path="/blogs" element={<Blogs />} />
                   <Route path="/blog/:blogId" element={<BlogDetail />} />
                   <Route path="/blog-posting" element={<Posting />} />
 
                   <Route path="/drivers" element={<Drivers />} />
                   <Route path="/driver-detail/:id" element={<DriverDetail />} />
+
                   <Route path="/serviceproviders" element={<ServiceProviders />} />
-                  <Route path="/aboutus" element={<AboutUs />} />
-                  <Route path="/item-detail" element={<ItemDetail />} />
+                  <Route path="/service-provider-detail/:id" element={<  ServiceProviderDetail />} />
+                  <Route path="/chat" element={<Chat />} />
+
 
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
                   <Route path="/profile" element={<Profile />} />
+
+                  <Route path="/aboutus" element={<AboutUs />} />
                   <Route path="/faq" element={<FAQ />} />
-                  <Route path="/chat" element={<Chat />} />
                 </Routes>
               </Router>
             </AlertState>

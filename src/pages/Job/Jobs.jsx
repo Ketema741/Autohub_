@@ -1,29 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import { Navbar, Footer, Sidebar } from '../../components';
 import JobCard from './JobCard';
 import { useStateContext } from '../../context/ContextProvider';
 
 
-import { FiSettings } from 'react-icons/fi';
-import { GiGraduateCap, GiLifeSupport, GiOfficeChair } from 'react-icons/gi'
-import { CgCommunity } from 'react-icons/cg'
-import { FcCollaboration } from 'react-icons/fc'
-import { FaConnectdevelop } from 'react-icons/fa'
-import { SiBookstack } from 'react-icons/si'
-
-import knowledge from '../../brands/undraw_road_to_knowledge_m8s0.svg'
-import assi from '../../brands/undraw_virtual_assistant_jjo2.svg'
-import learn from '../../brands/undraw_online_learning_re_qw08.svg'
+import { FiSearch } from 'react-icons/fi';
 
 
+import Header from './Header'
 const Jobs = () => {
   const {
     setCurrentColor,
     setCurrentMode,
     currentMode,
     activeMenu,
-    currentColor,
   } = useStateContext();
 
   useEffect(() => {
@@ -63,7 +53,7 @@ const Jobs = () => {
   return (
     <div className={currentMode === 'Dark' ? 'dark' : ''}>
       <div className="flex relative dark:bg-main-dark-bg">
-        
+
         {activeMenu ? (
           <div className="w-52 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
             <Sidebar />
@@ -85,9 +75,9 @@ const Jobs = () => {
           </div>
 
 
+          <Header />
+          <JobCard isOpen={isOpen} togglePopup={togglePopup} />
           <div className="mt-24 container px-5 mx-auto">
-            <JobCard isOpen={isOpen} togglePopup={togglePopup} />
-
 
             {isOpen && (
               <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center">

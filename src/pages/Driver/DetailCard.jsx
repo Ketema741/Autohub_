@@ -5,8 +5,8 @@ import driver3 from '../../data/avatar3.png';
 
 import { BsTelephone } from 'react-icons/bs'
 import { AiOutlineMail } from 'react-icons/ai'
-import Experience from './../Profile/Experience';
 
+import DriverRating from './DriverRating'
 
 const DetailCard = () => {
     return (
@@ -47,7 +47,7 @@ const DetailCard = () => {
                     </div>
                 </div>
                 <div className="mt-8 mb-8 w-full">
-                    
+
                     <div className="px-6 py-4 mb-4">
                         <h2 className="text-xl font-semibold mb-2">Professional Experience</h2>
                         <div className="flex flex-col space-y-4">
@@ -99,11 +99,11 @@ const DetailCard = () => {
                     <div className="flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
                         <p className="text-sm text-gray-600">Experience</p>
                         <p className="text-base font-medium text-navy-700 dark:text-white">
-                           3 years of driving experience
+                            3 years of driving experience
                         </p>
                     </div>
 
-                    
+
 
                     <div className="flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
                         <p className="text-sm text-gray-600">Birthday</p>
@@ -112,6 +112,7 @@ const DetailCard = () => {
                         </p>
                     </div>
                 </div>
+                <DriverRating />
             </div>
         </div>
     )

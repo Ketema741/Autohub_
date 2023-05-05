@@ -1,81 +1,140 @@
-import React from 'react';
-import { useStateContext } from '../../context/ContextProvider';
+import React from "react";
+import { useStateContext } from "../../context/ContextProvider";
+import knowledge from "../../assets/undraw_road_to_knowledge_m8s0.svg";
+import assi from "../../assets/undraw_virtual_assistant_jjo2.svg";
+import learn from "../../assets/undraw_online_learning_re_qw08.svg";
+import { useNavigate } from "react-router-dom";
 
-const JobCard = ({ togglePopup }) => {
-  const { currentColor } = useStateContext();
-
+const JobCard = ({ post }) => {
+  const navigate = useNavigate();
+  const handleView = () => {
+    // getBlog(blog._id, blog.category)
+    navigate(`/job/${"job._id"}`);
+  };
   return (
-    <div className=" pt-12 pr-0 pb-12 pl-0 mt-0 mr-auto mb-0 ml-auto sm:py-16 lg:py-20">
-      <div className="pt-0 pr-4 pb-0 pl-4 mt-0 mr-auto mb-0 ml-auto max-w-7xl sm:px-6 lg:px-8">
-        <div className="pt-0 pr-4 pb-0 pl-4 mt-0 mr-auto mb-0 ml-auto max-w-4xl sm:px-6 lg:px-8">
-          <div className="pt-0 pr-4 pb-0 pl-4 mt-0 mr-auto mb-0 ml-auto sm:flex sm:items-center sm:justify-between">
-            <div>
-              <p className="text-xl font-bold text-gray-900">Open Positions</p>
-              <p className="text-sm mt-1 mr-0 mb-0 ml-0 font-semi-bold text-gray-500">
-                Lorem ipsum dolor sit amet, consectetur adipis
+    <div className="py-16">
+      <div className="container m-auto text-gray-500 md:px-12 xl:px-0">
+        <div className="grid gap-10 lg:grid-cols-6 px-16">
+          <div className="lg:col-span-3">
+            <div className="space-y-4 rounded-3xl border border-gray-100 dark:border-gray-700 shadow-2xl shadow-gray-600/10 dark:shadow-none bg-white dark:bg-gray-800 px-8 py-12  sm:px-12 lg:px-8">
+              <img
+                src="https://res.cloudinary.com/dmegiw31y/image/upload/v1681974584/careerNet/web_dev_nsbfd7.png"
+                alt="illustration"
+                loading="lazy"
+                width="900"
+                height="600"
+              />
+              <h3 className="text-2xl font-semibold text-gray-800 dark:text-white">
+                Web development
+              </h3>
+              <p className="mb-6 text-gray-600 dark:text-gray-300">
+                We are seeking a talented web developer to join our team. As a
+                web developer, you will be responsible for designing,
+                developing, and maintaining our company website. Your
+                responsibilities will include working with the marketing team
+                to design and develop website pages that are visually
+                appealing, responsive, and user-friendly.
               </p>
-            </div>
-
-            <div className="mt-4 mr-0 mb-0 ml-0 sm:mt-0">
-              <p className="sr-only">Search Position</p>
-              <div className="relative">
-                <div className="flex items-center pt-0 pr-0 pb-0 pl-3 absolute inset-y-0 left-0 pointer-events-none">
-                  <p>
-                    <svg
-                      className="w-5 h-5 text-gray-400"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M21
-                                            21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                      />
-                    </svg>
-                  </p>
-                </div>
-                <input
-                  placeholder="Search Positions "
-                  type="search"
-                  className="block pt-2 pr-0 pb-2 pl-10 w-full py-2 border border-gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm"
-                />
-              </div>
+              <button
+                onClick={() => handleView()}
+                type="button"
+                className="block font-medium text-primary"
+              >
+                Know more
+              </button>
             </div>
           </div>
-
-          <div className="shadow-xl mt-8 mr-0 mb-0 ml-0 pt-4 pr-10 pb-4 pl-10 flow-root rounded-lg sm:py-2">
-            <div className="pt--10 pr-0 pb-10 pl-0">
-              <div className="pt-5 pr-0 pb-0 pl-0 mt-5 mr-0 mb-0 ml-0">
-                <div className="sm:flex sm:items-center sm:justify-between sm:space-x-5">
-                  <div className="flex items-center flex-1 min-w-0">
-                    <img
-                      src="https://d34u8crftukxnk.cloudfront.net/slackpress/prod/sites/6/SlackLogo_CompanyNews_SecondaryAubergine_Hero.jpg?d=500x500&amp;f=fill"
-                      className="flex-shrink-0 object-cover rounded-full btn- w-10 h-10"
-                    />
-                    <div className="mt-0 mr-0 mb-0 ml-4 flex-1 min-w-0">
-                      <p className="text-lg font-bold text-gray-800 truncate">
-                        Engineering Manager
-                      </p>
-                      <p className="text-gray-600 text-md">Slack</p>
-                    </div>
-                  </div>
-                  <div className="mt-4 mr-0 mb-0 ml-0 pt-0 pr-0 pb-0 pl-14 flex items-center sm:space-x-6 sm:pl-0 sm:mt-0">
-                    <button
-                      type="button"
-                      onClick={togglePopup}
-                      style={{ backgroundColor: currentColor }}
-                      className="bg-gray-800 pt-2 pr-6 pb-2 pl-6 text-lg font-medium text-gray-100 transition-all
-                                                duration-200 hover:bg-gray-700 rounded-lg"
-                    >
-                      Apply
-                    </button>
-                  </div>
-                </div>
+          <div className="lg:col-span-3">
+            <div className="space-y-4 rounded-3xl border border-gray-100 dark:border-gray-700 shadow-2xl shadow-gray-600/10 dark:shadow-none bg-white dark:bg-gray-800 px-8 py-12  sm:px-12 lg:px-8">
+              <img
+                src="https://res.cloudinary.com/dmegiw31y/image/upload/v1681974584/careerNet/moblie_dev_hc4sui.png"
+                alt="illustration"
+                loading="lazy"
+                width="900"
+                height="600"
+              />
+              <h3 className="text-2xl font-semibold text-gray-800 dark:text-white">
+                Moblie App development
+              </h3>
+              <p className="mb-6 text-gray-600 dark:text-gray-300">
+                We are looking for a skilled Mobile App Developer to join our
+                team. As a Mobile App Developer, you will be responsible for
+                designing, developing, and maintaining our mobile
+                applications. You will work closely with the product and
+                design teams to create user-friendly and visually appealing
+                mobile apps that meet business objectives.
+              </p>
+              <button
+                onClick={() => handleView()}
+                type="button"
+                className="block font-medium text-primary"
+              >
+                Know more
+              </button>
+            </div>
+          </div>
+          <div className="lg:col-span-3">
+            <div className="flex h-full flex-col justify-between rounded-3xl border border-gray-100 dark:border-gray-700 shadow-2xl shadow-gray-600/10 dark:shadow-none bg-white dark:bg-gray-800 px-8 py-12  sm:px-12 lg:px-8">
+              <div className="mb-6 space-y-4">
+                <img
+                  src="https://res.cloudinary.com/dmegiw31y/image/upload/v1681974584/careerNet/ui_image_je0err.jpg"
+                  alt="illustration"
+                  loading="lazy"
+                  width="900"
+                  height="600"
+                />
+                <h3 className="text-2xl font-semibold text-gray-800 dark:text-white">
+                  UI/UX Desinger
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300">
+                  We are seeking a talented UI/UX designer to join our team.
+                  As a UI/UX designer, you will be responsible for designing
+                  and improving user interfaces and experiences across our
+                  products. Your responsibilities will include conducting user
+                  research, creating wireframes and prototypes, and
+                  collaborating with developers to ensure the final product is
+                  visually appealing and user-friendly.
+                </p>
               </div>
+              <button
+                onClick={() => handleView()}
+                type="button"
+                className="block font-medium text-primary"
+              >
+                Know more
+              </button>
+            </div>
+          </div>
+          <div className="lg:col-span-3">
+            <div className="flex h-full flex-col justify-between rounded-3xl border border-gray-100 dark:border-gray-700 shadow-2xl shadow-gray-600/10 dark:shadow-none bg-white dark:bg-gray-800 px-8 py-12  sm:px-12 lg:px-8">
+              <div className="mb-6 space-y-4">
+                <img
+                  src="https://res.cloudinary.com/dmegiw31y/image/upload/v1681974585/careerNet/ai_image_tvkbpv.png"
+                  alt="illustration"
+                  loading="lazy"
+                  width="900"
+                  height="600"
+                />
+                <h3 className="text-2xl font-semibold text-gray-800 dark:text-white">
+                  AI/ML Engineer
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300">
+                  We are seeking a talented AI engineer to join our team. As
+                  an AI engineer, you will be responsible for designing and
+                  implementing AI solutions to solve complex business
+                  problems. Your responsibilities will include developing and
+                  implementing machine learning algorithms, collaborating with
+                  other engineers and data scientists, and staying up-to-date
+                  with the latest AI technologies and trends.
+                </p>
+              </div>
+              <button
+                onClick={() => handleView()}
+                type="button"
+                className="block font-medium text-primary"
+              >
+                Know more
+              </button>
             </div>
           </div>
         </div>

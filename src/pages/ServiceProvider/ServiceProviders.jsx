@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import { FiSettings } from 'react-icons/fi';
-import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import { Navbar, Footer, Sidebar } from '../../components';
 import ServiceProviderCard from './ServiceProviderCard';
 import { useStateContext } from '../../context/ContextProvider';
+import Header from './Header'
+
 
 const ServiceProviders = () => {
   const {
@@ -47,6 +47,7 @@ const ServiceProviders = () => {
           <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full ">
             <Navbar />
           </div>
+          <Header />
           <ServiceProviderCard />
           <Footer />
         </div>

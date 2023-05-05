@@ -10,6 +10,7 @@ export { default as EditItemDetail } from './Supplier/EditItemDetail';
 
 export { default as Jobs } from './Job/Jobs';
 export { default as JobCard } from './Job/JobCard';
+export { default as JobDetail } from './Job/JobDetail';
 
 export { default as ItemDetail } from './Item/ItemDetail';
 export { default as ItemFilter } from './Item/ItemFilter';
@@ -30,6 +31,7 @@ export { default as Profile } from './Profile/Profile';
 
 export { default as ServiceProviders } from './ServiceProvider/ServiceProviders';
 export { default as ServiceProviderCard } from './ServiceProvider/ServiceProviderCard';
+export { default as ServiceProviderDetail } from './ServiceProvider/Detail';
 
 export { default as AboutUs } from './AboutUs/AboutUs';
 export { default as FAQ } from './AboutUs/FAQ';

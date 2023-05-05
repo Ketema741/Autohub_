@@ -512,17 +512,6 @@ export const employeesGrid = [
 
 export const links = [
   {
-    title: 'Home',
-    links: [
-      {
-        name: 'ecommerce',
-        to: '/home',
-        icon: <FiShoppingBag />,
-      },
-    ],
-  },
-
-  {
     title: 'Pages',
     links: [
       {
