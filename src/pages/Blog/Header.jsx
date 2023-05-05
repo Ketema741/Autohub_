@@ -10,8 +10,7 @@ const HeaderCarousel = () => {
             <div class="relative lg:flex lg:items-center lg:gap-12">
                 <div class="text-center lg:text-left md:mt-12 lg:mt-0 sm:w-10/12 md:w-2/3 sm:mx-auto lg:mr-auto lg:w-6/12">
                     <h1 class="text-gray-900 font-bold text-4xl md:text-6xl lg:text-5xl xl:text-6xl dark:text-white">
-                        Build in your way but with our experts
-                        <span class="text-primary dark:text-primaryLight">Support.</span>
+                        Build in your way but with our experts Support
                     </h1>
                     <p class="mt-8 text-gray-600 dark:text-gray-300">
                         Odio incidunt nam itaque sed eius modi error totam sit illum. Voluptas doloribus asperiores quaerat aperiam. Quidem harum omnis beatae ipsum soluta!

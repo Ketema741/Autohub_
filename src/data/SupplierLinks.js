@@ -468,16 +468,6 @@ export const employeesGrid = [
 ];
 
 export const links = [
-  {
-    title: 'Home',
-    links: [
-      {
-        name: 'ecommerce',
-        url: 'home',
-        icon: <FiShoppingBag />,
-      },
-    ],
-  },
 
   {
     title: 'Pages',

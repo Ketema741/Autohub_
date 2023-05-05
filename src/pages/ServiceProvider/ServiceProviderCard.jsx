@@ -1,7 +1,8 @@
 import React from "react";
-import product1 from '../../data/product1.jpg'
-import product2 from '../../data/product2.jpg'
-import product3 from '../../data/product3.jpg'
+import { Link } from 'react-router-dom';
+import product1 from '../../data/product1.jpg';
+import product2 from '../../data/product2.jpg';
+import product3 from '../../data/product3.jpg';
 
 import { FaArrowRight } from 'react-icons/fa';
 
@@ -23,12 +24,12 @@ const ServiceProviderCard = () => {
               Obcaecati, quam? Eligendi, nulla numquam natus laborum porro at cum, consectetur ullam
               tempora ipsa iste officia sed officiis! Incidunt ea animi officiis.
             </p>
-            <a
-              href="/service-provider-detail/abacadaba"
+            <Link
+              to="/service-provider-detail/abacadaba"
               className="relative mx-auto flex h-10 w-10 items-center justify-center before:absolute before:inset-0 before:rounded-full before:border before:border-gray-100 dark:before:border-gray-600 before:transition before:duration-300 group-hover:before:scale-125"
             >
               <FaArrowRight className="text-primary" />
-            </a>
+            </Link>
           </div>
           <div className="group space-y-6 border border-gray-100 dark:border-gray-700 rounded-3xl bg-white dark:bg-gray-800 px-8 py-12 text-center shadow-2xl shadow-gray-600/10 dark:shadow-none">
             <img
@@ -43,12 +44,12 @@ const ServiceProviderCard = () => {
               tempora ipsa iste officia sed officiis! Incidunt ea animi officiis.
             </p>
 
-            <a
-              href="/service-provider-detail/abacadaba"
+            <Link
+              to="/service-provider-detail/abacadaba"
               className="relative mx-auto flex h-10 w-10 items-center justify-center before:absolute before:inset-0 before:rounded-full before:border before:border-gray-100 dark:before:border-gray-600 before:transition before:duration-300 group-hover:before:scale-125"
             >
               <FaArrowRight className="text-primary" />
-            </a>
+            </Link>
           </div>
           <div className="group space-y-6 border border-gray-100 dark:border-gray-700 rounded-3xl bg-white dark:bg-gray-800 px-8 py-12 text-center shadow-2xl shadow-gray-600/10 dark:shadow-none">
             <img
@@ -62,12 +63,12 @@ const ServiceProviderCard = () => {
               Obcaecati, quam? Eligendi, nulla numquam natus laborum porro at cum, consectetur ullam
               tempora ipsa iste officia sed officiis! Incidunt ea animi officiis.
             </p>
-            <a
-              href="/service-provider-detail/abacadaba"
+            <Link
+              to="/service-provider-detail/abacadaba"
               className="relative mx-auto flex h-10 w-10 items-center justify-center before:absolute before:inset-0 before:rounded-full before:border before:border-gray-100 dark:before:border-gray-600 before:transition before:duration-300 group-hover:before:scale-125"
             >
               <FaArrowRight className="text-primary" />
-            </a>
+            </Link>
           </div>
         </div>
       </div>
