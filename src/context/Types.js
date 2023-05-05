@@ -38,6 +38,12 @@ export const DELETE_CHART = 'DELETE_CHART';
 
 
 export const GET_POSTS = 'GET_POSTS';
+export const GET_POST = 'GET_POST';
+export const GET_JOBS = 'GET_JOBS';
+export const UPDATE_POST = 'UPDATE_POST';
+export const POST_ERROR = 'POST_ERROR';
+export const CLEAR_POSTS = 'CLEAR_POSTS';
+export const FILTER_POSTS = 'FILTER_POSTS';
 export const GET_POSTDETAILS = 'GET_POSTDETAILS';
 export const GET_RECENTPOSTS = 'GET_RECENTPOSTS';
 export const GET_CATEGORIES = 'GET_CATEGORIES';
@@ -47,5 +53,3 @@ export const GET_CATEGORYPOST = 'GET_CATEGORYPOST';
 export const GET_FEATUREDPOSTS = 'GET_FEATUREDPOSTS';
 export const GET_COMMENTS = 'GET_COMMENTS';
 export const SUBMITCOMMENT = 'SUBMITCOMMENT';
-
-export const POST_ERROR = 'ITEM_ERROR';

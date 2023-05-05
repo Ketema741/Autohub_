@@ -1,30 +1,94 @@
 import React from 'react';
-import product1 from '../../data/product9.jpg';
+import driver1 from '../../data/avatar.jpg';
+import driver2 from '../../data/avatar2.jpg';
+import driver3 from '../../data/avatar3.png';
 
-const DriverCard = ({name, vehicle, phone, experience,imageUrl, address}) => {
+import { BsTelephone } from 'react-icons/bs'
+import { AiOutlineMail } from 'react-icons/ai'
+
+const DriverCard = ({ name, vehicle, phone, experience, imageUrl, address }) => {
   return (
-    
-    <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
-      <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-        <div className="overflow-hidden"></div>
-        <div className="flex items-center border border-gray-300 shadow-md rounded-lg p-4">
-          <div className="w-16 h-16 rounded-full overflow-hidden">
-            <img
-              src={product1}
-              alt={name}
-              className="object-cover w-full h-full"
-            />
+
+    <div className="grid gap-28 py-20 md:grid-cols-3 md:gap-12">
+      <div className="group space-y-8 border-t-4 border-gray-100 dark:border-gray-800">
+        <div className="mx-auto -mt-16 h-32 w-32 rotate-45 overflow-hidden rounded-[2rem]">
+          <img
+            className="mx-auto h-full w-full -rotate-45 scale-125 object-cover transition duration-300 group-hover:scale-[1.4]"
+            src={driver1}
+            alt="driver"
+            loading="lazy"
+            width="640"
+            height="805"
+          />
+        </div>
+        <div className="space-y-4 text-center">
+          <div className='flex flex-row justify-center items-center space-x-2 flex-wrap'>
+            <h4 className="text-2xl text-gray-700 dark:text-white">Ketema G.</h4>
+            <span className=" text-sm text-gray-500">Motorcycle rider</span>
+
           </div>
-          <div className="ml-4">
-            <h2 className="text-lg font-medium">{name}</h2>
-            <p className="text-gray-600">{vehicle}</p>
-            <p className="text-gray-600">{experience} years of experience</p>
-            <p className="text-gray-600">{phone}</p>
-            <p className="text-gray-600">{address}</p>
+          <span className="mt-4 block text-sm text-gray-500">Please find below a list of drivers whom you can contact if you are interested in hiring them.
+          </span>
+          <div className="flex justify-center space-x-4 text-gray-500">
+
+            <div className='flex flex-row items-center flex-wrap space-x-2'>
+              <BsTelephone className="w-6 hover:text-primary" />
+              <span> +251912323811 </span>
+
+              <a href={`mailto:${'kgirma363@gmail.com'}`}>
+
+                <AiOutlineMail />
+              </a>
+
+
+            </div>
           </div>
+          <a href="/driver-detail/abacadaba" className="mx-auto block w-max text-primary">View</a>
+
+        </div>
+      </div>
+
+      <div className="group space-y-8 border-t-4 border-gray-100 dark:border-gray-800">
+        <div className="mx-auto -mt-16 h-32 w-32 rotate-45 overflow-hidden rounded-[2rem]">
+          <img
+            className="mx-auto h-full w-full -rotate-45 scale-125 object-cover transition duration-300 group-hover:scale-[1.4]"
+            src={driver2}
+            alt="driver"
+            loading="lazy"
+            width="1000"
+            height="667"
+          />
+        </div>
+        <div className="space-y-4 text-center">
+          <div>
+            <h4 className="text-2xl text-gray-700 dark:text-white">Anabelle Doe</h4>
+            <span className="block text-sm text-gray-500">Truck drivers </span>
+          </div>
+          <a href="#" className="mx-auto block w-max text-primary">View</a>
+        </div>
+      </div>
+
+      <div className="group space-y-8 border-t-4 border-gray-100 dark:border-gray-800">
+        <div className="mx-auto -mt-16 h-32 w-32 rotate-45 overflow-hidden rounded-[2rem]">
+          <img
+            className="mx-auto h-full w-full -rotate-45 scale-125 object-cover transition duration-300 group-hover:scale-[1.4]"
+            src={driver3}
+            alt="driver"
+            loading="lazy"
+            width="1000"
+            height="667"
+          />
+        </div>
+        <div className="space-y-4 text-center">
+          <div>
+            <h4 className="text-2xl text-gray-700 dark:text-white">Gatwach T.</h4>
+            <span className="block text-sm text-gray-500">Taxi drivers </span>
+          </div>
+          <a href="#" className="mx-auto block w-max text-primary">View</a>
         </div>
       </div>
     </div>
+
   );
 };
 

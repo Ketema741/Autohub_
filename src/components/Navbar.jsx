@@ -127,21 +127,19 @@ const Navbar = () => {
                 icon={<RiNotification3Line />}
               />
             </div>
-            <TooltipComponent content="Profile" position="BottomCenter">
-              <div
-                className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg"
-                onClick={() => handleClick("userProfile")}
-              >
-                <NavButton
+            <div
+              className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg"
+              onClick={() => handleClick("userProfile")}
+            >
+              <NavButton
                 title="Profile"
                 dotColor=""
                 customFunc={() => handleClick("profile")}
                 color={currentColor}
                 icon={<RxAvatar />}
               />
-                <MdKeyboardArrowDown className="text-gray-400 text-14" />
-              </div>
-            </TooltipComponent>
+              <MdKeyboardArrowDown className="text-gray-400 text-14" />
+            </div>
 
             {isClicked.cart && <Cart />}
             {isClicked.chat && <Chat />}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { AiFillCar } from 'react-icons/ai';
+import { AiFillCar, AiOutlineCloudUpload } from 'react-icons/ai';
 import { FiShoppingBag, FiBarChart, FiCreditCard, FiStar, FiShoppingCart } from 'react-icons/fi';
 import { BsBoxSeam, BsCurrencyDollar, BsShield, BsChatLeft, BsCurrencyExchange } from 'react-icons/bs';
 import { RiContactsLine } from 'react-icons/ri';
@@ -908,12 +908,19 @@ export const themeColors = [
   },
 ];
 
+export const Categories = [
+  { name: 'Intenships' },
+  { name: 'Resume' },
+  { name: 'Study' },
+  { name: 'Career Advice' },
+]
+
 export const userProfileData = [
   {
   
     icon: <MdOutlineManageAccounts />,
     title: 'My Profile',
-    url: 'profile',
+    url: '/profile',
     desc: 'Account Settings',
     iconColor: 'rgb(87, 125, 134)',
     iconBg: 'rgb(185, 237, 221)',
@@ -921,11 +928,19 @@ export const userProfileData = [
   {
     icon: <MdOutlineMail />,
     title: 'My Inbox',
-    url: 'profile',
+    url: '/profile',
     desc: 'Messages',
+    iconColor: '#03C9D7',
+    iconBg: '#E5FAFB',
+  },
+  {
+    icon: <AiOutlineCloudUpload />,
+    title: 'Blog Post',
+    url: '/blog-posting',
+    desc: 'Make Post',
     iconColor: '#A4BC92',
     iconBg: '#DDFFBB',
-  },
+  }
 ];
 
 export const itemsGrid = [

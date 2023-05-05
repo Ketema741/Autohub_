@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DeleteWarning = ({ setShowWarning }) => {
+const DeleteWarning = ({ setShowWarning, handleDelete }) => {
   return (
     <div className="flex justify-center items-center">
         <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-gray-900 bg-opacity-50 z-10">
@@ -8,7 +8,7 @@ const DeleteWarning = ({ setShowWarning }) => {
             <p>Are you sure you want to delete this item?</p>
             <div className="mt-4 flex justify-center">
               <button
-                // onClick={handleDelete}
+                onClick={handleDelete}
                 className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 mr-4 rounded"
               >
                 Yes, delete

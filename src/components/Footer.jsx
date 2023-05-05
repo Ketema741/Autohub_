@@ -82,28 +82,7 @@ const Footer = () => (
                     <a href="mailto:meschacirung@gmail.com" className="transition hover:text-primary"
                     >Autohub@gmail.com</a>
                   </li>
-                  <li>
-                    <form action="">
-                      <label for="newsletter" className="text-lg text-gray-700 dark:text-gray-200"
-                      >Subscribe to our newsletter</label>
-                      <div className="relative mt-4">
-                        <input
-                          type="email"
-                          name="newsletter"
-                          id="newsletter"
-                          placeholder="Your email"
-                          className="invalid:outline-none placeholder-gray-600 dark:placeholder-white rounded-3xl w-full bg-gray-100 dark:bg-gray-900 px-4 py-3 ring-1 ring-gray-200 dark:ring-gray-700 invalid:ring-red-400"
-                        />
-                        <button
-                          type="submit"
-                          title="Submit"
-                          className="absolute right-0 w-max rounded-r-3xl bg-primary py-3 px-6 text-center transition"
-                        >
-                          <span className="font-semibold text-gray-900"> Send </span>
-                        </button>
-                      </div>
-                    </form>
-                  </li>
+                 
                 </ul>
               </div>
             </div>

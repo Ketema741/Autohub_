@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { MdOutlineCancel } from 'react-icons/md';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import Button from './Button';
 import { userProfileData } from '../data/dummy';
@@ -41,7 +41,7 @@ const UserProfile = ({ onLogout }) => {
       </div>
       <div>
         {userProfileData.map((item, index) => (
-          <NavLink to={item.url}>
+          <Link to={item.url}>
             <div key={index} className="flex gap-5 border-b-1 border-color p-4 hover:bg-light-gray cursor-pointer  dark:hover:bg-[#a5c2f4]">
 
               <button
@@ -57,7 +57,7 @@ const UserProfile = ({ onLogout }) => {
                 <p className="text-gray-500 text-sm dark:text-gray-400"> {item.desc} </p>
               </div>
             </div>
-          </NavLink>
+          </Link>
         ))}
       </div>
       <div className="mt-5">

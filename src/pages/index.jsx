@@ -17,9 +17,11 @@ export { default as ItemFilter } from './Item/ItemFilter';
 export { default as Blogs } from './Blog/Blogs';
 export { default as BlogCard } from './Blog/BlogCard';
 export { default as BlogDetail } from './Blog/BlogDetail';
+export { default as Posting } from './Expert/Post/Posting';
 
 export { default as Drivers } from './Driver/Drivers';
 export { default as DriverCard } from './Driver/DriverCard';
+export { default as DriverDetail } from './Driver/DriverDetail';
 
 export { default as Login } from './Auth/Login';
 export { default as Register } from './Auth/Register';

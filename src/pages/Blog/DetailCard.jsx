@@ -1,7 +1,9 @@
 import React from 'react';
-import BlogTab from './BlogTab'
+import BlogTab from './BlogTab';
 
-import resume from '../../brands/undraw_road_to_knowledge_m8s0.svg'
+import resume from '../../brands/undraw_road_to_knowledge_m8s0.svg';
+import Comment from './Comment';
+
 
 const DetailCard = () => {
 
