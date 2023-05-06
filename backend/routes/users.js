@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const config = require('config');
 const jwt = require('jsonwebtoken');
 const { check, validationResult } = require('express-validator')
+require("dotenv").config();
 
 const Auth = require("../middleware/supplierAuth");
 const User = require('../models/User')
@@ -186,9 +187,9 @@ router.delete("/:id", Auth, async (req, res) => {
 
 
 cloudinary.config({
-  cloud_name: config.get("cloud_name"),
-  api_key: config.get("api_key"),
-  api_secret: config.get("api_secret"),
+  cloud_name:  process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_KEY,
 });
 
 

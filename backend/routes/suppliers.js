@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcryptjs');
 const config = require('config');
+require("dotenv").config();
+
 const jwt = require('jsonwebtoken');
 const { check, validationResult } = require('express-validator')
 
@@ -111,7 +113,7 @@ router.post(
 
 			jwt.sign(
 				payload,
-				config.get('jwtSecret'),
+				process.env.SECRET_JWT,
 				{ expiresIn: 360000 },
 				(err, token) => {
 					if (err) throw err;
@@ -227,9 +229,9 @@ router.post(
   
 
   cloudinary.config({
-    cloud_name: config.get("cloud_name"),
-    api_key: config.get("api_key"),
-    api_secret: config.get("api_secret"),
+    cloud_name: process.env.CLOUND_NAME,
+    api_key: process.env.API_KEY,
+    api_secret: process.env.API_SECRET,
   });
   
   

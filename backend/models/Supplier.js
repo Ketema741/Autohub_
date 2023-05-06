@@ -1,44 +1,44 @@
-const mongoose = require ('mongoose')
+const mongoose = require('mongoose')
 
-const UserSchema = mongoose.Schema ({
+const SupplierSchema = mongoose.Schema({
     type: {
-        type:String,
-        default:"user"
+        type: String,
+        default: "supplier"
     },
     name: {
-        type:String,
-        required:true
+        type: String,
+        required: true
     },
     email: {
-        type:String,
-        required:true,
+        type: String,
+        required: true,
         unique: true
     },
     password: {
-        type:String,
-        required:true
+        type: String,
+        required: true
     },
-    phone: { 
-        type:String,
-        required:true
+    phone: {
+        type: String,
+        required: true
     },
     description: {
         type: String,
     },
     experienceYear: {
-        type:Number,
+        type: Number,
 
     },
     location: {
         type: String,
- 
+
     },
     specializations: {
-        type:String,
-  
+        type: String,
+
     },
     activityRange: {
-        type: Number, 
+        type: Number,
         default: null
     },
     forSale: {
@@ -51,16 +51,16 @@ const UserSchema = mongoose.Schema ({
     },
     favourites: {
         type: [Object],
-        default:[]
+        default: []
     },
     supplierImage: {
-		type: [Object],
-        default:[]
-	},
+        type: [Object],
+        default: []
+    },
     date: {
         type: Date,
-       default: Date.now
+        default: Date.now
     },
 })
 
-module.exports = mongoose.model('supplier', UserSchema);
+module.exports = mongoose.model('supplier', SupplierSchema);

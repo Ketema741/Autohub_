@@ -1,63 +1,84 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const ContactSchema = new Schema({
-	supplier: {
-		type: Schema.Types.ObjectId,
-		ref: 'supplier'
-	},
-	type: { 
-		type: String,
-		default: "rent"
-	},
-	itemImages: {
-		type: [Object],
-		required: true
-	},
-	title: { 
-		type: String,
-		required: true
-	},
-	description: {
-		type: String
-	},
-	location: {
-		type: String,
-		required: true
-	}, 
-	area: {
-		type: Number,
-		required: true
-	},
-	bed: {
-		type: Number,
-		required: true
-	},
-	bath: {
-		type: Number,
-		required: true
-	},
-	price: {
-		type: Number,
-		required: true
-	},
-	propertyType: {
-		type: String,
-	},
-	garage: {
-		type: String,
-	},
-	yearBuilt: {
-		type: Date,
-		required: true
-	},
-	Neighborhood: {
-		type: String,
-	},
-	date: {
-		type: Date,
-		default: Date.now
-	},
+const CategorySchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+  },
 });
 
-module.exports = mongoose.model('item', ContactSchema); 
+const ItemSchema = new Schema(
+  {
+    supplier: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Supplier",
+      required: true,
+    },
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
+      required: true,
+    },
+    name: {
+      type: String,
+      required: true,
+    },
+
+    price: {
+      type: Number,
+      required: true,
+    },
+
+    description: {
+      type: String,
+    },
+    quantity: {
+      type: Number,
+      default: 1,
+    },
+
+    itemImages: {
+      type: [Object],
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
+
+const carSchema = new mongoose.Schema({
+  make: {
+    type: String,
+    required: true,
+  },
+  model: {
+    type: String,
+    required: true,
+  },
+  year: {
+    type: Number,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+  color: {
+    type: String,
+    required: true,
+  },
+  carImages: {
+    type: [Object],
+    required: true,
+  },
+});
+
+module.exports = mongoose.model("Car", carSchema);
+
+const models = {
+  Item: mongoose.model("Item", ItemSchema),
+  Category: mongoose.model("Category", CategorySchema),
+  Car: mongoose.model("Car", carSchema),
+};
+
+module.exports = models;
