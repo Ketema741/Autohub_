@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
 
 const VehicleExpertRegistration = ({ onSubmit, handlePrev }) => {
-    const [expertise, setExpertise] = useState('');
-    const [certifications, setCertifications] = useState('');
-    const [bio, setBio] = useState('');
-    const [address, setAddress] = useState('');
-    const [phone, setPhone] = useState('');
 
+    const [expert, setExpert] = useState({
+        expertise: '',
+        certifications: '',
+        bio: '',
+        address: '',
+        phone: '',
+    });
+
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setExpert((prevFormData) => ({ ...prevFormData, [name]: value }));
+    };
     const handleSubmit = (event) => {
         event.preventDefault();
-        onSubmit({ expertise, certifications });
+        onSubmit(expert);
     }
 
     return (
@@ -27,11 +34,17 @@ const VehicleExpertRegistration = ({ onSubmit, handlePrev }) => {
                         <div className="flex -mx-3">
                             <div className="w-full px-3 mb-5">
                                 <label for="" className="text-xs font-semibold px-1">
-                                Expertise
+                                    Expertise
                                 </label>
                                 <div className="flex">
                                     <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-email-outline text-gray-400 text-lg"></i></div>
-                                    <input className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" type="text" value={expertise} onChange={(event) => setExpertise(event.target.value)} />
+                                    <input
+                                        className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                                        type="text"
+                                        name="expertise"
+                                        value={expert.expertise}
+                                        onChange={handleInputChange}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -40,7 +53,13 @@ const VehicleExpertRegistration = ({ onSubmit, handlePrev }) => {
                                 <label for="" className="text-xs font-semibold px-1">Phone</label>
                                 <div className="flex">
                                     <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
-                                    <input className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" type="text" value={phone} onChange={(event) => setPhone(event.target.value)} />
+                                    <input
+                                        className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                                        type="text"
+                                        name="phone"
+                                        value={expert.phone}
+                                        onChange={handleInputChange}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -49,7 +68,14 @@ const VehicleExpertRegistration = ({ onSubmit, handlePrev }) => {
                                 <label for="" className="text-xs font-semibold px-1">Address</label>
                                 <div className="flex">
                                     <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
-                                    <input className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" type="text" value={address} onChange={(event) => setAddress(event.target.value)} />
+                                    <input
+                                        className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                                        type="text"
+                                        name="address"
+                                        value={expert.address}
+                                        onChange={handleInputChange}
+
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -58,18 +84,29 @@ const VehicleExpertRegistration = ({ onSubmit, handlePrev }) => {
                                 <label for="" className="text-xs font-semibold px-1">Bio</label>
                                 <div className="flex">
                                     <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
-                                    <input className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" type="text" value={bio} onChange={(event) => setBio(event.target.value)} />
+                                    <input
+                                        className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                                        type="text"
+                                        name="bio"
+                                        value={expert.bio}
+                                        onChange={handleInputChange}
+                                    />
                                 </div>
                             </div>
                         </div>
                         <div className="flex -mx-3">
                             <div className="w-full px-3 mb-12">
                                 <label for="" className="text-xs font-semibold px-1">
-                                Certifications
+                                    Certifications
                                 </label>
                                 <div className="flex">
                                     <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
-                                    <input className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" type="text" value={certifications} onChange={(event) => setCertifications(event.target.value)} />
+                                    <input
+                                        className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                                        type="text"
+                                        name="certifications"
+                                        value={expert.certifications}
+                                        onChange={handleInputChange} />
                                 </div>
                             </div>
                         </div>

@@ -10,7 +10,6 @@ import BlogState from './context/blog/BlogState';
 import {
   Home,
   Admin,
-  AdminDashboard,
 
   Supplier,
 
@@ -77,7 +76,6 @@ const App = () => {
                   <Route path="/" element={<Home />} />
                   <Route path="/home" element={<Home />} />
                   <Route path="/admin-dashboard" element={<Admin />} />
-                  <Route path="/admin" element={<AdminDashboard />} />
 
                   <Route path="/item-detail" element={<ItemDetail />} />
                   <Route path="/supplier" element={<Supplier />} />

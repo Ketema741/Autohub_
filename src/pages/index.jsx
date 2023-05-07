@@ -2,7 +2,6 @@
 
 export { default as Home } from './Ecommerce/Home';
 export { default as Admin } from './Admin/Admin';
-export { default as AdminDashboard } from './Admin/AdminDashboard';
 
 export { default as Supplier } from './Supplier/Supplier';
 export { default as SupplierData } from './Supplier/SupplierData';

@@ -15,6 +15,7 @@ const RegistrationForm = () => {
 
     const handleSelectType = (userType) => {
         setUserType(userType);
+        console.log(userType);
         setStep(2);
     }
     const handlePrev = () => {
@@ -38,7 +39,10 @@ const RegistrationForm = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log({ userType, carSupplierInfo, driverInfo, vehicleExpertInfo });
+        console.log(userType)
+        console.log(carSupplierInfo)
+        console.log(driverInfo)
+        console.log(vehicleExpertInfo);
         // Perform form submission logic here
     }
 
@@ -49,14 +53,14 @@ const RegistrationForm = () => {
             formComponent = <SelectType onSelect={handleSelectType} />;
             break;
         case 2:
-            switch (userType) {
-                case 'carSupplier':
+            switch (userType.userType) {
+                case 'supplier':
                     formComponent = <SupplierRegistration onSubmit={handleCarSupplierRegistration} handlePrev={handlePrev} />;
                     break;
                 case 'driver':
                     formComponent = <DriverRegistration onSubmit={handleDriverRegistration} handlePrev={handlePrev} />;
                     break;
-                case 'vehicleExpert':
+                case 'expert':
                     formComponent = <VehicleExpertRegistration onSubmit={handleVehicleExpertRegistration} handlePrev={handlePrev} />;
                     break;
                 default:
@@ -67,11 +71,11 @@ const RegistrationForm = () => {
             formComponent = (
                 <form onSubmit={handleSubmit}>
                     <h2>Step 3: Confirm Registration Information</h2>
-                    <p>User Type: {userType}</p>
+                    <p>User Type: {userType.userType}</p>
                     {carSupplierInfo && (
                         <>
                             <p>Company Name: {carSupplierInfo.companyName}</p>
-                            <p>Contact Information: {carSupplierInfo.contactInfo}</p>
+                            <p>Contact Information: {carSupplierInfo.phone}</p>
                         </>
                     )}
                     {driverInfo && (

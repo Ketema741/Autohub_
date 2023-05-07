@@ -74,7 +74,8 @@ const Admin = () => {
             {isClicked.jobs && <Jobs />}
             {isClicked.orders && <Orders />}
 
-            <AdminContent />
+            {!isClicked.suppliers && !isClicked.drivers && !isClicked.serviceProviders && !isClicked.experts && !isClicked.jobs && !isClicked.orders && <AdminContent />}
+
           </div>
           <Footer />
         </div>
