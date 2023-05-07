@@ -1,74 +1,74 @@
 import React, { useReducer, useEffect, useContext } from 'react';
 import axios from 'axios';
-import supplierContext from './supplierContext';
-import AuthContext from '../supplierAuth/authContext';
-import supplierReducer from './supplierReducer';
+import userContext from './userContext';
+import AuthContext from '../Auth/authContext';
+import userReducer from './userReducer';
 
 import {
-  GET_SUPPLIERS,
-  GET_SUPPLIER,
-  ADD_SUPPLIER,
+  GET_USERS,
+  GET_USER,
+  ADD_USER,
   ADD_CHART,
   DELETE_CHART,
   UPDATE_CHART,
-  DELETE_SUPPLIER,
+  DELETE_USER,
   SET_CURRENT,
   CLEAR_CURRENT,
-  UPDATE_SUPPLIER,
-  FILTER_SUPPLIERS,
-  CLEAR_SUPPLIERS,
+  UPDATE_USER,
+  FILTER_USER,
+  CLEAR_USERS,
   CLEAR_FILTER,
-  SUPPLIER_ERROR,
+  USER_ERROR,
 } from '../Types';
 
-const SupplierState = (props) => {
+const userState = (props) => {
   const initialState = {
-    suppliers: null,
-    supplier: null,
+    users: null,
+    user: null,
     current: null,
     filtered: null,
     favourites: [],
   };
 
-  const [state, dispatch] = useReducer(supplierReducer, initialState);
+  const [state, dispatch] = useReducer(userReducer, initialState);
 
   const authContext = useContext(AuthContext);
-  const authenticatedsupplier = authContext.supplier;
+  const authenticateduser = authContext.user;
 
-  // Get suppliers
-  const getSuppliers = async () => {
+  // Get users
+  const getUsers = async () => {
     try {
-      const res = await axios.get('/api/suppliers');
+      const res = await axios.get('users/drivers');
       dispatch({
-        type: GET_SUPPLIERS,
+        type: GET_USERS,
         payload: res.data,
       });
     } catch (err) {
       dispatch({
-        type: SUPPLIER_ERROR,
+        type: USER_ERROR,
         payload: err.response.msg,
       });
     }
   };
 
-  // Get supplier
-  const getSupplier = async (_id) => {
+  // Get user
+  const getUser = async (_id) => {
     try {
-      const res = await axios.get(`api/suppliers/${_id}`);
+      const res = await axios.get(`api/users/${_id}`);
       dispatch({
-        type: GET_SUPPLIER,
+        type: GET_USER,
         payload: res.data,
       });
     } catch (err) {
       dispatch({
-        type: SUPPLIER_ERROR,
+        type: USER_ERROR,
         payload: err.response.msg,
       });
     }
   };
 
-  // add suppliers
-  const addSupplier = async (item, images) => {
+  // add users
+  const addUser = async (item, images) => {
     item.itemImages = images;
     const config = {
       headers: {
@@ -76,11 +76,11 @@ const SupplierState = (props) => {
       },
     };
     try {
-      const res = await axios.post('api/suppliers', item, config);
+      const res = await axios.post('api/users', item, config);
 
-      dispatch({ type: ADD_SUPPLIER, payload: res.data });
+      dispatch({ type: ADD_USER, payload: res.data });
     } catch (error) {
-      dispatch({ type: SUPPLIER_ERROR });
+      dispatch({ type: USER_ERROR });
     }
   };
 
@@ -95,32 +95,32 @@ const SupplierState = (props) => {
       },
     };
     try {
-      await axios.post(`api/suppliers/image`, id_obj, config);
+      await axios.post(`api/users/image`, id_obj, config);
     } catch (error) {
-      dispatch({ type: SUPPLIER_ERROR });
+      dispatch({ type: USER_ERROR });
     }
   };
 
-  // clear suppliers
-  const clearSuppliers = () => {
-    dispatch({ type: CLEAR_SUPPLIERS });
+  // clear users
+  const clearUsers = () => {
+    dispatch({ type: CLEAR_USERS });
   };
 
-  // Delete supplier
-  const deleteSupplier = async (_id) => {
+  // Delete user
+  const deleteUser = async (_id) => {
     try {
-      await axios.delete(`api/suppliers/${_id}`);
+      await axios.delete(`api/users/${_id}`);
       dispatch({
-        type: DELETE_SUPPLIER,
+        type: DELETE_USER,
         payload: _id,
       });
     } catch (error) {
-      dispatch({ type: SUPPLIER_ERROR });
+      dispatch({ type: USER_ERROR });
     }
   };
 
-  // update supplier
-  const updateSupplier = async (supplier) => {
+  // update user
+  const updateUser = async (user) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -129,21 +129,21 @@ const SupplierState = (props) => {
 
     try {
       const res = await axios.put(
-        `api/suppliers/${supplier._id}`,
-        supplier,
+        `api/users/${user._id}`,
+        user,
         config
       );
       dispatch({
-        type: UPDATE_SUPPLIER,
+        type: UPDATE_USER,
         payload: res.data,
       });
     } catch (error) {
-      dispatch({ type: SUPPLIER_ERROR });
+      dispatch({ type: USER_ERROR });
     }
   };
 
   // add To favourite
-  const addToFavourite = async (supplier, item) => {
+  const addToFavourite = async (user, item) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -152,7 +152,7 @@ const SupplierState = (props) => {
 
     try {
       const res = await axios.put(
-        `/api/suppliers/favourite/${supplier._id}`,
+        `/api/users/favourite/${user._id}`,
         JSON.stringify(item),
         config,
       );
@@ -161,12 +161,12 @@ const SupplierState = (props) => {
         payload: item,
       });
     } catch (error) {
-      dispatch({ type: SUPPLIER_ERROR });
+      dispatch({ type: USER_ERROR });
     }
   };
 
   // remove from Favourite
-  const removeFavourite = async (supplierId, itemId) => {
+  const removeFavourite = async (userId, itemId) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -175,7 +175,7 @@ const SupplierState = (props) => {
 
     try {
       await axios.put(
-        `/api/suppliers/removefavourite/${supplierId}`,
+        `/api/users/removefavourite/${userId}`,
         config,
       );
       dispatch({
@@ -183,19 +183,19 @@ const SupplierState = (props) => {
         payload: itemId,
       });
     } catch (error) {
-      dispatch({ type: SUPPLIER_ERROR });
+      dispatch({ type: USER_ERROR });
     }
   };
 
-  // load supplier favourite on first run or refresh
-  useEffect(() => {
-    if (authenticatedsupplier && authenticatedsupplier.favourites) {
-      dispatch({
-        type: ADD_CHART,
-        payload: authenticatedsupplier.favourites,
-      });
-    }
-  }, [authenticatedsupplier]);
+  // load user favourite on first run or refresh
+  // useEffect(() => {
+  //   if (authenticateduser && authenticateduser.favourites) {
+  //     dispatch({
+  //       type: ADD_CHART,
+  //       payload: authenticateduser.favourites,
+  //     });
+  //   }
+  // }, [authenticateduser]);
 
   // set current
   const setCurrent = (item) => {
@@ -208,8 +208,8 @@ const SupplierState = (props) => {
   };
 
   // filter item
-  const filterSuppliers = (text) => {
-    dispatch({ type: FILTER_SUPPLIERS, payload: text });
+  const filterUser = (text) => {
+    dispatch({ type: FILTER_USER, payload: text });
   };
 
   // clear filter
@@ -218,31 +218,31 @@ const SupplierState = (props) => {
   };
 
   return (
-    <supplierContext.Provider
+    <userContext.Provider
       value={{
-        suppliers: state.suppliers,
-        supplier: state.supplier,
+        users: state.users,
+        user: state.user,
         favourites: state.favourites,
         current: state.current,
         filtered: state.filtered,
-        getSuppliers,
-        getSupplier,
-        addSupplier,
+        getUsers,
+        getUser,
+        addUser,
         addToFavourite,
         removeFavourite,
-        clearSuppliers,
-        deleteSupplier,
+        clearUsers,
+        deleteUser,
         removeImage,
         setCurrent,
         clearCurrent,
-        updateSupplier,
-        filterSuppliers,
+        updateUser,
+        filterUser,
         clearFilter,
       }}
     >
       {props.children}
-    </supplierContext.Provider>
+    </userContext.Provider>
   );
 };
 
-export default SupplierState;
+export default userState;

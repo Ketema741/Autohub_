@@ -32,7 +32,7 @@ import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import { Sidebar } from '../../components';
 
 import { useStateContext } from '../../context/ContextProvider';
-import AuthContext from "../../context/supplierAuth/authContext";
+import AuthContext from "../../context/Auth/authContext";
 
 import Navbar from './Navbar'
 import About from './About'
@@ -41,7 +41,7 @@ import ProfileCard from './ProfileCard'
 
 const Profile = () => {
     const authContext = useContext(AuthContext);
-    const { isSupplierAuthenticated, supplier, logout } = authContext;
+    const { isUserAuthenticated, user, logout } = authContext;
     const {
         setCurrentColor,
         setCurrentMode,
@@ -84,20 +84,20 @@ const Profile = () => {
                             : "bg-main-bg dark:bg-main-dark-bg  w-full min-h-screen flex-2 "
                     }
                 >
-                    {supplier &&
+                    {user &&
                         <Fragment>
                             <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full ">
-                                <Navbar name={supplier.name} currentColor={currentColor} />
+                                <Navbar name={user.name} currentColor={currentColor} />
                             </div>
                             <div>
                                 <div className="mt-24 container mx-auto my-5 p-5">
                                     <div className="md:flex gap-2 no-wrap md:-mx-2 ">
                                         <div className="w-full md:w-3/12 md:mx-2">
-                                            <ProfileCard currentColor={currentColor} name={supplier.name} />
+                                            <ProfileCard currentColor={currentColor} name={user.name} />
                                             <div className="my-8"></div>
                                         </div>
                                         <div className="w-full md:w-9/12 mx-2 h-64">
-                                            <About currentColor={currentColor} supplier={supplier} />
+                                            <About currentColor={currentColor} user={user} />
                                             <div className="my-6"></div>
                                             <Experience currentColor={currentColor} />
                                         </div>

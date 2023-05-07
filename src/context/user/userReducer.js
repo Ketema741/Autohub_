@@ -1,43 +1,43 @@
 import {
-  GET_SUPPLIERS,
-  GET_SUPPLIER,
-  ADD_SUPPLIER,
+  GET_USERS,
+  GET_USER,
+  ADD_USER,
   ADD_CHART,
   UPDATE_CHART,
   DELETE_CHART,
-  DELETE_SUPPLIER,
+  DELETE_USER,
   SET_CURRENT,
   CLEAR_CURRENT,
-  UPDATE_SUPPLIER,
-  FILTER_SUPPLIERS,
-  CLEAR_SUPPLIERS,
+  UPDATE_USER,
+  FILTER_USER,
+  CLEAR_USERS,
   CLEAR_FILTER,
-  SUPPLIER_ERROR,
+  USER_ERROR,
 } from '../Types';
 
-const supplierReducer = (state, action) => {
+const userReducer = (state, action) => {
   switch (action.type) {
-    case GET_SUPPLIERS:
+    case GET_USERS:
       return {
         ...state,
-        suppliers: action.payload,
+        users: action.payload,
       };
 
-    case GET_SUPPLIER:
+    case GET_USER:
       return {
         ...state,
-        supplier: action.payload,
+        user: action.payload,
       };
-    case ADD_SUPPLIER:
+    case ADD_USER:
       return {
         ...state,
-        suppliers: [action.payload, ...state.suppliers],
+        users: [action.payload, ...state.users],
       };
 
-    case UPDATE_SUPPLIER:
+    case UPDATE_USER:
       return {
         ...state,
-        supplier: action.payload,
+        user: action.payload,
       };
     case ADD_CHART:
       return {
@@ -56,17 +56,17 @@ const supplierReducer = (state, action) => {
           (favourite) => favourite._id !== action.payload,
         ),
       };
-    case DELETE_SUPPLIER:
+    case DELETE_USER:
       return {
         ...state,
-        suppliers: state.suppliers.filter(
-          (supplier) => supplier._id !== action.payload,
+        users: state.users.filter(
+          (user) => user._id !== action.payload,
         ),
       };
-    case CLEAR_SUPPLIERS:
+    case CLEAR_USERS:
       return {
         ...state,
-        suppliers: null,
+        users: null,
         filtered: null,
         error: null,
         current: null,
@@ -81,10 +81,10 @@ const supplierReducer = (state, action) => {
         ...state,
         current: null,
       };
-    case FILTER_SUPPLIERS:
+    case FILTER_USER:
       return {
         ...state,
-        filtered: state.suppliers.filter(({ name, location }) => {
+        filtered: state.users.filter(({ name, location }) => {
           const testString = `${name}${location}`.toLowerCase();
           return testString.includes(action.payload.toLowerCase());
         }),
@@ -94,7 +94,7 @@ const supplierReducer = (state, action) => {
         ...state,
         filtered: null,
       };
-    case SUPPLIER_ERROR:
+    case USER_ERROR:
       return {
         ...state,
         error: action.payload,
@@ -104,4 +104,4 @@ const supplierReducer = (state, action) => {
   }
 };
 
-export default supplierReducer;
+export default userReducer;

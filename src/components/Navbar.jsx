@@ -14,8 +14,8 @@ import Notification from './Notification';;
 import UserProfile from './UserProfile'
 import { ItemFilter } from '../pages';
 
-import AuthContext from "../context/supplierAuth/authContext";
-import SupplierContext from "../context/supplier/supplierContext";
+import AuthContext from "../context/Auth/authContext";
+import UserContext from "../context/user/userContext";
 import { useStateContext } from '../context/ContextProvider';
 
 
@@ -51,8 +51,8 @@ const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
 
 const Navbar = () => {
   const authContext = useContext(AuthContext);
-  const supplierContext = useContext(SupplierContext);
-  const { isSupplierAuthenticated, supplier, logout } = authContext;
+  const userContext = useContext(UserContext);
+  const { isUserAuthenticated, user, logout } = authContext;
 
   const {
     currentColor,
@@ -99,7 +99,7 @@ const Navbar = () => {
       />
 
       <div className="flex">
-        {isSupplierAuthenticated ?
+        {isUserAuthenticated ?
           <Fragment>
             <NavButton
               title="Cart"

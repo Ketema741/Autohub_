@@ -2,8 +2,8 @@ import React from 'react'
 import { AiOutlineUser } from 'react-icons/ai';
 import { IoIosArrowDown } from 'react-icons/io';
 
-const About = ({ supplier, currentColor }) => {
-    const { name, email, phone, description, specializations } = supplier
+const About = ({ user, currentColor }) => {
+    const { name, email, phone, description, specializations } = user
 
     const firstName = name.split(" ")[0]
     const lastName = name.split(" ")[1]
