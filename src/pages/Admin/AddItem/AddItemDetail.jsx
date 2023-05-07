@@ -115,12 +115,11 @@ const AddItemDetail = () => {
                             <TooltipComponent content="Add Images" position="RightCenter">
                                 <CloudinaryUploadWidget handleOpenWidget={handleOpenWidget} />
                             </TooltipComponent>
-
                         </div>
                     </div>
                 </div>
             </div>
-
+            
             {editItem &&
                 <div>
                     {uploadType == "car" ?

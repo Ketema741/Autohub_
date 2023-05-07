@@ -7,6 +7,13 @@ const initialState = {
   cart: false,
   userProfile: false,
   notification: false,
+  suppliers: false,
+  serviceProviders: false,
+  drivers: false,
+  experts: false,
+  jobs: false,
+  orders: false,
+  adminBoard: false,
 };
 
 export const ContextProvider = ({ children }) => {

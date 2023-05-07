@@ -8,40 +8,45 @@ import ItemState from './context/item/ItemState';
 import BlogState from './context/blog/BlogState';
 
 import {
-  AboutUs,
-  FAQ,
   Home,
+  Admin,
+  AdminDashboard,
+
+  Supplier,
+
   ItemDetail,
+  EditItemDetail,
+  AddItem,
+  Orders,
 
   Jobs,
   JobDetail,
 
-  Chat,
-
+  
   Blogs,
   BlogDetail,
   Posting,
 
   Drivers,
   DriverDetail,
-
-  Supplier,
-  EditItemDetail,
-  AddItem,
-  Orders,
-
+  
   ServiceProviders,
   ServiceProviderDetail,
+  Chat,
 
   Login,
   Register,
   Profile,
   Employees,
   Customers,
+
   Line,
   Bar,
   Pie,
   Financial,
+
+  AboutUs,
+  FAQ,
 } from './pages';
 
 import { useStateContext } from './context/ContextProvider';
@@ -71,8 +76,14 @@ const App = () => {
                   {/* dashboard  */}
                   <Route path="/" element={<Home />} />
                   <Route path="/home" element={<Home />} />
-                  <Route path="/item-detail" element={<ItemDetail />} />
+                  <Route path="/admin-dashboard" element={<Admin />} />
+                  <Route path="/admin" element={<AdminDashboard />} />
 
+                  <Route path="/item-detail" element={<ItemDetail />} />
+                  <Route path="/supplier" element={<Supplier />} />
+                  <Route path="supplier/edit-item-detail" element={<EditItemDetail />} />
+                  <Route path="supplier/add-item" element={<AddItem />} />
+                  
                   {/* pages  */}
                   <Route path="/orders" element={<Orders />} />
                   <Route path="/employees" element={<Employees />} />
@@ -85,9 +96,6 @@ const App = () => {
                   <Route path="/pie" element={<Pie />} />
                   <Route path="/financial" element={<Financial />} />
 
-                  <Route path="/supplier" element={<Supplier />} />
-                  <Route path="supplier/edit-item-detail" element={<EditItemDetail />} />
-                  <Route path="supplier/add-item" element={<AddItem />} />
 
                   <Route path="/jobs" element={<Jobs />} />
                   <Route path="/job/:id" element={<JobDetail />} />

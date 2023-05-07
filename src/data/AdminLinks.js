@@ -1,17 +1,16 @@
 import React from 'react';
-import { AiFillCar, AiOutlineCloudUpload } from 'react-icons/ai';
-import { FiShoppingBag, FiBarChart, FiCreditCard, FiStar, FiShoppingCart } from 'react-icons/fi';
-import { BsBoxSeam, BsCurrencyDollar, BsShield, BsChatLeft, BsCurrencyExchange } from 'react-icons/bs';
-import { RiContactsLine } from 'react-icons/ri';
-import { MdOutlineSupervisorAccount, MdOutlineWork, MdOutlineSupportAgent,MdOutlineMail,MdOutlineManageAccounts } from 'react-icons/md';
+import { AiOutlineShoppingCart, AiOutlineBarChart, AiOutlineStock } from 'react-icons/ai';
+import {  FiPieChart, FiBarChart, FiCreditCard, FiStar, FiShoppingCart } from 'react-icons/fi';
+import { IoMdContacts } from 'react-icons/io';
+import { RiContactsLine, RiStockLine } from 'react-icons/ri';
 import { HiOutlineRefresh } from 'react-icons/hi';
 import { TiTick } from 'react-icons/ti';
+
+import { AiFillCar } from 'react-icons/ai';
+import { BsBoxSeam, BsCurrencyDollar, BsShield, BsChatLeft, BsCurrencyExchange } from 'react-icons/bs';
+import { MdOutlineSupervisorAccount, MdOutlineWork } from 'react-icons/md';
 import { GrLocation, GrServices } from 'react-icons/gr';
-import { FcAbout } from 'react-icons/fc';
 
-
-// car brands
-import { SiMitsubishi, SiJaguar, SiFerrari, SiTesla, SiBmw, SiHonda, SiNissan, SiMercedes, SiToyota, SiLandrover } from 'react-icons/si'
 
 
 import avatar from './avatar.jpg';
@@ -511,98 +510,80 @@ export const employeesGrid = [
 ];
 
 export const links = [
+
   {
     title: 'Pages',
     links: [
       {
-        name: 'Supplier',
-        to: 'supplier',
+        name: 'orders',
+        url: 'admin/orders',
+        icon: <AiOutlineShoppingCart />,
+      },
+      {
+        name: 'employees',
+        url: 'admin/employees',
+        icon: <IoMdContacts />,
+      },
+      {
+        name: 'Customers',
+        url: 'admin/customers',
+        icon: <RiContactsLine />,
+      },
+      {
+        name: 'Suppliers',
+        url: 'admin/supplier',
         icon: <BsCurrencyExchange />,
       },
       {
         name: 'Service Providers',
-        to: 'serviceproviders',
+        url: 'admin/service-providers',
         icon: <GrServices />,
       },
       {
         name: 'Drivers',
-        to: 'drivers',
+        url: 'admin/drivers',
         icon: <AiFillCar />,
       },
       {
-        name: 'Jobs For Drivers',
-        to: 'jobs',
+        name: 'Jobs',
+        url: 'admin/jobs',
         icon: <MdOutlineWork />,
       },
       {
         name: 'Blogs',
-        to: 'blogs',
+        url: 'admin/blogs',
         icon: <RiContactsLine />,
       },
     ],
   },
+
   {
-    title: 'AutoHub',
+    title: 'Charts',
     links: [
       {
-        name: 'About Us',
-        to: 'aboutus',
-        icon: <FcAbout />,
+        name: 'line',
+        url: 'line',
+        icon: <AiOutlineStock />,
+      },
+
+
+      {
+        name: 'bar',
+        url: 'bar',
+        icon: <AiOutlineBarChart />,
       },
       {
-        name: 'FAQ',
-        to: 'faq',
-        icon: <MdOutlineSupportAgent />,
+        name: 'pie',
+        url: 'pie',
+        icon: <FiPieChart />,
+      },
+      {
+        name: 'financial',
+        url: 'financial',
+        icon: <RiStockLine />,
       }
-    ],
-  }
-];
-export const miniLinks = [
-  {
-    title: 'Pages',
-    links: [
-      {
-        name: '',
-        to: 'supplier',
-        icon: <BsCurrencyExchange />,
-      },
-      {
-        name: '',
-        to: 'serviceproviders',
-        icon: <GrServices />,
-      },
-      {
-        name: '',
-        to: 'drivers',
-        icon: <AiFillCar />,
-      },
-      {
-        name: '',
-        to: 'jobs',
-        icon: <MdOutlineWork />,
-      },
-      {
-        name: '',
-        to: 'blogs',
-        icon: <RiContactsLine />,
-      },
     ],
   },
-  {
-    title: 'AutoHub',
-    links: [
-      {
-        name: '',
-        to: 'aboutus',
-        icon: <FcAbout />,
-      },
-      {
-        name: '',
-        to: 'faq',
-        icon: <MdOutlineSupportAgent />,
-      }
-    ],
-  }
 ];
 
 export const cartData = [
@@ -667,7 +648,7 @@ export const earningData = [
     percentage: '-4%',
     title: 'Customers',
     iconColor: '#03C9D7',
-    iconBg: '#EDE1DD',
+    iconBg: '#E5FAFB',
     pcColor: 'red-600',
   },
   {
@@ -675,8 +656,8 @@ export const earningData = [
     amount: '4,396',
     percentage: '+23%',
     title: 'Products',
-    iconColor: '#FFEAAA',
-    iconBg: '#3A98B9',
+    iconColor: 'rgb(255, 244, 229)',
+    iconBg: 'rgb(254, 201, 15)',
     pcColor: 'green-600',
   },
   {
@@ -684,8 +665,8 @@ export const earningData = [
     amount: '423,39',
     percentage: '+38%',
     title: 'Sales',
-    iconColor: '#AA8E39',
-    iconBg: '#FFEAAA',
+    iconColor: 'rgb(228, 106, 118)',
+    iconBg: 'rgb(255, 244, 229)',
 
     pcColor: 'green-600',
   },
@@ -695,106 +676,8 @@ export const earningData = [
     percentage: '-12%',
     title: 'Refunds',
     iconColor: 'rgb(0, 194, 146)',
-    iconBg: '#3A98B9',
+    iconBg: 'rgb(235, 250, 242)',
     pcColor: 'red-600',
-  },
-];
-
-export const brands = [
-  {
-    icon: <SiBmw />,
-    amount: '39,354',
-    percentage: '13',
-    title: 'BMW',
-    iconColor: '#977062',
-    iconBg: '#EDE1DD',
-    pcColor: 'red-600',
-  },
-  {
-
-    icon: <SiFerrari />,
-    amount: '4,396',
-    percentage: '5',
-    title: 'Ferrari',
-    iconColor: '#00F6DC',
-    iconBg: '#2B8D82',
-    pcColor: 'green-600',
-  },
-  {
-    icon: <SiHonda />,
-    amount: '423,39',
-    percentage: '21',
-    title: 'Honda',
-    iconColor: '#AA8E39',
-    iconBg: '#FFEAAA',
-
-    pcColor: 'green-600',
-  },
-  {
-    icon: <SiMercedes />,
-    amount: '39,354',
-    percentage: '50',
-    title: 'Mercedes',
-    iconColor: '#FFEAAA',
-    iconBg: '#3A98B9',
-    pcColor: 'red-600',
-  },
-  {
-    icon: <SiMitsubishi />,
-    amount: '39,354',
-    percentage: '58',
-    title: 'BMW',
-    iconColor: '#977062',
-    iconBg: '#EDE1DD',
-    pcColor: 'red-600',
-  },
-  {
-
-    icon: <SiTesla />,
-    amount: '4,396',
-    percentage: '3',
-    title: 'Tesla',
-    iconColor: '#FFEAAA',
-    iconBg: '#3A98B9',
-    pcColor: 'green-600',
-  },
-  {
-    icon: <SiNissan />,
-    amount: '423,39',
-    percentage: '38',
-    title: 'Nissan',
-    iconColor: '#AA8E39',
-    iconBg: '#FFEAAA',
-
-    pcColor: 'green-600',
-  },
-  {
-    icon: <SiToyota />,
-    amount: '39,354',
-    percentage: '121',
-    title: 'Toyota',
-    iconColor: '#FFEAAA',
-    iconBg: '#3A98B9',
-    pcColor: 'red-600',
-  },
-  {
-    icon: <SiLandrover />,
-    amount: '39,354',
-    percentage: '110',
-    title: 'Landrover',
-    iconColor: '#977062',
-    iconBg: '#EDE1DD',
-    pcColor: 'red-600',
-  },
-  {
-    icon: <SiJaguar />,
-    amount: '423,39',
-    percentage: '38',
-    title: 'SiJaguar',
-    iconColor: '#AA8E39',
-    iconBg: '#FFEAAA',
-
-    pcColor: 'green-600',
   },
 ];
 
@@ -804,8 +687,8 @@ export const recentTransactions = [
     amount: '+$350',
     title: 'Paypal Transfer',
     desc: 'Money Added',
-    iconColor: '#977062',
-    iconBg: '#EDE1DD',
+    iconColor: '#03C9D7',
+    iconBg: '#E5FAFB',
     pcColor: 'green-600',
   },
   {
@@ -814,7 +697,7 @@ export const recentTransactions = [
     desc: 'Bill Payment',
     title: 'Wallet',
     iconColor: 'rgb(0, 194, 146)',
-    iconBg: '#3A98B9',
+    iconBg: 'rgb(235, 250, 242)',
     pcColor: 'red-600',
   },
   {
@@ -822,8 +705,8 @@ export const recentTransactions = [
     amount: '+$350',
     title: 'Credit Card',
     desc: 'Money reversed',
-    iconColor: '#FFEAAA',
-    iconBg: '#3A98B9',
+    iconColor: 'rgb(255, 244, 229)',
+    iconBg: 'rgb(254, 201, 15)',
 
     pcColor: 'green-600',
   },
@@ -833,8 +716,8 @@ export const recentTransactions = [
     title: 'Bank Transfer',
     desc: 'Money Added',
 
-    iconColor: '#AA8E39',
-    iconBg: '#FFEAAA',
+    iconColor: 'rgb(228, 106, 118)',
+    iconBg: 'rgb(255, 244, 229)',
     pcColor: 'green-600',
   },
   {
@@ -843,8 +726,8 @@ export const recentTransactions = [
     percentage: '+38%',
     title: 'Refund',
     desc: 'Payment Sent',
-    iconColor: '#977062',
-    iconBg: '#EDE1DD',
+    iconColor: '#03C9D7',
+    iconBg: '#E5FAFB',
     pcColor: 'red-600',
   },
 ];
@@ -863,7 +746,7 @@ export const weeklyStats = [
     amount: '-$560',
     title: 'Best Seller',
     desc: 'MaterialPro Admin',
-    iconBg: '#3A98B9',
+    iconBg: 'rgb(254, 201, 15)',
     pcColor: 'red-600',
   },
   {
@@ -944,73 +827,29 @@ export const themeColors = [
   },
 ];
 
-export const Categories = [
-  { name: 'Intenships' },
-  { name: 'Resume' },
-  { name: 'Study' },
-  { name: 'Career Advice' },
-]
-
 export const userProfileData = [
   {
-  
-    icon: <MdOutlineManageAccounts />,
+    icon: <BsCurrencyDollar />,
     title: 'My Profile',
-    url: '/profile',
     desc: 'Account Settings',
-    iconColor: 'rgb(87, 125, 134)',
-    iconBg: 'rgb(185, 237, 221)',
-  },
-  {
-    icon: <MdOutlineMail />,
-    title: 'My Inbox',
-    url: '/profile',
-    desc: 'Messages',
     iconColor: '#03C9D7',
     iconBg: '#E5FAFB',
   },
   {
-    icon: <AiOutlineCloudUpload />,
-    title: 'Blog Post',
-    url: '/blog-posting',
-    desc: 'Make Post',
-    iconColor: '#A4BC92',
-    iconBg: '#DDFFBB',
-  }
+    icon: <BsShield />,
+    title: 'My Inbox',
+    desc: 'Messages & Emails',
+    iconColor: 'rgb(0, 194, 146)',
+    iconBg: 'rgb(235, 250, 242)',
+  },
+  {
+    icon: <FiCreditCard />,
+    title: 'My Tasks',
+    desc: 'To-do and Daily Tasks',
+    iconColor: 'rgb(255, 244, 229)',
+    iconBg: 'rgb(254, 201, 15)',
+  },
 ];
-
-export const itemsGrid = [
-  {
-    headerText: 'Image',
-    template: gridOrderImage,
-    textAlign: 'Center',
-    width: '120',
-  },
-
-  {
-    field: 'ItemName',
-    headerText: 'Item Name',
-    width: '150',
-    textAlign: 'Center',
-  },
-  {
-    field: 'Price',
-    headerText: 'Item Price',
-    format: 'C2',
-    textAlign: 'Center',
-    editType: 'numericedit',
-    width: '150',
-  },
-  {
-    headerText: 'Status',
-    template: gridOrderStatus,
-    field: 'OrderItems',
-    textAlign: 'Center',
-    width: '120',
-  },
-
-];
-
 
 export const ordersGrid = [
   {
@@ -1100,7 +939,7 @@ export const customersData = [
     Status: 'Pending',
     CustomerImage:
       avatar4,
-    StatusBg: '#DDFFBB',
+    StatusBg: '#FEC90F',
     Weeks: '19',
     Budget: '$24.5k',
     Location: 'USA',
@@ -1170,7 +1009,7 @@ export const customersData = [
     Status: 'Pending',
     CustomerImage:
       avatar4,
-    StatusBg: '#DDFFBB',
+    StatusBg: '#FEC90F',
     Weeks: '19',
     Budget: '$24.5k',
     Location: 'USA',
@@ -1240,7 +1079,7 @@ export const customersData = [
     Status: 'Pending',
     CustomerImage:
       avatar4,
-    StatusBg: '#DDFFBB',
+    StatusBg: '#FEC90F',
     Weeks: '19',
     Budget: '$24.5k',
     Location: 'USA',
@@ -1310,7 +1149,7 @@ export const customersData = [
     Status: 'Pending',
     CustomerImage:
       avatar4,
-    StatusBg: '#DDFFBB',
+    StatusBg: '#FEC90F',
     Weeks: '19',
     Budget: '$24.5k',
     Location: 'USA',
@@ -1380,7 +1219,7 @@ export const customersData = [
     Status: 'Pending',
     CustomerImage:
       avatar4,
-    StatusBg: '#DDFFBB',
+    StatusBg: '#FEC90F',
     Weeks: '19',
     Budget: '$24.5k',
     Location: 'USA',
@@ -1450,7 +1289,7 @@ export const customersData = [
     Status: 'Pending',
     CustomerImage:
       avatar4,
-    StatusBg: '#DDFFBB',
+    StatusBg: '#FEC90F',
     Weeks: '19',
     Budget: '$24.5k',
     Location: 'USA',
@@ -1520,7 +1359,7 @@ export const customersData = [
     Status: 'Pending',
     CustomerImage:
       avatar4,
-    StatusBg: '#DDFFBB',
+    StatusBg: '#FEC90F',
     Weeks: '19',
     Budget: '$24.5k',
     Location: 'USA',
@@ -1590,7 +1429,7 @@ export const customersData = [
     Status: 'Pending',
     CustomerImage:
       avatar4,
-    StatusBg: '#DDFFBB',
+    StatusBg: '#FEC90F',
     Weeks: '19',
     Budget: '$24.5k',
     Location: 'USA',
@@ -1630,7 +1469,7 @@ export const employeesData = [
     Name: 'Nancy Davolio',
     Title: 'Sales Representative',
     HireDate: '01/02/2021',
-    Country: 'USA',
+    Country: 'USFA',
     ReportsTo: 'Carson',
     EmployeeImage:
       avatar3,
@@ -2263,61 +2102,6 @@ export const employeesData = [
       avatar2,
   },
 ];
-export const supplierItems = [
-  {
-    Id: '1',
-    ItemName: 'Vinet',
-    Price: 32.38,
-    Status: 'pending',
-    StatusBg: '#FB9678',
-    ProductImage:
-      product6,
-  },
-  {
-    Id: '2',
-    ItemName: 'Carson Darrin',
-    Price: 56.34,
-    Status: 'Available',
-    StatusBg: '#03C9D7',
-    ProductImage:
-      product5,
-  },
-  {
-    Id: '3',
-    ItemName: 'Fran Perez',
-    Price: 93.31,
-    Status: 'Available',
-    StatusBg: '#03C9D7',
-    ProductImage:
-      product7,
-  },
-  {
-    ItemName: 'Anika Viseer',
-    Price: 93.31,
-    Status: 'Not Available',
-    StatusBg: '#FF5C8E',
-    ProductImage:
-      product4,
-  },
-  {
-    Id: '4',
-    ItemName: 'Miron Vitold',
-    Price: 23.99,
-    Status: 'Pending',
-    StatusBg: 'red',
-    ProductImage:
-      product1,
-  },
-  {
-    Id: '5',
-    ItemName: 'Omar Darobe',
-    Price: 95.99,
-    Status: 'Not Available',
-    StatusBg: '#FF5C8E',
-    ProductImage:
-      product2,
-  }]
-
 
 export const ordersData = [
   {
@@ -3425,6 +3209,11 @@ export const stackedPrimaryYAxis = {
   minorTickLines: { width: 0 },
   labelFormat: '{value}',
 };
+
+
+
+
+
 
 
 export const financialChartData = [

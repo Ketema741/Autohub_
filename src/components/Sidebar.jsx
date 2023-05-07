@@ -32,9 +32,9 @@ const Sidebar = () => {
 
   return (
     <div className="h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10">
-      {activeMenu && (
+      {true && (
         <>
-          <div className="ml-3 flex justify-between items-center">
+          <div className="flex justify-between items-center">
             <Link to="/" onClick={handleCloseSideBar} className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-white text-slate-900">
               <img src={logo} className="mt-6 w-64 h-24" alt='Autohub' style={{ height: "140px", width: "140px", color: currentColor }}></img>
 

@@ -8,15 +8,21 @@ import { FaSearch } from 'react-icons/fa';
 
 
 const Header = () => {
-    const [showJobs, setShowJobs] = useState(false);
-    const [jobName, setJobName] = useState('Addis');
+    const [isOpen, setIsOpen] = useState(false);
+    const [selectedJob, setSelectedJob] = useState('Location');
+    const [inputValue, setInputValue] = useState('');
 
-    const handleJobNameChange = (e) => {
-        setJobName(e.target.value);
+    const handleToggleJobList = () => setIsOpen(!isOpen);
+
+    const handleJobSelection = (job) => {
+        setSelectedJob(job);
+        setIsOpen(false);
     };
 
-    const handleShowJobs = () => {
-        setShowJobs(!showJobs);
+
+
+    const handleSearch = () => {
+        console.log(selectedInternship);
     };
 
     return (
@@ -38,43 +44,33 @@ const Header = () => {
                         <h1 className="text-white text-center text-2xl font-bold sm:text-3xl md:text-4xl">
                             Rev up your career as a driver with our job listings! Whether you're a seasoned pro or just starting out, we have the perfect opportunity for you.
                         </h1>
-
-                        <form action="" className="w-full">
+                        <form className="w-full">
                             <div className="relative flex p-1 rounded-xl bg-white shadow-2xl md:p-2">
                                 <div
-                                    id="catJobBox"
-                                    className="hidden text-gray-600 relative md:flex justify-between items-center min-w-max select-none"
+                                    className={`text-gray-600 relative md:flex justify-between items-center min-w-max select-none ${isOpen ? 'peer-checked:opacity-100 peer-checked:visible peer-checked:translate-y-1' : ''
+                                        }`}
                                 >
-                                    <input
-                                        type="checkbox"
-                                        name=""
-                                        id="toggleJobLstCat"
-                                        className="peer hidden outline-none"
-                                    />
+                                    <input type="checkbox" id="toggleJobLstCat" className="peer hidden outline-none" checked={isOpen} readOnly />
                                     <input
                                         type="text"
-                                        name=""
                                         id="catJobName"
-                                        value={jobName}
-                                        onChange={handleJobNameChange}
+                                        value={selectedJob}
                                         className="pl-3 w-full bg-white text-base font-medium cursor-pointer"
                                         readOnly
+                                        onClick={handleToggleJobList}
                                     />
-                                    <label
-                                        htmlFor="toggleJobLstCat"
-                                        className="absolute top-0 left-0 w-full h-full"
-                                    ></label>
-                                    <span className="min-w-max" onClick={handleShowJobs}>
+                                    <label htmlFor="toggleJobLstCat" className="absolute top-0 left-0 w-full h-full" onClick={handleToggleJobList} />
+                                    <span type='button' className="min-w-max">
                                         <HiChevronDown />
                                     </span>
                                     <div
                                         id="catJobLst"
-                                        className={`absolute transition-all duration-500 ease-in-out ${showJobs
-                                            ? 'opacity-100 visible translate-y-1'
-                                            : 'opacity-0 invisible translate-y-10'
-                                            } top-full left-0 w-full bg-white bg-opacity-80 rounded-lg py-2`}
+                                        className={`absolute transition-all duration-500 ease-in-out translate-y-10 opacity-0 invisible top-full left-0 w-full bg-white bg-opacity-80 rounded-lg py-2 ${isOpen ? 'peer-checked:opacity-100 peer-checked:visible peer-checked:translate-y-1' : ''
+                                            }`}
                                     >
-                                        <ul className="flex flex-col w-full">
+                                        <ul className="flex flex-col w-full h-32 overflow-y-auto"
+                                            style={{ zIndex: '100', scrollbarWidth: 'thin', scrollbarColor: 'rgba(156, 163, 175, 0.5)' }}
+                                        >
                                             <li className="cursor-default transition hover:bg-gray-100 hover:bg-opacity-80 flex px-5 py-2">
                                                 Adama
                                             </li>
@@ -84,13 +80,16 @@ const Header = () => {
                                             <li className="cursor-default transition hover:bg-gray-100 hover:bg-opacity-80 flex px-5 py-2">
                                                 Bishoftu
                                             </li>
+
                                         </ul>
                                     </div>
                                 </div>
                                 <input
-                                    placeholder="Search Service provider"
-                                    className="w-full p-4 outline-none text-gray-600"
                                     type="text"
+                                    placeholder="Search..."
+                                    className="w-full p-4 outline-none text-gray-600"
+                                    value={inputValue}
+                                    onChange={(e) => setInputValue(e.target.value)}
                                 />
                                 <button
                                     type="button"
