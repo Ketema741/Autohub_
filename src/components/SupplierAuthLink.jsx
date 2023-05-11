@@ -15,7 +15,7 @@
 //   const authContext = useContext(AuthContext);
 //   const supplierContext = useContext(SupplierContext);
 
-//   const { isSupplierAuthenticated, supplier, logout } = authContext;
+//   const { isUserAuthenticated, supplier, logout } = authContext;
 
 //   const { favourites } = supplierContext
 
@@ -105,10 +105,10 @@
 //     <div className="header__nav">
 //       <nav className="user-nav">
 //         {
-//           isSupplierAuthenticated && userChart}
+//           isUserAuthenticated && userChart}
 
 //         {
-//           isSupplierAuthenticated ? authLinks : guestLinks}
+//           isUserAuthenticated ? authLinks : guestLinks}
 //       </nav>
 //     </div>
 //   );

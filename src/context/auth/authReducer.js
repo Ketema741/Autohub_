@@ -1,7 +1,7 @@
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
-  SUPPLIER_LOADED,
+  USER_LOADED,
   AUTH_ERROR,
   LOGIN_SUCCESS,
   SET_CURRENT,
@@ -12,31 +12,28 @@ import {
 
 const authReducer = (state, action) => {
   switch (action.type) {
-    case SUPPLIER_LOADED:
+    case USER_LOADED:
       return {
         ...state,
-
-        isSupplierAuthenticated: true,
-        supplierLoading: false,
-        supplier: action.payload,
+        isUserAuthenticated: true,
+        userLoading: false,
+        user: action.payload,
       };
     case REGISTER_SUCCESS:
       localStorage.setItem('token', action.payload.token);
       return {
         ...state,
         ...action.payload,
-
-        isSupplierAuthenticated: true,
-        supplierLoading: false,
+        isUserAuthenticated: true,
+        userLoading: false,
       };
     case LOGIN_SUCCESS:
       localStorage.setItem('token', action.payload.token);
       return {
         ...state,
         ...action.payload,
-
-        isSupplierAuthenticated: true,
-        supplierLoading: false,
+        isUserAuthenticated: true,
+        userLoading: false,
       };
     case REGISTER_FAIL:
     case AUTH_ERROR:
@@ -46,10 +43,9 @@ const authReducer = (state, action) => {
       return {
         ...state,
         token: null,
-
-        isSupplierAuthenticated: false,
-        supplierLoading: false,
-        supplier: null,
+        isUserAuthenticated: false,
+        userLoading: false,
+        user: null,
         error: action.payload,
       };
     case CLEAR_ERRORS:
@@ -60,7 +56,7 @@ const authReducer = (state, action) => {
     case SET_CURRENT:
       return {
         ...state,
-        currentSupplier: action.payload,
+        currentUser: action.payload,
       };
     default:
       throw new Error(`Unsupported type of: ${action.type}`);

@@ -1,7 +1,7 @@
 import React, { useReducer, useEffect, useContext } from 'react';
 import axios from 'axios';
 import supplierContext from './supplierContext';
-import AuthContext from '../supplierAuth/authContext';
+import AuthContext from '../auth/authContext';
 import supplierReducer from './supplierReducer';
 
 import {

@@ -1,13 +1,13 @@
 import React, { useReducer, useEffect } from 'react';
-import axios from 'axios';
 import setAuthToken from '../../utils/setAuthToken';
+import axios from '../axiosConfig';
 
 import AuthContext from './authContext';
 import authReducer from './authReducer';
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
-  SUPPLIER_LOADED,
+  USER_LOADED,
   AUTH_ERROR,
   LOGIN_SUCCESS,
   SET_CURRENT,
@@ -17,29 +17,23 @@ import {
 
 const AuthState = (props) => {
   const initialState = {
-    supplier: null,
-
-    currentSupplier: null,
+    user: null,
+    currentUser: null,
     token: localStorage.token,
-
-    isSupplierAuthenticated: null,
-    supplierLoading: true,
+    isUserAuthenticated: null,
+    userLoading: true,
     error: null,
   };
 
   const [state, dispatch] = useReducer(authReducer, initialState);
 
-  // Register supplier
-  const supplierRegister = async (formData, images) => {
-    formData.supplierImage = images;
+  // Register user
+  const register = async (formData, images) => {
+    formData.userImage = images;
 
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
+   
     try {
-      const res = await axios.post('api/suppliers', formData, config);
+      const res = await axios.post('api/users', formData);
       dispatch({
         type: REGISTER_SUCCESS,
         payload: res.data,
@@ -63,7 +57,7 @@ const AuthState = (props) => {
       },
     };
     try {
-      const res = await axios.post(`api/suppliers/image`, id_obj, config);
+      const res = await axios.post(`/users/image`, id_obj, config);
       console.log(res);
     } catch (err) {
       dispatch({
@@ -74,69 +68,62 @@ const AuthState = (props) => {
     }
   };
 
-  // login supplier
-  const supplierLogin = async (formData) => {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-
+  // login user
+  const userLogin = async (formData) => {
     try {
-      const res = await axios.post('api/authsupplier', formData, config);
-
+      console.log(formData)
+      const res = await axios.post('/users/login', JSON.stringify(formData));
+      console.log(res);
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data,
       });
 
-
-      loadSupplier();
+      loadUser();
     } catch (err) {
       dispatch({
         type: LOGIN_FAIL,
         payload: err.response.data.msg,
       });
 
-      console.log('error ', err.response);
+      console.log('error ', err);
     }
   };
 
   // logout
   const logout = () => dispatch({ type: LOGOUT });
 
-  // load supplier
-  const
-    loadSupplier = async () => {
-      if (localStorage.token) {
-        setAuthToken(localStorage.token);
-      }
-      const res = await axios.get('api/authsupplier');
+  // load user
+  const loadUser = async () => {
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
+    }
+    const res = await axios.get('/users/login');
 
-      try {
-        dispatch({
-          type: SUPPLIER_LOADED,
-          payload: res.data,
-        });
-      } catch (error) {
-        dispatch({
-          type: AUTH_ERROR,
-        });
-      }
-    };
+    try {
+      dispatch({
+        type: USER_LOADED,
+        payload: res.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: AUTH_ERROR,
+      });
+    }
+  };
 
   // set current
-  const setCurrent = (supplier) => {
-    dispatch({ type: SET_CURRENT, payload: supplier });
+  const setCurrent = (user) => {
+    dispatch({ type: SET_CURRENT, payload: user });
   };
 
   // set token on initial app loading
   setAuthToken(state.token);
 
-  // load supplier on first run or refresh
-  if (state.supplierLoading) {
+  // load user on first run or refresh
+  if (state.userLoading) {
 
-    loadSupplier();
+    loadUser();
   }
 
   // 'watch' state.token and set headers and local storage on any change
@@ -148,15 +135,15 @@ const AuthState = (props) => {
   return (
     <AuthContext.Provider
       value={{
-        supplier: state.supplier,
-        currentSupplier: state.currentSupplier,
+        user: state.user,
+        currentUser: state.currentUser,
         error: state.error,
-        isSupplierAuthenticated: state.isSupplierAuthenticated,
-        supplierRegister,
+        isUserAuthenticated: state.isUserAuthenticated,
+        register,
         setCurrent,
-        supplierLogin,
+        userLogin,
         logout,
-        loadSupplier,
+        loadUser,
         removeImage,
       }}
     >

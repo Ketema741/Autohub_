@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import SupplierAuthState from './context/supplierAuth/AuthState';
+import SupplierAuthState from './context/auth/AuthState';
 import AlertState from './context/alert/AlertState';
-import SupplierState from './context/supplier/SupplierState';
+import SupplierState from './context/user/SupplierState';
 import ItemState from './context/item/ItemState';
 import BlogState from './context/blog/BlogState';
 

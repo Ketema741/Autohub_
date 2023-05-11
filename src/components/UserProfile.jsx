@@ -6,7 +6,7 @@ import Button from './Button';
 import { userProfileData } from '../data/dummy';
 import { useStateContext } from '../context/ContextProvider';
 import avatar from '../data/avatar.jpg';
-import AuthContext from "../context/supplierAuth/authContext";
+import AuthContext from "../context/auth/authContext";
 
 const UserProfile = ({ onLogout }) => {
   const { currentColor } = useStateContext();

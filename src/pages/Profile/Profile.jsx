@@ -32,7 +32,7 @@ import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import { Sidebar } from '../../components';
 
 import { useStateContext } from '../../context/ContextProvider';
-import AuthContext from "../../context/supplierAuth/authContext";
+import AuthContext from "../../context/auth/authContext";
 
 import Navbar from './Navbar'
 import About from './About'
@@ -41,7 +41,7 @@ import ProfileCard from './ProfileCard'
 
 const Profile = () => {
     const authContext = useContext(AuthContext);
-    const { isSupplierAuthenticated, supplier, logout } = authContext;
+    const { isUserAuthenticated, supplier, logout } = authContext;
     const {
         setCurrentColor,
         setCurrentMode,

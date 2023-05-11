@@ -6,7 +6,7 @@ import { FaFacebookF, FaEnvelope } from 'react-icons/fa';
 
 // import Alert from "../layouts/Alerts";
 import AlertContext from "../../context/alert/alertContext";
-import AuthContext from "../../context/supplierAuth/authContext";
+import AuthContext from "../../context/auth/authContext";
 
 import loginsvg from '../../brands/undraw_access_account_re_8spm.svg'
 
@@ -15,22 +15,19 @@ const Login = (props) => {
     const authContext = useContext(AuthContext);
     const navigate = useNavigate();
 
-    const [supplier, setSupplier] = useState({
+    const [supplier, setUser] = useState({
         email: '',
         password: '',
     });
 
     const { email, password } = supplier;
     const { setAlert } = alertContext;
-    const { supplierLogin, error,
-        isSupplierAuthenticated,
-        loadSupplier } = authContext;
+    const { userLogin, error,  isUserAuthenticated, loadUser } = authContext;
 
     useEffect(() => {
         if (
-            isSupplierAuthenticated) {
-
-            loadSupplier()
+            isUserAuthenticated) {
+            loadUser()
             console.log('loged in')
             navigate('/');
         }
@@ -40,17 +37,17 @@ const Login = (props) => {
 
         // eslint-disable-next-line
     }, [error,
-        isSupplierAuthenticated, props.history]);
+        isUserAuthenticated, props.history]);
 
     const onChange = (e) =>
-        setSupplier({ ...supplier, [e.target.name]: e.target.value });
+        setUser({ ...supplier, [e.target.name]: e.target.value });
 
     const onSubmit = (e) => {
         e.preventDefault();
         if (email === '' || password === '') {
             setAlert('Please fill all field', 'danger');
         } else {
-            supplierLogin({ email, password });
+            userLogin({ email, password });
         }
     };
 
@@ -69,7 +66,7 @@ const Login = (props) => {
                             <div className="font-medium self-center text-xl sm:text-2xl uppercase text-gray-800">Login To Your Account</div>
                             <button className="relative mt-6 border rounded-md py-2 text-sm text-gray-800 bg-gray-200 hover:bg-gray-300">
                                 <span className="absolute left-0 top-0 flex items-center justify-center h-full w-10 text-blue-500"><FaFacebookF /></span>
-                                <span>Login with Facebook</span>
+                                <span>Login with Google</span>
                             </button>
                             <div className="relative mt-10 h-px bg-gray-300">
                                 <div className="absolute left-0 top-0 flex justify-center w-full -mt-2">
