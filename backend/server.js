@@ -20,8 +20,8 @@ app.get("/", (req, res) => {
 const PORT = process.env.PORT || 8080;
 // Define Routes
 app.use("/api/authsupplier", require("./routes/supplierAuth"));
-// app.use("/api/items", require("./routes/items"));
 app.use("/api/users", require("./routes/users"));
+// app.use("/api/items", require("./routes/items"));
 // app.use("/api/suppliers", require("./routes/suppliers"));
 
 // Gatwech 

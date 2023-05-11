@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react';
-import axios from 'axios';
+import axios from '../axiosConfig';
 import blogContext from './blogContext';
 import blogReducer from './blogReducer';
 

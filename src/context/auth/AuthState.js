@@ -28,12 +28,10 @@ const AuthState = (props) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   // Register user
-  const register = async (formData, images) => {
-    formData.userImage = images;
-
+  const register = async (formData) => {
    
     try {
-      const res = await axios.post('api/users', formData);
+      const res = await axios.post('/users/register', formData);
       dispatch({
         type: REGISTER_SUCCESS,
         payload: res.data,
@@ -51,11 +49,7 @@ const AuthState = (props) => {
       public_id: public_id,
     };
 
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
+   
     try {
       const res = await axios.post(`/users/image`, id_obj, config);
       console.log(res);
@@ -98,7 +92,8 @@ const AuthState = (props) => {
     if (localStorage.token) {
       setAuthToken(localStorage.token);
     }
-    const res = await axios.get('/users/login');
+    
+    const res = await axios.get('/users/');
 
     try {
       dispatch({

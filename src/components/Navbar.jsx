@@ -15,7 +15,7 @@ import UserProfile from './UserProfile'
 import { ItemFilter } from '../pages';
 
 import AuthContext from "../context/auth/authContext";
-import SupplierContext from "../context/user/supplierContext";
+import UserContext from "../context/user/userContext";
 import { useStateContext } from '../context/ContextProvider';
 
 
@@ -51,8 +51,8 @@ const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
 
 const Navbar = () => {
   const authContext = useContext(AuthContext);
-  const supplierContext = useContext(SupplierContext);
-  const { isUserAuthenticated, supplier, logout } = authContext;
+  const userContext = useContext(UserContext);
+  const { isUserAuthenticated, user, logout } = authContext;
 
   const {
     currentColor,

@@ -20,7 +20,7 @@ const ItemCard = ({ item, currentColor }) => {
           <Link to="item-detail">
             <div className="flex flex-wrap items-center">
               <h2 className="text-2xl focus:outline-none font-semibold">
-                {item.title}
+                {item.name}
               </h2>
             </div>
           </Link>

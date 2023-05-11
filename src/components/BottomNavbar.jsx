@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import { HiChevronDown } from 'react-icons/hi';
-
-import bg from '../data/bg2.jpg'; // 2 3 6 8
-
 import { FaSearch } from 'react-icons/fa';
 
-
+import bg from '../data/bg2.jpg'; // 2 3 6 8
 
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false);

@@ -8,16 +8,13 @@
 // import { MdFavoriteBorder } from "react-icons/md";
 
 // import AuthContext from "../../context/supplierAuth/authContext";
-// import SupplierContext from "../../context/supplier/supplierContext";
 
 
 // const AuthLink = () => {
 //   const authContext = useContext(AuthContext);
-//   const supplierContext = useContext(SupplierContext);
 
 //   const { isUserAuthenticated, supplier, logout } = authContext;
 
-//   const { favourites } = supplierContext
 
 
 

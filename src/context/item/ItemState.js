@@ -32,7 +32,7 @@ const Itemstate = (props) => {
   // Get supplier items
   const getItems = async () => {
     try {
-      const res = await axios.get('api/items/supplieritems');
+      const res = await axios.get('/items');
       dispatch({
         type: GET_ITEMS,
         payload: res.data,
@@ -48,7 +48,7 @@ const Itemstate = (props) => {
   // Get public items
   const getPublicItems = async () => {
     try {
-      const res = await axios.get('api/items');
+      const res = await axios.get('/items');
       dispatch({
         type: GET_PUBLICITEMS,
         payload: res.data,

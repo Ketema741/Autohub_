@@ -17,6 +17,7 @@ const Items = () => {
 
     useEffect(() => {
         getPublicItems()
+        
     }, []);
 
     return (
@@ -30,7 +31,7 @@ const Items = () => {
                                     <ItemCard item={item} currentColor={currentColor} />
                                 ))
                                 :
-                                publicItems.map((item) => (
+                                publicItems.data.map((item) => (
                                     <ItemCard item={item} currentColor={currentColor} />
                                 ))
                             }

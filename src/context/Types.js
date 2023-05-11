@@ -23,18 +23,18 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT = 'LOGOUT';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 
-export const GET_SUPPLIERS = 'GET_SUPPLIERS';
-export const GET_SUPPLIER = 'GET_SUPPLIER';
-export const ADD_SUPPLIER = 'ADD_SUPPLIER';
-export const DELETE_SUPPLIER = 'DELETE_SUPPLIER';
-export const UPDATE_SUPPLIER = 'UPDATE_SUPPLIER';
-export const FILTER_SUPPLIERS = 'FILTER_SUPPLIERS';
-export const CLEAR_SUPPLIERS = 'CLEAR_SUPPLIERS';
-export const SUPPLIER_ERROR = 'SUPPLIER_ERROR';
+export const GET_USERS = 'GET_USERS';
+export const GET_USER = 'GET_USER';
+export const ADD_USER = 'ADD_USER';
+export const DELETE_USER = 'DELETE_USER';
+export const UPDATE_USER = 'UPDATE_USER';
+export const FILTER_USERS = 'FILTER_USERS';
+export const CLEAR_USERS = 'CLEAR_USERS';
+export const USER_ERROR = 'USER_ERROR';
 
-export const ADD_CHART = 'ADD_CHART';
-export const UPDATE_CHART = 'UPDATE_CHART';
-export const DELETE_CHART = 'DELETE_CHART';
+export const ADD_CART = 'ADD_CART';
+export const UPDATE_CART = 'UPDATE_CART';
+export const DELETE_CART = 'DELETE_CART';
 
 
 export const GET_POSTS = 'GET_POSTS';
