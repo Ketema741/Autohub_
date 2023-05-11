@@ -4,12 +4,13 @@ const router = express.Router();
 const {
   signUpUser,
   signInUser,
-  getCustomers,
+  getCustomer,
   getDrivers,
   getServiceProviders,
   getSuppliers,
   updateCustomer,
   deleteCustomer,
+  getUser,
 } = require("../controllers/usersController");
 
 const { verifyToken, verifyAdministrator } = require("../middleware/auth");
@@ -25,6 +26,8 @@ const {
 
 router.post("/register", signUpUser);
 router.post("/login", signInUser);
+router.post("/user", getUser)
+
 router.put(
   "/update/customer/:user_id",
   verifyToken,
@@ -34,11 +37,10 @@ router.put(
 router.delete("/delete/customer/:user_id", deleteCustomer);
 
 router
+  .post("/customers", getCustomer)
   .get("/drivers", getDrivers)
-  .get("/customers", getCustomers)
   .get("/service-providers", getServiceProviders)
   .get("/suppliers", getSuppliers);
-
 
 // Admin only routes
 router.get("/pending/suppliers", verifyAdministrator, getPendingSuppliers);

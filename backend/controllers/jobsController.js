@@ -1,4 +1,4 @@
-const Job = require("../models/jobModel");
+const Job = require("../models/Job");
 const { sendMail } = require("../configurations/mail");
 const { uploadToCloudinary } = require("../configurations/cloudinary");
 

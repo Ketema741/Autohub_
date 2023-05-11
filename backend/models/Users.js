@@ -3,7 +3,11 @@ const mongoose = require("mongoose");
 // System Administrator schema
 const AdminSchema = new mongoose.Schema(
   {
-    name: {
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
       type: String,
       required: true,
     },
@@ -40,7 +44,11 @@ const AdminSchema = new mongoose.Schema(
 // Supplier user schema
 const SupplierSchema = new mongoose.Schema(
   {
-    name: {
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
       type: String,
       required: true,
     },
@@ -82,7 +90,11 @@ const SupplierSchema = new mongoose.Schema(
 // Service Provider user schema
 const ServiceProviderSchema = new mongoose.Schema(
   {
-    name: {
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
       type: String,
       required: true,
     },
@@ -119,7 +131,11 @@ const ServiceProviderSchema = new mongoose.Schema(
 // Driver user schema
 const DriverSchema = new mongoose.Schema(
   {
-    name: {
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
       type: String,
       required: true,
     },
@@ -156,7 +172,11 @@ const DriverSchema = new mongoose.Schema(
 // Customer or Regular user schema
 const CustomerSchema = new mongoose.Schema(
   {
-    name: {
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
       type: String,
       required: true,
     },
@@ -190,7 +210,11 @@ const CustomerSchema = new mongoose.Schema(
 // temporarySupplierSchema user schema
 const TemporarySupplierSchema = new mongoose.Schema(
   {
-    name: {
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
       type: String,
       required: true,
     },

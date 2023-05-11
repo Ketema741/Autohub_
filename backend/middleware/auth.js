@@ -22,6 +22,7 @@ const verifyToken = async (req, res, next) => {
       } else if (decoded.user.role === "driver") {
         req.user = await models.Driver.findById(decoded.user.id);
       }
+
       next();
     }
     if (!token) {

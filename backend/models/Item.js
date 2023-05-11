@@ -63,7 +63,7 @@ const carSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  color: {
+  description: {
     type: String,
     required: true,
   },

@@ -3,19 +3,14 @@ const bcrypt = require("bcryptjs");
 const models = require("../models/Users");
 
 const getUserByEmail = async (email) => {
-  const [
-    admin,
-    customer,
-    supplier,
-    driver,
-    serviceProvider,
-  ] = await Promise.all([
-    models.Customer.findOne({ email }),
-    models.Admin.findOne({ email }),
-    models.ServiceProvider.findOne({ email }),
-    models.Driver.findOne({ email }),
-    models.Supplier.findOne({ email }),
-  ]);
+  const [admin, customer, supplier, driver, serviceProvider] =
+    await Promise.all([
+      models.Customer.findOne({ email }),
+      models.Admin.findOne({ email }),
+      models.ServiceProvider.findOne({ email }),
+      models.Driver.findOne({ email }),
+      models.Supplier.findOne({ email }),
+    ]);
   if (admin) {
     return admin;
   }
@@ -39,8 +34,8 @@ const getUserByEmail = async (email) => {
 
 const signUpUser = async (req, res) => {
   try {
-    const { name, email, phone, password, userType } = req.body;
-    if (!name || !email || !password || !userType) {
+    const { firstName, lastName, email, phone, password, userType } = req.body;
+    if (!firstName || !lastName || !email || !password || !userType) {
       res.status(400);
       throw new Error(" Please enter all the required fields");
     }
@@ -57,20 +52,22 @@ const signUpUser = async (req, res) => {
       case "admin":
         const admin = await models.Admin.create({
           email,
-          name,
+          firstName,
+          lastName,
           phone,
           password: hashedPassword,
           role: "admin",
         });
 
         if (admin) {
-          res
-            .status(201)
-            .json({
-              admin,
-              token: generateToken(admin._id, admin.role),
-            })
-            .select("-password");
+          res.status(201).json({
+            email: admin.email,
+            firstName: admin.firstName,
+            lastName: admin.lastName,
+            phone: admin.phone,
+            role: admin.role,
+            token: generateToken(admin._id, admin.role),
+          });
         } else {
           res.status(400);
           throw new Error("User couldn't be Registered, Invalid credentials");
@@ -79,7 +76,8 @@ const signUpUser = async (req, res) => {
       case "service provider":
         const service_provider = await models.ServiceProvider.create({
           email,
-          name,
+          firstName,
+          lastName,
           phone,
           password: hashedPassword,
           role: "service provider",
@@ -88,7 +86,8 @@ const signUpUser = async (req, res) => {
           res.status(201).json({
             _id: service_provider._id,
             email: service_provider.email,
-            name: service_provider.name,
+            firstName: service_provider.firstName,
+            lastName: service_provider.lastName,
             token: generateToken(service_provider._id, service_provider.role),
           });
         } else {
@@ -99,7 +98,8 @@ const signUpUser = async (req, res) => {
       case "supplier":
         const supplier = await models.TemporarySupplier.create({
           email,
-          name,
+          firstName,
+          lastName,
           phone,
           password: hashedPassword,
           role: "supplier",
@@ -108,7 +108,8 @@ const signUpUser = async (req, res) => {
           res.status(201).json({
             _id: supplier._id,
             email: supplier.email,
-            name: supplier.name,
+            firstName: supplier.firstName,
+            lastName: supplier.lastName,
             token: generateToken(supplier._id, supplier.role),
           });
         } else {
@@ -119,7 +120,8 @@ const signUpUser = async (req, res) => {
       case "customer":
         const customer = await models.Customer.create({
           email,
-          name,
+          firstName,
+          lastName,
           phone,
           password: hashedPassword,
           role: "customer",
@@ -128,7 +130,8 @@ const signUpUser = async (req, res) => {
           res.status(201).json({
             _id: customer._id,
             email: customer.email,
-            name: customer.name,
+            firstName: customer.firstName,
+            lastName: customer.lastName,
             token: generateToken(customer._id, customer.role),
           });
         } else {
@@ -140,7 +143,8 @@ const signUpUser = async (req, res) => {
       case "driver":
         const driver = await models.Driver.create({
           email,
-          name,
+          firstName,
+          lastName,
           phone,
           password: hashedPassword,
           role: "driver",
@@ -149,7 +153,8 @@ const signUpUser = async (req, res) => {
           res.status(201).json({
             _id: driver._id,
             email: driver.email,
-            name: driver.name,
+            firstName: driver.firstName,
+            lastName: driver.lastName,
             token: generateToken(driver._id, driver.role),
           });
         } else {
@@ -171,6 +176,9 @@ const signInUser = async (req, res) => {
     if (user && (await bcrypt.compare(password, user.password))) {
       res.status(200).json({
         _id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        address: user.address,
         email,
         token: generateToken(user._id, user.role),
       });
@@ -344,7 +352,8 @@ const deleteDriver = async (req, res) => {
 };
 
 // get all customers
-const getCustomers = async (req, res) => {
+
+const getCustomer = async (req, res) => {
   try {
     const customers = await models.Customer.find({}).select("-password");
     res.status(200).json({
@@ -391,6 +400,42 @@ const getDrivers = async (req, res) => {
   }
 };
 
+const getUser = async (req, res) => {
+  try {
+    const { token } = req.body;
+    const decoded = jwt.verify(token, process.env.SECRET_JWT);
+
+    if (decoded.user.role === "admin") {
+      user = await models.Admin.findById(decoded.user.id).select(
+        "-password -accountId"
+      );
+    } else if (decoded.user.role === "service provider") {
+      user = await models.ServiceProvider.findById(decoded.user.id).select(
+        "-password -accountId"
+      );
+    } else if (decoded.user.role === "supplier") {
+      user = await models.Supplier.findById(decoded.user.id).select(
+        "-password -accountId"
+      );
+    } else if (decoded.user.role === "customer") {
+      user = await models.Customer.findById(decoded.user.id).select(
+        "-password -accountId"
+      );
+    } else if (decoded.user.role === "driver") {
+      user = await models.Driver.findById(decoded.user.id).select(
+        "-password -accountId"
+      );
+    }
+    console.log(user);
+    if (!user) {
+      res.status(404);
+      throw new Error("User not found");
+    }
+    res.status(200).json({ user });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 // Function to generate Token for a user
 const generateToken = (id, role) => {
   return jwt.sign(
@@ -418,8 +463,9 @@ module.exports = {
   deleteDriver,
   deleteServiceProvider,
   deleteSupplier,
-  getCustomers,
+  getCustomer,
   getServiceProviders,
   getSuppliers,
   getDrivers,
+  getUser,
 };
