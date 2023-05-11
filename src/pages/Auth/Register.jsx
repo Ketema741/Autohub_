@@ -1,16 +1,12 @@
-import React, { useState, useContext } from 'react';
-
-
+import React, { useState } from 'react';
 import SelectType from './SelectType';
 import SupplierRegistration from './SupplierRegistration';
 import DriverRegistration from './DriverRegistration';
 import VehicleExpertRegistration from './VehicleExpertRegistration';
 
 import welcome from '../../brands/undraw_welcome_cats_thqn.svg'
-import AuthContext from '../../context/Auth/authContext'
+
 const RegistrationForm = () => {
-    const authContext = useContext(AuthContext)
-    const { register } = authContext
     const [step, setStep] = useState(1);
     const [userType, setUserType] = useState(null);
     const [carSupplierInfo, setCarSupplierInfo] = useState(null);
@@ -43,20 +39,11 @@ const RegistrationForm = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        let userFormData = { ...userType };
-
-        if (carSupplierInfo) {
-            userFormData = { ...userFormData, ...carSupplierInfo };
-        }
-        if (driverInfo) {
-            userFormData = { ...userFormData, ...driverInfo };
-        }
-        if (vehicleExpertInfo) {
-            userFormData = { ...userFormData, ...vehicleExpertInfo };
-        }
-
-        console.log(userFormData);
-        // register(userFormData)
+        console.log(userType)
+        console.log(carSupplierInfo)
+        console.log(driverInfo)
+        console.log(vehicleExpertInfo);
+        // Perform form submission logic here
     }
 
     let formComponent;

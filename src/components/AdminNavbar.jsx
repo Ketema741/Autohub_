@@ -17,8 +17,8 @@ import UserProfile from './UserProfile'
 import { AiOutlineSearch } from 'react-icons/ai';
 import { IoIosChatbubbles } from 'react-icons/io';
 
-import AuthContext from "../context/Auth/authContext";
-import UserContext from "../context/user/userContext";
+import AuthContext from "../context/supplierAuth/authContext";
+import SupplierContext from "../context/supplier/supplierContext";
 import { useStateContext } from '../context/ContextProvider';
 
 
@@ -42,8 +42,8 @@ const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
 
 const Navbar = () => {
     const authContext = useContext(AuthContext);
-    const userContext = useContext(UserContext);
-    const { isUserAuthenticated, user, logout } = authContext;
+    const supplierContext = useContext(SupplierContext);
+    const { isSupplierAuthenticated, supplier, logout } = authContext;
 
     const {
         currentColor,

@@ -7,7 +7,7 @@ const {
   getCustomers,
   getDrivers,
   getServiceProviders,
-  getUsers,
+  getSuppliers,
   updateCustomer,
   deleteCustomer,
 } = require("../controllers/usersController");
@@ -37,7 +37,7 @@ router
   .get("/drivers", getDrivers)
   .get("/customers", getCustomers)
   .get("/service-providers", getServiceProviders)
-  .get("/suppliers", getUsers);
+  .get("/suppliers", getSuppliers);
 
 
 // Admin only routes

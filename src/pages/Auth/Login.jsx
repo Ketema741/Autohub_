@@ -6,7 +6,7 @@ import { FaFacebookF, FaEnvelope } from 'react-icons/fa';
 
 // import Alert from "../layouts/Alerts";
 import AlertContext from "../../context/alert/alertContext";
-import AuthContext from "../../context/Auth/authContext";
+import AuthContext from "../../context/supplierAuth/authContext";
 
 import loginsvg from '../../brands/undraw_access_account_re_8spm.svg'
 
@@ -15,22 +15,22 @@ const Login = (props) => {
     const authContext = useContext(AuthContext);
     const navigate = useNavigate();
 
-    const [user, setUser] = useState({
+    const [supplier, setSupplier] = useState({
         email: '',
         password: '',
     });
 
-    const { email, password } = user;
+    const { email, password } = supplier;
     const { setAlert } = alertContext;
-    const { userLogin, error,
-        isUserAuthenticated,
-        loadUser } = authContext;
+    const { supplierLogin, error,
+        isSupplierAuthenticated,
+        loadSupplier } = authContext;
 
     useEffect(() => {
         if (
-            isUserAuthenticated) {
+            isSupplierAuthenticated) {
 
-            loadUser()
+            loadSupplier()
             console.log('loged in')
             navigate('/');
         }
@@ -40,17 +40,17 @@ const Login = (props) => {
 
         // eslint-disable-next-line
     }, [error,
-        isUserAuthenticated, props.history]);
+        isSupplierAuthenticated, props.history]);
 
     const onChange = (e) =>
-        setUser({ ...user, [e.target.name]: e.target.value });
+        setSupplier({ ...supplier, [e.target.name]: e.target.value });
 
     const onSubmit = (e) => {
         e.preventDefault();
         if (email === '' || password === '') {
             setAlert('Please fill all field', 'danger');
         } else {
-            userLogin({ email, password });
+            supplierLogin({ email, password });
         }
     };
 

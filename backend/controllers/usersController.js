@@ -231,7 +231,7 @@ const updateServiceProvider = async (req, res) => {
   }
 };
 
-const updateUser = async (req, res) => {
+const updateSupplier = async (req, res) => {
   try {
     const user = await models.Supplier.findById(req.params.user_id);
     console.log(user);
@@ -294,7 +294,7 @@ const deleteCustomer = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-const deleteUser = async (req, res) => {
+const deleteSupplier = async (req, res) => {
   try {
     const deletedUser = await models.Supplier.findByIdAndDelete(
       req.params.user_id
@@ -355,7 +355,7 @@ const getCustomers = async (req, res) => {
   }
 };
 // get all suppliers
-const getUsers = async (req, res) => {
+const getSuppliers = async (req, res) => {
   try {
     const suppliers = await models.Supplier.find({}).select("-password");
     res.status(200).json({
@@ -412,14 +412,14 @@ module.exports = {
   signInUser,
   updateDriver,
   updateCustomer,
-  updateUser,
+  updateSupplier,
   updateServiceProvider,
   deleteCustomer,
   deleteDriver,
   deleteServiceProvider,
-  deleteUser,
+  deleteSupplier,
   getCustomers,
   getServiceProviders,
-  getUsers,
+  getSuppliers,
   getDrivers,
 };

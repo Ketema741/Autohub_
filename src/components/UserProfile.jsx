@@ -6,12 +6,12 @@ import Button from './Button';
 import { userProfileData } from '../data/dummy';
 import { useStateContext } from '../context/ContextProvider';
 import avatar from '../data/avatar.jpg';
-import AuthContext from "../context/Auth/authContext";
+import AuthContext from "../context/supplierAuth/authContext";
 
 const UserProfile = ({ onLogout }) => {
   const { currentColor } = useStateContext();
   const authContext = useContext(AuthContext);
-  const { user } = authContext;
+  const { supplier } = authContext;
 
 
   return (
@@ -32,10 +32,10 @@ const UserProfile = ({ onLogout }) => {
           src={avatar}
           alt="user-profile"
         />
-        {user &&
+        {supplier &&
           <div>
-            <p className="font-semibold text-xl dark:text-gray-200"> {user.name} </p>
-            <p className="text-gray-500 text-sm font-semibold dark:text-gray-400"> {user.email}</p>
+            <p className="font-semibold text-xl dark:text-gray-200"> {supplier.name} </p>
+            <p className="text-gray-500 text-sm font-semibold dark:text-gray-400"> {supplier.email}</p>
           </div>
         }
       </div>

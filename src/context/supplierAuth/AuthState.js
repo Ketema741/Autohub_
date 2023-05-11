@@ -7,7 +7,7 @@ import authReducer from './authReducer';
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
-  USER_LOADED,
+  SUPPLIER_LOADED,
   AUTH_ERROR,
   LOGIN_SUCCESS,
   SET_CURRENT,
@@ -17,19 +17,21 @@ import {
 
 const AuthState = (props) => {
   const initialState = {
-    user: null,
-    currentUser: null,
+    supplier: null,
+
+    currentSupplier: null,
     token: localStorage.token,
-    isUserAuthenticated: null,
-    userLoading: true,
+
+    isSupplierAuthenticated: null,
+    supplierLoading: true,
     error: null,
   };
 
   const [state, dispatch] = useReducer(authReducer, initialState);
 
-  // Register user
-  const register = async (formData, images) => {
-    formData.userImage = images;
+  // Register supplier
+  const supplierRegister = async (formData, images) => {
+    formData.supplierImage = images;
 
     const config = {
       headers: {
@@ -37,9 +39,9 @@ const AuthState = (props) => {
       },
     };
     try {
-      const res = await axios.post('api/users', formData, config);
+      const res = await axios.post('api/suppliers', formData, config);
       dispatch({
-        type: r_SUCCESS,
+        type: REGISTER_SUCCESS,
         payload: res.data,
       });
     } catch (err) {
@@ -61,7 +63,7 @@ const AuthState = (props) => {
       },
     };
     try {
-      const res = await axios.post(`api/users/image`, id_obj, config);
+      const res = await axios.post(`api/suppliers/image`, id_obj, config);
       console.log(res);
     } catch (err) {
       dispatch({
@@ -72,8 +74,8 @@ const AuthState = (props) => {
     }
   };
 
-  // login user
-  const userLogin = async (formData) => {
+  // login supplier
+  const supplierLogin = async (formData) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -81,7 +83,7 @@ const AuthState = (props) => {
     };
 
     try {
-      const res = await axios.post('api/authuser', formData, config);
+      const res = await axios.post('api/authsupplier', formData, config);
 
       dispatch({
         type: LOGIN_SUCCESS,
@@ -89,7 +91,7 @@ const AuthState = (props) => {
       });
 
 
-      loadUser();
+      loadSupplier();
     } catch (err) {
       dispatch({
         type: LOGIN_FAIL,
@@ -103,17 +105,17 @@ const AuthState = (props) => {
   // logout
   const logout = () => dispatch({ type: LOGOUT });
 
-  // load user
+  // load supplier
   const
-    loadUser = async () => {
+    loadSupplier = async () => {
       if (localStorage.token) {
         setAuthToken(localStorage.token);
       }
-      const res = await axios.get('api/authuser');
+      const res = await axios.get('api/authsupplier');
 
       try {
         dispatch({
-          type: USER_LOADED,
+          type: SUPPLIER_LOADED,
           payload: res.data,
         });
       } catch (error) {
@@ -124,17 +126,17 @@ const AuthState = (props) => {
     };
 
   // set current
-  const setCurrent = (user) => {
-    dispatch({ type: SET_CURRENT, payload: user });
+  const setCurrent = (supplier) => {
+    dispatch({ type: SET_CURRENT, payload: supplier });
   };
 
   // set token on initial app loading
   setAuthToken(state.token);
 
-  // load user on first run or refresh
-  if (state.userLoading) {
+  // load supplier on first run or refresh
+  if (state.supplierLoading) {
 
-    loadUser();
+    loadSupplier();
   }
 
   // 'watch' state.token and set headers and local storage on any change
@@ -146,15 +148,15 @@ const AuthState = (props) => {
   return (
     <AuthContext.Provider
       value={{
-        user: state.user,
-        currentUser: state.currentUser,
+        supplier: state.supplier,
+        currentSupplier: state.currentSupplier,
         error: state.error,
-        isUserAuthenticated: state.isUserAuthenticated,
-        register,
+        isSupplierAuthenticated: state.isSupplierAuthenticated,
+        supplierRegister,
         setCurrent,
-        userLogin,
+        supplierLogin,
         logout,
-        loadUser,
+        loadSupplier,
         removeImage,
       }}
     >

@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import AuthState from './context/Auth/AuthState';
+import SupplierAuthState from './context/supplierAuth/AuthState';
 import AlertState from './context/alert/AlertState';
-import SupplierState from './context/user/userState';
+import SupplierState from './context/supplier/SupplierState';
 import ItemState from './context/item/ItemState';
 import BlogState from './context/blog/BlogState';
 
@@ -65,7 +65,7 @@ const App = () => {
   }, []);
 
   return (
-    <AuthState>
+    <SupplierAuthState>
       <SupplierState>
         <ItemState>
           <BlogState>
@@ -122,7 +122,7 @@ const App = () => {
           </BlogState>
         </ItemState>
       </SupplierState>
-    </AuthState>
+    </SupplierAuthState>
   );
 };
 

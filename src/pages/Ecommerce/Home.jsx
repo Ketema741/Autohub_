@@ -7,7 +7,6 @@ import Items from '../Item/Items';
 
 import { useStateContext } from '../../context/ContextProvider';
 import ItemContext from '../../context/item/itemContext';
-import UserContext from '../../context/user/userContext';
 
 const Home = () => {
   const {
@@ -18,15 +17,11 @@ const Home = () => {
     currentColor,
   } = useStateContext();
 
-  const itemContext = useContext(ItemContext);
-  const userContext = useContext(UserContext);
-
-  const { getUsers } = userContext;
-  const { filtered, publicItems, getPublicItems, loading } = itemContext;
+  const itemContext = useContext(ItemContext)
+  const { filtered, publicItems, getPublicItems, loading } = itemContext
 
 
   useEffect(() => {
-    getUsers()
     getPublicItems()
 
     const currentThemeColor = localStorage.getItem('colorMode');
