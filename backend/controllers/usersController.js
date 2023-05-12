@@ -467,8 +467,7 @@ module.exports = {
   getCustomers,
 =======
   deleteSupplier,
-  getCustomer,
->>>>>>> 3c1a62602fdc165b4d8bf435239269150b43f05d
+  getCustomers,
   getServiceProviders,
   getUsers,
   getDrivers,
