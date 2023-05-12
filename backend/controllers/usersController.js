@@ -462,10 +462,8 @@ module.exports = {
   deleteCustomer,
   deleteDriver,
   deleteServiceProvider,
-<<<<<<< HEAD
   deleteUser,
   getCustomers,
-=======
   deleteSupplier,
   getCustomers,
   getServiceProviders,
