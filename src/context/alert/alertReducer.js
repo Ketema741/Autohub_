@@ -1,4 +1,4 @@
-import { SET_ALERT, REMOVE_ALERT } from '../Types';
+import { SET_ALERT, REMOVE_ALERT } from "../Types";
 
 const alertReducer = (state, action) => {
   switch (action.type) {

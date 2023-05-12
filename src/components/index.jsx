@@ -1,4 +1,5 @@
 export { default as Button } from './Button';
+export { default as Alert } from './Alert';
 export { default as ThemeSettings } from './ThemeSettings';
 export { default as Sidebar } from './Sidebar';
 export { default as SupplierSidebar } from './SupplierSidebar';

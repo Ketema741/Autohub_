@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+import { FaEnvelope, FaLock } from 'react-icons/fa';
 
 const DriverRegistration = ({ onSubmit, handlePrev }) => {
 
@@ -8,6 +11,17 @@ const DriverRegistration = ({ onSubmit, handlePrev }) => {
         address: '',
         phone: '',
     });
+
+    const validateForm = Yup.object().shape({
+        licenseNumber: Yup.string().required('License Number is required'),
+        phone: Yup.string().required('Phone is required'),
+        address: Yup.string().required('Address is required'),
+        bio: Yup.string()
+            .required('Bio is required')
+            .min(5, 'Bio must be at least 5 characters long'),
+    });
+
+
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -29,87 +43,105 @@ const DriverRegistration = ({ onSubmit, handlePrev }) => {
                         <h1 className="font-bold text-3xl text-gray-900">REGISTER</h1>
                         <p>Step 2: Vehicle driver Registration</p>
                     </div>
-                    <form onSubmit={handleSubmit}>
-                        <div className="flex -mx-3">
-                            <div className="w-full px-3 mb-5">
-                                <label for="" className="text-xs font-semibold px-1">
-                                    License Number
-                                </label>
-                                <div className="flex">
-                                    <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-email-outline text-gray-400 text-lg"></i></div>
-                                    <input
-                                        className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-                                        type="text"
-                                        name="licenseNumber"
-                                        value={driver.licenseNumber}
-                                        onChange={handleInputChange}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="flex -mx-3">
-                            <div className="w-full px-3 mb-12">
-                                <label for="" className="text-xs font-semibold px-1">Phone</label>
-                                <div className="flex">
-                                    <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
-                                    <input
-                                        className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-                                        type="text"
-                                        name="phone"
-                                        value={driver.phone}
-                                        onChange={handleInputChange}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="flex -mx-3">
-                            <div className="w-full px-3 mb-12">
-                                <label for="" className="text-xs font-semibold px-1">Address</label>
-                                <div className="flex">
-                                    <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
-                                    <input
-                                        className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-                                        type="text"
-                                        name="address"
-                                        value={driver.address}
-                                        onChange={handleInputChange}
+                    <Formik initialValues={driver} onSubmit={handleSubmit} validate={validateForm}>
+                        <Form>
+                            <div className="flex -mx-3">
+                                <div className="w-full px-3 mb-5">
+                                    <label htmlFor="licenseNumber" className="text-xs font-semibold px-1">
+                                        License Number
+                                    </label>
+                                    <div className="flex">
+                                        <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                            <FaEnvelope className="text-gray-400 text-lg" />
+                                        </div>
+                                        <Field type="text" id="licenseNumber" name="licenseNumber" className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" />
 
-                                    />
+                                    </div>
+                                    <ErrorMessage name="licenseNumber" component="div" className="text-red-500" />
                                 </div>
                             </div>
-                        </div>
-                        <div className="flex -mx-3">
-                            <div className="w-full px-3 mb-12">
-                                <label for="" className="text-xs font-semibold px-1">Bio</label>
-                                <div className="flex">
-                                    <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
-                                    <input
-                                        className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-                                        type="text"
-                                        name="bio"
-                                        value={driver.bio}
-                                        onChange={handleInputChange}
-                                    />
+
+
+                            <div className="flex -mx-3">
+                                <div className="w-full px-3 mb-12">
+                                    <label htmlFor="phone" className="text-xs font-semibold px-1">Phone</label>
+                                    <div className="flex">
+                                        <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                            <FaLock className="text-gray-400 text-lg" />
+                                        </div>
+                                        <Field
+                                            id="phone"
+                                            type="text"
+                                            name="phone"
+                                            className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                                            value={driver.phone}
+                                            onChange={handleInputChange}
+                                        />
+                                    </div>
+                                    <ErrorMessage name="phone" component="div" className="text-red-500" />
                                 </div>
                             </div>
-                        </div>
-                        
-                        <div className="flex justify-between">
-                            <button
-                                type="button"
-                                className="bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600"
-                                onClick={handlePrev}
-                            >
-                                Previous
-                            </button>
-                            <button
-                                className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
-                                type="submit"
-                            >
-                                Submit
-                            </button>
-                        </div>
-                    </form>
+
+
+                            <div className="flex -mx-3">
+                                <div className="w-full px-3 mb-12">
+                                    <label htmlFor="address" className="text-xs font-semibold px-1">Address</label>
+                                    <div className="flex">
+                                        <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                            <FaLock className="text-gray-400 text-lg" />
+                                        </div>
+                                        <Field
+                                            id="address"
+                                            type="text"
+                                            name="address"
+                                            className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                                            value={driver.address}
+                                            onChange={handleInputChange}
+                                        />
+                                    </div>
+                                    <ErrorMessage name="address" component="div" className="text-red-500" />
+                                </div>
+                            </div>
+
+
+                            <div className="flex -mx-3">
+                                <div className="w-full px-3 mb-12">
+                                    <label htmlFor="bio" className="text-xs font-semibold px-1">Bio</label>
+                                    <div className="flex">
+                                        <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                            <FaLock className="text-gray-400 text-lg" />
+                                        </div>
+                                        <Field
+                                            id="bio"
+                                            type="text"
+                                            name="bio"
+                                            className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                                            value={driver.bio}
+                                            onChange={handleInputChange}
+                                        />
+                                    </div>
+                                    <ErrorMessage name="bio" component="div" className="text-red-500" />
+                                </div>
+                            </div>
+
+
+                            <div className="flex justify-between">
+                                <button
+                                    type="button"
+                                    className="bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600"
+                                    onClick={handlePrev}
+                                >
+                                    Previous
+                                </button>
+                                <button
+                                    className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+                                    type="submit"
+                                >
+                                    Submit
+                                </button>
+                            </div>
+                        </Form>
+                    </Formik>
                 </div>
             </div>
         </div>

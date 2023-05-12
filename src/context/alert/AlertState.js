@@ -1,10 +1,9 @@
-import React, { useReducer } from 'react';
-import { v4 } from 'uuid';
+import React, { useReducer } from "react";
+import AlertContext from "./alertContext";
+import alertReducer from "./alertReducer";
+import { v4 } from "uuid";
 
-import AlertContext from './alertContext';
-import alertReducer from './alertReducer';
-
-import { SET_ALERT, REMOVE_ALERT } from '../Types';
+import { SET_ALERT, REMOVE_ALERT } from "../Types";
 
 const AlertState = (props) => {
   const initialState = [];

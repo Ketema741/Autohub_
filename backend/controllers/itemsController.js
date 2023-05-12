@@ -1,6 +1,5 @@
 const models = require("../models/Item");
 const { Supplier } = require("../models/Users");
-const { Car } = require("../models/Item");
 const { uploadToCloudinary } = require("../configurations/cloudinary");
 
 const addCategory = async (req, res) => {
@@ -103,7 +102,7 @@ const updateItem = async (req, res) => {
     const user = await Supplier.findById(req.user);
 
     if (!user) {
-      res.status(401)
+      res.status(401);
       throw new Error("Unauthorized");
     }
     if (item.supplier.toString() !== user.id) {
@@ -143,12 +142,38 @@ const deleteItem = async (req, res) => {
 };
 
 // Car Item
-
 const createCar = async (req, res) => {
   try {
-    const car = new Car(req.body);
-    await car.save();
-    res.status(201).json(car);
+    const { make, model, year, price, description } = req.body;
+    const imageFiles = req.files;
+
+    const action = imageFiles.map((img) =>
+      uploadToCloudinary(img.path, "images")
+    );
+    const images_data = await Promise.all(action);
+    const car = await models.Car.create({
+      supplier: req.user._id,
+      make,
+      model,
+      price,
+      year,
+      description,
+      carImages: images_data,
+    });
+    if (car) {
+      const _car = await models.Car.findByIdAndUpdate(
+        { _id: car._id },
+        {
+          $addToSet: { carImages: images_data },
+        },
+        {new:true}
+      );
+      console.log(images_data, req.files)
+      res.status(201).json({
+        data: _car,
+        message: "Car added successfully",
+      });
+    }
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -156,7 +181,7 @@ const createCar = async (req, res) => {
 
 const getCar = async (req, res) => {
   try {
-    const car = await Car.findById(req.params.id);
+    const car = await models.Car.findById(req.params.id);
     if (!car) {
       return res.status(404).json({ error: "That car couldn't be founded" });
     }
@@ -168,7 +193,7 @@ const getCar = async (req, res) => {
 
 const updateCar = async (req, res) => {
   try {
-    const car = await Car.findByIdAndUpdate(req.params.id, req.body, {
+    const car = await models.Car.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });
     if (!car) {
@@ -182,7 +207,7 @@ const updateCar = async (req, res) => {
 
 const deleteCar = async (req, res) => {
   try {
-    const car = await Car.findByIdAndDelete(req.params.id);
+    const car = await models.Car.findByIdAndDelete(req.params.id);
     if (!car) {
       return res.status(404).json({ error: "That car couldn't be founded" });
     }
@@ -193,11 +218,18 @@ const deleteCar = async (req, res) => {
 };
 
 const getAllCars = async (req, res) => {
+  console.log(models.Car)
   try {
-    const cars = await Car.find({});
-    res.status(200).json(cars);
+    const cars = await models.Car.find({});
+    if (cars) {
+      res.status(200).json({
+        data: cars,
+      });
+    }
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({
+      message: "Error is right here!",
+    });
   }
 };
 
@@ -214,6 +246,4 @@ module.exports = {
   createCar,
   updateCar,
   deleteCar,
-
 };
-

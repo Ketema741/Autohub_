@@ -77,10 +77,10 @@ const AuthState = (props) => {
     } catch (err) {
       dispatch({
         type: LOGIN_FAIL,
-        payload: err.response.data.msg,
+        payload: err.response.data.error,
       });
 
-      console.log('error ', err);
+      console.log('error ', err.response.data);
     }
   };
 
@@ -133,6 +133,7 @@ const AuthState = (props) => {
         user: state.user,
         currentUser: state.currentUser,
         error: state.error,
+        userLoading: state.userLoading,
         isUserAuthenticated: state.isUserAuthenticated,
         register,
         setCurrent,

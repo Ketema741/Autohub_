@@ -1,11 +1,14 @@
+require("dotenv").config();
 const express = require("express");
-
-const connectDB = require("./config/db");
+const mongoose = require("mongoose");
 const cors = require("cors");
-
 const app = express();
+
+// middlewares
+app.use(express.json());
 app.use(cors());
 
+<<<<<<< HEAD
 // connect Database
 connectDB();
 
@@ -26,12 +29,23 @@ app.use("/api/users", require("./routes/users"));
 
 // Gatwech 
 app.use("/api/blogs", require("./routes/blogs"));
+=======
+>>>>>>> 3c1a62602fdc165b4d8bf435239269150b43f05d
 app.use("/users", require("./routes/UsersRoutes"));
 app.use("/jobs", require("./routes/jobRoutes"));
 app.use("/items", require("./routes/itemRoutes"));
 app.use("/orders", require("./routes/orderRoutes"));
-app.use("analytics", require("./routes/analyticRoutes"));
-
-app.listen(PORT, () => {
-  console.log(`server started at port: ${PORT}`);
-});
+app.use("/blogs", require("./routes/blogsRoutes"));
+app.use("/analytics", require("./routes/analyticRoutes"));
+// Connect to mongodb atlas in the cloud
+const port = process.env.PORT || 6767;
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`Server listening on port: ${port}`);
+    });
+  })
+  .catch((err) => {
+    console.error(err);
+  });
