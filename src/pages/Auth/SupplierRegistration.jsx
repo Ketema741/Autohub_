@@ -1,23 +1,58 @@
 import React, { useState } from 'react';
 
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+import { BiPhone } from 'react-icons/bi';
+import { IoLocationOutline } from 'react-icons/io5';
+import { BsFillJournalBookmarkFill, BsBuildingGear } from 'react-icons/bs';
+
 const SupplierRegistration = ({ onSubmit, handlePrev }) => {
 
-    const [supplier, setSupplier] = useState({
+    const initialValues = {
         companyName: '',
         bio: '',
         address: '',
         phone: '',
-      });
+    };
 
-      const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setSupplier((prevFormData) => ({ ...prevFormData, [name]: value }));
-      };
-      
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        onSubmit(supplier);
-    }
+    const validationSchema = Yup.object({
+        companyName: Yup.string().required('Company Name is required'),
+        bio: Yup.string().required('Bio is required'),
+        address: Yup.string().required('Address is required'),
+        phone: Yup.string().required('Phone is required'),
+    });
+
+    const validateForm = (values) => {
+        const errors = {};
+
+        if (!values.companyName) {
+            errors.companyName = 'Company Name is required';
+        }
+
+        if (!values.bio) {
+            errors.bio = 'Bio is required';
+        } else if (values.bio.length < 5) {
+            errors.bio = 'Bio must be at least 5 characters long';
+        }
+
+        if (!values.address) {
+            errors.address = 'Address is required';
+        }
+
+        if (!values.phone) {
+            errors.phone = 'Phone is required';
+        } else if (values.phone.length < 10) {
+            errors.phone = 'Phone must be at least 10 characters long';
+        }
+
+        return errors;
+    };
+
+
+    const handleSubmit = (values) => {
+        onSubmit(values);
+        console.log(values);
+    };
 
     return (
         <div className="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style={{ maxWidth: "1000px" }}>
@@ -30,87 +65,115 @@ const SupplierRegistration = ({ onSubmit, handlePrev }) => {
                         <h1 className="font-bold text-3xl text-gray-900">REGISTER</h1>
                         <p>Step 2: Car and Accessory Supplier Registration</p>
                     </div>
-                    <form onSubmit={handleSubmit}>
-                        <div className="flex -mx-3">
-                            <div className="w-full px-3 mb-5">
-                                <label for="" className="text-xs font-semibold px-1">Company Name</label>
-                                <div className="flex">
-                                    <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-email-outline text-gray-400 text-lg"></i></div>
-                                    <input 
-                                    className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" 
-                                    type="text" 
-                                    value={supplier.companyName} 
-                                    name='companyName'
-                                    onChange={handleInputChange} 
-
-                                    />
-
+                    <Formik
+                        initialValues={initialValues}
+                        onSubmit={handleSubmit}
+                        validate={validateForm}
+                        validationSchema={validationSchema}
+                    >
+                        <Form>
+                            <div className="flex -mx-3">
+                                <div className="w-full px-3 mb-5">
+                                    <label htmlFor="companyName" className="text-xs font-semibold px-1">
+                                        Company Name
+                                    </label>
+                                    <div className="flex">
+                                        <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                            <BsBuildingGear className="text-gray-400 text-lg" />
+                                        </div>
+                                        <Field
+                                            type="text"
+                                            id="companyName"
+                                            name="companyName"
+                                            className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                                        />
+                                    </div>
+                                    <ErrorMessage name="companyName" component="div" className="text-red-500" />
                                 </div>
                             </div>
-                        </div>
-                        <div className="flex -mx-3">
-                            <div className="w-full px-3 mb-12">
-                                <label for="" className="text-xs font-semibold px-1">Phone</label>
-                                <div className="flex">
-                                    <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
-                                    <input 
-                                    className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" 
-                                    type="text" 
-                                    value={supplier.phone} 
-                                    name='phone'
-                                    onChange={handleInputChange} 
 
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="flex -mx-3">
-                            <div className="w-full px-3 mb-12">
-                                <label for="" className="text-xs font-semibold px-1">Address</label>
-                                <div className="flex">
-                                    <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
-                                    <input 
-                                    className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" 
-                                    type="text" 
-                                    value={supplier.address} 
-                                    name='address'
-                                    onChange={handleInputChange} 
 
-                                    />
-                                     
+
+                            <div className="flex -mx-3">
+                                <div className="w-full px-3 mb-12">
+                                    <label htmlFor="phone" className="text-xs font-semibold px-1">Phone</label>
+                                    <div className="flex">
+                                        <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                            <BiPhone className="text-gray-400 text-lg" />
+                                        </div>
+                                        <Field
+                                            id="phone"
+                                            type="text"
+                                            name="phone"
+                                            className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+
+                                        />
+                                    </div>
+                                    <ErrorMessage name="phone" component="div" className="text-red-500" />
                                 </div>
                             </div>
-                        </div>
-                        <div className="flex -mx-3">
-                            <div className="w-full px-3 mb-12">
-                                <label for="" className="text-xs font-semibold px-1">Bio</label>
-                                <div className="flex">
-                                    <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
-                                    <input 
-                                    className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" 
-                                    type="text" 
-                                    value={supplier.bio} 
-                                    name='bio'
-                                    onChange={handleInputChange} />
+
+
+
+                            <div className="flex -mx-3">
+                                <div className="w-full px-3 mb-12">
+                                    <label htmlFor="address" className="text-xs font-semibold px-1">Address</label>
+                                    <div className="flex">
+                                        <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                            <IoLocationOutline className="text-gray-400 text-lg" />
+                                        </div>
+                                        <Field
+                                            id="address"
+                                            type="text"
+                                            name="address"
+                                            className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+
+                                        />
+                                    </div>
+                                    <ErrorMessage name="address" component="div" className="text-red-500" />
                                 </div>
                             </div>
-                        </div>
-                        <div className="flex justify-between">
-                            <button
-                                type="button"
-                                className="bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600"
-                                onClick={handlePrev}
-                            >
-                                Previous
-                            </button>
-                            <button
-                                className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
-                                type="submit"
-                            >
-                                Submit
-                            </button>
-                        </div>
-                    </form>
+
+
+
+                            <div className="flex -mx-3">
+                                <div className="w-full px-3 mb-12">
+                                    <label htmlFor="bio" className="text-xs font-semibold px-1">Bio</label>
+                                    <div className="flex">
+                                        <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                            <BsFillJournalBookmarkFill className="text-gray-400 text-lg" />
+                                        </div>
+                                        <Field
+                                            as="textarea"
+                                            id="bio"
+                                            name="bio"
+                                            className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                                        />
+                                    </div>
+                                    <ErrorMessage name="bio" component="div" className="text-red-500" />
+                                </div>
+
+                            </div>
+
+
+
+                            <div className="flex justify-between">
+                                <button
+                                    type="button"
+                                    className="bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600"
+                                    onClick={handlePrev}
+                                >
+                                    Previous
+                                </button>
+                                <button
+                                    className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+                                    type="submit"
+                                >
+                                    Submit
+                                </button>
+                            </div>
+                        </Form>
+                    </Formik>
                 </div>
             </div>
         </div>

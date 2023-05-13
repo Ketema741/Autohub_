@@ -4,41 +4,20 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { BiPhone } from 'react-icons/bi';
 import { IoLocationOutline } from 'react-icons/io5';
-import { GrCertificate, GrUserExpert } from 'react-icons/gr';
-import { BsFillJournalBookmarkFill } from 'react-icons/bs';
 
-const VehicleExpertRegistration = ({ onSubmit, handlePrev }) => {
-
-
+const NormalUserRegistration = ({ onSubmit, handlePrev }) => {
     const initialValues = {
-        expertise: '',
-        certifications: '',
-        bio: '',
         address: '',
         phone: '',
     };
 
     const validationSchema = Yup.object({
-        expertise: Yup.string().required('Expertise is required'),
-        certifications: Yup.string().required('certifications is required'),
-        bio: Yup.string().required('Bio is required'),
         address: Yup.string().required('Address is required'),
         phone: Yup.string().required('Phone is required'),
     });
 
     const validateForm = (values) => {
         const errors = {};
-
-        if (!values.expertise) {
-            errors.expertise = 'Expertise is required';
-        }
-
-        if (!values.bio) {
-            errors.bio = 'Bio is required';
-        } else if (values.bio.length < 5) {
-            errors.bio = 'Bio must be at least 5 characters long';
-        }
-
         if (!values.address) {
             errors.address = 'Address is required';
         }
@@ -66,7 +45,7 @@ const VehicleExpertRegistration = ({ onSubmit, handlePrev }) => {
                 <div className="w-full md:w-1/2 py-10 px-5 md:px-10">
                     <div className="text-center mb-10">
                         <h1 className="font-bold text-3xl text-gray-900">REGISTER</h1>
-                        <p>Step 2: Vehicle Expert Registration</p>
+                        <p>Step 2: Anonymous User Registration</p>
                     </div>
                     <Formik
                         initialValues={initialValues}
@@ -75,45 +54,6 @@ const VehicleExpertRegistration = ({ onSubmit, handlePrev }) => {
                         validationSchema={validationSchema}
                     >
                         <Form>
-                            <div className="flex -mx-3">
-                                <div className="w-full px-3 mb-5">
-                                    <label htmlFor="expertise" className="text-xs font-semibold px-1">
-                                        Expertise
-                                    </label>
-                                    <div className="flex">
-                                        <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                            <GrUserExpert className="text-gray-400 text-lg" />
-                                        </div>
-                                        <Field
-                                            type="text"
-                                            id="expertise"
-                                            name="expertise"
-                                            className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-                                        />
-                                    </div>
-                                    <ErrorMessage name="expertise" component="div" className="text-red-500" />
-                                </div>
-                            </div>
-                            <div className="flex -mx-3">
-                                <div className="w-full px-3 mb-5">
-                                    <label htmlFor="certifications" className="text-xs font-semibold px-1">
-                                        Certifications
-                                    </label>
-                                    <div className="flex">
-                                        <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                            <GrCertificate className="text-gray-400 text-lg" />
-                                        </div>
-                                        <Field
-                                            type="text"
-                                            id="certifications"
-                                            name="certifications"
-                                            className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-                                        />
-                                    </div>
-                                    <ErrorMessage name="certifications" component="div" className="text-red-500" />
-                                </div>
-                            </div>
-
                             <div className="flex -mx-3">
                                 <div className="w-full px-3 mb-12">
                                     <label htmlFor="phone" className="text-xs font-semibold px-1">Phone</label>
@@ -152,23 +92,7 @@ const VehicleExpertRegistration = ({ onSubmit, handlePrev }) => {
                                 </div>
                             </div>
 
-                            <div className="flex -mx-3">
-                                <div className="w-full px-3 mb-12">
-                                    <label htmlFor="bio" className="text-xs font-semibold px-1">Bio</label>
-                                    <div className="flex">
-                                        <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                            <BsFillJournalBookmarkFill className="text-gray-400 text-lg" />
-                                        </div>
-                                        <Field
-                                            as="textarea"
-                                            id="bio"
-                                            name="bio"
-                                            className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-                                        />
-                                    </div>
-                                    <ErrorMessage name="bio" component="div" className="text-red-500" />
-                                </div>
-                            </div>
+                            
 
                             <div className="flex justify-between">
                                 <button
@@ -193,4 +117,4 @@ const VehicleExpertRegistration = ({ onSubmit, handlePrev }) => {
     );
 }
 
-export default VehicleExpertRegistration
+export default NormalUserRegistration

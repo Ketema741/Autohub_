@@ -3,6 +3,7 @@ import SelectType from './SelectType';
 import SupplierRegistration from './SupplierRegistration';
 import DriverRegistration from './DriverRegistration';
 import VehicleExpertRegistration from './VehicleExpertRegistration';
+import NormalUserRegistration from './NormalUserRegistration';
 
 import welcome from '../../brands/undraw_welcome_cats_thqn.svg'
 
@@ -12,10 +13,10 @@ const RegistrationForm = () => {
     const [carSupplierInfo, setCarSupplierInfo] = useState(null);
     const [driverInfo, setDriverInfo] = useState(null);
     const [vehicleExpertInfo, setVehicleExpertInfo] = useState(null);
+    const [userInfo, setUserInfo] = useState(null);
 
     const handleSelectType = (userType) => {
         setUserType(userType);
-        console.log(userType);
         setStep(2);
     }
     const handlePrev = () => {
@@ -29,6 +30,10 @@ const RegistrationForm = () => {
 
     const handleDriverRegistration = (info) => {
         setDriverInfo(info);
+        setStep(3);
+    }
+    const handleUserRegistration = (info) => {
+        setUserInfo(info);
         setStep(3);
     }
 
@@ -56,6 +61,9 @@ const RegistrationForm = () => {
             switch (userType.userType) {
                 case 'supplier':
                     formComponent = <SupplierRegistration onSubmit={handleCarSupplierRegistration} handlePrev={handlePrev} />;
+                    break;
+                case 'user':
+                    formComponent = <NormalUserRegistration onSubmit={handleUserRegistration} handlePrev={handlePrev} />;
                     break;
                 case 'driver':
                     formComponent = <DriverRegistration onSubmit={handleDriverRegistration} handlePrev={handlePrev} />;
@@ -88,6 +96,12 @@ const RegistrationForm = () => {
                         <>
                             <p>Expertise: {vehicleExpertInfo.expertise}</p>
                             <p>Certifications: {vehicleExpertInfo.certifications}</p>
+                        </>
+                    )}
+                    {userInfo && (
+                        <>
+                            <p>Name: {userInfo.firstName}</p>
+                            <p>Phone: {userInfo.phone}</p>
                         </>
                     )}
                     <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600" type="submit">Submit Registration</button>

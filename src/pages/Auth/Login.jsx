@@ -57,13 +57,15 @@ const Login = (props) => {
         } else if (values.password.length < 6) {
             errors.password = 'Password must be at least 6 characters long';
         }
+        if (errors) {
+            setIsLoading(false);
 
+        }
         return errors;
     };
 
     const handleSubmit = (values) => {
         setIsLoading(userLoading);
-
         if (values.email === '' || values.password === '') {
             setAlert('Please fill all fields', 'danger');
         } else {

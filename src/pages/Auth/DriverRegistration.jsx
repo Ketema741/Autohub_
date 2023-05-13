@@ -1,36 +1,61 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { FaEnvelope, FaLock } from 'react-icons/fa';
+
+import { AiOutlineIdcard } from 'react-icons/ai';
+import { BiPhone } from 'react-icons/bi';
+import { IoLocationOutline } from 'react-icons/io5';
+import { BsFillJournalBookmarkFill } from 'react-icons/bs';
 
 const DriverRegistration = ({ onSubmit, handlePrev }) => {
 
-    const [driver, setDriver] = useState({
+
+    const initialValues = {
         licenseNumber: '',
         bio: '',
         address: '',
         phone: '',
-    });
-
-    const validateForm = Yup.object().shape({
+    };
+    const validationSchema = Yup.object().shape({
         licenseNumber: Yup.string().required('License Number is required'),
         phone: Yup.string().required('Phone is required'),
         address: Yup.string().required('Address is required'),
         bio: Yup.string()
             .required('Bio is required')
-            .min(5, 'Bio must be at least 5 characters long'),
+            .min(10, 'Bio must be at least 5 characters long'),
     });
 
+    const validateForm = (values) => {
+        const errors = {};
 
+        if (!values.licenseNumber) {
+            errors.licenseNumber = 'License Number is required';
+        }
 
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setDriver((prevFormData) => ({ ...prevFormData, [name]: value }));
+        if (!values.bio) {
+            errors.bio = 'Bio is required';
+        } else if (values.bio.length < 5) {
+            errors.bio = 'Bio must be at least 5 characters long';
+        }
+
+        if (!values.address) {
+            errors.address = 'Address is required';
+        }
+
+        if (!values.phone) {
+            errors.phone = 'Phone is required';
+        } else if (values.phone.length < 10) {
+            errors.phone = 'Phone must be at least 10 characters long';
+        }
+
+        return errors;
     };
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        onSubmit(driver);
-    }
+
+
+    const handleSubmit = (values) => {
+        onSubmit(values);
+        console.log(values);
+    };
 
     return (
         <div className="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style={{ maxWidth: "1000px" }}>
@@ -43,7 +68,12 @@ const DriverRegistration = ({ onSubmit, handlePrev }) => {
                         <h1 className="font-bold text-3xl text-gray-900">REGISTER</h1>
                         <p>Step 2: Vehicle driver Registration</p>
                     </div>
-                    <Formik initialValues={driver} onSubmit={handleSubmit} validate={validateForm}>
+                    <Formik
+                        initialValues={initialValues}
+                        onSubmit={handleSubmit}
+                        validate={validateForm}
+                        validationSchema={validationSchema}
+                    >
                         <Form>
                             <div className="flex -mx-3">
                                 <div className="w-full px-3 mb-5">
@@ -52,78 +82,75 @@ const DriverRegistration = ({ onSubmit, handlePrev }) => {
                                     </label>
                                     <div className="flex">
                                         <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                            <FaEnvelope className="text-gray-400 text-lg" />
+                                            <AiOutlineIdcard className="text-gray-400 text-lg" />
                                         </div>
-                                        <Field type="text" id="licenseNumber" name="licenseNumber" className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" />
-
+                                        <Field
+                                            type="text"
+                                            id="licenseNumber"
+                                            name="licenseNumber"
+                                            className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                                        />
                                     </div>
                                     <ErrorMessage name="licenseNumber" component="div" className="text-red-500" />
                                 </div>
                             </div>
-
 
                             <div className="flex -mx-3">
                                 <div className="w-full px-3 mb-12">
                                     <label htmlFor="phone" className="text-xs font-semibold px-1">Phone</label>
                                     <div className="flex">
                                         <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                            <FaLock className="text-gray-400 text-lg" />
+                                            <BiPhone className="text-gray-400 text-lg" />
                                         </div>
                                         <Field
                                             id="phone"
                                             type="text"
                                             name="phone"
                                             className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-                                            value={driver.phone}
-                                            onChange={handleInputChange}
+
                                         />
                                     </div>
                                     <ErrorMessage name="phone" component="div" className="text-red-500" />
                                 </div>
                             </div>
 
-
                             <div className="flex -mx-3">
                                 <div className="w-full px-3 mb-12">
                                     <label htmlFor="address" className="text-xs font-semibold px-1">Address</label>
                                     <div className="flex">
                                         <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                            <FaLock className="text-gray-400 text-lg" />
+                                            <IoLocationOutline className="text-gray-400 text-lg" />
                                         </div>
                                         <Field
                                             id="address"
                                             type="text"
                                             name="address"
                                             className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-                                            value={driver.address}
-                                            onChange={handleInputChange}
+
                                         />
                                     </div>
                                     <ErrorMessage name="address" component="div" className="text-red-500" />
                                 </div>
                             </div>
 
-
                             <div className="flex -mx-3">
                                 <div className="w-full px-3 mb-12">
                                     <label htmlFor="bio" className="text-xs font-semibold px-1">Bio</label>
                                     <div className="flex">
                                         <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                                            <FaLock className="text-gray-400 text-lg" />
+                                            <BsFillJournalBookmarkFill className="text-gray-400 text-lg" />
                                         </div>
                                         <Field
+                                            as="textarea"
                                             id="bio"
-                                            type="text"
                                             name="bio"
                                             className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-                                            value={driver.bio}
-                                            onChange={handleInputChange}
                                         />
                                     </div>
                                     <ErrorMessage name="bio" component="div" className="text-red-500" />
                                 </div>
-                            </div>
 
+                            </div>
 
                             <div className="flex justify-between">
                                 <button
