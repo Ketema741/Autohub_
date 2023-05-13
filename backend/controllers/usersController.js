@@ -41,7 +41,7 @@ const signUpUser = async (req, res) => {
       throw new Error(" Please enter all the required fields");
     }
 
-    const userExist = await getUserByEmail();
+    const userExist = await getUserByEmail(email);
     if (userExist) {
       res.status(400);
       throw new Error(" User with that email already exists");
@@ -53,10 +53,8 @@ const signUpUser = async (req, res) => {
       case "admin":
         const admin = await models.Admin.create({
           email,
-
           firstName,
           lastName,
-
           phone,
           password: hashedPassword,
           role: "admin",
@@ -71,11 +69,6 @@ const signUpUser = async (req, res) => {
             role: admin.role,
             token: generateToken(admin._id, admin.role),
           });
-
-          res.status(201).json({
-            admin,
-            token: generateToken(admin._id, admin.role),
-          });
         } else {
           res.status(400);
           throw new Error("User couldn't be Registered, Invalid credentials");
@@ -84,10 +77,8 @@ const signUpUser = async (req, res) => {
       case "service provider":
         const service_provider = await models.ServiceProvider.create({
           email,
-
           firstName,
           lastName,
-
           phone,
           password: hashedPassword,
           role: "service provider",
@@ -110,10 +101,8 @@ const signUpUser = async (req, res) => {
       case "supplier":
         const supplier = await models.TemporarySupplier.create({
           email,
-
           firstName,
           lastName,
-
           phone,
           password: hashedPassword,
           role: "supplier",
@@ -482,6 +471,7 @@ module.exports = {
   signInUser,
   updateDriver,
   updateCustomer,
+  updateSupplier,
   updateServiceProvider,
   deleteCustomer,
   deleteDriver,

@@ -21,16 +21,18 @@ const verifyToken = async (req, res, next) => {
         req.user = await models.Customer.findById(decoded.user.id);
       } else if (decoded.user.role === "driver") {
         req.user = await models.Driver.findById(decoded.user.id);
+      }else{
+        throw new Error("No, user nor that role")
       }
-
+      console.log("decoded user", decoded.user);
       next();
     }
     if (!token) {
       res.status(401);
       throw new Error("Unauthorized, No token.");
     }
-  } catch (err) {
-    res.status(401).json(err.message);
+  } catch (error) {
+    res.status(401).json(error.message);
   }
 };
 

@@ -33,9 +33,9 @@ const addItem = async (req, res) => {
     );
     const images_data = await Promise.all(imgs);
     const category = await models.Category.findById(categoryId);
-
+    
     const item = await models.Item.create({
-      supplier: req.user,
+      supplier: req.user._id,
       category,
       name,
       price,
@@ -231,7 +231,7 @@ const createCar = async (req, res) => {
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
-}; // <-- Missing closing bracket
+};  
 
 const getCar = async (req, res) => {
   try {
