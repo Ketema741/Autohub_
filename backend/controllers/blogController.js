@@ -1,6 +1,9 @@
 require("dotenv").config();
-const model = require('../models/Blog')
-const { purgeFromCloudinary, uploadToCloudinary } = require("../configurations/cloudinary");
+const model = require("../models/Blog");
+const {
+  purgeFromCloudinary,
+  uploadToCloudinary,
+} = require("../configurations/cloudinary");
 
 // Get blog post
 const getBlogs = async (req, res) => {
@@ -8,7 +11,6 @@ const getBlogs = async (req, res) => {
     const blogs = await model.Blog.find({})
       .sort({ date: -1 })
       .populate("user", "firstName userImage bio email ");
-
 
     res.json(blogs);
   } catch (err) {
@@ -32,50 +34,43 @@ const getBlog = async (req, res) => {
 };
 
 const addBlog = async (req, res) => {
-  const {
-    title,
-    excerpt,
-    description,
-    category,
-    summary,
-    steps,
-    takeaways,
-    timeline,
-  } = req.body;
-
-
   try {
-    const newBlog = new model.Blog({
+    const { title, excerpt, description, category, summary } = req.body;
+    if (!title || !excerpt || !summary || !description || !category) {
+      res.status(400);
+      throw new Error("Please, add all the required fields");
+    }
+
+    const imageFile = req.file;
+    const images_data = await uploadToCloudinary(imageFile.path, "images");
+
+    const _blog = await model.Blog.create({
+      author: req.user._id,
       title,
       excerpt,
       description,
       category,
       summary,
-      steps,
-      takeaways,
-      timeline,
-      user: req.user.id,
+      blogImage: images_data,
     });
-   
-    const blogImage = req.files;
-    const imgs = imageFiles.map((img) =>
-      uploadToCloudinary(img.path, "images")
-    );
-    const images_data = await Promise.all(imgs);
-    // const category = await models.Category.findById(categoryId);
-    
-    // if (item) {
-    //   await models.Item.findByIdAndUpdate(
-    //     { _id: item._id },
-    //     {
-    //       $addToSet: { itemImages: images_data },
-    //     }
-    //   );
-    const blog = await newBlog.save();
-    res.json(blog);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).json({ error: err.message });
+    if (_blog) {
+      const blog = await model.Blog.findByIdAndUpdate(
+        { _id: _blog._id },
+        {
+          blogImage: images_data,
+        }
+      );
+
+      res.status(201).json({
+        data: blog,
+        message: "Blog posted successfully",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      message: error.message,
+    });
   }
 };
 

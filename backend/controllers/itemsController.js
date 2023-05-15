@@ -33,7 +33,11 @@ const addItem = async (req, res) => {
     );
     const images_data = await Promise.all(imgs);
     const category = await models.Category.findById(categoryId);
-    
+    if(!category){
+      res.status(404)
+      throw new Error("No such a category! please add it before assigning item to item")
+    }
+    console.log(req.files)
     const item = await models.Item.create({
       supplier: req.user._id,
       category,
@@ -56,6 +60,7 @@ const addItem = async (req, res) => {
       });
     }
   } catch (error) {
+    console.log(error)
     res.status(400).json({
       message: error.message,
     });
@@ -222,7 +227,6 @@ const createCar = async (req, res) => {
         },
         { new: true }
       );
-      console.log(images_data, req.files);
       res.status(201).json({
         data: _car,
         message: "Car added successfully",

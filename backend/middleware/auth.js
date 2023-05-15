@@ -1,16 +1,16 @@
+require("dotenv").config()
 const jwt = require("jsonwebtoken");
 const models = require("../models/Users");
 
 const verifyToken = async (req, res, next) => {
   let token;
-  try {
-    if (
-      req.headers.authorization &&
-      req.headers.authorization.startsWith("Bearer")
-    ) {
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    try {
       token = req.headers.authorization.split(" ")[1];
       const decoded = jwt.verify(token, process.env.SECRET_JWT);
-
       if (decoded.user.role === "admin") {
         req.user = await models.Admin.findById(decoded.user.id);
       } else if (decoded.user.role === "service provider") {
@@ -21,18 +21,20 @@ const verifyToken = async (req, res, next) => {
         req.user = await models.Customer.findById(decoded.user.id);
       } else if (decoded.user.role === "driver") {
         req.user = await models.Driver.findById(decoded.user.id);
-      }else{
-        throw new Error("No, user nor that role")
+      } else {
+        throw new Error("No, user nor that role");
       }
-      console.log("decoded user", decoded.user);
+
       next();
-    }
-    if (!token) {
+    } catch (err) {
       res.status(401);
-      throw new Error("Unauthorized, No token.");
+      console.log(err)
+      // throw new Error("Unauthorized, acccess denied.");
     }
-  } catch (error) {
-    res.status(401).json(error.message);
+  }
+  if (!token) {
+    res.status(401);
+    throw new Error("Unauthorized, No token.");
   }
 };
 

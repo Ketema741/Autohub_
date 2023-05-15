@@ -452,7 +452,7 @@ const getUser = async (req, res) => {
       res.status(404);
       throw new Error("User not found");
     }
-    res.status(200).json({ user });
+    res.status(200).json({ data:user });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
