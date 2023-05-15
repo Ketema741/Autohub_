@@ -1,15 +1,15 @@
 require("dotenv").config();
-const { Blog } = require("../models/Blog");
+const model = require('../models/Blog')
 const { purgeFromCloudinary } = require("../configurations/cloudinary");
 
 // Get blog post
 const getBlogs = async (req, res) => {
   try {
-    const blogs = await Blog.find()
+    const blogs = await model.Blog.find({})
       .sort({ date: -1 })
       .populate("user", "firstName userImage bio email ");
 
-      
+
     res.json(blogs);
   } catch (err) {
     console.error(err.message);
@@ -19,7 +19,7 @@ const getBlogs = async (req, res) => {
 
 const getBlog = async (req, res) => {
   try {
-    let blog = await Blog.findById(req.params.id).populate(
+    let blog = await model.Blog.findById(req.params.id).populate(
       "user",
       "firstName userImage bio email "
     );
@@ -44,7 +44,7 @@ const addBlog = async (req, res) => {
   } = req.body;
 
   try {
-    const newBlog = new Blog({
+    const newBlog = new model.Blog({
       title,
       excerpt,
       description,
@@ -65,7 +65,7 @@ const addBlog = async (req, res) => {
 
 const updateBlog = async (req, res) => {
   try {
-    let blog = await Blog.findById(req.params.id);
+    let blog = await model.Blog.findById(req.params.id);
 
     if (!blog) {
       res.status(404);
@@ -91,7 +91,7 @@ const updateBlog = async (req, res) => {
 
 const deleteBlog = async (req, res) => {
   try {
-    const blog = await Blog.findById(req.params.id);
+    const blog = await model.Blog.findById(req.params.id);
 
     if (!blog) {
       res.status(404);
