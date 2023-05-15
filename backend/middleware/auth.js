@@ -1,14 +1,14 @@
-require("dotenv").config()
+require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const models = require("../models/Users");
 
 const verifyToken = async (req, res, next) => {
-  let token;
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
-  ) {
-    try {
+  try {
+    let token;
+    if (
+      req.headers.authorization &&
+      req.headers.authorization.startsWith("Bearer")
+    ) {
       token = req.headers.authorization.split(" ")[1];
       const decoded = jwt.verify(token, process.env.SECRET_JWT);
       if (decoded.user.role === "admin") {
@@ -26,15 +26,17 @@ const verifyToken = async (req, res, next) => {
       }
 
       next();
-    } catch (err) {
-      res.status(401);
-      console.log(err)
-      // throw new Error("Unauthorized, acccess denied.");
+
+      if (!token) {
+        res.status(401);
+        throw new Error("Forbidden, acccess denied.");
+      }
+    } else {
+      res.status(403)
+      throw new Error("Unauthorized, No token.");
     }
-  }
-  if (!token) {
-    res.status(401);
-    throw new Error("Unauthorized, No token.");
+  } catch (error) {
+    res.status(401).json({ error: error.message });
   }
 };
 

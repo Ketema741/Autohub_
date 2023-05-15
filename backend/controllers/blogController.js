@@ -75,6 +75,7 @@ const addBlog = async (req, res) => {
 };
 
 const updateBlog = async (req, res) => {
+  const blogFields = req.body
   try {
     let blog = await model.Blog.findById(req.params.id);
 
@@ -83,11 +84,11 @@ const updateBlog = async (req, res) => {
       throw new Error("blog not found");
     }
 
-    if (blog.user.toString() !== req.user.id) {
-      return res.status(401).json({ msg: "Not authorized" });
+    if (blog.author.toString() !== req.user.id) {
+      return res.status(401).json({ msg: "Not authorized, Only Author can modified a blog post" });
     }
 
-    blog = await blog.findByIdAndUpdate(
+    blog = await model.Blog.findByIdAndUpdate(
       req.params.id,
       { $set: blogFields },
       { new: true }
