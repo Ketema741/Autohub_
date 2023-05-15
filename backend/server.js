@@ -10,6 +10,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/users", require("./routes/UsersRoutes"));
+app.use("/blogs", require("./routes/blogsRoutes"));
 app.use("/jobs", require("./routes/jobRoutes"));
 app.use("/items", require("./routes/itemRoutes"));
 app.use("/orders", require("./routes/orderRoutes"));

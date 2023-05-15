@@ -9,6 +9,7 @@ const getBlogs = async (req, res) => {
       .sort({ date: -1 })
       .populate("user", "firstName userImage bio email ");
 
+      
     res.json(blogs);
   } catch (err) {
     console.error(err.message);
