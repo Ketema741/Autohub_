@@ -1,6 +1,6 @@
 require("dotenv").config();
 const model = require('../models/Blog')
-const { purgeFromCloudinary } = require("../configurations/cloudinary");
+const { purgeFromCloudinary, uploadToCloudinary } = require("../configurations/cloudinary");
 
 // Get blog post
 const getBlogs = async (req, res) => {
@@ -43,6 +43,7 @@ const addBlog = async (req, res) => {
     timeline,
   } = req.body;
 
+
   try {
     const newBlog = new model.Blog({
       title,
@@ -55,6 +56,21 @@ const addBlog = async (req, res) => {
       timeline,
       user: req.user.id,
     });
+   
+    const blogImage = req.files;
+    const imgs = imageFiles.map((img) =>
+      uploadToCloudinary(img.path, "images")
+    );
+    const images_data = await Promise.all(imgs);
+    // const category = await models.Category.findById(categoryId);
+    
+    // if (item) {
+    //   await models.Item.findByIdAndUpdate(
+    //     { _id: item._id },
+    //     {
+    //       $addToSet: { itemImages: images_data },
+    //     }
+    //   );
     const blog = await newBlog.save();
     res.json(blog);
   } catch (err) {

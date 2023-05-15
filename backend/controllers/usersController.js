@@ -415,7 +415,15 @@ const getDrivers = async (req, res) => {
 
 const getUser = async (req, res) => {
   try {
-    const { token } = req.body;
+    let token;
+    if (
+      req.headers.authorization &&
+      req.headers.authorization.startsWith("Bearer")
+    ) {
+      token = req.headers.authorization.split(" ")[1];
+    } else {
+      throw new Error("No Token!, Token is required");
+    }
     const decoded = jwt.verify(token, process.env.SECRET_JWT);
 
     if (decoded.user.role === "admin") {

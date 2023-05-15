@@ -26,7 +26,7 @@ const {
 
 router.post("/register", signUpUser);
 router.post("/login", signInUser);
-router.post("/user", getUser);
+router.get("/user", getUser);
 
 router.put(
   "/update/customer/:user_id",
