@@ -465,7 +465,7 @@ const generateToken = (id, role) => {
     },
     process.env.SECRET_JWT,
     {
-      expiresIn: "30d",
+      expiresIn: "24h",
     }
   );
 };

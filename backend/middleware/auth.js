@@ -11,6 +11,19 @@ const verifyToken = async (req, res, next) => {
     ) {
       token = req.headers.authorization.split(" ")[1];
       const decoded = jwt.verify(token, process.env.SECRET_JWT);
+
+      if (decoded && decoded.exp) {
+        const currentTime = Math.floor(Date.now() / 1000);
+
+        if (currentTime > decodedToken.exp) {
+          res.status(401);
+          throw new Error("Token has expired");
+        }
+      } else {
+        // The token is invalid or doesn't have an expiration time
+        throw new Error("Invalid token");
+      }
+
       if (decoded.user.role === "admin") {
         req.user = await models.Admin.findById(decoded.user.id);
       } else if (decoded.user.role === "service provider") {
@@ -32,7 +45,7 @@ const verifyToken = async (req, res, next) => {
         throw new Error("Forbidden, acccess denied.");
       }
     } else {
-      res.status(403)
+      res.status(403);
       throw new Error("Unauthorized, No token.");
     }
   } catch (error) {
