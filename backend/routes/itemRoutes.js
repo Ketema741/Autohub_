@@ -58,7 +58,6 @@ router.put("/cars/update/:id", updateCar);
 router.delete("/cars/delete/:id", deleteCar);
 
 
-router.post("/item/add/tag", assignTagsToProduct);
-router.post("/item/related-items", getRelatedProducts);
+router.post("/item/add/tag", verifyToken, assignTagsToProduct);
 
 module.exports = router;

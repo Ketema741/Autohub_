@@ -4,6 +4,7 @@ const { Supplier } = require("../models/Users");
 const { Car } = require("../models/Item");
 
 const { uploadToCloudinary } = require("../configurations/cloudinary");
+const { model } = require("mongoose");
 
 const addCategory = async (req, res) => {
   try {
@@ -33,11 +34,13 @@ const addItem = async (req, res) => {
     );
     const images_data = await Promise.all(imgs);
     const category = await models.Category.findById(categoryId);
-    if(!category){
-      res.status(404)
-      throw new Error("No such a category! please add it before assigning item to item")
+    if (!category) {
+      res.status(404);
+      throw new Error(
+        "No such a category! please add it before assigning item to item"
+      );
     }
-    console.log(req.files)
+  
     const item = await models.Item.create({
       supplier: req.user._id,
       category,
@@ -60,7 +63,7 @@ const addItem = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(400).json({
       message: error.message,
     });
@@ -87,8 +90,10 @@ const getItem = async (req, res) => {
     const { id } = req.params;
     const item = await models.Item.findById(id);
     if (item) {
+      const relatedItems = await getRelatedProducts(item._id);
       res.status(200).json({
         data: item,
+        relatedItems,
       });
     }
   } catch (error) {
@@ -110,9 +115,8 @@ const updateItem = async (req, res) => {
     const user = await Supplier.findById(req.user);
 
     if (!user) {
-
       res.status(401);
-      res.status(401)
+      res.status(401);
       throw new Error("Unauthorized");
     }
     if (item.supplier.toString() !== user.id) {
@@ -151,7 +155,6 @@ const deleteItem = async (req, res) => {
   }
 };
 
-// const Product = require("../models/product");
 
 // Tag to an item
 const assignTagsToProduct = async (req, res) => {
@@ -177,10 +180,10 @@ const assignTagsToProduct = async (req, res) => {
 //  querying related products
 const getRelatedProducts = async (itemId) => {
   try {
-    const currentProduct = await Item.findById(itemId);
+    const currentProduct = await models.Item.findById(itemId);
     const { category, tags } = currentProduct;
 
-    const relatedProducts = await Product.aggregate([
+    const relatedProducts = await models.Item.aggregate([
       {
         $match: {
           $or: [{ category }, { tags: { $in: tags } }],
@@ -199,7 +202,6 @@ const getRelatedProducts = async (itemId) => {
   }
 };
 
- 
 // Car Item
 const createCar = async (req, res) => {
   try {
@@ -235,7 +237,7 @@ const createCar = async (req, res) => {
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
-};  
+};
 
 const getCar = async (req, res) => {
   try {
@@ -306,4 +308,3 @@ module.exports = {
   assignTagsToProduct,
   getRelatedProducts,
 };
-

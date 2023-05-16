@@ -22,7 +22,7 @@ const getBlogs = async (req, res) => {
 const getBlog = async (req, res) => {
   try {
     let blog = await model.Blog.findById(req.params.id).populate(
-      "user",
+      "author",
       "firstName userImage bio email "
     );
     if (!blog) return res.status(404).json({ msg: req.params.id });
@@ -42,7 +42,7 @@ const addBlog = async (req, res) => {
     }
 
     const imageFile = req.file;
-    const images_data = await uploadToCloudinary(imageFile.path, "images");
+    const images_data = await uploadToCloudinary(imageFile?.path, "images");
 
     const _blog = await model.Blog.create({
       author: req.user._id,
@@ -75,7 +75,7 @@ const addBlog = async (req, res) => {
 };
 
 const updateBlog = async (req, res) => {
-  const blogFields = req.body
+  const blogFields = req.body;
   try {
     let blog = await model.Blog.findById(req.params.id);
 
@@ -85,7 +85,9 @@ const updateBlog = async (req, res) => {
     }
 
     if (blog.author.toString() !== req.user.id) {
-      return res.status(401).json({ msg: "Not authorized, Only Author can modified a blog post" });
+      return res
+        .status(401)
+        .json({ msg: "Not authorized, Only Author can modified a blog post" });
     }
 
     blog = await model.Blog.findByIdAndUpdate(
@@ -110,20 +112,21 @@ const deleteBlog = async (req, res) => {
       throw new Error("blog not found");
     }
 
-    if (blog.user.toString() !== req.user.id) {
-      return res.status(401).json({ msg: "Not authorized" });
+    if (blog.author.toString() !== req.user.id) {
+      return res
+        .status(403)
+        .json({ msg: "Only author is can delete a blog post" });
     }
 
-    const deletedBlog = await blog.findByIdAndRemove(req.params.id);
-    const { images } = deletedBlog;
-    const action = images.map((image) => purgeFromCloudinary(image.public_id));
-    await Promise.all(action);
-    console.log(images);
+    const deletedBlog = await model.Blog.findByIdAndRemove(req.params.id);
+    const { blogImage } = deletedBlog;
+    if (deleteBlog) {
+      purgeFromCloudinary(blogImage?.public_id);
+    }
 
-    res.status(200).json({ msg: "blog removed" });
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).json({ error: err.message });
+    res.status(200).json({ msg: "blog has been deleted" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };
 
