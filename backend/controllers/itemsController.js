@@ -197,7 +197,6 @@ const getRelatedProducts = async (itemId) => {
 
     return relatedProducts;
   } catch (error) {
-    console.error(error);
     throw new Error("Failed to get related products");
   }
 };

@@ -38,6 +38,13 @@ const customerLocation = async (req, res) => {
         $group: {
           _id: "$address",
           count: { $sum: 1 },
+          customers: {
+            $push: {
+              firstName: "$firstName",
+              lastName: "$lastName",
+              email: "$email",
+            },
+          },
         },
       },
       {
@@ -46,7 +53,7 @@ const customerLocation = async (req, res) => {
         },
       },
     ]);
-    res.status(200).json(customerByLocation);
+    res.status(200).json({ addresses: customerByLocation });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
