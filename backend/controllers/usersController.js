@@ -35,8 +35,8 @@ const getUserByEmail = async (email) => {
 
 const signUpUser = async (req, res) => {
   try {
-    const { firstName, lastName, email, phone, password, userType } = req.body;
-    if (!firstName || !lastName || !email || !password || !userType) {
+    const { firstName, lastName, email, phone, password, address, userType } = req.body;
+    if (!firstName || !lastName || !email || !password || !userType || !address) {
       res.status(400);
       throw new Error(" Please enter all the required fields");
     }
@@ -56,6 +56,7 @@ const signUpUser = async (req, res) => {
           firstName,
           lastName,
           phone,
+          address,
           password: hashedPassword,
           role: "admin",
         });
@@ -80,6 +81,7 @@ const signUpUser = async (req, res) => {
           firstName,
           lastName,
           phone,
+          address,
           password: hashedPassword,
           role: "service provider",
         });
@@ -104,6 +106,7 @@ const signUpUser = async (req, res) => {
           firstName,
           lastName,
           phone,
+          address,
           password: hashedPassword,
           role: "supplier",
         });
@@ -111,10 +114,8 @@ const signUpUser = async (req, res) => {
           res.status(201).json({
             _id: supplier._id,
             email: supplier.email,
-
             firstName: supplier.firstName,
             lastName: supplier.lastName,
-
             token: generateToken(supplier._id, supplier.role),
           });
         } else {
@@ -125,11 +126,10 @@ const signUpUser = async (req, res) => {
       case "customer":
         const customer = await models.Customer.create({
           email,
-
           firstName,
           lastName,
-
           phone,
+          address,
           password: hashedPassword,
           role: "customer",
         });
@@ -137,10 +137,8 @@ const signUpUser = async (req, res) => {
           res.status(201).json({
             _id: customer._id,
             email: customer.email,
-
             firstName: customer.firstName,
             lastName: customer.lastName,
-
             token: generateToken(customer._id, customer.role),
           });
         } else {
@@ -152,10 +150,10 @@ const signUpUser = async (req, res) => {
       case "driver":
         const driver = await models.Driver.create({
           email,
-
           firstName,
           lastName,
           phone,
+          address,
           password: hashedPassword,
           role: "driver",
         });
@@ -163,10 +161,8 @@ const signUpUser = async (req, res) => {
           res.status(201).json({
             _id: driver._id,
             email: driver.email,
-
             firstName: driver.firstName,
             lastName: driver.lastName,
-
             token: generateToken(driver._id, driver.role),
           });
         } else {
@@ -452,7 +448,7 @@ const getUser = async (req, res) => {
       res.status(404);
       throw new Error("User not found");
     }
-    res.status(200).json({ user });
+    res.status(200).json({ data:user });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -469,7 +465,7 @@ const generateToken = (id, role) => {
     },
     process.env.SECRET_JWT,
     {
-      expiresIn: "30d",
+      expiresIn: "24h",
     }
   );
 };

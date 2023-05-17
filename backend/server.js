@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
+// Init an EXPRESS
 const app = express();
 
 // middlewares
@@ -14,7 +15,7 @@ app.use("/blogs", require("./routes/blogsRoutes"));
 app.use("/jobs", require("./routes/jobRoutes"));
 app.use("/items", require("./routes/itemRoutes"));
 app.use("/orders", require("./routes/orderRoutes"));
-app.use("analytics", require("./routes/analyticRoutes"));
+app.use("/analytics", require("./routes/analyticRoutes"));
 // Connect to mongodb atlas in the cloud
 const port = process.env.PORT || 8080;
 mongoose

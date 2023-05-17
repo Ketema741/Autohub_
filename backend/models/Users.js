@@ -205,6 +205,7 @@ const CustomerSchema = new mongoose.Schema(
     },
     address: {
       type: String,
+      required:true
     },
 
     profileImage: {
