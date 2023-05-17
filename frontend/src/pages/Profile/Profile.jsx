@@ -1,33 +1,4 @@
-//  import React from 'react'
-
-
-// const Profile = () => {
-//     return (
-//         <div className="bg-gray-100">
-//             <NavBar />
-//             <div className="container mx-auto my-5 p-5">
-//                 <div className="md:flex no-wrap md:-mx-2 ">
-//                     <div className="w-full md:w-3/12 md:mx-2">
-//                         <ProfileCard />
-//                         <div className="my-4"></div>
-//                         <FriendCard />
-//                     </div>
-//                     <div className="w-full md:w-9/12 mx-2 h-64">
-//                         <About />
-//                         <div className="my-4"></div>
-//                         <Experience />
-//                     </div>
-//                 </div>
-//             </div>
-//         </div>
-//     )
-// }
-
-// export default Profile
-
 import React, { useContext, useEffect, Fragment } from 'react';
-import { FiSettings } from 'react-icons/fi';
-import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 import { Sidebar } from '../../components';
 
@@ -41,7 +12,7 @@ import ProfileCard from './ProfileCard'
 
 const Profile = () => {
     const authContext = useContext(AuthContext);
-    const { isUserAuthenticated, supplier, logout } = authContext;
+    const { isUserAuthenticated, user, logout } = authContext;
     const {
         setCurrentColor,
         setCurrentMode,
@@ -84,20 +55,20 @@ const Profile = () => {
                             : "bg-main-bg dark:bg-main-dark-bg  w-full min-h-screen flex-2 "
                     }
                 >
-                    {supplier &&
+                    {user &&
                         <Fragment>
                             <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full ">
-                                <Navbar name={supplier.name} currentColor={currentColor} />
+                                <Navbar name={user.user.firstName} currentColor={currentColor} />
                             </div>
                             <div>
                                 <div className="mt-24 container mx-auto my-5 p-5">
                                     <div className="md:flex gap-2 no-wrap md:-mx-2 ">
                                         <div className="w-full md:w-3/12 md:mx-2">
-                                            <ProfileCard currentColor={currentColor} name={supplier.name} />
+                                            <ProfileCard currentColor={currentColor} name={user.user.firstName} />
                                             <div className="my-8"></div>
                                         </div>
                                         <div className="w-full md:w-9/12 mx-2 h-64">
-                                            <About currentColor={currentColor} supplier={supplier} />
+                                            <About currentColor={currentColor} user={user} />
                                             <div className="my-6"></div>
                                             <Experience currentColor={currentColor} />
                                         </div>

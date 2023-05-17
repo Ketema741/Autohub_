@@ -47,7 +47,7 @@ const Posts = () => {
 
     return (
         <div className="flex w-full flex-wrap content-center justify-center p-12 bg-gray-200">
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3">
                 <div className="w-50 bg-white p-3 rounded-xl shadow-xl ">
                     <img className="h-52 w-full object-cover" src="https://i.imgur.com/5yeBVeM.jpeg" alt="example image 1" />
                     <div className='py-4'>

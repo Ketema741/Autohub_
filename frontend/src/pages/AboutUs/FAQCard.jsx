@@ -19,11 +19,11 @@ const Dropdown = ({ label, content }) => {
             >
                 <span className="py-2 pl-4 pr-3 text-left text-base font-semibold text-gray-900">{label}</span>
                 {isOpen ?
-                    <div class="mr-3 rounded-full border border-grey w-7 h-7 flex items-center justify-center test">
+                    <div className="mr-3 rounded-full border border-grey w-7 h-7 flex items-center justify-center test">
                         <BsChevronUp />
                     </div>
                     :
-                    <div class="mr-3 rounded-full border border-grey w-7 h-7 flex items-center justify-center test">
+                    <div className="mr-3 rounded-full border border-grey w-7 h-7 flex items-center justify-center test">
                         <BsChevronDown />
                     </div>}
             </button>
@@ -36,11 +36,11 @@ const FAQCard = () => {
     return (
         <div className="mt-20 flex justify-center">
             <div className="w-full md:w-3/4  bg-gray-100 rounded shadow-lg overflow-hidden">
-                <div class="flex flex-col items-center">
-                    <h2 class="font-bold text-5xl mt-5 tracking-tight">
+                <div className="flex flex-col items-center">
+                    <h2 className="font-bold text-5xl mt-5 tracking-tight">
                         FAQ
                     </h2>
-                    <p class="text-neutral-500 text-xl mt-3">
+                    <p className="text-neutral-500 text-xl mt-3">
                         Frequenty asked questions
                     </p>
                 </div>

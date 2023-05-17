@@ -45,7 +45,7 @@ const AddItemDetail = () => {
             <div className="flex flex-wrap items-top">
                 <div className="w-full md:w-1/2 z-1 bg-gray-100 rounded shadow-lg overflow-hidden">
                     <div className="text-lg font-medium uppercase p-4 text-center border-b tracking-wide  border-gray-200" style={{ color: currentColor }}>Add Item</div>
-                    <div class="flex justify-center">
+                    <div className="flex justify-center">
                         <div className="m-5 mx-auto max-w-md text-center">
                             <label className="mb-3 block text-base font-medium text-[#07074D]">
                                 What Do You Want To Upload ?
@@ -111,7 +111,7 @@ const AddItemDetail = () => {
                         <p className="p-5 text-center text-base font-medium text-[#07074D]">No Items Images</p>
 
                         {/* <ImageGallery currentColor={currentColor} /> */}
-                        <div class="flex justify-center pb-2 bg-gray-200">
+                        <div className="flex justify-center pb-2 bg-gray-200">
                             <TooltipComponent content="Add Images" position="RightCenter">
                                 <CloudinaryUploadWidget handleOpenWidget={handleOpenWidget} />
                             </TooltipComponent>

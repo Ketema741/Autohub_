@@ -31,7 +31,7 @@ const AuthState = (props) => {
   const register = async (formData) => {
    
     try {
-      const res = await axios.post('/users/register', formData);
+      const res = await axios.post('/users/register', JSON.stringify(formData));
       dispatch({
         type: REGISTER_SUCCESS,
         payload: res.data,
@@ -92,8 +92,9 @@ const AuthState = (props) => {
     if (localStorage.token) {
       setAuthToken(localStorage.token);
     }
-    
-    const res = await axios.get('/users/');
+
+    const res = await axios.get('/users/user');
+    console.log(res)
 
     try {
       dispatch({
@@ -117,7 +118,6 @@ const AuthState = (props) => {
 
   // load user on first run or refresh
   if (state.userLoading) {
-
     loadUser();
   }
 

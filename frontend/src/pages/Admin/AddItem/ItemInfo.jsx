@@ -23,7 +23,7 @@ const ItemInfo = ({ item }) => {
                                     <th className="py-2 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">Description</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-200 bg-white">
+                            <tbody className="divide-y divide-gray-200 bg-white">
                                 <tr>
                                     <td className="px-3 py-4 text-sm text-gray-500">Brand</td>
                                     <td className="px-3 py-4 text-sm">

@@ -3,6 +3,11 @@ import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 import { AiOutlinePlus } from 'react-icons/ai';
 import { RiDeleteBinLine } from 'react-icons/ri';
+const Parse = require('html-react-parser')
+
+
+
+
 
 import { useStateContext } from '../../../context/ContextProvider';
 import CarForm from './CarForm'
@@ -60,7 +65,8 @@ const AddItemDetail = () => {
     };
 
     const handleSubmit = () => {
-        console.log(selectedImages);
+        itemData.images = selectedImages;
+        console.log(itemData);
     };
 
 
@@ -75,7 +81,7 @@ const AddItemDetail = () => {
             <div className="flex flex-wrap items-top">
                 <div className="w-full md:w-1/2 z-1 bg-gray-100 rounded shadow-lg overflow-hidden">
                     <div className="text-lg font-medium uppercase p-4 text-center border-b tracking-wide  border-gray-200" style={{ color: currentColor }}>Add Item</div>
-                    <div class="flex justify-center">
+                    <div className="flex justify-center">
                         <div className="m-5 mx-auto max-w-md text-center">
                             {!itemData ?
                                 <>
@@ -120,12 +126,17 @@ const AddItemDetail = () => {
                                         </div>
                                     </div>
                                 </>
-                                :
-
-                                <p>{itemData.title} </p>
+                                : <div></div>
                             }
                         </div>
                     </div>
+
+                    {
+                        itemData &&
+                        <div className='m-4 flex flex-col justify-start'>
+                            {Parse(itemData.description)}
+                        </div>
+                    }
 
 
 
@@ -152,7 +163,7 @@ const AddItemDetail = () => {
                             <p className="p-5 text-center text-base font-medium text-[#07074D]">No Selected Images</p>
                         }
 
-                        <div class="flex justify-center pb-2 bg-gray-200">
+                        <div className="flex justify-center pb-2 bg-gray-200">
                             <div>
                                 {selectedImages &&
 

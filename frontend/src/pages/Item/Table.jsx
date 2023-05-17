@@ -17,11 +17,11 @@ const Dropdown = ({ label, content }) => {
             >
                 <span className="py-2 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">{label}</span>
                 {isOpen ?
-                    <div class="mr-3 rounded-full border border-grey w-7 h-7 flex items-center justify-center test">
+                    <div className="mr-3 rounded-full border border-grey w-7 h-7 flex items-center justify-center test">
                         <BsChevronUp />
                     </div>
                     :
-                    <div class="mr-3 rounded-full border border-grey w-7 h-7 flex items-center justify-center test">
+                    <div className="mr-3 rounded-full border border-grey w-7 h-7 flex items-center justify-center test">
                         <BsChevronDown />
                     </div>}
             </button>
