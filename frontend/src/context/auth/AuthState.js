@@ -94,7 +94,6 @@ const AuthState = (props) => {
     }
 
     const res = await axios.get('/users/user');
-    console.log(res)
 
     try {
       dispatch({

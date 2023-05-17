@@ -47,7 +47,7 @@ const Admin = () => {
       <div className="flex relative dark:bg-main-dark-bg">
 
         {activeMenu ? (
-          <div className="w-58 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
+          <div className="w-52 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
             <AdminSidebar />
           </div>
         ) : (
@@ -58,7 +58,7 @@ const Admin = () => {
         <div
           className={
             activeMenu
-              ? 'dark:bg-main-dark-bg  bg-main-bg min-h-screen md:ml-56 w-full  '
+              ? 'dark:bg-main-dark-bg  bg-main-bg min-h-screen md:ml-52 w-full  '
               : 'bg-main-bg dark:bg-main-dark-bg  w-full min-h-screen flex-2 '
           }
         >

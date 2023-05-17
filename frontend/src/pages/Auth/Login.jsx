@@ -6,10 +6,10 @@ import { MdLock } from 'react-icons/md';
 import { FaEnvelope } from 'react-icons/fa';
 import { FiUserPlus } from 'react-icons/fi';
 import { FcGoogle } from 'react-icons/fc';
+
 import { Alert } from '../../components'
 import AlertContext from "../../context/alert/alertContext";
 import AuthContext from "../../context/auth/authContext";
-
 import loginsvg from '../../brands/undraw_access_account_re_8spm.svg'
 
 const Login = (props) => {
@@ -18,7 +18,6 @@ const Login = (props) => {
     const navigate = useNavigate();
 
     const [isLoading, setIsLoading] = useState(false);
-
     const { setAlert } = alertContext;
     const { userLogin, error, isUserAuthenticated, loadUser, userLoading } = authContext;
 
@@ -28,6 +27,7 @@ const Login = (props) => {
             console.log('loged in')
             navigate('/');
         }
+
         if (error) {
             setAlert(error, 'danger');
             setIsLoading(false)
@@ -35,8 +35,6 @@ const Login = (props) => {
 
         // eslint-disable-next-line
     }, [loadUser, error, isUserAuthenticated, props.history]);
-
-
 
     const initialValues = {
         email: '',
@@ -66,11 +64,7 @@ const Login = (props) => {
 
     const handleSubmit = (values) => {
         setIsLoading(userLoading);
-        if (values.email === '' || values.password === '') {
-            setAlert('Please fill all fields', 'danger');
-        } else {
-            userLogin(values);
-        }
+        userLogin(values);
     };
 
 
@@ -98,6 +92,7 @@ const Login = (props) => {
                                 </div>
                             </div>
                             <Alert />
+                            
 
                             {isLoading &&
                                 <div className="flex justify-center items-center">

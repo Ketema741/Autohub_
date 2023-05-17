@@ -34,8 +34,8 @@ const UserProfile = ({ onLogout }) => {
         />
         {user &&
           <div>
-            <p className="font-semibold text-xl dark:text-gray-200"> {user.user.firsName} </p>
-            <p className="text-gray-500 text-sm font-semibold dark:text-gray-400"> {user.user.email}</p>
+            <p className="font-semibold text-xl dark:text-gray-200"> {user.firstName} </p>
+            <p className="text-gray-500 text-sm font-semibold dark:text-gray-400"> {user.email}</p>
           </div>
         }
       </div>
