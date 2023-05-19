@@ -87,6 +87,7 @@ const SelectType = ({ onSelect }) => {
                     </div>
                     <ErrorMessage name="firstName" component="div" className="text-red-500" />
                   </div>
+                  
 
                   <div className="w-1/2 px-3 mb-5">
                     <label className="text-xs font-semibold px-1">Last name</label>

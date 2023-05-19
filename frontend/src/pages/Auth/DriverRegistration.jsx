@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
@@ -6,10 +6,13 @@ import { AiOutlineIdcard } from 'react-icons/ai';
 import { BiPhone } from 'react-icons/bi';
 import { IoLocationOutline } from 'react-icons/io5';
 import { BsFillJournalBookmarkFill } from 'react-icons/bs';
+import AlertContext from "../../context/alert/alertContext";
 
 const DriverRegistration = ({ onSubmit, handlePrev }) => {
 
-
+    const alertContext = useContext(AlertContext)
+    const { setAlert } = alertContext
+    
     const initialValues = {
         licenseNumber: '',
         bio: '',

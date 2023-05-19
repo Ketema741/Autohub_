@@ -78,7 +78,7 @@ const App = () => {
                   <Route path="/admin-dashboard" element={<Admin />} />
 
                   <Route path="/item-detail" element={<ItemDetail />} />
-                  <Route path="/supplier" element={<Supplier />} />
+                  <Route path="/supplier-dashboard" element={<Supplier />} />
                   <Route path="supplier/edit-item-detail" element={<EditItemDetail />} />
                   <Route path="supplier/add-item" element={<AddItem />} />
                   

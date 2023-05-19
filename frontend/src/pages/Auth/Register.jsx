@@ -16,7 +16,7 @@ import AlertContext from "../../context/alert/alertContext";
 const RegistrationForm = (props) => {
 
     const authContext = useContext(AuthContext);
-    const alertContext = useState(AlertContext);
+    const alertContext = useContext(AlertContext);
 
     const [isLoading, setIsLoading] = useState(false);
     const { setAlert } = alertContext;
@@ -29,7 +29,7 @@ const RegistrationForm = (props) => {
         }
 
         if (error) {
-            // setAlert(error, 'danger');
+            setAlert(error.error, 'danger');
             setIsLoading(false)
         }
 
@@ -123,9 +123,7 @@ const RegistrationForm = (props) => {
                 <form onSubmit={handleSubmit}>
                     <h2>Step 3: Confirm Registration Information</h2>
                     <Alert />
-                    {
-                        error && <div>{error.error}</div>
-                    }
+                    
 
                     {isLoading &&
                         <div className="flex justify-center items-center">
@@ -143,7 +141,7 @@ const RegistrationForm = (props) => {
                             <p className="mb-2">Last Name: {role.lastName}</p>
                             <p className="mb-2">Email: {role.email}</p>
                             <p className="mb-2">Phone: {carSupplierInfo.phone}</p>
-                            <p className="mb-2">Phone: {carSupplierInfo.campnyName}</p>
+                            <p className="mb-2">Company Name: {carSupplierInfo.companyName}</p>
                         </div>
                     )}
                     {driverInfo && (

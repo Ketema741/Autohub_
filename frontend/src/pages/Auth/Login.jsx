@@ -24,7 +24,6 @@ const Login = (props) => {
     useEffect(() => {
         if (isUserAuthenticated) {
             loadUser()
-            console.log('loged in')
             navigate('/');
         }
 

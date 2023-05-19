@@ -514,11 +514,7 @@ export const links = [
   {
     title: 'Pages',
     links: [
-      {
-        name: 'Supplier',
-        to: 'supplier',
-        icon: <BsCurrencyExchange />,
-      },
+      
       {
         name: 'Service Providers',
         to: 'serviceproviders',
@@ -980,14 +976,7 @@ export const userProfileData = [
     iconColor: '#03C9D7',
     iconBg: '#E5FAFB',
   },
-  {
-    icon: <AiOutlineCloudUpload />,
-    title: 'Blog Post',
-    url: '/blog-posting',
-    desc: 'Make Post',
-    iconColor: '#A4BC92',
-    iconBg: '#DDFFBB',
-  }
+  
 ];
 
 export const itemsGrid = [
