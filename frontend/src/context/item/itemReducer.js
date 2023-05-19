@@ -23,7 +23,7 @@ const itemReducer = (state, action) => {
     case GET_PUBLICITEMS:
       return {
         ...state,
-        publicItems: action.payload,
+        publicItems: action.payload.data,
       };
     case GET_ITEM:
       return {
@@ -68,8 +68,8 @@ const itemReducer = (state, action) => {
     case FILTER_ITEMS:
       return {
         ...state,
-        filtered: state.publicItems.filter(({ title, location }) => {
-          const testString = `${title}${location}`.toLowerCase();
+        filtered: state.publicItems.filter(({ category, name }) => {
+          const testString = `${category}${name}`.toLowerCase();
           return testString.includes(action.payload.toLowerCase());
         }),
       };

@@ -1,18 +1,14 @@
 import React, { Fragment, useContext, useEffect } from 'react';
-
 import { useStateContext } from '../../context/ContextProvider';
 import ItemContext from '../../context/item/itemContext';
 import ItemCard from './ItemCard'
-import CarouselList from './CarouselList'
 import { brands } from '../../data/dummy';
-import { Carousel, initTE } from "tw-elements";
-initTE({ Carousel });
 
 const Items = () => {
     const { currentColor } = useStateContext();
 
     const itemContext = useContext(ItemContext)
-    const { filtered, publicItems, getPublicItems, loading } = itemContext
+    const { filtered, publicItems, getPublicItems } = itemContext
 
 
     useEffect(() => {
@@ -31,7 +27,7 @@ const Items = () => {
                                     <ItemCard item={item} currentColor={currentColor} />
                                 ))
                                 :
-                                publicItems.data.map((item) => (
+                                publicItems.map((item) => (
                                     <ItemCard item={item} currentColor={currentColor} />
                                 ))
                             }
@@ -65,6 +61,7 @@ const Items = () => {
                                 </p>
                             </div>
                         ))}
+                        
                     </div>
                 </div>
                 

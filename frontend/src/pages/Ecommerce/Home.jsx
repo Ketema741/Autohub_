@@ -1,6 +1,4 @@
 import React, { useContext, useEffect } from 'react';
-import { FiSettings } from 'react-icons/fi';
-import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 import { Navbar, BottomNavbar, Footer, Sidebar } from '../../components';
 import Items from '../Item/Items';
@@ -14,11 +12,10 @@ const Home = () => {
     setCurrentMode,
     currentMode,
     activeMenu,
-    currentColor,
   } = useStateContext();
 
   const itemContext = useContext(ItemContext)
-  const { filtered, publicItems, getPublicItems, loading } = itemContext
+  const { getPublicItems } = itemContext
 
 
   useEffect(() => {
@@ -36,7 +33,7 @@ const Home = () => {
   return (
     <div className={currentMode === "Dark" ? "dark" : ""}>
       <div className="flex relative dark:bg-main-dark-bg">
-        
+
         {activeMenu ? (
           <div className="w-52 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
             <Sidebar />

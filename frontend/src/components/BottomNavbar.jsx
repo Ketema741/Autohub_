@@ -1,13 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { HiChevronDown } from 'react-icons/hi';
 import { FaSearch } from 'react-icons/fa';
-
+import ItemContext from '../context/item/itemContext';
 import bg from '../data/bg2.jpg'; // 2 3 6 8
 
 const Header = () => {
+
+    
+    const text = useRef('')
+    
+    const itemContext = useContext(ItemContext)
+    const { filtered, clearFilter, filterItems } = itemContext
+
+    useEffect(() => {
+        if (filtered == null) {
+          text.current.value = ''
+        }
+      })
+
     const [isOpen, setIsOpen] = useState(false);
     const [selectedJob, setSelectedJob] = useState('Select');
-    const [inputValue, setInputValue] = useState('');
 
     const handleToggleJobList = () => setIsOpen(!isOpen);
 
@@ -18,8 +30,13 @@ const Header = () => {
 
 
 
-    const handleSearch = () => {
-        console.log(selectedInternship);
+    const handleSearch = (e) => {
+        if (e.target.value !== '') {
+            filterItems(e.target.value);
+        } else {
+            clearFilter();
+        }
+
     };
 
     return (
@@ -39,7 +56,7 @@ const Header = () => {
                 <div className="relative container m-auto px-6 md:px-12 lg:px-6">
                     <div className="mb-12 pt-12 space-y-8 md:mb-20 md:pt-24 lg:w-8/12 lg:mx-auto">
                         <h1 className="text-white text-center text-2xl font-bold sm:text-3xl md:text-4xl">
-                        Rev up your career as a driver with our job listings! Whether you're a seasoned pro or just starting out, we have the perfect opportunity for you.
+                            Rev up your career as a driver with our job listings! Whether you're a seasoned pro or just starting out, we have the perfect opportunity for you.
                         </h1>
                         <form className="w-full">
                             <div className="relative flex p-1 rounded-xl bg-white shadow-2xl md:p-2">
@@ -79,10 +96,10 @@ const Header = () => {
                                 </div>
                                 <input
                                     type="text"
-                                    placeholder="Your favorite position"
+                                    ref={text}
+                                    placeholder="Search... "
                                     className="w-full p-4 outline-none text-gray-600"
-                                    value={inputValue}
-                                    onChange={(e) => setInputValue(e.target.value)}
+                                    onChange={handleSearch}
                                 />
                                 <button
                                     type="button"
