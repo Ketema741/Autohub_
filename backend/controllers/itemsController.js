@@ -1,10 +1,9 @@
 const models = require("../models/Item");
 const { Supplier } = require("../models/Users");
 
-const { Car } = require("../models/Item");
 
 const { uploadToCloudinary } = require("../configurations/cloudinary");
-const { model } = require("mongoose");
+
 
 const addCategory = async (req, res) => {
   try {
@@ -287,7 +286,7 @@ const getAllCars = async (req, res) => {
     }
   } catch (error) {
     res.status(400).json({
-      message: "Error is right here!",
+      message: error.message,
     });
   }
 };

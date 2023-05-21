@@ -1,6 +1,6 @@
 const stripe = require("stripe")(process.env.SECRET_KEY);
 const models = require("../models/Order");
-const { Cart } = require("../models/Cart");
+const Cart  = require("../models/Cart");
 
 const { generateRandomString } = require("../utils/random");
 
@@ -55,7 +55,6 @@ const placeOrder = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
     res.status(500).json({ error: error.message });
   }
 };
