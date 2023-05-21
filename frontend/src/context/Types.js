@@ -38,6 +38,7 @@ export const USER_ERROR = 'USER_ERROR';
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 // system drivers
 export const GET_DRIVERS = 'GET_DRIVERS';
 export const GET_DRIVER = 'GET_DRIVER';
@@ -78,6 +79,8 @@ export const FILTER_SUPPLIERS = 'FILTER_SUPPLIERS';
 export const CLEAR_SUPPLIERS = 'CLEAR_SUPPLIERS';
 export const SUPPLIER_ERROR = 'EXEPRT_ERROR';
 
+=======
+>>>>>>> d410d914cf604ac31d2cc2685e3919d82020c305
 =======
 >>>>>>> d410d914cf604ac31d2cc2685e3919d82020c305
 =======

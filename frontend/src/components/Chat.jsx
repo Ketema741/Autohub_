@@ -104,6 +104,10 @@ const Chat = () => {
     getMessages(currentChat?._id)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    console.log(messages);
+>>>>>>> d410d914cf604ac31d2cc2685e3919d82020c305
 =======
     console.log(messages);
 >>>>>>> d410d914cf604ac31d2cc2685e3919d82020c305
