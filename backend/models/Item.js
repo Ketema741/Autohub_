@@ -85,8 +85,8 @@ const carSchema = new mongoose.Schema({
 module.exports = mongoose.model("Car", carSchema);
 
 const models = {
-  Item: mongoose.model("Item", ItemSchema),
   Category: mongoose.model("Category", CategorySchema),
+  Item: mongoose.model("Item", ItemSchema),
   Car: mongoose.model("Car", carSchema),
 };
 

@@ -15,9 +15,9 @@ const verifyToken = async (req, res, next) => {
       if (decoded && decoded.exp) {
         const currentTime = Math.floor(Date.now() / 1000);
 
-        if (currentTime > decodedToken.exp) {
+        if (currentTime > decoded.exp) {
           res.status(401);
-          throw new Error("Token has expired");
+          throw new Error("Token has expired, please sign into account");
         }
       } else {
         // The token is invalid or doesn't have an expiration time
@@ -38,8 +38,12 @@ const verifyToken = async (req, res, next) => {
         throw new Error("No, user nor that role");
       }
 
-      next();
+      if(!req.user){
+        throw new Error("Not Authenticated user. Please login")
+      }
 
+      next();
+      console.log(req.user)
       if (!token) {
         res.status(401);
         throw new Error("Forbidden, acccess denied.");

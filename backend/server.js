@@ -16,6 +16,7 @@ app.use("/jobs", require("./routes/jobRoutes"));
 app.use("/items", require("./routes/itemRoutes"));
 app.use("/orders", require("./routes/orderRoutes"));
 app.use("/analytics", require("./routes/analyticRoutes"));
+ 
 // Connect to mongodb atlas in the cloud
 const port = process.env.PORT || 8080;
 mongoose
