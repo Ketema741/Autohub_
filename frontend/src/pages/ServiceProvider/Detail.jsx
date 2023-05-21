@@ -5,6 +5,7 @@ import { useStateContext } from "../../context/ContextProvider";
 
 import { SiBookstack } from "react-icons/si";
 import Blog from "../../assets/undraw_job_offers_re_634p.svg";
+
 import DetailCard from './DetailCard'
 const Parse = require("html-react-parser");
 
