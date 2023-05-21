@@ -126,7 +126,6 @@ const BlogDetail = () => {
                     <div className="lg:flex">
                       <div className="relative mt-8 md:mt-16 space-y-8 sm:w-10/12 md:w-2/3 lg:ml-0 sm:mx-auto text-center lg:text-left lg:mr-auto lg:w-7/12">
                         <p className="sm:text-lg text-gray-700 dark:text-gray-300 lg:w-11/12">
-                          {/* <div dangerouslySetInnerHTML={{ __html:  }} /> */}
                           {Parse(blog.summary)}
                         </p>
                         <p className="text-xl font-bold text-gray-600 dark:text-gray-400">
@@ -146,7 +145,6 @@ const BlogDetail = () => {
                             </a>
                           )
                           )}
-
 
                         </div>
                       </div>

@@ -93,6 +93,7 @@ const CarForm = ({ handleData, itemData }) => {
 
 
     const handleSubmit = (values) => {
+        values.description = content
         console.log(values)
         handleData(values)
         // setUploadType('')

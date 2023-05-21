@@ -514,11 +514,7 @@ export const links = [
   {
     title: 'Pages',
     links: [
-      {
-        name: 'Supplier',
-        to: 'supplier',
-        icon: <BsCurrencyExchange />,
-      },
+      
       {
         name: 'Service Providers',
         to: 'serviceproviders',
@@ -706,6 +702,7 @@ export const brands = [
     amount: '39,354',
     percentage: '13',
     title: 'BMW',
+    id: '1',
     iconColor: '#977062',
     iconBg: '#EDE1DD',
     pcColor: 'red-600',
@@ -715,63 +712,41 @@ export const brands = [
     icon: <SiFerrari />,
     amount: '4,396',
     percentage: '5',
+    id: '2',
     title: 'Ferrari',
     iconColor: '#00F6DC',
     iconBg: '#2B8D82',
     pcColor: 'green-600',
   },
-  {
-    icon: <SiHonda />,
-    amount: '423,39',
-    percentage: '21',
-    title: 'Honda',
-    iconColor: '#AA8E39',
-    iconBg: '#FFEAAA',
-
-    pcColor: 'green-600',
-  },
+  
   {
     icon: <SiMercedes />,
     amount: '39,354',
     percentage: '50',
     title: 'Mercedes',
+    id: '3',
     iconColor: '#FFEAAA',
     iconBg: '#3A98B9',
     pcColor: 'red-600',
   },
-  {
-    icon: <SiMitsubishi />,
-    amount: '39,354',
-    percentage: '58',
-    title: 'BMW',
-    iconColor: '#977062',
-    iconBg: '#EDE1DD',
-    pcColor: 'red-600',
-  },
+  
   {
 
     icon: <SiTesla />,
     amount: '4,396',
     percentage: '3',
     title: 'Tesla',
+    id: '4',
     iconColor: '#FFEAAA',
     iconBg: '#3A98B9',
     pcColor: 'green-600',
   },
-  {
-    icon: <SiNissan />,
-    amount: '423,39',
-    percentage: '38',
-    title: 'Nissan',
-    iconColor: '#AA8E39',
-    iconBg: '#FFEAAA',
-
-    pcColor: 'green-600',
-  },
+  
   {
     icon: <SiToyota />,
     amount: '39,354',
     percentage: '121',
+    id: '5',
     title: 'Toyota',
     iconColor: '#FFEAAA',
     iconBg: '#3A98B9',
@@ -781,6 +756,7 @@ export const brands = [
     icon: <SiLandrover />,
     amount: '39,354',
     percentage: '110',
+    id: '6',
     title: 'Landrover',
     iconColor: '#977062',
     iconBg: '#EDE1DD',
@@ -790,10 +766,41 @@ export const brands = [
     icon: <SiJaguar />,
     amount: '423,39',
     percentage: '38',
+    id: '7',
     title: 'SiJaguar',
     iconColor: '#AA8E39',
     iconBg: '#FFEAAA',
 
+    pcColor: 'green-600',
+  },
+  {
+    icon: <SiNissan />,
+    amount: '423,39',
+    percentage: '38',
+    title: 'Nissan',
+    iconColor: '#AA8E39',
+    iconBg: '#FFEAAA',
+    id: '8',
+    pcColor: 'green-600',
+  },
+  {
+    icon: <SiMitsubishi />,
+    amount: '39,354',
+    percentage: '58',
+    title: 'BMW',
+    id: '9',
+    iconColor: '#977062',
+    iconBg: '#EDE1DD',
+    pcColor: 'red-600',
+  },
+  {
+    icon: <SiHonda />,
+    amount: '423,39',
+    percentage: '21',
+    title: 'Honda',
+    iconColor: '#AA8E39',
+    iconBg: '#FFEAAA',
+    id: '10',
     pcColor: 'green-600',
   },
 ];
@@ -969,14 +976,7 @@ export const userProfileData = [
     iconColor: '#03C9D7',
     iconBg: '#E5FAFB',
   },
-  {
-    icon: <AiOutlineCloudUpload />,
-    title: 'Blog Post',
-    url: '/blog-posting',
-    desc: 'Make Post',
-    iconColor: '#A4BC92',
-    iconBg: '#DDFFBB',
-  }
+  
 ];
 
 export const itemsGrid = [

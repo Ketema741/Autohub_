@@ -1,24 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+
 import SelectType from './SelectType';
 import SupplierRegistration from './SupplierRegistration';
 import DriverRegistration from './DriverRegistration';
 import VehicleExpertRegistration from './VehicleExpertRegistration';
 import NormalUserRegistration from './NormalUserRegistration';
+import { useNavigate } from "react-router-dom";
 
-import welcome from '../../brands/undraw_welcome_cats_thqn.svg'
+import { Alert } from '../../components'
 
-const RegistrationForm = () => {
+import AuthContext from './../../context/auth/authContext';
+import AlertContext from "../../context/alert/alertContext";
+
+
+const RegistrationForm = (props) => {
+
+    const authContext = useContext(AuthContext);
+    const alertContext = useContext(AlertContext);
+
+    const [isLoading, setIsLoading] = useState(false);
+    const { setAlert } = alertContext;
+    const { error, isUserAuthenticated, loadUser, userLoading, register } = authContext;
+
+    useEffect(() => {
+        if (isUserAuthenticated) {
+            loadUser()
+            navigate('/');
+        }
+
+        if (error) {
+            setAlert(error.error, 'danger');
+            setIsLoading(false)
+        }
+
+        // eslint-disable-next-line
+    }, [loadUser, error, isUserAuthenticated, props.history]);
+
     const [step, setStep] = useState(1);
-    const [userType, setUserType] = useState(null);
+    const [role, setRole] = useState(null);
     const [carSupplierInfo, setCarSupplierInfo] = useState(null);
     const [driverInfo, setDriverInfo] = useState(null);
     const [vehicleExpertInfo, setVehicleExpertInfo] = useState(null);
     const [userInfo, setUserInfo] = useState(null);
 
-    const handleSelectType = (userType) => {
-        setUserType(userType);
+    const handleSelectType = (role) => {
+        setRole(role);
         setStep(2);
-    }
+    };
+
     const handlePrev = () => {
         setStep(step - 1);
     };
@@ -44,11 +73,25 @@ const RegistrationForm = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(userType)
-        console.log(carSupplierInfo)
-        console.log(driverInfo)
-        console.log(vehicleExpertInfo);
-        // Perform form submission logic here
+        let mergedObject;
+
+        setIsLoading(userLoading);
+
+        if (carSupplierInfo) {
+            mergedObject = { ...role, ...carSupplierInfo };
+        }
+        else if (driverInfo) {
+            mergedObject = { ...role, ...driverInfo };
+        }
+        else if (vehicleExpertInfo) {
+            mergedObject = { ...role, ...vehicleExpertInfo };
+        }
+        else if (userInfo) {
+            mergedObject = { ...role, ...userInfo };
+        }
+
+        register(mergedObject)
+
     }
 
     let formComponent;
@@ -58,7 +101,7 @@ const RegistrationForm = () => {
             formComponent = <SelectType onSelect={handleSelectType} />;
             break;
         case 2:
-            switch (userType.userType) {
+            switch (role.role) {
                 case 'supplier':
                     formComponent = <SupplierRegistration onSubmit={handleCarSupplierRegistration} handlePrev={handlePrev} />;
                     break;
@@ -79,32 +122,71 @@ const RegistrationForm = () => {
             formComponent = (
                 <form onSubmit={handleSubmit}>
                     <h2>Step 3: Confirm Registration Information</h2>
-                    <p>User Type: {userType.userType}</p>
+                    <Alert />
+                    
+
+                    {isLoading &&
+                        <div className="flex justify-center items-center">
+                            <div className="relative">
+                                <div className="w-12 h-12 rounded-full absolute border-2 border-solid border-gray-200"></div>
+                                <div className="w-12 h-12 rounded-full animate-spin absolute border-2 border-solid border-blue-500 border-t-transparent"></div>
+                            </div>
+                        </div>
+
+                    }
                     {carSupplierInfo && (
-                        <>
-                            <p>Company Name: {carSupplierInfo.companyName}</p>
-                            <p>Contact Information: {carSupplierInfo.phone}</p>
-                        </>
+                        <div className="my-8 bg-gray-100 p-4 rounded-lg">
+                            <p className="mb-2">User Type: {role.role}</p>
+                            <p className="mb-2">First Name: {role.firstName}</p>
+                            <p className="mb-2">Last Name: {role.lastName}</p>
+                            <p className="mb-2">Email: {role.email}</p>
+                            <p className="mb-2">Phone: {carSupplierInfo.phone}</p>
+                            <p className="mb-2">Company Name: {carSupplierInfo.companyName}</p>
+                        </div>
                     )}
                     {driverInfo && (
-                        <>
-                            <p>Driver's License Number: {driverInfo.licenseNumber}</p>
-                            <p>Vehicle Make and Model: {driverInfo.vehicleMakeModel}</p>
-                        </>
+                        <div className="my-8 bg-gray-100 p-4 rounded-lg">
+                            <p className="mb-2">First Name: {role.firstName}</p>
+                            <p className="mb-2">Last Name: {role.lastName}</p>
+                            <p className="mb-2">Email: {role.email}</p>
+                            <p className="mb-2">Role: {role.role}</p>
+                            <p className="mb-2">Phone: {driverInfo.phone}</p>
+                            <p className="mb-2">Vehicle Make and Model: {driverInfo.vehicleMakeModel}</p>
+                            <p className="mb-2">Driver's License Number: {driverInfo.licenseNumber}</p>
+                        </div>
                     )}
                     {vehicleExpertInfo && (
-                        <>
-                            <p>Expertise: {vehicleExpertInfo.expertise}</p>
-                            <p>Certifications: {vehicleExpertInfo.certifications}</p>
-                        </>
+                        <div className="my-8 bg-gray-100 p-4 rounded-lg">
+                            <p className="mb-2">First Name: {role.firstName}</p>
+                            <p className="mb-2">Last Name: {role.lastName}</p>
+                            <p className="mb-2">Email: {role.email}</p>
+                            <p className="mb-2">Role: {role.role}</p>
+                            <p className="mb-2">Phone: {vehicleExpertInfo.phone}</p>
+                        </div>
                     )}
                     {userInfo && (
-                        <>
-                            <p>Name: {userInfo.firstName}</p>
-                            <p>Phone: {userInfo.phone}</p>
-                        </>
+                        <div className="my-8 bg-gray-100 p-4 rounded-lg">
+                            <p className="mb-2">Name: {role.firstName}</p>
+                            <p className="mb-2">Email: {role.email}</p>
+                            <p className="mb-2">Phone: {userInfo.phone}</p>
+                        </div>
                     )}
-                    <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600" type="submit">Submit Registration</button>
+
+                    <div className="flex justify-between">
+                        <button
+                            type="button"
+                            className="bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600"
+                            onClick={() => setStep(1)}
+                        >
+                            Restart
+                        </button>
+                        <button
+                            className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+                            type="submit"
+                        >
+                            Submit
+                        </button>
+                    </div>
                 </form>
             );
             break;

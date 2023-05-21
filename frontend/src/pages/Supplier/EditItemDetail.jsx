@@ -19,7 +19,7 @@ const Table = () => {
                     <th className="py-2 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">Description</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-gray-200 bg-white">
+            <tbody className="divide-y divide-gray-200 bg-white">
                 <tr>
                     <td className="px-3 py-4 text-sm text-gray-500">Brand</td>
                     <td className="px-3 py-4 text-sm">
@@ -106,10 +106,10 @@ const EditItemDetail = () => {
                     <div className="text-white rounded-b md:rounded-b-none md:rounded-r shadow-lg overflow-hidden" style={{ height: '400px', overflowY: 'scroll' }}>
                         <div className="text-lg font-medium uppercase p-4 text-center border-b tracking-wide" style={{ backgroundColor: currentColor }}>Item Images</div>
                         <ImageGallery currentColor={currentColor} />
-                        <div class="flex justify-center pb-2 bg-gray-200">
+                        <div className="flex justify-center pb-2 bg-gray-200">
                             <TooltipComponent content="Add" position="RightCenter">
-                                <button type="button" class=" rounded-full hover:bg-blue-600 p-4 hover:shadow-lg" style={{ backgroundColor: currentColor }}>
-                                    <span class="font-medium text-white">
+                                <button type="button" className=" rounded-full hover:bg-blue-600 p-4 hover:shadow-lg" style={{ backgroundColor: currentColor }}>
+                                    <span className="font-medium text-white">
                                         <AiOutlinePlus />
                                     </span>
                                 </button>

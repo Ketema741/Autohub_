@@ -1,18 +1,14 @@
 import React, { Fragment, useContext, useEffect } from 'react';
-
 import { useStateContext } from '../../context/ContextProvider';
 import ItemContext from '../../context/item/itemContext';
 import ItemCard from './ItemCard'
-import CarouselList from './CarouselList'
 import { brands } from '../../data/dummy';
-import { Carousel, initTE } from "tw-elements";
-initTE({ Carousel });
 
 const Items = () => {
     const { currentColor } = useStateContext();
 
     const itemContext = useContext(ItemContext)
-    const { filtered, publicItems, getPublicItems, loading } = itemContext
+    const { filtered, publicItems, getPublicItems } = itemContext
 
 
     useEffect(() => {
@@ -31,7 +27,7 @@ const Items = () => {
                                     <ItemCard item={item} currentColor={currentColor} />
                                 ))
                                 :
-                                publicItems.data.map((item) => (
+                                publicItems.map((item) => (
                                     <ItemCard item={item} currentColor={currentColor} />
                                 ))
                             }
@@ -49,7 +45,7 @@ const Items = () => {
                     </div>
                     <div className="flex m-3 flex-wrap justify-center gap-1 items-center text-center">
                         {brands.map((item) => (
-                            <div key={item.title} className="bg-white h-44 dark:text-gray-200 dark:bg-secondary-dark-bg md:w-52  p-5 pt-9 rounded-2xl " >
+                            <div key={item.id} className="bg-white h-44 dark:text-gray-200 dark:bg-secondary-dark-bg md:w-52  p-5 pt-9 rounded-2xl " >
                                 <button
                                     type="button"
                                     style={{ color: item.iconColor, backgroundColor: item.iconBg }}
@@ -65,6 +61,7 @@ const Items = () => {
                                 </p>
                             </div>
                         ))}
+                        
                     </div>
                 </div>
                 

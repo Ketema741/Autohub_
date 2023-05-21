@@ -39,14 +39,14 @@ export default function Card({ index, activeIndex, item }) {
       }}
       
     >
-      <div class=" flex flex-row items-start rounded-xl shadow-cla-blue bg-gradient-to-r from-indigo-50 to-blue-50 overflow-hidden col-span-12 space-y-3 sm:col-span-6 xl:col-span-4 ">
-        <div class="relative w-full">
+      <div className=" flex flex-row items-start rounded-xl shadow-cla-blue bg-gradient-to-r from-indigo-50 to-blue-50 overflow-hidden col-span-12 space-y-3 sm:col-span-6 xl:col-span-4 ">
+        <div className="relative w-full">
           <img src={card1} className="object-cover w-full mb-4 overflow-hidden shadow-sm max-h-56" />
         </div>
 
         <div className="pl-3 pb-1">
-          <a class="text-lg font-semibold text-black sm:text-xl md:text-2xl">Explore the world's hidden gems</a>
-          <p class="mt-2 text-sm text-black">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <a className="text-lg font-semibold text-black sm:text-xl md:text-2xl">Explore the world's hidden gems</a>
+          <p className="mt-2 text-sm text-black">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
           <div className="pt-1 pr-0 pb-0 pl-0">
             <div className="pt-1 pr-0 pb-0 pl-0">
               <a className="inline text-xs font-medium mt-0 mr-1 mb-0 ml-0 underline">

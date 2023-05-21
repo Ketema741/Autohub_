@@ -60,7 +60,7 @@ const AdminSidebar = () => {
           </div>
 
           <div className="mt-4">
-            <div className="fixed top-0 z-10 ml-[-100%] flex h-screen w-full flex-col justify-between border-r bg-white px-6 pb-3 transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%] dark:bg-gray-800 dark:border-gray-700">
+            <div className="fixed top-0 z-10 ml-[-100%] flex h-screen w-full flex-col justify-between border-r bg-white px-2 pb-3 transition duration-300 md:w-4/16 lg:ml-0 lg:w-[20%] xl:w-[15%] 2xl:w-[10%] dark:bg-gray-800 dark:border-gray-700">
               <div>
                 <div className="mt-8 text-center">
                   <img src={avatat} alt="" className="m-auto h-10 w-10 rounded-full object-cover lg:h-28 lg:w-28" />

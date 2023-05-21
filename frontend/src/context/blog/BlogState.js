@@ -31,7 +31,7 @@ const Blogstate = (props) => {
   // Get blogs
   const getBlogs = async () => {
     try {
-      const res = await axios.get('/api/blogs');
+      const res = await axios.get('/blogs');
       dispatch({
         type: GET_POSTS,
         payload: res.data,
@@ -49,7 +49,7 @@ const Blogstate = (props) => {
   // update blogs
   const updatePost = async () => {
     try {
-      const res = await axios.put('api/blogs');
+      const res = await axios.put('/blogs');
       dispatch({
         type: UPDATE_POST,
         payload: res.data,
@@ -70,7 +70,7 @@ const Blogstate = (props) => {
   const getBlog = async (_id, category) => {
     filterBlogs(category)
     try {
-      const res = await axios.get(`api/blogs/${_id}`);
+      const res = await axios.get(`/blogs/${_id}`);
       dispatch({
         type: GET_POST,
         payload: res.data,

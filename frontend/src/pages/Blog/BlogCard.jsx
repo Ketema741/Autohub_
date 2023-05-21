@@ -18,18 +18,18 @@ const BlogPost = ({ blog }) => {
   }
   const { currentColor } = useStateContext();
   return (
-    <div class=" flex flex-col items-start rounded-xl shadow-xl bg-white overflow-hidden col-span-12 space-y-3 sm:col-span-6 xl:col-span-4 ">
-      <div class="relative w-full">
+    <div className=" flex flex-col items-start rounded-xl shadow-xl bg-white overflow-hidden col-span-12 space-y-3 sm:col-span-6 xl:col-span-4 ">
+      <div className="relative w-full">
 
         <img src={blog.blogImages[0]} className="object-cover w-full mb-4 overflow-hidden max-h-56 transition duration-500 hover:scale-105" />
 
-        <div class="p-2 absolute bottom-0 left-1/2 transform -translate-x-1/2 mx-auto w-1/2  text-white bg-opacity-83 rounded-sm">
-          <p class="p-1 text-center mx-auto" style={{ backgroundColor: "#101d2c" }}>{blog.category}</p>
+        <div className="p-2 absolute bottom-0 left-1/2 transform -translate-x-1/2 mx-auto w-1/2  text-white bg-opacity-83 rounded-sm">
+          <p className="p-1 text-center mx-auto" style={{ backgroundColor: "#101d2c" }}>{blog.category}</p>
         </div>
       </div>
       <div className="pl-3 pb-1">
-        <a class="text-lg font-bold sm:text-xl md:text-2xl">{blog.title}</a>
-        <p class="mt-2 text-sm text-black">{blog.excerpt}</p>
+        <a className="text-lg font-bold sm:text-xl md:text-2xl">{blog.title}</a>
+        <p className="mt-2 text-sm text-black">{blog.excerpt}</p>
         <div className="pt-2 pr-0 pb-0 pl-0">
           <div className="pt-2 pr-0 pb-0 pl-0">
             <a className="inline text-xs font-medium mt-0 mr-1 mb-0 ml-0 underline">

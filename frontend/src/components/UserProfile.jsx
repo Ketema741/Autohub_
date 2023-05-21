@@ -7,12 +7,12 @@ import { userProfileData } from '../data/dummy';
 import { useStateContext } from '../context/ContextProvider';
 import avatar from '../data/avatar.jpg';
 import AuthContext from "../context/auth/authContext";
+import UserRole from './UserRole';
 
 const UserProfile = ({ onLogout }) => {
   const { currentColor } = useStateContext();
   const authContext = useContext(AuthContext);
   const { user } = authContext;
-
 
   return (
     <div className="nav-item absolute right-1 top-16 bg-white dark:bg-[#42464D] p-8 rounded-lg w-96">
@@ -34,8 +34,8 @@ const UserProfile = ({ onLogout }) => {
         />
         {user &&
           <div>
-            <p className="font-semibold text-xl dark:text-gray-200"> {user.name} </p>
-            <p className="text-gray-500 text-sm font-semibold dark:text-gray-400"> {supplier.email}</p>
+            <p className="font-semibold text-xl dark:text-gray-200"> {user.firstName} </p>
+            <p className="text-gray-500 text-sm font-semibold dark:text-gray-400"> {user.email}</p>
           </div>
         }
       </div>
@@ -59,6 +59,8 @@ const UserProfile = ({ onLogout }) => {
             </div>
           </Link>
         ))}
+        
+        <UserRole />
       </div>
       <div className="mt-5">
         <button
@@ -70,7 +72,7 @@ const UserProfile = ({ onLogout }) => {
           Logout
         </button>
       </div>
-    </div >
+    </div>
 
   );
 };

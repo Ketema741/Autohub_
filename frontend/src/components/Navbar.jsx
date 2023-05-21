@@ -37,7 +37,7 @@ const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
       type="button"
       onClick={() => customFunc()}
       style={{ color }}
-      className="relative text-xl rounded-full p-3 hover:bg-light-gray"
+      className="h-12 w-12 rounded-xl border bg-gray-100 active:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:active:bg-gray-800"
     >
       <span
         style={{ background: dotColor }}
@@ -95,7 +95,7 @@ const Navbar = () => {
         title="Menu"
         customFunc={handleActiveMenu}
         color={currentColor}
-        icon={<AiOutlineMenu />}
+        icon={<AiOutlineMenu className="mx-auto w-6 h-6 text-gray-600 dark:text-gray-300" />}
       />
 
       <div className="flex">
@@ -105,7 +105,7 @@ const Navbar = () => {
               title="Cart"
               customFunc={() => handleClick("cart")}
               color={currentColor}
-              icon={<FiShoppingCart />}
+              icon={<FiShoppingCart className="mx-auto w-6 h-6 text-gray-600 dark:text-gray-300" />}
             />
 
             <div className="hidden sm:block">
@@ -114,7 +114,7 @@ const Navbar = () => {
                 dotColor="#FF5C8E"
                 customFunc={() => handleClick("chat")}
                 color={currentColor}
-                icon={<BsChatLeft />}
+                icon={<BsChatLeft className="mx-auto w-6 h-6 text-gray-600 dark:text-gray-300" />}
               />
             </div>
 
@@ -124,7 +124,7 @@ const Navbar = () => {
                 dotColor="#FF5C8E"
                 customFunc={() => handleClick("notification")}
                 color={currentColor}
-                icon={<RiNotification3Line />}
+                icon={<RiNotification3Line className="mx-auto w-6 h-6 text-gray-600 dark:text-gray-300" />}
               />
             </div>
             <div
@@ -136,7 +136,7 @@ const Navbar = () => {
                 dotColor=""
                 customFunc={() => handleClick("profile")}
                 color={currentColor}
-                icon={<RxAvatar />}
+                icon={<RxAvatar className="mx-auto w-6 h-6 text-gray-600 dark:text-gray-300" />}
               />
               <MdKeyboardArrowDown className="text-gray-400 text-14" />
             </div>
