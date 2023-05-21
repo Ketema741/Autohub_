@@ -1,6 +1,8 @@
 import React from 'react';
 import { AiOutlineSearch, AiOutlineStar } from 'react-icons/ai';
 import { BsPersonCircle, BsCheck2Circle } from 'react-icons/bs';
+import {RiSendPlaneFill, RiImageFill, RiFileGifFill, RiEmotionFill} from 'react-icons/ri';
+
 import { FiMessageSquare } from 'react-icons/fi';
 import background from '../../brands/bg-3.jpg'
 
@@ -103,14 +105,34 @@ const Chat = () => {
                         <Message />
                     </div>
                     <div className='flex-none h-40 p-4 pt-0'>
-                        <textarea className='h-full w-full outline-none border hover:border-blue-600 focus:border-blue-600 shadow-lg rounded p-4'> Hi</textarea>
+                        <div className="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
+                            <div className="relative flex">
+                                <span className="absolute inset-y-0 flex items-center">
+                                    <button type="button" className="inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
+                                        <RiSendPlaneFill className="h-6 w-6 text-gray-600" />
+                                    </button>
+                                </span>
+                                <input type="text" placeholder="Write your message!" className="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-12 bg-gray-200 rounded-md py-3" />
+                                <div className="absolute right-0 items-center inset-y-0 hidden sm:flex">
+                                    <button type="button" className="inline-flex items-center justify-center rounded-full h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
+                                        <RiImageFill className="h-6 w-6 text-gray-600" />
+                                    </button>
+                                    <button type="button" className="inline-flex items-center justify-center rounded-full h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
+                                        <RiFileGifFill className="h-6 w-6 text-gray-600" />
+                                    </button>
+                                    <button type="button" className="inline-flex items-center justify-center rounded-full h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
+                                        <RiEmotionFill className="h-6 w-6 text-gray-600" />
+                                    </button>
+                                    <button type="button" className="inline-flex items-center justify-center rounded-lg px-4 py-3 transition duration-500 ease-in-out text-white bg-blue-500 hover:bg-blue-400 focus:outline-none">
+                                        <span className="font-bold">Send</span>
+                                        <RiSendPlaneFill className="h-6 w-6 ml-2 transform rotate-90" />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-
-                <div className='w-1/5 bg-gray-200'>second</div>
             </div>
-
         </div>
     )
 }

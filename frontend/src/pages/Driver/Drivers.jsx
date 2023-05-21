@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
-import { FiSettings, FiSearch } from 'react-icons/fi';
-import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import React, { useEffect, useContext, useRef, Fragment } from 'react';
+import { FiSearch } from 'react-icons/fi';
 import {
   Navbar,
   Footer,
@@ -9,34 +8,28 @@ import {
 import { DriverCard } from '../index';
 import { useStateContext } from '../../context/ContextProvider';
 
+import UserContext from '../../context/user/userContext';
 
 const Drivers = () => {
-  const drivers = [
-    {
-      name: 'John Doe',
-      vehicle: 'Toyota Camry',
-      experience: 5,
-      phone: '555-555-5555',
-      address: '123 Main St, Anytown USA',
-      imageUrl: '../../data/avatar4.jpg',
-    },
-    {
-      name: 'Jane Smith',
-      vehicle: 'Honda Civic',
-      experience: 3,
-      phone: '555-555-5555',
-      address: '456 Main St, Anytown USA',
-      imageUrl: '../../data/avatar4.jpg',
-    },
-  ];
+
 
   const {
     setCurrentColor,
     setCurrentMode,
     currentMode,
     activeMenu,
-    currentColor,
   } = useStateContext();
+
+  const userContext = useContext(UserContext);
+  const { getUsers, drivers, filteredDrivers, filterUsers, clearFilter } = userContext;
+
+  useEffect(() => {
+    getUsers("drivers")
+  }, [])
+
+  useEffect(() => {
+    console.log(drivers)
+  }, [drivers])
 
   useEffect(() => {
     const currentThemeColor = localStorage.getItem('colorMode');
@@ -47,12 +40,25 @@ const Drivers = () => {
     }
   }, []);
 
-  const editing = { allowDeleting: true, allowEditing: true };
+  const text = useRef('')
+
+  useEffect(() => {
+    if (filteredDrivers == null) {
+      text.current.value = ''
+    }
+  })
+
+
+  const onChange = (e) => {
+    if (e.target.value !== '') {
+      filterUsers(e.target.value, "drivers");
+    } else {
+      clearFilter();
+    }
+  };
   return (
     <div className={currentMode === "Dark" ? "dark" : ""}>
       <div className="flex relative dark:bg-main-dark-bg">
-
-
         {activeMenu ? (
           <div className="w-52 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
             <Sidebar />
@@ -75,9 +81,6 @@ const Drivers = () => {
           <div></div>
           <div className="mt-24 container px-5 mx-auto">
             <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
-
-
-
               <div className="py-20">
                 <div className="container mx-auto px-6 text-center md:px-12">
                   <div className="mb-8">
@@ -100,19 +103,34 @@ const Drivers = () => {
                             </p>
                           </div>
                           <input
-                            placeholder="Search Drivers "
-                            type="search"
-                            className="block pt-2 pr-0 pb-2 pl-10 w-full py-2 border border-gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm"
+                            placeholder="Search... "
+                            type="text"
+                            ref={text}
+                            onChange={onChange}
+                            className="block  pt-3 pr-0 pb-3 pl-24 lg:mx-auto lg:w-full py-3 border border-gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm"
                           />
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  {/* {drivers.map((driver) => ( */}
-                  {/* <DriverCard key={driver.name} {...driver} /> */}
-                  <DriverCard />
-                  {/* ))} */}
+                  {drivers !== null ? (
+                    <div className="grid gap-28 py-20 md:grid-cols-3 md:gap-12">
+                      {
+                        filteredDrivers !== null ?
+                          filteredDrivers.map(driver => (
+                            <DriverCard key={driver._id} driver={driver} />
+                          ))
+                          :
+                          drivers.map(driver => (
+                            <DriverCard key={driver._id} driver={driver} />
+                          ))
+                      }
+                    </div>
+                  )
+                    : <div>loading...</div>
+                  }
+
                 </div>
               </div>
             </div>

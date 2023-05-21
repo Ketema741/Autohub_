@@ -1,7 +1,6 @@
 
 import React, { useContext, useEffect } from 'react';
-import { TooltipComponent } from '@syncfusion/ej2-react-popups';
-
+import UserContext from '../../context/user/userContext';
 import { useStateContext } from '../../context/ContextProvider';
 import { Navbar, Footer, Sidebar } from '../../components';
 
@@ -16,6 +15,10 @@ const DriverDetail = () => {
         activeMenu,
         currentColor
     } = useStateContext();
+
+    const userContext = useContext(UserContext)
+
+    const { user } = userContext
 
 
 
@@ -55,7 +58,12 @@ const DriverDetail = () => {
                     <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full ">
                         <Navbar />
                     </div>
-                    <DetailCard />
+                    {user ?
+                        (<DetailCard user={user} />)
+                        :
+                        <div>loading...</div>
+                    }
+
                     <Footer />
 
                 </div>

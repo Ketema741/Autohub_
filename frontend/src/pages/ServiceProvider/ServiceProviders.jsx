@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+
 import { Navbar, Footer, Sidebar } from '../../components';
 import ServiceProviderCard from './ServiceProviderCard';
 import { useStateContext } from '../../context/ContextProvider';
@@ -12,7 +13,7 @@ const ServiceProviders = () => {
     currentMode,
     activeMenu,
     currentColor,
-    
+
   } = useStateContext();
 
   useEffect(() => {
@@ -27,7 +28,7 @@ const ServiceProviders = () => {
   return (
     <div className={currentMode === "Dark" ? "dark" : ""}>
       <div className="flex relative dark:bg-main-dark-bg">
-        
+
         {activeMenu ? (
           <div className="w-52 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
             <Sidebar />

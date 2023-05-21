@@ -13,6 +13,9 @@ import {
   CLEAR_USERS,
   CLEAR_FILTER,
   USER_ERROR,
+  GET_DRIVER,
+  GET_DRIVERS,
+  FILTER_DRIVERS,
 } from '../Types';
 
 const userReducer = (state, action) => {
@@ -23,7 +26,18 @@ const userReducer = (state, action) => {
         users: action.payload,
       };
 
+    case GET_DRIVERS:
+      return {
+        ...state,
+        drivers: action.payload.data,
+      };
+
     case GET_USER:
+      return {
+        ...state,
+        user: action.payload,
+      };
+    case GET_DRIVER:
       return {
         ...state,
         user: action.payload,
@@ -89,10 +103,18 @@ const userReducer = (state, action) => {
           return testString.includes(action.payload.toLowerCase());
         }),
       };
+    case FILTER_DRIVERS: 
+      return {
+        ...state,
+        filteredDrivers: state.drivers.filter(({ firstName, lastName }) => {
+          const testString = `${firstName}${lastName}`.toLowerCase();
+          return testString.includes(action.payload.toLowerCase());
+        }),
+      };
     case CLEAR_FILTER:
       return {
         ...state,
-        filtered: null,
+        filteredDrivers: null,
       };
     case USER_ERROR:
       return {

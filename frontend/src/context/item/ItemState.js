@@ -64,10 +64,11 @@ const Itemstate = (props) => {
   // Get item
   const getItem = async (_id) => {
     try {
-      const res = await axios.get(`api/items/${_id}`);
+      const res = await axios.get(`/items/${_id}`);
+      console.log(res.data.data)
       dispatch({
         type: GET_ITEM,
-        payload: res.data,
+        payload: res.data.data,
       });
     } catch (err) {
       dispatch({

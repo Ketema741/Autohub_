@@ -4,6 +4,7 @@ import userContext from './userContext';
 import AuthContext from '../auth/authContext';
 import userReducer from './userReducer';
 
+
 import {
   GET_USERS,
   GET_USER,
@@ -19,14 +20,16 @@ import {
   CLEAR_USERS,
   CLEAR_FILTER,
   USER_ERROR,
+  GET_DRIVERS, GET_SUPPLIERS, GET_EXEPRT, GET_EXEPRTS, GET_SERVISEPROVIERS, FILTER_DRIVERS
 } from '../Types';
 
 const UserState = (props) => {
   const initialState = {
     users: null,
+    drivers: null,
     user: null,
     current: null,
-    filtered: null,
+    filteredDrivers: null,
     favourites: [],
   };
 
@@ -35,12 +38,28 @@ const UserState = (props) => {
   const authContext = useContext(AuthContext);
   const authenticateduser = authContext.user;
 
+
   // Get users
-  const getUsers = async () => {
+  const getUsers = async (userType) => {
+    let get_users
+    if (userType === "drivers") {
+      get_users = GET_DRIVERS;
+    }
+    else if (userType === "supplier") {
+      get_users = GET_SUPPLIERS;
+    }
+    else if (userType === "expert") {
+      get_users = GET_EXEPRTS;
+    }
+    else if (userType === "serviceprovider") {
+      get_users = GET_SERVISEPROVIERS;
+    }
+
+
     try {
-      const res = await axios.get('/api/users');
+      const res = await axios.get(`/users/${userType}`);
       dispatch({
-        type: GET_USERS,
+        type: get_users,
         payload: res.data,
       });
     } catch (err) {
@@ -52,9 +71,9 @@ const UserState = (props) => {
   };
 
   // Get user
-  const getUser = async (_id) => {
+  const getUser = async (_id, userType) => {
     try {
-      const res = await axios.get(`api/users/${_id}`);
+      const res = await axios.get(`/users/${userType}/${_id}`);
       dispatch({
         type: GET_USER,
         payload: res.data,
@@ -68,15 +87,14 @@ const UserState = (props) => {
   };
 
   // add users
-  const addUser = async (item, images) => {
-    item.itemImages = images;
+  const addUser = async (item) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
       },
     };
     try {
-      const res = await axios.post('api/users', item, config);
+      const res = await axios.post(`/users/register`, item, config);
 
       dispatch({ type: ADD_USER, payload: res.data });
     } catch (error) {
@@ -84,22 +102,7 @@ const UserState = (props) => {
     }
   };
 
-  const removeImage = async (public_id) => {
-    const id_obj = {
-      public_id: public_id,
-    };
 
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-    try {
-      await axios.post(`api/users/image`, id_obj, config);
-    } catch (error) {
-      dispatch({ type: USER_ERROR });
-    }
-  };
 
   // clear users
   const clearUsers = () => {
@@ -107,9 +110,9 @@ const UserState = (props) => {
   };
 
   // Delete user
-  const deleteUser = async (_id) => {
+  const deleteUser = async (_id, userType) => {
     try {
-      await axios.delete(`api/users/${_id}`);
+      await axios.delete(`/users/${userType}/${_id}`);
       dispatch({
         type: DELETE_USER,
         payload: _id,
@@ -120,7 +123,7 @@ const UserState = (props) => {
   };
 
   // update user
-  const updateUser = async (user) => {
+  const updateUser = async (user, userType) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -129,7 +132,7 @@ const UserState = (props) => {
 
     try {
       const res = await axios.put(
-        `api/users/${user._id}`,
+        `/users/${userType}/${user._id}`,
         user,
         config
       );
@@ -142,8 +145,8 @@ const UserState = (props) => {
     }
   };
 
-  // add To favourite
-  const addToFavourite = async (user, item) => {
+  // add To cart
+  const addToCart = async (user, item) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -152,7 +155,7 @@ const UserState = (props) => {
 
     try {
       const res = await axios.put(
-        `/api/users/favourite/${user._id}`,
+        `/users/cart/${user._id}`,
         JSON.stringify(item),
         config,
       );
@@ -165,8 +168,8 @@ const UserState = (props) => {
     }
   };
 
-  // remove from Favourite
-  const removeFavourite = async (userId, itemId) => {
+  // remove from cart
+  const removeFromCart = async (userId, itemId) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -175,7 +178,7 @@ const UserState = (props) => {
 
     try {
       await axios.put(
-        `/api/users/removefavourite/${userId}`,
+        `/users/removefromfart/${userId}`,
         config,
       );
       dispatch({
@@ -187,12 +190,12 @@ const UserState = (props) => {
     }
   };
 
-  // load user favourite on first run or refresh
+  // load user cart on first run or refresh
   useEffect(() => {
-    if (authenticateduser && authenticateduser.favourites) {
+    if (authenticateduser && authenticateduser.carts) {
       dispatch({
         type: ADD_CART,
-        payload: authenticateduser.favourites,
+        payload: authenticateduser.carts,
       });
     }
   }, [authenticateduser]);
@@ -208,8 +211,12 @@ const UserState = (props) => {
   };
 
   // filter item
-  const filterUsers = (text) => {
-    dispatch({ type: FILTER_USERS, payload: text });
+  const filterUsers = (text, userType) => {
+    let filter_users
+    if (userType == "drivers") {
+      filter_users = FILTER_DRIVERS
+    }
+    dispatch({ type: filter_users, payload: text });
   };
 
   // clear filter
@@ -221,18 +228,18 @@ const UserState = (props) => {
     <userContext.Provider
       value={{
         users: state.users,
+        drivers: state.drivers,
         user: state.user,
         favourites: state.favourites,
         current: state.current,
-        filtered: state.filtered,
+        filteredDrivers: state.filteredDrivers,
         getUsers,
         getUser,
         addUser,
-        addToFavourite,
-        removeFavourite,
+        addToCart,
+        removeFromCart,
         clearUsers,
         deleteUser,
-        removeImage,
         setCurrent,
         clearCurrent,
         updateUser,

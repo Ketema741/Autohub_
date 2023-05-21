@@ -1,14 +1,14 @@
 import React from 'react';
 import driver1 from '../../data/avatar.jpg';
-import driver2 from '../../data/avatar2.jpg';
-import driver3 from '../../data/avatar3.png';
+
 
 import { BsTelephone } from 'react-icons/bs'
 import { AiOutlineMail } from 'react-icons/ai'
 
 import DriverRating from './DriverRating'
 
-const DetailCard = () => {
+const DetailCard = ({ user }) => {
+    
     return (
         <div className="mt-24 flex flex-col justify-center items-center">
             <div className="relative flex flex-col items-center rounded-[20px] w-[80%] max-w-[95%] mx-auto bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:!shadow-none p-3">
@@ -26,7 +26,9 @@ const DetailCard = () => {
                     </div>
                     <div className="space-y-4 text-center">
                         <div className='flex flex-row justify-center items-center space-x-2 flex-wrap'>
-                            <h4 className="text-2xl text-gray-700 dark:text-white">Ketema G.</h4>
+                            <h4 className="text-2xl text-gray-700 dark:text-white">
+                                {user.firstName}
+                            </h4>
                             <span className=" text-sm text-gray-500">Motorcycle rider</span>
 
                         </div>
@@ -35,7 +37,7 @@ const DetailCard = () => {
 
                             <div className='flex flex-row items-center flex-wrap space-x-2'>
                                 <BsTelephone className="w-6 hover:text-primary" />
-                                <span> +251912323811 </span>
+                                <span> {user.phone} </span>
 
                                 <a href={`mailto:${'kgirma363@gmail.com'}`}>
 
