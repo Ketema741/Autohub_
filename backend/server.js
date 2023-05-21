@@ -18,8 +18,8 @@ app.use("/orders", require("./routes/orderRoutes"));
 app.use("/analytics", require("./routes/analyticRoutes"));
 
 //  CHATTING MIDDLEWARES
-app.use("/conversations", require("./routes/conversations"));
-app.use("/messages", require("./routes/messages"));
+app.use("/conversations", require("./routes/conversationsRoutes"));
+app.use("/messages", require("./routes/messagesRoutes"));
 
 // Connect to mongodb atlas in the cloud
 const port = process.env.PORT || 8080;
