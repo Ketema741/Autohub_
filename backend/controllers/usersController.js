@@ -35,8 +35,16 @@ const getUserByEmail = async (email) => {
 
 const signUpUser = async (req, res) => {
   try {
-    const { firstName, lastName, email, phone, password, address, userType } = req.body;
-    if (!firstName || !lastName || !email || !password || !userType || !address) {
+    const { firstName, lastName, email, phone, password, address, userType } =
+      req.body;
+    if (
+      !firstName ||
+      !lastName ||
+      !email ||
+      !password ||
+      !userType ||
+      !address
+    ) {
       res.status(400);
       throw new Error(" Please enter all the required fields");
     }
@@ -169,7 +177,36 @@ const signUpUser = async (req, res) => {
           res.status(400);
           throw new Error("User couldn't be Registered, Invalid credentials");
         }
+      case "CarAficionadosUser":
+        const CarAficionadosUser = await models.CarAficionadosUser.create({
+          email,
+          firstName,
+          lastName,
+          phone,
+          address,
+          password: hashedPassword,
+          role: "CarAficionadosUser",
+        });
+        if (CarAficionadosUser) {
+          res.status(201).json({
+            _id: CarAficionadosUser._id,
+            email: CarAficionadosUser.email,
+            firstName: CarAficionadosUser.firstName,
+            lastName: CarAficionadosUser.lastName,
+            token: generateToken(
+              CarAficionadosUser._id,
+              CarAficionadosUser.role
+            ),
+          });
+        } else {
+          res.status(400);
+          throw new Error("User couldn't be Registered, Invalid credentials");
+        }
         break;
+      default:
+        throw new Error(
+          "Can't register a user of that type please provide existing user type"
+        );
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -180,7 +217,7 @@ const signInUser = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await getUserByEmail(email);
-    console.log(user);
+
     if (user && (await bcrypt.compare(password, user.password))) {
       res.status(200).json({
         _id: user._id,
@@ -203,10 +240,13 @@ const signInUser = async (req, res) => {
 const updateCustomer = async (req, res) => {
   try {
     const user = await models.Customer.findById(req.params.user_id);
-    console.log(user);
+
     if (!user) {
       res.status(404);
       throw new Error("Couldn't be updated, Customer not found ");
+    }
+    if (user._id !== req.user.id.toString()) {
+      throw new Error("Only account owner can update the profile");
     }
     const updatedUser = await models.Customer.findByIdAndUpdate(
       req.params.user_id,
@@ -226,10 +266,13 @@ const updateCustomer = async (req, res) => {
 const updateServiceProvider = async (req, res) => {
   try {
     const user = await models.ServiceProvider.findById(req.params.user_id);
-    console.log(user);
+
     if (!user) {
       res.status(404);
       throw new Error("Couldn't be updated, Service Provider not found ");
+    }
+    if (user._id !== req.user.id.toString()) {
+      throw new Error("Only account owner can update the profile");
     }
     const updatedUser = await models.ServiceProvider.findByIdAndUpdate(
       req.params.user_id,
@@ -250,10 +293,13 @@ const updateServiceProvider = async (req, res) => {
 const updateSupplier = async (req, res) => {
   try {
     const user = await models.Supplier.findById(req.params.user_id);
-    console.log(user);
+
     if (!user) {
       res.status(404);
       throw new Error("Couldn't be updated, Supplier not found ");
+    }
+    if (user._id !== req.user.id.toString()) {
+      throw new Error("Only account owner can update the profile");
     }
     const updatedUser = await models.Supplier.findByIdAndUpdate(
       req.params.user_id,
@@ -273,10 +319,13 @@ const updateSupplier = async (req, res) => {
 const updateDriver = async (req, res) => {
   try {
     const user = await models.Driver.findById(req.params.user_id);
-    console.log(user);
+
     if (!user) {
       res.status(404);
       throw new Error("Couldn't be updated, User not found ");
+    }
+    if (user._id !== req.user.id.toString()) {
+      throw new Error("Only account owner can update the profile");
     }
     const updatedUser = await models.Driver.findByIdAndUpdate(
       req.params.user_id,
@@ -288,6 +337,34 @@ const updateDriver = async (req, res) => {
     res.status(200).json({
       data: updatedUser,
       message: "Driver has been updated successfully",
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const updateCarAficionados = async (req, res) => {
+  try {
+    const user = await models.CarAficionadosUser.findById(req.params.user_id);
+
+    if (!user) {
+      res.status(404);
+      throw new Error("Couldn't be updated, User not found ");
+    }
+    if (user._id !== req.user.id.toString()) {
+      throw new Error("Only account owner can update the profile");
+    }
+
+    const updatedUser = await models.CarAficionadosUser.findByIdAndUpdate(
+      req.params.user_id,
+      req.body,
+      {
+        new: true,
+      }
+    ).select("-password");
+    res.status(200).json({
+      data: updatedUser,
+      message: "CarAficionadosUser has been updated successfully",
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -343,6 +420,23 @@ const deleteServiceProvider = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+const deleteCarAficionados = async (req, res) => {
+  try {
+    const deletedUser = await models.CarAficionadosUser.findByIdAndDelete(
+      req.params.user_id
+    );
+    if (!deletedUser) {
+      res.status(404);
+      throw new Error("Couldn't deleted, Customer not found");
+    }
+    res.status(200).json({
+      message: "Car Aficionados has been deleted successfully",
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 const deleteDriver = async (req, res) => {
   try {
     const deletedUser = await models.Driver.findByIdAndDelete(
@@ -398,11 +492,39 @@ const getServiceProviders = async (req, res) => {
 };
 
 // get all drivers
+const getDriver = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const driver = await models.Driver.findById(id).select("-password");
+    if (!driver) {
+      throw new Error("Driver not found");
+    }
+    res.status(200).json({
+      data: driver,
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 const getDrivers = async (req, res) => {
   try {
     const drivers = await models.Driver.find({}).select("-password");
     res.status(200).json({
       data: drivers,
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const getCarAficionados = async (req, res) => {
+  try {
+    const CarAficionadosUser = await models.CarAficionadosUser.find({}).select(
+      "-password"
+    );
+    res.status(200).json({
+      data: CarAficionadosUser,
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -443,12 +565,12 @@ const getUser = async (req, res) => {
         "-password -accountId"
       );
     }
-    console.log(user);
+
     if (!user) {
       res.status(404);
       throw new Error("User not found");
     }
-    res.status(200).json({ data:user });
+    res.status(200).json({ data: user });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -474,6 +596,7 @@ module.exports = {
   signUpUser,
   signInUser,
   updateDriver,
+  updateCarAficionados,
   updateCustomer,
   updateSupplier,
   updateServiceProvider,
@@ -482,9 +605,14 @@ module.exports = {
   deleteServiceProvider,
   getCustomers,
   deleteSupplier,
+  deleteCarAficionados,
   getCustomers,
   getSuppliers,
   getServiceProviders,
   getDrivers,
+  getCarAficionados,
   getUser,
+
+  // get user by IDs
+  getDriver,
 };

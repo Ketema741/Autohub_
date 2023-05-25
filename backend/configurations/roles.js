@@ -16,9 +16,16 @@ const roles = (() => {
     .createAny("category")
     .deleteOwn("item");
 
+  ac.grant("driver").updateOwn("profile");
+  ac.grant("expert").updateOwn("profile");
+  ac.grant("service-provider").updateOwn("profile");
+
   ac.grant("admin")
-    .extend("customer")
+    .extend("driver")
+    .extend("expert")
     .extend("supplier")
+    .extend("customer")
+    .extend("service-provider")
     .updateAny("profile")
     .deleteAny("profile");
 
@@ -27,6 +34,4 @@ const roles = (() => {
 
 module.exports = {
   roles,
-
 };
-

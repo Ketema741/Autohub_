@@ -6,7 +6,6 @@ const getPendingSuppliers = async (req, res) => {
     const pendingSuppliers = await TemporarySupplier.find({});
     res.status(200).json(pendingSuppliers);
   } catch (err) {
-    console.error(err);
     res.status(500).json({ error: "Something went wrong" });
   }
 };

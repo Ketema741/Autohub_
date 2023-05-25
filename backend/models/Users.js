@@ -3,13 +3,11 @@ const mongoose = require("mongoose");
 // System Administrator schema
 const AdminSchema = new mongoose.Schema(
   {
-
     firstName: {
       type: String,
       required: true,
     },
     lastName: {
-
       type: String,
       required: true,
     },
@@ -46,13 +44,11 @@ const AdminSchema = new mongoose.Schema(
 // Supplier user schema
 const SupplierSchema = new mongoose.Schema(
   {
-
     firstName: {
       type: String,
       required: true,
     },
     lastName: {
-
       type: String,
       required: true,
     },
@@ -64,6 +60,9 @@ const SupplierSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
+    },
+    companyName:{
+      type:String,
     },
     accountId: {
       type: String,
@@ -94,13 +93,11 @@ const SupplierSchema = new mongoose.Schema(
 // Service Provider user schema
 const ServiceProviderSchema = new mongoose.Schema(
   {
-
     firstName: {
       type: String,
       required: true,
     },
     lastName: {
-
       type: String,
       required: true,
     },
@@ -123,7 +120,9 @@ const ServiceProviderSchema = new mongoose.Schema(
     address: {
       type: String,
     },
-
+    vendorName:{
+      type:String,
+    },
     profileImage: {
       type: String,
     },
@@ -137,13 +136,11 @@ const ServiceProviderSchema = new mongoose.Schema(
 // Driver user schema
 const DriverSchema = new mongoose.Schema(
   {
-
     firstName: {
       type: String,
       required: true,
     },
     lastName: {
-
       type: String,
       required: true,
     },
@@ -173,6 +170,13 @@ const DriverSchema = new mongoose.Schema(
     role: {
       type: String,
     },
+    types: {
+      type: String,
+    },
+    education: { type: String },
+    birthday: { type: String },
+    experience: { type: String },
+    workHistory: { type: String },
   },
   { timestamps: true }
 );
@@ -180,13 +184,11 @@ const DriverSchema = new mongoose.Schema(
 // Customer or Regular user schema
 const CustomerSchema = new mongoose.Schema(
   {
-
     firstName: {
       type: String,
       required: true,
     },
     lastName: {
-
       type: String,
       required: true,
     },
@@ -205,7 +207,7 @@ const CustomerSchema = new mongoose.Schema(
     },
     address: {
       type: String,
-      required:true
+      required: true,
     },
 
     profileImage: {
@@ -217,17 +219,14 @@ const CustomerSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
-// temporarySupplierSchema user schema
-const TemporarySupplierSchema = new mongoose.Schema(
+// Expert user schema
+const CarAficionadosUser = new mongoose.Schema(
   {
-
     firstName: {
       type: String,
       required: true,
     },
     lastName: {
-
       type: String,
       required: true,
     },
@@ -239,6 +238,51 @@ const TemporarySupplierSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
+    },
+    phone: {
+      type: String,
+      required: true,
+    },
+    bio: {
+      type: String,
+    },
+    address: {
+      type: String,
+    },
+
+    profileImage: {
+      type: String,
+    },
+    role: {
+      type: String,
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
+
+// temporarySupplierSchema user schema
+const TemporarySupplierSchema = new mongoose.Schema(
+  {
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    companyName: {
+      type: String,
     },
     accountId: {
       type: String,
@@ -271,6 +315,7 @@ const models = {
   Customer: mongoose.model("Customer", CustomerSchema),
   ServiceProvider: mongoose.model("ServiceProvider", ServiceProviderSchema),
   Supplier: mongoose.model("Supplier", SupplierSchema),
+  Expert: mongoose.model("CarAficionadosUser", CarAficionadosUser),
   TemporarySupplier: mongoose.model(
     "TemporarySupplier",
     TemporarySupplierSchema
@@ -278,6 +323,4 @@ const models = {
   Driver: mongoose.model("Driver", DriverSchema),
 };
 
-
 module.exports = models;
- 

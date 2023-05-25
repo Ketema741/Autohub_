@@ -43,7 +43,6 @@ const verifyToken = async (req, res, next) => {
       }
 
       next();
-      console.log(req.user)
       if (!token) {
         res.status(401);
         throw new Error("Forbidden, acccess denied.");
