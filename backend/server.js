@@ -16,6 +16,7 @@ app.use("/jobs", require("./routes/jobRoutes"));
 app.use("/items", require("./routes/itemRoutes"));
 app.use("/orders", require("./routes/orderRoutes"));
 app.use("/analytics", require("./routes/analyticRoutes"));
+app.use("/drivers/ratings", require("./routes/ratingRoutes"));
 
 // Notification routes
 app.use("/notifications", require("./routes/NotificationRoutes"));

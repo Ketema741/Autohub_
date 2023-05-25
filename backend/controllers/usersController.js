@@ -178,24 +178,24 @@ const signUpUser = async (req, res) => {
           throw new Error("User couldn't be Registered, Invalid credentials");
         }
       case "CarAficionadosUser":
-        const CarAficionadosUser = await models.CarAficionadosUser.create({
+        const carAficionadosUser = await models.CarAficionadosUser.create({
           email,
           firstName,
           lastName,
           phone,
           address,
           password: hashedPassword,
-          role: "CarAficionadosUser",
+          role: "carAficionadosUser",
         });
-        if (CarAficionadosUser) {
+        if (carAficionadosUser) {
           res.status(201).json({
-            _id: CarAficionadosUser._id,
-            email: CarAficionadosUser.email,
-            firstName: CarAficionadosUser.firstName,
-            lastName: CarAficionadosUser.lastName,
+            _id: carAficionadosUser._id,
+            email: carAficionadosUser.email,
+            firstName: carAficionadosUser.firstName,
+            lastName: carAficionadosUser.lastName,
             token: generateToken(
-              CarAficionadosUser._id,
-              CarAficionadosUser.role
+              carAficionadosUser._id,
+              carAficionadosUser.role
             ),
           });
         } else {
@@ -204,6 +204,7 @@ const signUpUser = async (req, res) => {
         }
         break;
       default:
+        res.status(400);
         throw new Error(
           "Can't register a user of that type please provide existing user type"
         );
@@ -495,7 +496,9 @@ const getServiceProviders = async (req, res) => {
 const getDriver = async (req, res) => {
   try {
     const { id } = req.params;
-    const driver = await models.Driver.findById(id).select("-password");
+    const driver = await models.Driver.findById(id)
+      .populate({ path: "ratings" })
+      .select("-password");
     if (!driver) {
       throw new Error("Driver not found");
     }

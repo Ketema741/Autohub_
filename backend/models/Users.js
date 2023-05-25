@@ -61,8 +61,8 @@ const SupplierSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    companyName:{
-      type:String,
+    companyName: {
+      type: String,
     },
     accountId: {
       type: String,
@@ -120,8 +120,8 @@ const ServiceProviderSchema = new mongoose.Schema(
     address: {
       type: String,
     },
-    vendorName:{
-      type:String,
+    vendorName: {
+      type: String,
     },
     profileImage: {
       type: String,
@@ -177,6 +177,12 @@ const DriverSchema = new mongoose.Schema(
     birthday: { type: String },
     experience: { type: String },
     workHistory: { type: String },
+    ratings: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "DriverRating",
+      },
+    ],
   },
   { timestamps: true }
 );
