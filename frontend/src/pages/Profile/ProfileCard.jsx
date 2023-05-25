@@ -3,10 +3,10 @@ import avatar from '../../data/avatar.jpg'
 
 const ProfileCard = ({ name, currentColor }) => {
   return (
-    <div className={"bg-white p-3 border-t-4 b"} style={{ borderColor: currentColor }}>
-      <div style={{ height: "25rem" }} className="image overflow-hidden">
+    <div className="bg-white p-3 border-t-4 b" style={{ borderColor: currentColor }}>
+      <div style={{ height: "24rem" }} className=" image overflow-hidden shadow-sm rounded-2xl">
         <img
-          className="h-full w-full mx-auto"
+          className=" h-full w-full mx-auto"
           src={avatar}
           alt="user profile image"
         />

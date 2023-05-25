@@ -58,13 +58,13 @@ const Profile = () => {
                     {user &&
                         <Fragment>
                             <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full ">
-                                <Navbar name={user.user.firstName} currentColor={currentColor} />
+                                <Navbar name={user.firstName} currentColor={currentColor} />
                             </div>
                             <div>
                                 <div className="mt-24 container mx-auto my-5 p-5">
                                     <div className="md:flex gap-2 no-wrap md:-mx-2 ">
                                         <div className="w-full md:w-3/12 md:mx-2">
-                                            <ProfileCard currentColor={currentColor} name={user.user.firstName} />
+                                            <ProfileCard currentColor={currentColor} name={user.firstName} />
                                             <div className="my-8"></div>
                                         </div>
                                         <div className="w-full md:w-9/12 mx-2 h-64">

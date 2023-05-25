@@ -16,6 +16,10 @@ export const ITEM_ERROR = 'ITEM_ERROR';
 export const SET_ALERT = 'SET_ALERT';
 export const REMOVE_ALERT = 'REMOVE_ALERT';
 
+// alert
+export const ADD_TOCART = 'ADD_TOCART';
+export const REMOVE_FROMCART = 'REMOVE_FROMCART';
+
 // authentication
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_FAIL = 'REGISTER_FAIL';
@@ -85,7 +89,9 @@ export const DELETE_CART = 'DELETE_CART';
 // blog post
 export const GET_POSTS = 'GET_POSTS';
 export const GET_POST = 'GET_POST';
+export const DELETE_POST = 'DELETE_POST';
 export const GET_JOBS = 'GET_JOBS';
+export const DELETE_JOB = 'DELETE_JOB';
 export const UPDATE_POST = 'UPDATE_POST';
 export const POST_ERROR = 'POST_ERROR';
 export const CLEAR_POSTS = 'CLEAR_POSTS';
@@ -100,7 +106,13 @@ export const GET_FEATUREDPOSTS = 'GET_FEATUREDPOSTS';
 export const GET_COMMENTS = 'GET_COMMENTS';
 export const SUBMITCOMMENT = 'SUBMITCOMMENT';
 
-// chat
+// Notifications
+export const GET_NOTIFICATIONS = 'GET_NOTIFICATIONS'
+export const SEND_NOTIFICATION = 'SEND_NOTIFICATION'
+export const SEND_NOTIFICATIONS = 'SEND_NOTIFICATIONS'
+export const DELETE_NOTIFICATION = 'DELETE_NOTIFICATION'
+
+// Chats
 export const GET_CONVERSATIONS = 'GET_CONVERSATIONS'
 export const GET_CONVERSATION ='GET_CONVERSATION'
 export const GET_MESSAGES ='GET_MESSAGES'

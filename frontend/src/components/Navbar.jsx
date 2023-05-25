@@ -17,7 +17,7 @@ import { ItemFilter } from '../pages';
 import AuthContext from "../context/auth/authContext";
 import UserContext from "../context/user/userContext";
 import { useStateContext } from '../context/ContextProvider';
-
+import ChatContext from '../context/chat/chatContext';
 
 const GuestLinks = (
   <div className="flex  gap-x-5">
@@ -39,20 +39,20 @@ const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
       style={{ color }}
       className="h-12 w-12 rounded-xl border bg-gray-100 active:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:active:bg-gray-800"
     >
-      <span
-        style={{ background: dotColor }}
-        className="absolute inline-flex rounded-full h-2 w-2 right-2 top-2"
-      />
+
       {icon}
     </button>
+
   </TooltipComponent>
 );
 
 
 const Navbar = () => {
   const authContext = useContext(AuthContext);
-  const userContext = useContext(UserContext);
+  const chatContext = useContext(ChatContext);
+  const { getNotifications, notifications } = chatContext;
   const { isUserAuthenticated, user, logout } = authContext;
+
 
   const {
     currentColor,
@@ -82,11 +82,19 @@ const Navbar = () => {
     }
   }, [screenSize]);
 
+  useEffect(() => {
+    if (user) {
+      getNotifications(user._id)
+
+    }
+  }, [user]);
   const onLogout = () => {
     logout();
   };
 
   const handleActiveMenu = () => setActiveMenu(!activeMenu);
+
+  
 
   return (
     <div className="flex justify-between bg-gray-100 dark:bg-gray-800 dark:border-gray-700 shadow-2xl relative ">
@@ -101,14 +109,23 @@ const Navbar = () => {
       <div className="flex">
         {isUserAuthenticated ?
           <Fragment>
-            <NavButton
-              title="Cart"
-              customFunc={() => handleClick("cart")}
-              color={currentColor}
-              icon={<FiShoppingCart className="mx-auto w-6 h-6 text-gray-600 dark:text-gray-300" />}
-            />
+            <div className="relative flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg" >
 
-            <div className="hidden sm:block">
+              <NavButton
+                title="Cart"
+                customFunc={() => handleClick("cart")}
+                color={currentColor}
+                icon={<FiShoppingCart className="mx-auto w-6 h-6 text-gray-600 dark:text-gray-300" />}
+              />
+              <span
+                style={{ background: "#FF5C8E" }}
+                className="absolute inline-flex items-center justify-center rounded-full h-4 w-4 right-2 top-2 text-white text-center"
+              >
+                0
+              </span>
+            </div>
+
+            <div className="relative flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg" >
               <NavButton
                 title="Chat"
                 dotColor="#FF5C8E"
@@ -116,9 +133,15 @@ const Navbar = () => {
                 color={currentColor}
                 icon={<BsChatLeft className="mx-auto w-6 h-6 text-gray-600 dark:text-gray-300" />}
               />
+              <span
+                style={{ background: "#FF5C8E" }}
+                className="absolute inline-flex items-center justify-center rounded-full h-4 w-4 right-2 top-2 text-white text-center"
+              >
+                0
+              </span>
             </div>
 
-            <div className="hidden sm:block">
+            <div className=" relative flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg">
               <NavButton
                 title="Notification"
                 dotColor="#FF5C8E"
@@ -126,14 +149,21 @@ const Navbar = () => {
                 color={currentColor}
                 icon={<RiNotification3Line className="mx-auto w-6 h-6 text-gray-600 dark:text-gray-300" />}
               />
+              {notifications ?
+                <span
+                  style={{ background: "#FF5C8E" }}
+                  className="absolute inline-flex items-center justify-center rounded-full h-4 w-4 right-2 top-2 text-white text-center"
+                >
+                  {notifications.length}
+                </span>
+                : ""
+              }
             </div>
-            <div
-              className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg"
+            <div className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg"
               onClick={() => handleClick("userProfile")}
             >
               <NavButton
                 title="Profile"
-                dotColor=""
                 customFunc={() => handleClick("profile")}
                 color={currentColor}
                 icon={<RxAvatar className="mx-auto w-6 h-6 text-gray-600 dark:text-gray-300" />}

@@ -7,7 +7,8 @@ import {
   CLEAR_FILTER,
   POST_ERROR,
   SET_CURRENT,
-  GET_JOBS
+  GET_JOBS,
+  DELETE_POST,
 } from '../Types';
 
 
@@ -17,7 +18,6 @@ const blogReducer = (state, action) => {
       return {
         ...state,
         blogs: action.payload,
-        
       };
     case GET_JOBS:
       return {
@@ -51,6 +51,11 @@ const blogReducer = (state, action) => {
       return {
         ...state,
         current: null,
+      };
+    case DELETE_POST:
+      return {
+        ...state,
+        posts: state.posts.filter((post) => post._id !== action.payload),
       };
     case FILTER_POSTS:
       return {

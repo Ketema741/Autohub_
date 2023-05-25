@@ -14,6 +14,11 @@ import {
   GET_USERS,
   SET_CHAT,
   SET_ARRIVAL_MESSAGE,
+  
+  GET_NOTIFICATIONS,
+  SEND_NOTIFICATION,
+  SEND_NOTIFICATIONS,
+  DELETE_NOTIFICATION,
 
 } from '../Types';
 
@@ -23,8 +28,9 @@ const ChatState = (props) => {
     arrivalChat: null,
     currentChat: null,
     messages: null,
-    onlineUsers:null,
+    onlineUsers: null,
     error: null,
+    notifications: null,
 
   };
 
@@ -33,7 +39,7 @@ const ChatState = (props) => {
   // Get conversations
   const getConversations = async (id) => {
     try {
-      const res = await axios.get('/conversations/'+ id);
+      const res = await axios.get('/conversations/' + id);
       dispatch({
         type: GET_CONVERSATIONS,
         payload: res.data,
@@ -47,7 +53,7 @@ const ChatState = (props) => {
       console.log({ 'erro': err })
     }
   };
-  
+
 
   // Get message
   const getMessages = async (_id) => {
@@ -68,7 +74,7 @@ const ChatState = (props) => {
 
   // send message
   const sendMessage = async (message) => {
-    
+
     try {
       const res = await axios.post("/messages", message);
       dispatch({ type: SEND_MESSAGE, payload: message });
@@ -81,7 +87,53 @@ const ChatState = (props) => {
     }
   };
 
+  // Get Notifications
+  const getNotifications = async (id) => {
+    try {
+      const res = await axios.get('/notifications/' + id);
+      dispatch({
+        type: GET_NOTIFICATIONS,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: MESSAGE_ERROR,
+        payload: err.response.msg,
 
+      });
+      console.log({ 'erro': err })
+    }
+  };
+
+
+
+  // send notification
+  const sendNotification  = async (notification) => {
+    try {
+      const res = await axios.post("/notifications/send", notification);
+      dispatch({ type: SEND_NOTIFICATION, payload: notification });
+
+    } catch (err) {
+      dispatch({
+        type: MESSAGE_ERROR,
+        payload: err.response.msg,
+      });
+    }
+  };
+
+   // send notification
+   const deleteNotification  = async (notificationId) => {
+    try {
+      const res = await axios.post(`/notifications/${notificationId}`);
+      dispatch({ type: DELETE_NOTIFICATION, payload: notificationId });
+
+    } catch (err) {
+      dispatch({
+        type: MESSAGE_ERROR,
+        payload: err.response.msg,
+      });
+    }
+  };
 
   // socke.io get message
   const getMessage = (text) => {
@@ -96,7 +148,7 @@ const ChatState = (props) => {
   const getUsers = (text) => {
     dispatch({ type: GET_USERS, payload: text });
   };
-  
+
   // socke.io get users
   const setCurrentChat = (text) => {
     dispatch({ type: SET_CHAT, payload: text });
@@ -113,6 +165,7 @@ const ChatState = (props) => {
     <chatContext.Provider
       value={{
         conversations: state.conversations,
+        notifications: state.notifications,
         arrivalChat: state.arrivalChat,
         currentChat: state.currentChat,
         messages: state.messages,
@@ -125,8 +178,11 @@ const ChatState = (props) => {
         getUsers,
         setCurrentChat,
         setArrivalMessage,
-        
-       
+        getNotifications,
+        sendNotification,
+        deleteNotification,
+
+
       }}
     >
       {props.children}
