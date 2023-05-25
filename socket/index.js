@@ -12,10 +12,7 @@ const addUser = (userId, socketId) => {
 };
 
 const removeUser = (socketId) => {
-  if (users) {
-    users = users.filter((user) => user.socketId !== socketId);
-
-  }
+  users = users.filter((user) => user.socketId !== socketId);
 };
 
 const getUser = (userId) => {
@@ -23,16 +20,16 @@ const getUser = (userId) => {
 };
 
 io.on("connection", (socket) => {
-  //when ceonnect
-  console.log("a user connected.");
+  // When a new user connects
+  console.log("A user connected.");
 
-  //take userId and socketId from user
+  // Take userId and socketId from the user
   socket.on("addUser", (userId) => {
     addUser(userId, socket.id);
     io.emit("getUsers", users);
   });
 
-  //send and get message
+  // Send and receive messages
   socket.on("sendMessage", ({ senderId, receiverId, text }) => {
     const user = getUser(receiverId);
     if (user) {
@@ -45,10 +42,24 @@ io.on("connection", (socket) => {
     }
   });
 
+  // Send notification to a specific user
+  socket.on("sendNotificationToUser", ({ message, recipientId }) => {
+    const user = getUser(recipientId);
+    if (user) {
+      io.to(user.socketId).emit("getNotification", { message });
+    } else {
+      console.log("Recipient not found");
+    }
+  });
 
-  //when disconnect
+  // Send notification to all recipients
+  socket.on("sendNotificationToAllUsers", ({ message }) => {
+    io.emit("getNotification", { message });
+  });
+
+  // When a user disconnects
   socket.on("disconnect", () => {
-    console.log("a user disconnected!");
+    console.log("A user disconnected!");
     removeUser(socket.id);
     io.emit("getUsers", users);
   });
