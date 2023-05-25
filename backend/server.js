@@ -17,7 +17,10 @@ app.use("/items", require("./routes/itemRoutes"));
 app.use("/orders", require("./routes/orderRoutes"));
 app.use("/analytics", require("./routes/analyticRoutes"));
 
-//  CHATTING MIDDLEWARES
+// Notification routes
+app.use("/notifications", require("./routes/NotificationRoutes"));
+
+//  CHATTING
 app.use("/conversations", require("./routes/conversationsRoutes"));
 app.use("/messages", require("./routes/messagesRoutes"));
 
