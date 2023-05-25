@@ -3,7 +3,7 @@ import { AiOutlineUser } from 'react-icons/ai';
 import { IoIosArrowDown } from 'react-icons/io';
 
 const About = ({ user, currentColor }) => {
-    const { firstName, lastName, email, phone } = user.user
+    const { firstName, lastName, email, phone } = user
 
     return (
         <div className="bg-white p-3 shadow-sm rounded-sm">
@@ -51,10 +51,7 @@ const About = ({ user, currentColor }) => {
                     </div>
                 </div>
             </div>
-            <button className="block w-full text-blue-800 text-sm font-semibold rounded-lg hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4">
-                <IoIosArrowDown className="inline-block mr-2" />
-                Show Full Information
-            </button>
+           
         </div>
 
     )

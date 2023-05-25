@@ -17,7 +17,6 @@ import {
   ItemDetail,
   EditItemDetail,
   AddItem,
-  Orders,
 
   Jobs,
   JobDetail,
@@ -86,7 +85,7 @@ const App = () => {
                     <Route path="supplier/add-item" element={<AddItem />} />
 
                     {/* pages  */}
-                    <Route path="/orders" element={<Orders />} />
+                    {/* <Route path="/orders" element={<Orders />} /> */}
                     <Route path="/employees" element={<Employees />} />
                     <Route path="/customers" element={<Customers />} />
 

@@ -5,7 +5,6 @@ export { default as Admin } from './Admin/Admin';
 
 export { default as Supplier } from './Supplier/Supplier';
 export { default as SupplierData } from './Supplier/SupplierData';
-export { default as Orders } from './Supplier/Orders';
 export { default as AddItem } from './Supplier/AddItem/AddItem';
 export { default as EditItemDetail } from './Supplier/EditItemDetail';
 
@@ -42,7 +41,7 @@ export { default as Chat } from './Chat/Chat';
 
 
 export { default as Employees } from './Employees';
-export { default as Customers } from './Customers';
+export { default as Customers } from './Supplier/Customers';
 export { default as Area } from './Charts/Area';
 export { default as Bar } from './Charts/Bar';
 export { default as Financial } from './Charts/Financial';

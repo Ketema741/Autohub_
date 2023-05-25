@@ -43,7 +43,7 @@ const DriverCard = ({ driver }) => {
             <BsTelephone className="w-6 hover:text-primary" />
             <span> {driver.phone} </span>
 
-            <a href={`mailto:${'kgirma363@gmail.com'}`}>
+            <a href={`mailto:${driver.email}`}>
               <AiOutlineMail />
             </a>
           </div>

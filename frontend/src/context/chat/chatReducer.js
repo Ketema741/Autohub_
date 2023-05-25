@@ -7,6 +7,8 @@ import {
   SEND_MESSAGE,
   SET_CHAT,
   SET_ARRIVAL_MESSAGE,
+  GET_NOTIFICATIONS,
+  DELETE_NOTIFICATION,
 } from '../Types';
 
 
@@ -54,6 +56,16 @@ const chatReducer = (state, action) => {
         return {
           ...state,
           error: action.payload,
+        };
+      case GET_NOTIFICATIONS:
+        return {
+          ...state,
+          notifications: action.payload,
+        };
+      case DELETE_NOTIFICATION:
+        return {
+          ...state,
+          notifications: state.notifications.filter((notification) => notification._id !== action.payload),
         };
     default:
       throw new Error(`Unsupported type of: ${action.type}`);
