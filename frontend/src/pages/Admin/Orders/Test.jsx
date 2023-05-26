@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { BsArrowLeft, BsArrowRight, BsCreditCard } from 'react-icons/bs';
+
+import * as XLSX from 'xlsx';
+import FileSaver from 'file-saver';
+
 import { FiSearch } from 'react-icons/fi';
-import avatar from '../../../data/avatar.jpg';
-import { Header } from '../../../components';
+import { AiOutlineDownload } from 'react-icons/ai';
+import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';
+
 import { ordersData } from './dummy';
-
-
+import { Header } from '../../../components';
 
 const OrderTable = () => {
     const [orders, setOrders] = useState(ordersData);
@@ -28,7 +31,58 @@ const OrderTable = () => {
     const goToPage = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
+    const filteredOrdersData = ordersData.map((order) => {
+        const { StatusBg, ProductImage, ...filteredOrder } = order;
+        return filteredOrder;
+    });
+    const handleDownload = () => {
+        const worksheet = XLSX.utils.json_to_sheet(filteredOrdersData);
+        const workbook = XLSX.utils.book_new();
 
+        // Adjust column widths
+        const columnWidths = [
+            // Example widths for each column (modify as needed)
+            { wch: 10 }, // Width for column A
+            { wch: 20 }, // Width for column B
+            { wch: 10 }, // Width for column C
+            { wch: 25 }, // Width for column D
+            { wch: 20 }, // Width for column E
+            { wch: 10 }, // Width for column F
+        ];
+
+        // Apply column widths to the worksheet
+        worksheet['!cols'] = columnWidths;
+
+        // Set the height for the first row (header row)
+        const headerRowHeight = 40; // Adjust the value as needed
+        worksheet['!rows'] = [{ hpt: headerRowHeight, hidden: false }];
+
+        // Get the range of the header row
+        const headerRange = XLSX.utils.decode_range(worksheet['!ref'], { sheetRows: 1 });
+
+        // Apply font style to each header cell individually
+        for (let col = headerRange.s.c; col <= headerRange.e.c; col++) {
+            const headerCell = XLSX.utils.encode_cell({ r: headerRange.s.r, c: col }); // Using the start row of the range as the header row
+            const headerCellStyle = worksheet[headerCell].s || {};
+            const font = headerCellStyle.font || {};
+
+            // Set the desired font attributes
+            font.bold = true;
+            font.sz = 14; // Adjust the font size as needed
+
+            // Apply the font to the cell style
+            headerCellStyle.font = font;
+            worksheet[headerCell].s = headerCellStyle;
+        }
+
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+        const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+        const data = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        const fileName = 'item_orders.xlsx';
+        FileSaver.saveAs(data, fileName);
+
+
+    };
 
     return (
         <div className="mt-24 container px-4 mx-auto overflow-hidden">
@@ -190,6 +244,14 @@ const OrderTable = () => {
                         <BsArrowRight className="w-5 h-5 rtl:-scale-x-100" />
                     </button>
                 </div>
+                <button
+                    onClick={handleDownload}
+                    className="mt-8 flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
+                    <span>
+                        Download
+                    </span>
+                    <AiOutlineDownload className="w-5 h-5 rtl:-scale-x-100" />
+                </button>
             </div>
         </div>
     );

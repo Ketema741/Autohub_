@@ -41,37 +41,7 @@ const Customers = () => {
 
     return (
         <div>
-            {/* <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl overflow-hidden"> */}
-                {/* <Header category="" title="Customer Orders" />
-                <GridComponent
-                    dataSource={ordersData}
-                    allowPaging
-                    allowSorting
-                    toolbar={toolbarOptions}
-                    allowExcelExport
-                    allowPdfExport
-                    contextMenuItems={contextMenuItems}
-                    editSettings={editing}
-                    actionComplete={handleActionComplete} // Handle save/delete actions
-                >
-                    <ColumnsDirective>
-                        {ordersGrid.map((item, index) => (
-                            <ColumnDirective key={index} {...item} />
-                        ))}
-                    </ColumnsDirective>
-                    <Inject services={[
-                        Resize,
-                        Sort,
-                        ContextMenu,
-                        Filter,
-                        Page,
-                        ExcelExport,
-                        Edit,
-                        PdfExport,
-                    ]} />
-                </GridComponent>
-
-            </div> */}
+            
             <Test />
         </div>
 
