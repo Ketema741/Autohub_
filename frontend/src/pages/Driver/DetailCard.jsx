@@ -27,7 +27,8 @@ const DetailCard = ({ user }) => {
                     <div className="space-y-4 text-center">
                         <div className='flex flex-row justify-center items-center space-x-2 flex-wrap'>
                             <h4 className="text-2xl text-gray-700 dark:text-white">
-                                {user.firstName}
+                                {/* {user.firstName} */}
+                                ketema Girma
                             </h4>
                             <span className=" text-sm text-gray-500">Motorcycle rider</span>
 
@@ -37,7 +38,8 @@ const DetailCard = ({ user }) => {
 
                             <div className='flex flex-row items-center flex-wrap space-x-2'>
                                 <BsTelephone className="w-6 hover:text-primary" />
-                                <span> {user.phone} </span>
+                                {/* <span> {user.phone} </span> */}
+                                0912323811
 
                                 <a href={`mailto:${'kgirma363@gmail.com'}`}>
 
