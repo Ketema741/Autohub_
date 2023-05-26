@@ -10,7 +10,6 @@ const grantAccess = (action, resource)=>{
             
         try {
             const permissions = roles.can(decoded.user.role)[action](resource)
-            console.log(req.user)
             if(!permissions.granted){
                 return res.status(403).json({
                     ErrorMessage:"Sorry! You don't have that permission"
@@ -18,7 +17,6 @@ const grantAccess = (action, resource)=>{
             }
             next()
         } catch (error) {
-            console.log(error)
             res.status(400).json({error: error})
         }
     }

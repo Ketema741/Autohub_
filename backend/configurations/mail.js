@@ -13,7 +13,7 @@ const OAuth2Client = new OAuth2(
 OAuth2Client.setCredentials({
   refresh_token: process.env.OAUTH_CLIENT_REFRESH_TOKEN,
 });
- 
+
 const sendMail = async (mailOptions) => {
   try {
     const accessToken = await OAuth2Client.getAccessToken();
@@ -34,10 +34,9 @@ const sendMail = async (mailOptions) => {
     const result = transport.sendMail(mailOptions);
     return result;
   } catch (error) {
-    console.log("Error!!", error);
+    res.status(500).json(error.message);
   }
 };
- 
 
 module.exports = {
   sendMail,
