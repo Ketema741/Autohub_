@@ -1,5 +1,3 @@
-
-
 import React, { useState } from 'react';
 import { BsArrowLeft, BsArrowRight, BsCreditCard } from 'react-icons/bs';
 import { FiSearch } from 'react-icons/fi';
@@ -7,15 +5,15 @@ import avatar from '../../../data/avatar.jpg';
 import { Header } from '../../../components';
 
 
-const ActiveExperts = () => {
+const ActiveSuppliers = () => {
     const [currentPage, setCurrentPage] = useState(1);
 
-    const [serviceProvider, setServiceProvider] = useState([]);
+    const [supplier, setSupplier] = useState([]);
     const [showAlert, setShowAlert] = useState(null);
 
-    const handleRejectClick = (serviceProvider) => {
+    const handleRejectClick = (supplier) => {
         setShowAlert(true);
-        setServiceProvider(serviceProvider);
+        setSupplier(supplier);
     };
 
     const handleCloseAlert = () => {
@@ -29,19 +27,19 @@ const ActiveExperts = () => {
         { id: 4, phone: "10000 91 232 3811", company: "4 Wheel Parts ", name: 'Dema' },
         { id: 5, phone: "10000 91 232 3811", company: "Summit Racing", name: 'Ohana' },
         { id: 6, phone: "10000 91 232 3811", company: "JC Whitney", name: 'Sunny' },
-        { id: 7, phone: "10000 91 232 3811", company: "AutoZone", name: 'service Provider' },
-        { id: 8, phone: "10000 91 232 3811", company: "Pep Boys", name: 'service Provider' },
-        { id: 9, phone: "10000 91 232 3811", company: "Advance Auto Parts", name: 'serviceProvider' },
-        { id: 10, phone: "10000 91 232 3811", company: "O'Reilly Auto Parts", name: 'serviceProvider' },
+        { id: 7, phone: "10000 91 232 3811", company: "AutoZone", name: 'Supplier' },
+        { id: 8, phone: "10000 91 232 3811", company: "Pep Boys", name: 'Supplier' },
+        { id: 9, phone: "10000 91 232 3811", company: "Advance Auto Parts", name: 'Supplier' },
+        { id: 10, phone: "10000 91 232 3811", company: "O'Reilly Auto Parts", name: 'Supplier' },
     ]
 
 
     const PAGE_SIZE = 2;
-    const totalServiceProviders = data.length;
-    const totalPages = Math.ceil(totalServiceProviders / PAGE_SIZE);
+    const totalSuppliers = data.length;
+    const totalPages = Math.ceil(totalSuppliers / PAGE_SIZE);
     const startIndex = (currentPage - 1) * PAGE_SIZE;
     const endIndex = startIndex + PAGE_SIZE;
-    const currentServiceProviders = data.slice(startIndex, endIndex);
+    const currentSuppliers = data.slice(startIndex, endIndex);
 
     const goToPage = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -50,7 +48,7 @@ const ActiveExperts = () => {
     const handleClickSave = (e) => {
         e.preventDefault();
         handleCloseAlert(false);
-        console.log(serviceProvider)
+        console.log(supplier)
     }
 
     return (
@@ -58,9 +56,9 @@ const ActiveExperts = () => {
             <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl overflow-hidden">
                 <div className="mb-8">
                     <div className="pt-0 pr-4 pb-0 pl-4 mt-0 mr-auto mb-0 ml-auto sm:flex sm:items-center sm:justify-between">
-                        <Header category="System Users" title="Vehicle Service Providers" />
+                        <Header category="System Users" title="Suppliers with Approved Status" />
                         <div className="mt-4 mr-0 mb-0 ml-0 sm:mt-0">
-                            <p className="sr-only">Search Vehicle Service Providers</p>
+                            <p className="sr-only">Search Supplier</p>
                             <div className="relative">
                                 <div className="flex items-center pt-0 pr-0 pb-0 pl-3 absolute inset-y-0 left-0 pointer-events-none">
                                     <p>
@@ -68,7 +66,7 @@ const ActiveExperts = () => {
                                     </p>
                                 </div>
                                 <input
-                                    placeholder="Search.. "
+                                    placeholder="Search Suppliers "
                                     type="search"
                                     className="block pt-2 pr-0 pb-2 pl-10 w-full py-2 border border-gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm"
                                 />
@@ -94,19 +92,24 @@ const ActiveExperts = () => {
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                                 Date
                                             </th>
+
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                                serviceProvider
+                                                Bank Account
                                             </th>
 
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                                Email
+                                                Supplier
+                                            </th>
+
+                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                                Company Name
                                             </th>
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                                 Actions
                                             </th>
                                         </tr>
                                     </thead>
-                                    {currentServiceProviders.length > 0 && currentServiceProviders.map((user) => (
+                                    {currentSuppliers.length > 0 && currentSuppliers.map((user) => (
                                         <tbody key={user.id} className="bg-white divide-y divide-gray-300 dark:divide-gray-700 dark:bg-gray-900">
                                             <tr>
                                                 <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
@@ -115,15 +118,24 @@ const ActiveExperts = () => {
                                                     </div>
                                                 </td>
                                                 <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">Jan 6, 2022</td>
+                                                <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                    <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 dark:bg-gray-800" style={{ color: '#977062', backgroundColor: '#EDE1DD' }}>
+                                                        <BsCreditCard />
 
-                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                    <div className="flex items-center gap-x-2">
-                                                        <img className="object-cover w-8 h-8 rounded-full" src={avatar} alt="user" />
-                                                        <h2 className="text-sm font-medium text-gray-800 dark:text-white ">{user.name}</h2>
+                                                        <h2 className="text-sm font-normal">{user.phone}</h2>
                                                     </div>
                                                 </td>
                                                 <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                    {user.name}@example.com
+                                                    <div className="flex items-center gap-x-2">
+                                                        <img className="object-cover w-8 h-8 rounded-full" src={avatar} alt="user" />
+                                                        <div>
+                                                            <h2 className="text-sm font-medium text-gray-800 dark:text-white ">{user.name}</h2>
+                                                            <p className="text-xs font-normal text-gray-600 dark:text-gray-400">{user.name}@example.com</p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                    {user.company}
                                                 </td>
                                                 <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                     <div className="flex items-center gap-x-6">
@@ -156,7 +168,7 @@ const ActiveExperts = () => {
                     <div className="items-center hidden md:flex ">
                         <div className="flex items-center">
                             <span className="text-sm text-gray-700 capitalize pr-2">
-                                Displaying {startIndex + 1} - {endIndex} out of {totalServiceProviders} Service Providers
+                                Displaying {startIndex + 1} - {endIndex} out of {totalSuppliers} suppliers
                             </span>
                         </div>
                     </div>
@@ -174,10 +186,10 @@ const ActiveExperts = () => {
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                     <div className="bg-red-400 rounded-lg p-6">
                         <h3 className="text-xl font-semibold text-white mb-4">
-                            Confirmation Required: Suspend {serviceProvider.name}'s Account
+                            Confirmation Required: Suspend {supplier.name}'s Account
                         </h3>
                         <p className="text-white mb-4">
-                            Are you certain you wish to suspend the serviceProvider's account on our website?
+                            Are you certain you wish to suspend the supplier's account on our website?
                         </p>
 
                         <div className="flex space-x-5 justify-center items-center">
@@ -205,4 +217,4 @@ const ActiveExperts = () => {
     )
 }
 
-export default ActiveExperts
+export default ActiveSuppliers

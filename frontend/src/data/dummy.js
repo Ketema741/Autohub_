@@ -1090,11 +1090,11 @@ export const lineCustomSeries = [
 ];
 
 export const pieChartData = [
-  { x: 'Users', y: 18, text: '30%' },
-  { x: 'Suppliers', y: 8, text: '25%' },
-  { x: 'Drivers', y: 18, text: '20%' },
-  { x: 'Service Providers', y: 15, text: '15%' },
-  { x: 'Experts', y: 11, text: '10%' },
+  { x: 'Anonymous Users', y: 200, text: '30%' },
+  { x: 'Suppliers', y: 150, text: '25%' },
+  { x: 'Drivers', y: 100, text: '20%' },
+  { x: 'Service Providers', y: 50, text: '15%' },
+  { x: 'Experts', y: 20, text: '10%' },
   
 ];
 

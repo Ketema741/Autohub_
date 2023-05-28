@@ -14,7 +14,7 @@ import {
     ExcelExport
 } from '@syncfusion/ej2-react-grids';
 import '../../../App.css';
-
+import Test from './Test';
 import { useStateContext } from '../../../context/ContextProvider';
 import { ordersData, ordersGrid, contextMenuItems } from './dummy';
 import { Header } from '../../../components';
@@ -30,7 +30,7 @@ const Customers = () => {
         if (args.requestType === 'save') {
             const updatedData = args.data;
             setModifiedData(updatedData);
-            console.log(modifiedData)
+            console.log(updatedData)
         } else if (args.requestType === 'delete') {
             if (args) {
                 const deletedUser = args.promise[0];
@@ -40,36 +40,9 @@ const Customers = () => {
     };
 
     return (
-
-        <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl overflow-hidden">
-            <Header category="" title="Customer Orders" />
-            <GridComponent
-                dataSource={ordersData}
-                allowPaging
-                allowSorting
-                toolbar={toolbarOptions}
-                allowExcelExport
-                allowPdfExport
-                contextMenuItems={contextMenuItems}
-                editSettings={editing}
-                actionComplete={handleActionComplete} // Handle save/delete actions
-            >
-                <ColumnsDirective>
-                    {ordersGrid.map((item, index) => (
-                        <ColumnDirective key={index} {...item} />
-                    ))}
-                </ColumnsDirective>
-                <Inject services={[
-                    Resize,
-                    Sort,
-                    ContextMenu,
-                    Filter,
-                    Page,
-                    ExcelExport,
-                    Edit,
-                    PdfExport,
-                ]} />
-            </GridComponent>
+        <div>
+            
+            <Test />
         </div>
 
 

@@ -60,7 +60,7 @@ const AdminSidebar = () => {
           </div>
 
           <div className="mt-4">
-            <div className="fixed top-0 z-10 ml-[-100%] flex h-screen w-full flex-col justify-between  bg-white px-2 pb-3 transition duration-300 md:w-4/16 lg:ml-0 lg:w-[23%] xl:w-[18%] 2xl:w-[13%] dark:bg-gray-800 dark:border-gray-700">
+            <div className="fixed top-0 z-10 ml-[-100%] flex h-screen w-full flex-col justify-between  bg-white px-2 pb-3 transition duration-300 md:w-[23%] lg:ml-0 lg:w-[20%] xl:w-[15%] 2xl:w-[10%] dark:bg-gray-800 dark:border-gray-700">
               <div>
                 <div className="mt-8 text-center">
                   <img src={avatat} alt="" className="m-auto h-10 w-10 rounded-full object-cover lg:h-28 lg:w-28" />
@@ -117,7 +117,7 @@ const AdminSidebar = () => {
                   <li>
                     <button type="button" onClick={() => handleClick("experts")} className="group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600 dark:text-gray-300">
                       <BiBookOpen className="h-5 w-5 fill-current text-gray-600 group-hover:text-cyan-600 dark:group-hover:text-sky-400" />
-                      <span className="group-hover:text-gray-700 dark:group-hover:text-gray-50">Expert</span>
+                      <span className="group-hover:text-gray-700 dark:group-hover:text-gray-50">Vehicle Aficionados</span>
                     </button>
                   </li>
 
