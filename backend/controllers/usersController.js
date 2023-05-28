@@ -492,12 +492,11 @@ const getServiceProviders = async (req, res) => {
   }
 };
 
-// get all drivers
 const getDriver = async (req, res) => {
   try {
     const { id } = req.params;
     const driver = await models.Driver.findById(id)
-      .populate({ path: "ratings" })
+      .populate({ path: "ratings", model: "DriverRating" })
       .select("-password");
     if (!driver) {
       throw new Error("Driver not found");
