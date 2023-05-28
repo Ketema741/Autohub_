@@ -20,13 +20,29 @@ import {
   CLEAR_USERS,
   CLEAR_FILTER,
   USER_ERROR,
-  GET_DRIVERS, GET_SUPPLIERS, GET_EXEPRT, GET_EXEPRTS, GET_SERVISEPROVIERS, FILTER_DRIVERS
+  GET_DRIVERS, GET_SUPPLIERS, GET_EXEPRT, GET_EXEPRTS, GET_SERVISEPROVIERS, FILTER_DRIVERS, GET_DRIVER, GET_SUPPLIER, GET_SERVISEPROVIER, FILTER_SUPPLIERS, FILTER_EXEPRTS, FILTER_SERVISEPROVIERS
 } from '../Types';
 
 const UserState = (props) => {
   const initialState = {
     users: null,
+
     drivers: null,
+    driver: null,
+    filteredDrivers: null,
+
+    suppliers: null,
+    supplier: null,
+    filteredSuppliers: null,
+
+    serviceProviders: null,
+    serviceProvider: null,
+    filteredServiceProviders: null,
+
+    aficionados: null,
+    aficionado: null,
+    filteredAficionados: null,
+
     user: null,
     current: null,
     filteredDrivers: null,
@@ -45,13 +61,13 @@ const UserState = (props) => {
     if (userType === "drivers") {
       get_users = GET_DRIVERS;
     }
-    else if (userType === "supplier") {
+    else if (userType === "suppliers") {
       get_users = GET_SUPPLIERS;
     }
-    else if (userType === "expert") {
+    else if (userType === "experts") {
       get_users = GET_EXEPRTS;
     }
-    else if (userType === "serviceprovider") {
+    else if (userType === "service-providers") {
       get_users = GET_SERVISEPROVIERS;
     }
 
@@ -72,10 +88,25 @@ const UserState = (props) => {
 
   // Get user
   const getUser = async (_id, userType) => {
+
+    let get_user
+    if (userType === "driver") {
+      get_user = GET_DRIVER;
+    }
+    else if (userType === "supplier") {
+      get_user = GET_SUPPLIER;
+    }
+    else if (userType === "expert") {
+      get_user = GET_EXEPRT;
+    }
+    else if (userType === "service-provider") {
+      get_user = GET_SERVISEPROVIER;
+    }
+
     try {
       const res = await axios.get(`/users/${userType}/${_id}`);
       dispatch({
-        type: GET_USER,
+        type: get_user,
         payload: res.data,
       });
     } catch (err) {
@@ -213,8 +244,17 @@ const UserState = (props) => {
   // filter item
   const filterUsers = (text, userType) => {
     let filter_users
-    if (userType == "drivers") {
-      filter_users = FILTER_DRIVERS
+    if (userType === "drivers") {
+      filter_users = FILTER_DRIVERS;
+    }
+    else if (userType === "suppliers") {
+      filter_users = FILTER_SUPPLIERS;
+    }
+    else if (userType === "experts") {
+      filter_users = FILTER_EXEPRTS;
+    }
+    else if (userType === "service-providers") {
+      filter_users = FILTER_SERVISEPROVIERS;
     }
     dispatch({ type: filter_users, payload: text });
   };
@@ -228,11 +268,25 @@ const UserState = (props) => {
     <userContext.Provider
       value={{
         users: state.users,
-        drivers: state.drivers,
         user: state.user,
-        favourites: state.favourites,
         current: state.current,
+
+        drivers: state.drivers,
+        driver: state.driver,
         filteredDrivers: state.filteredDrivers,
+
+        suppliers: state.suppliers,
+        supplier: state.supplier,
+        filteredSuppliers: state.filteredSuppliers,
+
+        serviceProviders: state.serviceProviders,
+        serviceProvider: state.serviceProvider,
+        filteredServiceProviders: state.filteredServiceProviders,
+
+        aficionados: state.aficionados,
+        aficionado: state.aficionado,
+        filteredAficionados: state.filteredAficionados,
+
         getUsers,
         getUser,
         addUser,

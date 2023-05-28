@@ -26,7 +26,7 @@ const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
 );
 
 
-const Navbar = ({ name }) => {
+const Navbar = () => {
 
     const {
         currentColor,

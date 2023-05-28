@@ -1,17 +1,42 @@
+import React, { useState, useContext, useEffect, useRef } from 'react';
+import moment from 'moment';
 
-
-import React, { useState } from 'react';
-import { BsArrowLeft, BsArrowRight, BsCreditCard } from 'react-icons/bs';
+import { BsArrowLeft, BsArrowRight, } from 'react-icons/bs';
 import { FiSearch } from 'react-icons/fi';
+import { FiMoreVertical } from 'react-icons/fi';
+
+
 import avatar from '../../../data/avatar.jpg';
 import { Header } from '../../../components';
+import UserContext from '../../../context/user/userContext';
+import Modal from '../Modal'
+import DownloadButton from '../Download'
+const ActiveServiceProviders = () => {
+    const userContext = useContext(UserContext);
+    const { getUsers, getUser, serviceProvider, serviceProviders, filteredServiceProviders, filterUsers, clearFilter } = userContext;
 
+    useEffect(() => {
+        getUsers("service-providers");
+    }, []);
 
-const ActiveExperts = () => {
     const [currentPage, setCurrentPage] = useState(1);
-
-    const [serviceProvider, setServiceProvider] = useState([]);
+    const [currentServiceProvider, setServiceProvider] = useState([]);
     const [showAlert, setShowAlert] = useState(null);
+    const PAGE_SIZE = 2;
+
+
+    const totalServiceProviders = serviceProviders ? serviceProviders.length : 0;
+    const totalPages = Math.ceil(totalServiceProviders / PAGE_SIZE);
+    const startIndex = (currentPage - 1) * PAGE_SIZE;
+    const endIndex = startIndex + PAGE_SIZE;
+    let currentServiceProviders = serviceProviders ? serviceProviders.slice(startIndex, endIndex) : [];
+
+    const text = useRef('');
+    useEffect(() => {
+        if (filteredServiceProviders === null) {
+            text.current.value = '';
+        }
+    }, [filteredServiceProviders]);
 
     const handleRejectClick = (serviceProvider) => {
         setShowAlert(true);
@@ -22,36 +47,46 @@ const ActiveExperts = () => {
         setShowAlert(false);
     };
 
-    const data = [
-        { id: 1, phone: "10000 91 232 3811", company: "WeatherTech", name: 'Me ' },
-        { id: 2, phone: "10000 91 232 3811", company: "AutoAnything ", name: 'betsi' },
-        { id: 3, phone: "10000 91 232 3811", company: "CARiD", name: 'Gatwech' },
-        { id: 4, phone: "10000 91 232 3811", company: "4 Wheel Parts ", name: 'Dema' },
-        { id: 5, phone: "10000 91 232 3811", company: "Summit Racing", name: 'Ohana' },
-        { id: 6, phone: "10000 91 232 3811", company: "JC Whitney", name: 'Sunny' },
-        { id: 7, phone: "10000 91 232 3811", company: "AutoZone", name: 'service Provider' },
-        { id: 8, phone: "10000 91 232 3811", company: "Pep Boys", name: 'service Provider' },
-        { id: 9, phone: "10000 91 232 3811", company: "Advance Auto Parts", name: 'serviceProvider' },
-        { id: 10, phone: "10000 91 232 3811", company: "O'Reilly Auto Parts", name: 'serviceProvider' },
-    ]
+    const onChange = (e) => {
+        if (e.target.value !== '') {
+            filterUsers(e.target.value, 'service-providers');
+        } else {
+            clearFilter();
+        }
+    };
 
+    const [showActions, setShowActions] = useState(Array(currentServiceProviders?.length).fill(false));
+    const [openIndex, setOpenIndex] = useState(null); // Track the index of the currently open toggle
 
-    const PAGE_SIZE = 2;
-    const totalServiceProviders = data.length;
-    const totalPages = Math.ceil(totalServiceProviders / PAGE_SIZE);
-    const startIndex = (currentPage - 1) * PAGE_SIZE;
-    const endIndex = startIndex + PAGE_SIZE;
-    const currentServiceProviders = data.slice(startIndex, endIndex);
+    const toggleActions = (index) => {
+        const updatedShowActions = [...showActions];
+        updatedShowActions[index] = !updatedShowActions[index];
 
-    const goToPage = (pageNumber) => {
-        setCurrentPage(pageNumber);
+        // Close the previously opened toggle
+        if (openIndex !== null && openIndex !== index) {
+            updatedShowActions[openIndex] = false;
+        }
+
+        setShowActions(updatedShowActions);
+        setOpenIndex(index); // Update the openIndex to the clicked index
     };
 
     const handleClickSave = (e) => {
         e.preventDefault();
         handleCloseAlert(false);
-        console.log(serviceProvider)
+        console.log(serviceProvider);
+    };
+
+    const [showUserModal, setShowUserModal] = useState(null);
+
+    const handleShow = (_id) => {
+        getUser(_id, "service-provider")
+        setShowUserModal(true);
     }
+
+    const handleModalClose = () => {
+        setShowUserModal(false);
+    };
 
     return (
         <div className="mt-24 container px-4 mx-auto overflow-hidden">
@@ -69,7 +104,9 @@ const ActiveExperts = () => {
                                 </div>
                                 <input
                                     placeholder="Search.. "
-                                    type="search"
+                                    type="text"
+                                    ref={text}
+                                    onChange={onChange}
                                     className="block pt-2 pr-0 pb-2 pl-10 w-full py-2 border border-gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm"
                                 />
                             </div>
@@ -95,7 +132,10 @@ const ActiveExperts = () => {
                                                 Date
                                             </th>
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                                serviceProvider
+                                                Service Provider
+                                            </th>
+                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                                Company Name
                                             </th>
 
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -106,35 +146,144 @@ const ActiveExperts = () => {
                                             </th>
                                         </tr>
                                     </thead>
-                                    {currentServiceProviders.length > 0 && currentServiceProviders.map((user) => (
-                                        <tbody key={user.id} className="bg-white divide-y divide-gray-300 dark:divide-gray-700 dark:bg-gray-900">
-                                            <tr>
-                                                <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                                                    <div className="inline-flex items-center gap-x-3">
-                                                        <span>{user.id}</span>
-                                                    </div>
-                                                </td>
-                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">Jan 6, 2022</td>
 
-                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                    <div className="flex items-center gap-x-2">
-                                                        <img className="object-cover w-8 h-8 rounded-full" src={avatar} alt="user" />
-                                                        <h2 className="text-sm font-medium text-gray-800 dark:text-white ">{user.name}</h2>
-                                                    </div>
-                                                </td>
-                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                    {user.name}@example.com
-                                                </td>
-                                                <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                    <div className="flex items-center gap-x-6">
-                                                        <button onClick={() => handleRejectClick(user)} className="text-red-300 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
-                                                            Freeze
+                                    {filteredServiceProviders !== null ?
+                                        filteredServiceProviders.map((user, index) => (
+                                            <tbody key={user._id} className="bg-white divide-y divide-gray-300 dark:divide-gray-700 dark:bg-gray-900">
+                                                <tr>
+                                                    <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                                                        <div className="inline-flex items-center gap-x-3">
+                                                            <span>{index + 1}</span>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                        {moment(user.createdAt).format('MMMM Do YYYY, h:mm:ss a')}
+                                                    </td>
+
+                                                    <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                        <div className="flex items-center gap-x-2">
+                                                            <img className="object-cover w-8 h-8 rounded-full" src={avatar} alt="user" />
+                                                            <h2 className="text-sm font-medium text-gray-800 dark:text-white ">{user.firstName}</h2>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                        {user.lastName}
+                                                    </td>
+                                                    <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                        {user.email}
+                                                    </td>
+
+                                                    <td className="relative px-4 py-4 flex items-center justify-center">
+
+                                                        {showActions[index] && (
+                                                            <div
+                                                                className="absolute -top-14 right-20 z-100 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+                                                            >
+                                                                <ul className="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="benq-ex2710q-dropdown-button">
+                                                                    <li>
+                                                                        <button onClick={handleShow} className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                                            Show
+                                                                        </button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <button
+                                                                            onClick={() => handleRejectClick(user)}
+                                                                            className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                                                        >
+                                                                            Freeze
+                                                                        </button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="#"
+                                                                            className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                                                        >
+                                                                            Delete
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+
+                                                            </div>
+                                                        )}
+                                                        <button
+                                                            className="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
+                                                            type="button"
+                                                            onClick={() => toggleActions(index)}
+                                                        >
+                                                            <FiMoreVertical className="w-5 h-5" />
                                                         </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    ))
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        ))
+                                        :
+                                        currentServiceProviders.map((user, index) => (
+                                            <tbody key={user._id} className="bg-white divide-y divide-gray-300 dark:divide-gray-700 dark:bg-gray-900">
+                                                <tr>
+                                                    <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                                                        <div className="inline-flex items-center gap-x-3">
+                                                            <span>{index + 1}</span>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                        {moment(user.createdAt).format('MMMM Do YYYY, h:mm:ss a')}
+                                                    </td>
+
+                                                    <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                        <div className="flex items-center gap-x-2">
+                                                            <img className="object-cover w-8 h-8 rounded-full" src={avatar} alt="user" />
+                                                            <h2 className="text-sm font-medium text-gray-800 dark:text-white ">{user.firstName}</h2>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                        {user.lastName}
+                                                    </td>
+                                                    <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                        {user.email}
+                                                    </td>
+
+
+                                                    <td className="relative px-4 py-4 flex items-center justify-center">
+
+                                                        {showActions[index] && (
+                                                            <div
+                                                                className="absolute -top-14 right-20 z-100 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+                                                            >
+                                                                <ul className="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="benq-ex2710q-dropdown-button">
+                                                                    <li>
+                                                                        <button onClick={handleShow} className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                                            Show
+                                                                        </button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <button
+                                                                            onClick={() => handleRejectClick(user)}
+                                                                            className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                                                        >
+                                                                            Freeze
+                                                                        </button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="#"
+                                                                            className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                                                        >
+                                                                            Delete
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+
+                                                            </div>
+                                                        )}
+                                                        <button
+                                                            className="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
+                                                            type="button"
+                                                            onClick={() => toggleActions(index)}
+                                                        >
+                                                            <FiMoreVertical className="w-5 h-5" />
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        ))
                                     }
                                 </table>
                             </div>
@@ -169,12 +318,17 @@ const ActiveExperts = () => {
                         <BsArrowRight className="w-5 h-5 rtl:-scale-x-100" />
                     </button>
                 </div>
+                <DownloadButton filteredData={serviceProviders} fileName="service_rovider" />
+
             </div>
+            {showUserModal && (
+                <Modal User={serviceProvider} handleModalClose={handleModalClose} />
+            )}
             {showAlert && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                     <div className="bg-red-400 rounded-lg p-6">
                         <h3 className="text-xl font-semibold text-white mb-4">
-                            Confirmation Required: Suspend {serviceProvider.name}'s Account
+                            Confirmation Required: Suspend {currentServiceProvider.name}'s Account
                         </h3>
                         <p className="text-white mb-4">
                             Are you certain you wish to suspend the serviceProvider's account on our website?
@@ -205,4 +359,4 @@ const ActiveExperts = () => {
     )
 }
 
-export default ActiveExperts
+export default ActiveServiceProviders

@@ -1,9 +1,8 @@
 import React from 'react'
 import { AiOutlineUser } from 'react-icons/ai';
-import { IoIosArrowDown } from 'react-icons/io';
 
 const About = ({ user, currentColor }) => {
-    const { firstName, lastName, email, phone } = user
+    const { firstName, lastName, email, phone, birthDay, address } = user
 
     return (
         <div className="bg-white p-3 shadow-sm rounded-sm">
@@ -33,12 +32,9 @@ const About = ({ user, currentColor }) => {
                     </div>
                     <div className="grid grid-cols-2">
                         <div className="px-4 py-2 font-semibold">Current Address</div>
-                        <div className="px-4 py-2">Addis Ababa, 4Kile</div>
+                        <div className="px-4 py-2">{address}</div>
                     </div>
-                    <div className="grid grid-cols-2">
-                        <div className="px-4 py-2 font-semibold">Addis Ababa, 4Kile</div>
-                        <div className="px-4 py-2">4Kile, 5Kile, 6Kile</div>
-                    </div>
+
                     <div className="grid grid-cols-2">
                         <div className="px-4 py-2 font-semibold">Email</div>
                         <div className="px-4 py-2">
@@ -47,11 +43,11 @@ const About = ({ user, currentColor }) => {
                     </div>
                     <div className="grid grid-cols-2">
                         <div className="px-4 py-2 font-semibold">Birthday</div>
-                        <div className="px-4 py-2">August 26, 1998</div>
+                        <div className="px-4 py-2">{birthDay}</div>
                     </div>
                 </div>
             </div>
-           
+
         </div>
 
     )

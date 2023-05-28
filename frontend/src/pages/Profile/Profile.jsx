@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, Fragment } from 'react';
+import React, { useState, useContext, useEffect, Fragment } from 'react';
 
 import { Sidebar } from '../../components';
 
@@ -6,9 +6,10 @@ import { useStateContext } from '../../context/ContextProvider';
 import AuthContext from "../../context/auth/authContext";
 
 import Navbar from './Navbar'
-import About from './About'
+import AboutDriver from './about/AboutDriver'
 import Experience from './Experience'
 import ProfileCard from './ProfileCard'
+import EditDriver from './edit/EditDriver';
 
 const Profile = () => {
     const authContext = useContext(AuthContext);
@@ -21,9 +22,6 @@ const Profile = () => {
         currentColor
     } = useStateContext();
 
-
-
-
     useEffect(() => {
         const currentThemeColor = localStorage.getItem('colorMode');
         const currentThemeMode = localStorage.getItem('themeMode');
@@ -34,11 +32,22 @@ const Profile = () => {
         }
     }, []);
 
+    const [showUserModal, setShowUserModal] = useState(null);
+
+    const handleShow = () => {
+
+        // getUser(_id, "supplier")
+        setShowUserModal(true);
+    }
+
+    const handleModalClose = () => {
+        setShowUserModal(false);
+    };
     return (
 
         <div className={currentMode === "Dark" ? "dark" : ""}>
             <div className="flex relative dark:bg-main-dark-bg">
-                
+
                 {activeMenu ? (
                     <div className="w-52 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
                         <Sidebar />
@@ -58,22 +67,35 @@ const Profile = () => {
                     {user &&
                         <Fragment>
                             <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full ">
-                                <Navbar name={user.firstName} currentColor={currentColor} />
+                                <Navbar />
                             </div>
                             <div>
                                 <div className="mt-24 container mx-auto my-5 p-5">
                                     <div className="md:flex gap-2 no-wrap md:-mx-2 ">
                                         <div className="w-full md:w-3/12 md:mx-2">
-                                            <ProfileCard currentColor={currentColor} name={user.firstName} />
+                                            <ProfileCard
+                                                currentColor={currentColor}
+                                                user={user}
+
+                                                handleShow={handleShow}
+                                            />
                                             <div className="my-8"></div>
                                         </div>
                                         <div className="w-full md:w-9/12 mx-2 h-64">
-                                            <About currentColor={currentColor} user={user} />
+                                            {user.role == "driver" && <AboutDriver currentColor={currentColor} user={user} />}
+                                            {user.role == "supplier" && <AboutSupplier currentColor={currentColor} user={user} />}
+                                            {user.role == "expert" && <AboutExpert currentColor={currentColor} user={user} />}
+                                            {user.role == "service-provider" && <AboutServiceProvider currentColor={currentColor} user={user} />}
+
                                             <div className="my-6"></div>
                                             <Experience currentColor={currentColor} />
                                         </div>
                                     </div>
                                 </div>
+                                {showUserModal && user.role == "driver" && <EditDriver handleModalClose={handleModalClose} user={user} />}
+                                {showUserModal && user.role == "supplier" && <EditSupplier handleModalClose={handleModalClose} user={user} />}
+                                {showUserModal && user.role == "expert" && <EditExpert handleModalClose={handleModalClose} user={user} />}
+                                {showUserModal && user.role == "service-provider" && <EditServiceProvider handleModalClose={handleModalClose} user={user} />}
                             </div>
                         </Fragment>
                     }

@@ -1,18 +1,16 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
+import moment from 'moment';
 
 import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';
-import { FiSearch } from 'react-icons/fi';
-import { FiMoreVertical } from 'react-icons/fi';
+import { FiSearch, FiMoreVertical } from 'react-icons/fi';
 
-
-import moment from 'moment';
 
 import avatar from '../../../data/avatar.jpg';
 import { Header } from '../../../components';
 import Modal from '../Modal'
 import UserContext from '../../../context/user/userContext';
 
-const Drivers = () => {
+const ActiveJobs = () => {
 
     const userContext = useContext(UserContext);
     const { getUser, getUsers, drivers, driver, filteredDrivers, filterUsers, clearFilter } = userContext;
@@ -97,6 +95,8 @@ const Drivers = () => {
 
     const [showUserModal, setShowUserModal] = useState(null);
 
+
+
     const handleModalClose = () => {
         setShowUserModal(false);
     };
@@ -107,9 +107,9 @@ const Drivers = () => {
             <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl overflow-hidden">
                 <div className="mb-8">
                     <div className="pt-0 pr-4 pb-0 pl-4 mt-0 mr-auto mb-0 ml-auto sm:flex sm:items-center sm:justify-between">
-                        <Header category="System Users" title="Pending Vehicle Aficionados" />
+                        <Header category="Jobs" title="Active Jobs" />
                         <div className="mt-4 mr-0 mb-0 ml-0 sm:mt-0">
-                            <p className="sr-only">Search Aficionados</p>
+                            <p className="sr-only">Search  Jobs</p>
                             <div className="relative">
                                 <div className="flex items-center pt-0 pr-0 pb-0 pl-3 absolute inset-y-0 left-0 pointer-events-none">
                                     <p>
@@ -360,4 +360,4 @@ const Drivers = () => {
     )
 }
 
-export default Drivers
+export default ActiveJobs

@@ -1,18 +1,16 @@
 import React from 'react';
-import driver1 from '../../data/avatar.jpg';
-
 
 import { BsTelephone } from 'react-icons/bs'
 import { AiOutlineMail } from 'react-icons/ai'
 
 import DriverRating from './DriverRating'
+import driver1 from '../../data/avatar.jpg';
 
-const DetailCard = ({ user }) => {
+const DetailCard = ({ driver }) => {
     
     return (
         <div className="mt-24 flex flex-col justify-center items-center">
             <div className="relative flex flex-col items-center rounded-[20px] w-[80%] max-w-[95%] mx-auto bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:!shadow-none p-3">
-
                 <div className="group space-y-8 border-t-4 border-gray-100 dark:border-gray-800">
                     <div className="mx-auto -mt-16 h-32 w-32 rotate-45 overflow-hidden rounded-[2rem]">
                         <img
@@ -27,8 +25,7 @@ const DetailCard = ({ user }) => {
                     <div className="space-y-4 text-center">
                         <div className='flex flex-row justify-center items-center space-x-2 flex-wrap'>
                             <h4 className="text-2xl text-gray-700 dark:text-white">
-                                {/* {user.firstName} */}
-                                ketema Girma
+                                {driver.firstName}
                             </h4>
                             <span className=" text-sm text-gray-500">Motorcycle rider</span>
 
@@ -38,16 +35,13 @@ const DetailCard = ({ user }) => {
 
                             <div className='flex flex-row items-center flex-wrap space-x-2'>
                                 <BsTelephone className="w-6 hover:text-primary" />
-                                {/* <span> {user.phone} </span> */}
-                                0912323811
-
-                                <a href={`mailto:${'kgirma363@gmail.com'}`}>
-
+                                <span> {driver.phone} </span>
+                                
+                                <a href={`mailto:${driver.email}`}>
                                     <AiOutlineMail />
                                 </a>
                             </div>
                         </div>
-
                     </div>
                 </div>
                 <div className="mt-8 mb-8 w-full">

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { FaStar } from 'react-icons/fa';
 
-const DriverRating = ({ initialRating }) => {
+const DriverRating = (_id) => {
   const [ratings, setRatings] = useState({
-    punctuality: initialRating,
-    professionalism: initialRating,
-    drivingSkills: initialRating,
-    knowledgeOfRoutes: initialRating,
-    communication: initialRating,
+    punctuality: 0,
+    professionalism: 0,
+    drivingSkills: 0,
+    knowledgeOfRoutes: 0,
+    communication: 0,
   });
 
   const handleClick = (field, newRating) => {
@@ -15,7 +15,8 @@ const DriverRating = ({ initialRating }) => {
       ...prevRatings,
       [field]: newRating,
     }));
-    console.log(ratings)
+    // send to the backend
+    
   };
 
   const renderStars = (field) => {

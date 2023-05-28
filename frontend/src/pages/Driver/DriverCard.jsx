@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { BsTelephone } from 'react-icons/bs'
 import { AiOutlineMail } from 'react-icons/ai'
+import { FaStar } from 'react-icons/fa'
+
 import UserContext from '../../context/user/userContext';
 
 const DriverCard = ({ driver }) => {
@@ -13,9 +15,30 @@ const DriverCard = ({ driver }) => {
   const { getUser } = userContext
 
   const handleclick = () => {
-    getUser(driver._id, "drivers")
+    getUser(driver._id, "driver")
     navigate(`/driver-detail/${driver._id}`)
   }
+
+  const renderStars = (rating) => {
+    const stars = [];
+
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        <FaStar
+          key={i}
+          className={
+            i <= rating
+              ? 'text-yellow-500 transition-all duration-300 ease-in-out transform hover:scale-110'
+              : 'text-gray-400 transition-all duration-300 ease-in-out transform hover:scale-110'
+          }
+        />
+      );
+    }
+
+    return stars;
+  };
+
+
   return (
 
     <div className="group space-y-8 border-t-4 border-gray-100 dark:border-gray-800">
@@ -37,11 +60,16 @@ const DriverCard = ({ driver }) => {
         </div>
         <span className="mt-4 block text-sm text-gray-500">Please find below a list of drivers whom you can contact if you are interested in hiring them.
         </span>
-        <div className="flex justify-center space-x-4 text-gray-500">
 
-          <div className='flex flex-row items-center flex-wrap space-x-2'>
+        <div className="flex flex-col justify-center space-x-4 space-y-4 text-gray-500">
+          <div className='flex flex-row justify-center items-center flex-wrap space-x-4'>
+            {renderStars(3)}
+          </div>
+          <div className='flex flex-row justify-center items-center flex-wrap space-x-4'>
             <BsTelephone className="w-6 hover:text-primary" />
-            <span> {driver.phone} </span>
+            <a href={`tel:${driver.phone}`}>
+              {driver.phone}
+            </a>
 
             <a href={`mailto:${driver.email}`}>
               <AiOutlineMail />
