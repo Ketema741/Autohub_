@@ -1,6 +1,4 @@
 import React, { useEffect } from 'react';
-import { FiSettings } from 'react-icons/fi';
-import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import { Navbar, Footer, Sidebar } from '../../components';
 import { useStateContext } from '../../context/ContextProvider';
 import Ketema from '../../brands/me.png'
@@ -13,7 +11,6 @@ const AboutUs = () => {
     setCurrentMode,
     currentMode,
     activeMenu,
-    currentColor,
     
   } = useStateContext();
 
@@ -51,7 +48,6 @@ const AboutUs = () => {
             <Navbar />
           </div>
           <AboutUsCard />
-
 
           <div className="py-20">
             <div className="xl:container mx-auto px-6 md:px-12">
@@ -96,7 +92,7 @@ const AboutUs = () => {
                   />
                   <div className="absolute bottom-0 inset-x-0 h-max mt-auto px-8 py-6 bg-gray-800 dark:bg-white translate-y-24 transition duration-300 ease-in-out group-hover:translate-y-0">
                     <div>
-                      <h4 className="text-xl font-semibold dark:text-gray-700 text-white">Joseph Birara</h4>
+                      <h4 className="text-xl font-semibold dark:text-gray-700 text-white">Betselot Tadele</h4>
                       <span className="block text-sm text-gray-500">CEO-Founder</span>
                     </div>
                     <p className="mt-8 text-gray-300 dark:text-gray-600">
@@ -116,7 +112,7 @@ const AboutUs = () => {
                   />
                   <div className="absolute bottom-0 inset-x-0 h-max mt-auto px-8 py-6 bg-gray-800 dark:bg-white translate-y-24 transition duration-300 ease-in-out group-hover:translate-y-0">
                     <div>
-                      <h4 className="text-xl font-semibold dark:text-gray-700 text-white">Fitsum .</h4>
+                      <h4 className="text-xl font-semibold dark:text-gray-700 text-white">Gatwech Tap</h4>
                       <span className="block text-sm text-gray-500">CEO-Founder</span>
                     </div>
                     <p className="mt-8 text-gray-300 dark:text-gray-600">
@@ -136,7 +132,7 @@ const AboutUs = () => {
                   />
                   <div className="absolute bottom-0 inset-x-0 h-max mt-auto px-8 py-6 bg-gray-800 dark:bg-white translate-y-24 transition duration-300 ease-in-out group-hover:translate-y-0">
                     <div>
-                      <h4 className="text-xl font-semibold dark:text-gray-700 text-white">Dawit Andargache</h4>
+                      <h4 className="text-xl font-semibold dark:text-gray-700 text-white">Dema Amano </h4>
                       <span className="block text-sm text-gray-500">CEO-Founder</span>
                     </div>
                     <p className="mt-8 text-gray-300 dark:text-gray-600">

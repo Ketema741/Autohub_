@@ -2,12 +2,31 @@ import React from 'react';
 
 import { BsTelephone } from 'react-icons/bs'
 import { AiOutlineMail } from 'react-icons/ai'
+import { FaStar } from 'react-icons/fa'
 
 import DriverRating from './DriverRating'
 import driver1 from '../../data/avatar.jpg';
 
 const DetailCard = ({ driver }) => {
-    
+    const renderStars = (rating) => {
+        const stars = [];
+
+        for (let i = 1; i <= 5; i++) {
+            stars.push(
+                <FaStar
+                    key={i}
+                    className={
+                        i <= rating
+                            ? 'text-yellow-500 transition-all duration-300 ease-in-out transform hover:scale-110'
+                            : 'text-gray-400 transition-all duration-300 ease-in-out transform hover:scale-110'
+                    }
+                />
+            );
+        }
+
+        return stars;
+    };
+
     return (
         <div className="mt-24 flex flex-col justify-center items-center">
             <div className="relative flex flex-col items-center rounded-[20px] w-[80%] max-w-[95%] mx-auto bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:!shadow-none p-3">
@@ -36,7 +55,7 @@ const DetailCard = ({ driver }) => {
                             <div className='flex flex-row items-center flex-wrap space-x-2'>
                                 <BsTelephone className="w-6 hover:text-primary" />
                                 <span> {driver.phone} </span>
-                                
+
                                 <a href={`mailto:${driver.email}`}>
                                     <AiOutlineMail />
                                 </a>
@@ -44,6 +63,7 @@ const DetailCard = ({ driver }) => {
                         </div>
                     </div>
                 </div>
+
                 <div className="mt-8 mb-8 w-full">
 
                     <div className="px-6 py-4 mb-4">
@@ -66,6 +86,7 @@ const DetailCard = ({ driver }) => {
                         </div>
                     </div>
                 </div>
+
                 <div className="pb-8 grid grid-cols-2 gap-4 px-8 w-full">
                     <div className="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
                         <p className="text-sm text-gray-600">Education</p>
@@ -110,6 +131,56 @@ const DetailCard = ({ driver }) => {
                         </p>
                     </div>
                 </div>
+
+
+                <div className="mt-4 w-full">
+                    <div className="px-6 py-4 mb-4">
+                        <h3 className="ml-2 text-2xl font-bold text-navy-700 dark:text-white">
+                            Driver Rating Status
+                        </h3>
+                        <div className="pb-8 grid grid-cols-2 gap-4 w-full">
+                            <div className="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+                                <p className="text-base font-medium text-navy-700 dark:text-white">
+                                    Professionalism
+                                </p>
+                                <div className="pt-4 flex w-3/4  items-center">
+                                    {renderStars(4)}
+                                </div>
+                            </div>
+
+                            <div className="flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+                                <p className="text-base font-medium text-navy-700 dark:text-white">
+                                    Driving Skills
+                                </p>
+                                <div className="pt-4 flex w-3/4  items-center">
+                                    {renderStars(5)}
+                                </div>
+                            </div>
+
+                            <div className="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+                                <p className="text-base font-medium text-navy-700 dark:text-white">
+                                    Knowledge of Routes
+                                </p>
+                                <div className="pt-4 flex w-3/4  items-center">
+                                    {renderStars(5)}
+                                </div>
+                            </div>
+
+                            <div className="flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+                                <p className="text-base font-medium text-navy-700 dark:text-white">
+                                    Communication
+                                </p>
+
+                                <div className="pt-4 flex w-3/4  items-center">
+                                    {renderStars(3)}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
                 <DriverRating />
             </div>
         </div>
