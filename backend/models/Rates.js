@@ -13,10 +13,10 @@ const driverRatingSchema = new mongoose.Schema(
       required: true,
     },
 
-    communication: { type: Number, min: 1, max: 5 },
-    drivingSkills: { type: Number, min: 1, max: 5 },
-    knowledgeOfRoutes: { type: Number, min: 1, max: 5 },
-    professionalism: { type: Number, min: 1, max: 5 },
+    communication: { type: Number, default: 0, min: 1, max: 5 },
+    drivingSkills: { type: Number, default: 0, min: 1, max: 5 },
+    knowledgeOfRoutes: { type: Number, default: 0, min: 1, max: 5 },
+    professionalism: { type: Number, default: 0, min: 1, max: 5 },
   },
   { timestamps: true }
 );
