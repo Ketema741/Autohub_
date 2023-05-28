@@ -21,7 +21,7 @@ const rateDriver = async (req, res) => {
       throw new Error("No driver with that id, driver not found");
     }
 
-    const rating = await DriverRating.create({
+    const rating = new DriverRating({
       user: req.user.id,
       driver: driver._id,
       communication,
@@ -30,14 +30,16 @@ const rateDriver = async (req, res) => {
       professionalism,
     });
 
+    await rating.save(); // Save the newly created rating document
+
     const updateDriverRating = await models.Driver.findByIdAndUpdate(
       driver._id,
       {
         $push: {
-          communication: rating.communication,
-          drivingSkills: rating.drivingSkills,
-          knowledgeOfRoutes: rating.knowledgeOfRoutes,
-          professionalism: rating.professionalism,
+          "ratings.communication": { $each: rating.communication },
+          "ratings.drivingSkills": { $each: rating.drivingSkills },
+          "ratings.knowledgeOfRoutes": { $each: rating.knowledgeOfRoutes },
+          "ratings.professionalism": { $each: rating.professionalism },
         },
       },
       { new: true }
@@ -58,61 +60,29 @@ const rateDriver = async (req, res) => {
 
 const getRatings = async (req, res) => {
   try {
-    const results = await DriverRating.aggregate([
+    const results = await models.Driver.aggregate([
       {
-        $group: {
-          _id: "$driver",
-          communication: { $avg: "$communication" },
-          drivingSkills: { $avg: "$drivingSkills" },
-          knowledgeOfRoutes: { $avg: "$communication" },
-          professionalism: { $avg: "$drivingSkills" },
+        $project: {
+          _id: 0,
+          averageCommunication: { $avg: "$ratings.communication" },
+          averageDrivingSkills: { $avg: "$ratings.drivingSkills" },
+          averageKnowledgeOfRoutes: { $avg: "$ratings.knowledgeOfRoutes" },
+          averageProfessionalism: { $avg: "$ratings.professionalism" },
         },
       },
     ]);
-    console.log(results);
-    let averageRatingsByDriver;
-    // if (results.length > 0) {
-    //   averageRatingsByDriver = results.map((result) => ({
-    //     driver: result._id,
-    //     averageCommunication: result.averageCommunication,
-    //     averageDrivingSkills: result.averageDrivingSkills,
-    //   }));
-    // } else {
-    //   throw new Error("No ratings found.");
-    // }
+
+    if (results.length === 0) {
+      throw new Error("No ratings found.");
+    }
+
     res.status(200).json(results);
   } catch (error) {
     console.error("Error:", error);
-    res.status(500).json(error.message);
+    res.status(500).json({ error: error.message });
   }
 };
 
-// const results = await DriverRating.aggregate([
-//   {
-//     $group: {
-//       _id: "$driver",
-//       communication: { $push: "$communication" },
-//       drivingSkills: { $push: "$drivingSkills" },
-//       knowledgeOfRoutes: { $push: "$knowledgeOfRoutes" },
-//       professionalism: { $push: "$professionalism" },
-//     },
-//   },
-// ])
-//   .then((results) => {
-//     if (results.length > 0) {
-//       const pipelineData = results.map((result) => ({
-//         driver: result._id,
-//         communication: result.communication,
-//         drivingSkills: result.drivingSkills,
-//       }));
-//       console.log(pipelineData);
-//     } else {
-//       console.log("No ratings found.");
-//     }
-//   })
-//   .catch((error) => {
-//     console.error("Error:", error);
-//   });
 module.exports = {
   rateDriver,
   getRatings,

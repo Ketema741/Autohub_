@@ -163,10 +163,10 @@ const signUpUser = async (req, res) => {
           address,
           password: hashedPassword,
           role: "driver",
-          experience: "",
-          birthday: "",
-          education: "",
-          workHistory: "",
+          experience,
+          birthday,
+          education,
+          workHistory,
         });
         if (driver) {
           res.status(201).json({
@@ -495,7 +495,9 @@ const getServiceProviders = async (req, res) => {
 const getServiceProvider = async (req, res) => {
   try {
     const { id } = req.params;
-    const serviceProvider = await models.ServiceProvider.findById(id).select("-password");
+    const serviceProvider = await models.ServiceProvider.findById(id).select(
+      "-password"
+    );
     if (!serviceProvider) {
       res.status(404);
       throw new Error("Service Provider not found");
