@@ -4,11 +4,8 @@ import { useStateContext } from '../../../context/ContextProvider';
 import { HtmlEditor, Inject, Link, QuickToolbar, RichTextEditorComponent, Table, Toolbar } from '@syncfusion/ej2-react-richtexteditor';
 
 import { customToolbarSettings } from './Toolbar';
-import UserContext from '../../../context/user/userContext';
 
-const Edit = ({ handleModalClose, user }) => {
-    const userContext = useContext(UserContext);
-    const { getUser } = userContext;
+const Edit = ({ handleModalClose, user, handleUpdate }) => {
 
     const [content, setContent] = useState('');
 
@@ -34,8 +31,7 @@ const Edit = ({ handleModalClose, user }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         formData.description = content
-        console.log(formData);
-        // updateUser(formData)
+        handleUpdate(formData)
 
     };
 
@@ -215,7 +211,7 @@ const Edit = ({ handleModalClose, user }) => {
                                     className="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none"
                                     style={{ backgroundColor: currentColor }}
                                 >
-                                    Submit
+                                    Update
                                 </button>
                             </div>
                         </form>

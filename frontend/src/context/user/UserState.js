@@ -118,14 +118,14 @@ const UserState = (props) => {
   };
 
   // add users
-  const addUser = async (item) => {
+  const addUser = async (user) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
       },
     };
     try {
-      const res = await axios.post(`/users/register`, item, config);
+      const res = await axios.post(`/users/register`, user, config);
 
       dispatch({ type: ADD_USER, payload: res.data });
     } catch (error) {

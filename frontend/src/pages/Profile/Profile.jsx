@@ -10,9 +10,11 @@ import AboutDriver from './about/AboutDriver'
 import Experience from './Experience'
 import ProfileCard from './ProfileCard'
 import EditDriver from './edit/EditDriver';
-
+import UserContext from '../../context/user/userContext';
 const Profile = () => {
     const authContext = useContext(AuthContext);
+    const userContext = useContext(UserContext);
+
     const { isUserAuthenticated, user, logout } = authContext;
     const {
         setCurrentColor,
@@ -21,6 +23,8 @@ const Profile = () => {
         activeMenu,
         currentColor
     } = useStateContext();
+
+    const { updateUser } = userContext
 
     useEffect(() => {
         const currentThemeColor = localStorage.getItem('colorMode');
@@ -35,14 +39,21 @@ const Profile = () => {
     const [showUserModal, setShowUserModal] = useState(null);
 
     const handleShow = () => {
-
-        // getUser(_id, "supplier")
         setShowUserModal(true);
     }
 
     const handleModalClose = () => {
         setShowUserModal(false);
     };
+
+
+    const handleUpdate = (data) => {
+        console.log(data);
+        setShowUserModal(false)
+        // updateUser(data, "driver")
+
+    };
+
     return (
 
         <div className={currentMode === "Dark" ? "dark" : ""}>
@@ -92,10 +103,10 @@ const Profile = () => {
                                         </div>
                                     </div>
                                 </div>
-                                {showUserModal && user.role == "driver" && <EditDriver handleModalClose={handleModalClose} user={user} />}
-                                {showUserModal && user.role == "supplier" && <EditSupplier handleModalClose={handleModalClose} user={user} />}
-                                {showUserModal && user.role == "expert" && <EditExpert handleModalClose={handleModalClose} user={user} />}
-                                {showUserModal && user.role == "service-provider" && <EditServiceProvider handleModalClose={handleModalClose} user={user} />}
+                                {showUserModal && user.role == "driver" && <EditDriver handleUpdate={handleUpdate} handleModalClose={handleModalClose} user={user} />}
+                                {showUserModal && user.role == "supplier" && <EditSupplier handleUpdate={handleUpdate} handleModalClose={handleModalClose} user={user} />}
+                                {showUserModal && user.role == "expert" && <EditExpert handleUpdate={handleUpdate} handleModalClose={handleModalClose} user={user} />}
+                                {showUserModal && user.role == "service-provider" && <EditServiceProvider handleUpdate={handleUpdate} handleModalClose={handleModalClose} user={user} />}
                             </div>
                         </Fragment>
                     }
