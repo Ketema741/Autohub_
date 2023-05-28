@@ -18,7 +18,7 @@ const DriverDetail = () => {
 
     const userContext = useContext(UserContext)
 
-    const { user } = userContext
+    const { driver } = userContext
 
 
 
@@ -58,12 +58,11 @@ const DriverDetail = () => {
                     <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full ">
                         <Navbar />
                     </div>
-                    <DetailCard user={user} />
-                    {/* {user ?
-                        (<DetailCard user={user} />)
+                    {driver !== null ?
+                        (<DetailCard driver={driver} />)
                         :
                         <div>loading...</div>
-                    } */}
+                    } 
 
                     <Footer />
 

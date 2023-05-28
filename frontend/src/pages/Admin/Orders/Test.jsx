@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 
-import * as XLSX from 'xlsx';
-import FileSaver from 'file-saver';
-
 import { FiSearch } from 'react-icons/fi';
-import { AiOutlineDownload } from 'react-icons/ai';
 import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';
+import { FiMoreVertical } from 'react-icons/fi';
 
 import { ordersData } from './dummy';
 import { Header } from '../../../components';
+import { AiOutlineClose } from 'react-icons/ai';
+import DownloadButton from '../Download'
 
 const OrderTable = () => {
     const [orders, setOrders] = useState(ordersData);
@@ -35,53 +34,46 @@ const OrderTable = () => {
         const { StatusBg, ProductImage, ...filteredOrder } = order;
         return filteredOrder;
     });
-    const handleDownload = () => {
-        const worksheet = XLSX.utils.json_to_sheet(filteredOrdersData);
-        const workbook = XLSX.utils.book_new();
 
-        // Adjust column widths
-        const columnWidths = [
-            // Example widths for each column (modify as needed)
-            { wch: 10 }, // Width for column A
-            { wch: 20 }, // Width for column B
-            { wch: 10 }, // Width for column C
-            { wch: 25 }, // Width for column D
-            { wch: 20 }, // Width for column E
-            { wch: 10 }, // Width for column F
-        ];
 
-        // Apply column widths to the worksheet
-        worksheet['!cols'] = columnWidths;
 
-        // Set the height for the first row (header row)
-        const headerRowHeight = 40; // Adjust the value as needed
-        worksheet['!rows'] = [{ hpt: headerRowHeight, hidden: false }];
+    const [currentItem, setItem] = useState(null)
+    const [showAlert, setShowAlert] = useState(false)
 
-        // Get the range of the header row
-        const headerRange = XLSX.utils.decode_range(worksheet['!ref'], { sheetRows: 1 });
+    const handleRejectClick = (item) => {
+        setShowAlert(true);
+        setItem(item);
+        console.log(item)
+    };
 
-        // Apply font style to each header cell individually
-        for (let col = headerRange.s.c; col <= headerRange.e.c; col++) {
-            const headerCell = XLSX.utils.encode_cell({ r: headerRange.s.r, c: col }); // Using the start row of the range as the header row
-            const headerCellStyle = worksheet[headerCell].s || {};
-            const font = headerCellStyle.font || {};
+    const handleCloseAlert = () => {
+        setShowAlert(false);
+    };
 
-            // Set the desired font attributes
-            font.bold = true;
-            font.sz = 14; // Adjust the font size as needed
+    const [showActions, setShowActions] = useState(Array(filteredOrdersData?.length).fill(false));
+    const [openIndex, setOpenIndex] = useState(null); // Track the index of the currently open toggle
 
-            // Apply the font to the cell style
-            headerCellStyle.font = font;
-            worksheet[headerCell].s = headerCellStyle;
+    const toggleActions = (index) => {
+        const updatedShowActions = [...showActions];
+        updatedShowActions[index] = !updatedShowActions[index];
+
+        // Close the previously opened toggle
+        if (openIndex !== null && openIndex !== index) {
+            updatedShowActions[openIndex] = false;
         }
 
-        XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
-        const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-        const data = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-        const fileName = 'item_orders.xlsx';
-        FileSaver.saveAs(data, fileName);
+        setShowActions(updatedShowActions);
+        setOpenIndex(index); // Update the openIndex to the clicked index
+    };
+
+    const [showItemModal, setShowItemModal] = useState(null);
+    const handleShow = (_id) => {
+        setShowItemModal(true);
+    }
 
 
+    const handleModalClose = () => {
+        setShowItemModal(false);
     };
 
     return (
@@ -114,7 +106,6 @@ const OrderTable = () => {
                                 <table className="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
                                     <thead className="bg-gray-50 dark:bg-gray-800">
                                         <tr>
-
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                                 Image
                                             </th>
@@ -146,7 +137,7 @@ const OrderTable = () => {
                                         </tr>
                                     </thead>
                                     {paginatedOrders.length > 0 &&
-                                        paginatedOrders.map((order) => (
+                                        paginatedOrders.map((order, index) => (
 
                                             <tbody key={order.OrderID} className="bg-white divide-y divide-gray-300 dark:divide-gray-700 dark:bg-gray-900" >
                                                 <tr>
@@ -200,12 +191,45 @@ const OrderTable = () => {
                                                             <span>{order.Location}</span>
                                                         </div>
                                                     </td>
-                                                    <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                        <div className="flex items-center gap-x-6">
-                                                            <button onClick={() => handleRejectClick(order)} className="text-red-300 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
-                                                                Delete
-                                                            </button>
-                                                        </div>
+
+                                                    <td className="relative px-4 py-4 flex items-center justify-center">
+
+                                                        {showActions[index] && (
+                                                            <div
+                                                                className="absolute -top-14 right-20 z-100 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+                                                            >
+                                                                <ul className="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="benq-ex2710q-dropdown-button">
+                                                                    <li>
+                                                                        <button onClick={handleShow} className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                                            Show
+                                                                        </button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <button
+                                                                            onClick={() => handleRejectClick(order)}
+                                                                            className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                                                        >
+                                                                            Freeze
+                                                                        </button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="#"
+                                                                            className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                                                        >
+                                                                            Delete
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+
+                                                            </div>
+                                                        )}
+                                                        <button
+                                                            className="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
+                                                            type="button"
+                                                            onClick={() => toggleActions(index)}
+                                                        >
+                                                            <FiMoreVertical className="w-5 h-5" />
+                                                        </button>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -244,14 +268,62 @@ const OrderTable = () => {
                         <BsArrowRight className="w-5 h-5 rtl:-scale-x-100" />
                     </button>
                 </div>
-                <button
-                    onClick={handleDownload}
-                    className="mt-8 flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
-                    <span>
-                        Download
-                    </span>
-                    <AiOutlineDownload className="w-5 h-5 rtl:-scale-x-100" />
-                </button>
+                
+                <DownloadButton filteredData={filteredOrdersData} fileName="user_order" />
+
+                {showItemModal &&
+                    <div className=" bg-half-transparent fixed inset-0  flex justify-center items-center overflow-y-auto">
+            <div className="mt-24 float-right h-screen dark:text-gray-200 bg-white dark:bg-[#484B52] max-w-screen w-full sm:w-full md:w-full lg:w-full xl:w-1/2 2xl:w-1/3 overflow-y-auto rounded-lg" style={{ width: "70%", height: "90%" }}>
+                {/* Modal content */}
+                            <div
+                                action="#"
+                                className="relative bg-white rounded-lg shadow dark:bg-gray-700"
+                            >
+                                {/* Modal header */}
+                                <div className="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
+
+                                    <Header category="Checkout" title="User Detail" />
+
+                                    <button
+                                        type="button"
+                                        className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                        onClick={handleModalClose}
+                                        data-modal-hide="editUserModal"
+                                    >
+                                        <AiOutlineClose className="w-5 h-5" />
+                                    </button>
+                                </div>
+
+                                {/* Modal body */}
+                                <div className="p-6 space-y-6">
+                                    {/* {User !== null ?
+                                        <div className="grid grid-cols-6 gap-6">
+                                            <div className="col-span-6 sm:col-span-3">
+
+                                                <p
+                                                    className="text-gray-900 text-xl block w-full p-2.5 dark:text-white"
+                                                >
+                                                    {`${User.firstName}  ${User.lastName}`}
+                                                </p>
+
+                                            </div>
+                                            <div className="col-span-6 sm:col-span-3">
+                                                <p
+                                                    className="text-gray-900 text-xl block w-full p-2.5 dark:text-white"
+                                                >
+                                                    {User.email}
+                                                </p>
+
+                                            </div>
+                                        </div>
+                                        : <div> loading ...</div>
+                                    } */}
+                                    loading...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     );

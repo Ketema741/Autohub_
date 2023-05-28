@@ -1,12 +1,26 @@
-import React from "react";
-
+import React, { useState } from "react";
 
 import { SiBookstack } from "react-icons/si";
 import Blog from "../../assets/undraw_job_offers_re_634p.svg";
+import Apply from './Apply'
 
 const JobDetailCard = () => {
+    const [content, setContent] = useState('');
 
+    const [isOpen, setIsOpen] = useState(false);
 
+    const togglePopup = () => {
+        setIsOpen(!isOpen);
+    };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        formData.description = content
+        console.log(formData);
+
+        // addItem(formData, images)
+    };
+
+    
     return (
         <div className="lg:flex" >
             <div className="relative mt-8 md:mt-16 space-y-8 sm:w-full sm:px-4 md:w-2/3 lg:ml-0 sm:mx-auto text-center lg:text-left lg:mr-auto lg:w-7/12">
@@ -123,9 +137,9 @@ const JobDetailCard = () => {
                         <h3 className="text-xl mb-8 font-semibold border-b pb-4">Apply Now</h3>
 
                         <div className="grid grid-cols-3 space-x-4 md:space-x-6 md:flex md:justify-center lg:justify-start">
-                            <a
-                                aria-label="add to slack"
-                                href="http://localhost:3000"
+                            <button
+
+                                onClick={togglePopup}
                                 className="p-4 border  dark:bg-gray-800 dark:border-gray-700 rounded-full duration-300 hover:border-cyan-400 hover:shadow-lg hover:shadow-cyan-600/20 dark:hover:border-cyan-300/30"
                             >
                                 <div className="flex justify-center space-x-4">
@@ -137,11 +151,14 @@ const JobDetailCard = () => {
                                         Apply
                                     </span>
                                 </div>
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
+            {isOpen &&
+                <Apply togglePopup={togglePopup}  />
+            }
         </div>
     );
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useRef, Fragment } from 'react';
+import React, { useEffect, useContext, useRef } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import {
   Navbar,
@@ -27,9 +27,6 @@ const Drivers = () => {
     getUsers("drivers")
   }, [])
 
-  useEffect(() => {
-    console.log(drivers)
-  }, [drivers])
 
   useEffect(() => {
     const currentThemeColor = localStorage.getItem('colorMode');

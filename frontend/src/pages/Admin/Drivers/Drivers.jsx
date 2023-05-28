@@ -1,11 +1,27 @@
-import React, { useState } from 'react';
-import { BsArrowLeft, BsArrowRight, BsCreditCard } from 'react-icons/bs';
+import React, { useState, useContext, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom'
+
+import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';
 import { FiSearch } from 'react-icons/fi';
+import { FiMoreVertical } from 'react-icons/fi';
+
+
+import moment from 'moment';
+
 import avatar from '../../../data/avatar.jpg';
 import { Header } from '../../../components';
+import Modal from '../Modal'
+import UserContext from '../../../context/user/userContext';
 
+const Drivers = () => {
 
-const ActiveExperts = () => {
+    const userContext = useContext(UserContext);
+    const { getUser, getUsers, drivers, driver, filteredDrivers, filterUsers, clearFilter } = userContext;
+
+    useEffect(() => {
+        getUsers("drivers")
+    }, [])
+
     const [currentPage, setCurrentPage] = useState(1);
 
     const [aficionado, setAficionado] = useState([]);
@@ -20,26 +36,19 @@ const ActiveExperts = () => {
         setShowAlert(false);
     };
 
-    const data = [
-        { id: 1, phone: "10000 91 232 3811", company: "WeatherTech", name: 'Me ' },
-        { id: 2, phone: "10000 91 232 3811", company: "AutoAnything ", name: 'betsi' },
-        { id: 3, phone: "10000 91 232 3811", company: "CARiD", name: 'Gatwech' },
-        { id: 4, phone: "10000 91 232 3811", company: "4 Wheel Parts ", name: 'Dema' },
-        { id: 5, phone: "10000 91 232 3811", company: "Summit Racing", name: 'Ohana' },
-        { id: 6, phone: "10000 91 232 3811", company: "JC Whitney", name: 'Sunny' },
-        { id: 7, phone: "10000 91 232 3811", company: "AutoZone", name: 'aficionado' },
-        { id: 8, phone: "10000 91 232 3811", company: "Pep Boys", name: 'aficionado' },
-        { id: 9, phone: "10000 91 232 3811", company: "Advance Auto Parts", name: 'aficionado' },
-        { id: 10, phone: "10000 91 232 3811", company: "O'Reilly Auto Parts", name: 'aficionado' },
-    ]
-
-
     const PAGE_SIZE = 2;
-    const totalAficionado = data.length;
+    let totalAficionado = 0
+    if (drivers) {
+        totalAficionado = drivers.length;
+    }
     const totalPages = Math.ceil(totalAficionado / PAGE_SIZE);
     const startIndex = (currentPage - 1) * PAGE_SIZE;
     const endIndex = startIndex + PAGE_SIZE;
-    const currentAficionados = data.slice(startIndex, endIndex);
+
+    let currentDrivers = []
+    if (drivers) {
+        currentDrivers = drivers.slice(startIndex, endIndex);
+    }
 
     const goToPage = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -48,17 +57,62 @@ const ActiveExperts = () => {
     const handleClickSave = (e) => {
         e.preventDefault();
         handleCloseAlert(false);
-        console.log(aficionado)
     }
+
+    const text = useRef('')
+
+    useEffect(() => {
+        if (filteredDrivers == null) {
+            text.current.value = ''
+        }
+    }, [filteredDrivers])
+
+    const [showActions, setShowActions] = useState(Array(currentDrivers?.length).fill(false));
+    const [openIndex, setOpenIndex] = useState(null); // Track the index of the currently open toggle
+
+    const toggleActions = (index) => {
+        const updatedShowActions = [...showActions];
+        updatedShowActions[index] = !updatedShowActions[index];
+
+        // Close the previously opened toggle
+        if (openIndex !== null && openIndex !== index) {
+            updatedShowActions[openIndex] = false;
+        }
+
+        setShowActions(updatedShowActions);
+        setOpenIndex(index); // Update the openIndex to the clicked index
+    };
+
+    const onChange = (e) => {
+        if (e.target.value !== '') {
+            filterUsers(e.target.value, "drivers");
+        } else {
+            clearFilter();
+        }
+    };
+
+    const handleShow = (_id) => {
+        getUser(_id, "driver")
+        setShowUserModal(true);
+    }
+
+    const [showUserModal, setShowUserModal] = useState(null);
+
+
+
+    const handleModalClose = () => {
+        setShowUserModal(false);
+    };
+
 
     return (
         <div className="mt-24 container px-4 mx-auto overflow-hidden">
             <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl overflow-hidden">
                 <div className="mb-8">
                     <div className="pt-0 pr-4 pb-0 pl-4 mt-0 mr-auto mb-0 ml-auto sm:flex sm:items-center sm:justify-between">
-                        <Header category="System Users" title="Vehicle Aficionados with Approved Status" />
+                        <Header category="System Users" title="Vehicle Drivers" />
                         <div className="mt-4 mr-0 mb-0 ml-0 sm:mt-0">
-                            <p className="sr-only">Search Vehicle Aficionados</p>
+                            <p className="sr-only">Search Vehicle Drivers</p>
                             <div className="relative">
                                 <div className="flex items-center pt-0 pr-0 pb-0 pl-3 absolute inset-y-0 left-0 pointer-events-none">
                                     <p>
@@ -67,7 +121,9 @@ const ActiveExperts = () => {
                                 </div>
                                 <input
                                     placeholder="Search.. "
-                                    type="search"
+                                    type="text"
+                                    ref={text}
+                                    onChange={onChange}
                                     className="block pt-2 pr-0 pb-2 pl-10 w-full py-2 border border-gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm"
                                 />
                             </div>
@@ -90,10 +146,10 @@ const ActiveExperts = () => {
                                             </th>
 
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                                Date
+                                                Registered Date
                                             </th>
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                                Aficionado
+                                                Aficionado Name
                                             </th>
 
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -104,36 +160,136 @@ const ActiveExperts = () => {
                                             </th>
                                         </tr>
                                     </thead>
-                                    {currentAficionados.length > 0 && currentAficionados.map((user) => (
-                                        <tbody key={user.id} className="bg-white divide-y divide-gray-300 dark:divide-gray-700 dark:bg-gray-900">
-                                            <tr>
-                                                <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                                                    <div className="inline-flex items-center gap-x-3">
-                                                        <span>{user.id}</span>
-                                                    </div>
-                                                </td>
-                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">Jan 6, 2022</td>
+                                    {filteredDrivers !== null ?
+                                        filteredDrivers.map((user, index) => (
+                                            <tbody key={user._id} className="bg-white divide-y divide-gray-300 dark:divide-gray-700 dark:bg-gray-900">
+                                                <tr>
+                                                    <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                                                        <div className="inline-flex items-center gap-x-3">
+                                                            <span>{index + 1}</span>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                        {moment(user.createdAt).format('MMMM Do YYYY, h:mm:ss a')}
+                                                    </td>
 
-                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                    <div className="flex items-center gap-x-2">
-                                                        <img className="object-cover w-8 h-8 rounded-full" src={avatar} alt="user" />
-                                                        <h2 className="text-sm font-medium text-gray-800 dark:text-white ">{user.name}</h2>
-                                                    </div>
-                                                </td>
-                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                    {user.name}@example.com
-                                                </td>
-                                                <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                    <div className="flex items-center gap-x-6">
-                                                        <button onClick={() => handleRejectClick(user)} className="text-red-300 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
-                                                            Freeze
+                                                    <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                        <div className="flex items-center gap-x-2">
+                                                            <img className="object-cover w-8 h-8 rounded-full" src={avatar} alt="user" />
+                                                            <h2 className="text-sm font-medium text-gray-800 dark:text-white ">{user.firstName}</h2>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                        {user.email}
+                                                    </td>
+                                                    <td className="relative px-4 py-4 flex items-center justify-center">
+
+                                                        {showActions[index] && (
+                                                            <div
+                                                                className="absolute -top-14 right-20 z-100 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+                                                            >
+                                                                <ul className="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="benq-ex2710q-dropdown-button">
+                                                                    <li>
+                                                                        <button onClick={() => handleShow(user._id)} className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                                            Show
+                                                                        </button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <button
+                                                                            onClick={() => handleRejectClick(user)}
+                                                                            className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                                                        >
+                                                                            Freeze
+                                                                        </button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="#"
+                                                                            className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                                                        >
+                                                                            Delete
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+
+                                                            </div>
+                                                        )}
+                                                        <button
+                                                            className="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
+                                                            type="button"
+                                                            onClick={() => toggleActions(index)}
+                                                        >
+                                                            <FiMoreVertical className="w-5 h-5" />
                                                         </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    ))
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        ))
+                                        :
+                                        currentDrivers.map((user, index) => (
+                                            <tbody key={user._id} className="bg-white divide-y divide-gray-300 dark:divide-gray-700 dark:bg-gray-900">
+                                                <tr>
+                                                    <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                                                        <div className="inline-flex items-center gap-x-3">
+                                                            <span>{index + 1}</span>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                        {moment(user.createdAt).format('MMMM Do YYYY, h:mm:ss a')}
+                                                    </td>
+
+                                                    <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                        <div className="flex items-center gap-x-2">
+                                                            <img className="object-cover w-8 h-8 rounded-full" src={avatar} alt="user" />
+                                                            <h2 className="text-sm font-medium text-gray-800 dark:text-white ">{user.firstName}</h2>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                        {user.email}
+                                                    </td>
+                                                    <td className="relative px-4 py-4 flex items-center justify-end">
+
+                                                        {showActions[index] && (
+                                                            <div
+                                                                className="absolute -top-14 right-20 z-100 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+                                                            >
+                                                                <ul className="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="benq-ex2710q-dropdown-button">
+                                                                    <li>
+                                                                        <button onClick={() => handleShow(user._id)} className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                                            Show
+                                                                        </button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <button
+                                                                            onClick={() => handleRejectClick(user)}
+                                                                            className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                                                        >
+                                                                            Freeze
+                                                                        </button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="#"
+                                                                            className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                                                        >
+                                                                            Delete
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+
+                                                            </div>
+                                                        )}
+                                                        <button
+                                                            className="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
+                                                            type="button"
+                                                            onClick={() => toggleActions(index)}
+                                                        >
+                                                            <FiMoreVertical className="w-5 h-5" />
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        ))
                                     }
+
                                 </table>
                             </div>
                         </div>
@@ -168,6 +324,10 @@ const ActiveExperts = () => {
                     </button>
                 </div>
             </div>
+
+            {showUserModal && (
+                <Modal User={driver} handleModalClose={handleModalClose} />
+            )}
             {showAlert && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                     <div className="bg-red-400 rounded-lg p-6">
@@ -203,4 +363,4 @@ const ActiveExperts = () => {
     )
 }
 
-export default ActiveExperts
+export default Drivers

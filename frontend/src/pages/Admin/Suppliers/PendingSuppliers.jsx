@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';
-import { FiSearch } from 'react-icons/fi';
+import { FiSearch, FiMoreVertical  } from 'react-icons/fi';
 import avatar from '../../../data/avatar.jpg';
 import { Header } from '../../../components';
-
+import Modal from '../Modal'
 
 
 
@@ -34,7 +34,7 @@ const Suppliers = () => {
         setSupplier(supplier);
     };
 
-    const handleModalClose = () => {
+    const handleEditModalClose = () => {
         setShowEditModal(false);
     };
 
@@ -68,6 +68,36 @@ const Suppliers = () => {
         console.log(supplier)
         console.log(bankAccount)
     }
+
+
+    const [showActions, setShowActions] = useState(Array(currentSuppliers?.length).fill(false));
+    const [openIndex, setOpenIndex] = useState(null); // Track the index of the currently open toggle
+
+    const toggleActions = (index) => {
+        const updatedShowActions = [...showActions];
+        updatedShowActions[index] = !updatedShowActions[index];
+
+        // Close the previously opened toggle
+        if (openIndex !== null && openIndex !== index) {
+            updatedShowActions[openIndex] = false;
+        }
+
+        setShowActions(updatedShowActions);
+        setOpenIndex(index); // Update the openIndex to the clicked index
+    };
+
+    const [showUserModal, setShowUserModal] = useState(null);
+
+    const handleShow = (supplier) => {
+        
+        // getUser(_id, "supplier")
+        setSupplier(supplier)
+        setShowUserModal(true);
+    }
+
+    const handleModalClose = () => {
+        setShowUserModal(false);
+    };
 
 
     return (
@@ -130,7 +160,7 @@ const Suppliers = () => {
 
                                         </tr>
                                     </thead>
-                                    {currentSuppliers.length > 0 && currentSuppliers.map((supplier) => (
+                                    {currentSuppliers.length > 0 && currentSuppliers.map((supplier, index) => (
                                         <tbody key={supplier.id} className="bg-white divide-y divide-gray-300 dark:divide-gray-700 dark:bg-gray-900">
                                             <tr>
                                                 <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
@@ -154,21 +184,46 @@ const Suppliers = () => {
                                                 <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                                     {supplier.company}
                                                 </td>
-                                                <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                    <div className="flex items-center gap-x-6">
-                                                        <button
-                                                            onClick={() => handleRejectClick(supplier)}
-                                                            className="text-red-300 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
+                                                
+                                                <td className="relative px-4 py-4 flex items-center justify-end">
+
+                                                    {showActions[index] && (
+                                                        <div
+                                                            className="absolute -top-14 right-20 z-100 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
                                                         >
-                                                            Reject
-                                                        </button>
-                                                        <button
-                                                            onClick={() => handleEditClick(supplier)}
-                                                            className="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none"
-                                                        >
-                                                            Approve
-                                                        </button>
-                                                    </div>
+                                                            <ul className="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="benq-ex2710q-dropdown-button">
+                                                                <li>
+                                                                    <button onClick={() => handleShow(supplier)} className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                                        Show
+                                                                    </button>
+                                                                </li>
+                                                                <li>
+                                                                    <button
+                                                                        onClick={() => handleEditClick(supplier)}
+                                                                        className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                                                    >
+                                                                        Approve
+                                                                    </button>
+                                                                </li>
+                                                                <li>
+                                                                    <button
+                                                                        onClick={() => handleRejectClick(supplier)}
+                                                                        className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                                                    >
+                                                                        Reject
+                                                                    </button>
+                                                                </li>
+                                                            </ul>
+
+                                                        </div>
+                                                    )}
+                                                    <button
+                                                        className="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
+                                                        type="button"
+                                                        onClick={() => toggleActions(index)}
+                                                    >
+                                                        <FiMoreVertical className="w-5 h-5" />
+                                                    </button>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -211,6 +266,36 @@ const Suppliers = () => {
                     </button>
 
                 </div>
+                {showUserModal && (
+                    <Modal User={{
+                        ratings
+                            :
+                            [],
+                        _id
+                            :
+                            "6461d2f5fb38bfa51b8ece44",
+                        firstName
+                            :
+                            "ohana",
+                        lastName
+                            :
+                            "Girma",
+                        email
+                            :
+                            "ohana@gmail.com",
+                        phone
+                            :
+                            "+25199494945",
+                        role
+                            :
+                            "driver",
+                        createdAt
+                            :
+                            "2023-05-15T06:36:37.331Z",
+                        updatedAt: "2023-05-15T06:36:37.331Z"
+
+                    }} handleModalClose={handleModalClose} />
+                )}
                 {showEditModal && (
                     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
 
@@ -228,7 +313,7 @@ const Suppliers = () => {
                                     <button
                                         type="button"
                                         className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                                        onClick={handleModalClose}
+                                        onClick={handleEditModalClose}
                                         data-modal-hide="editUserModal"
                                     >
                                         <svg

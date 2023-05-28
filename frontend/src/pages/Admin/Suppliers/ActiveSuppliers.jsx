@@ -1,9 +1,16 @@
 import React, { useState } from 'react';
+
+import * as XLSX from 'xlsx';
+import FileSaver from 'file-saver';
+
 import { BsArrowLeft, BsArrowRight, BsCreditCard } from 'react-icons/bs';
-import { FiSearch } from 'react-icons/fi';
+import { FiSearch, FiMoreVertical } from 'react-icons/fi';
+import { AiOutlineDownload }  from 'react-icons/ai';
+
 import avatar from '../../../data/avatar.jpg';
 import { Header } from '../../../components';
-
+import Modal from '../Modal' 
+import DownloadButton from '../Download'
 
 const ActiveSuppliers = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -21,16 +28,16 @@ const ActiveSuppliers = () => {
     };
 
     const data = [
-        { id: 1, phone: "10000 91 232 3811", company: "WeatherTech", name: 'Me ' },
-        { id: 2, phone: "10000 91 232 3811", company: "AutoAnything ", name: 'betsi' },
-        { id: 3, phone: "10000 91 232 3811", company: "CARiD", name: 'Gatwech' },
-        { id: 4, phone: "10000 91 232 3811", company: "4 Wheel Parts ", name: 'Dema' },
-        { id: 5, phone: "10000 91 232 3811", company: "Summit Racing", name: 'Ohana' },
-        { id: 6, phone: "10000 91 232 3811", company: "JC Whitney", name: 'Sunny' },
-        { id: 7, phone: "10000 91 232 3811", company: "AutoZone", name: 'Supplier' },
-        { id: 8, phone: "10000 91 232 3811", company: "Pep Boys", name: 'Supplier' },
-        { id: 9, phone: "10000 91 232 3811", company: "Advance Auto Parts", name: 'Supplier' },
-        { id: 10, phone: "10000 91 232 3811", company: "O'Reilly Auto Parts", name: 'Supplier' },
+        { id: 1, BankAcount: "10000 91 232 3811", Company: "WeatherTech", name: 'Me ' },
+        { id: 2, BankAcount: "10000 91 232 3811", Company: "AutoAnything ", name: 'betsi' },
+        { id: 3, BankAcount: "10000 91 232 3811", Company: "CARiD", name: 'Gatwech' },
+        { id: 4, BankAcount: "10000 91 232 3811", Company: "4 Wheel Parts ", name: 'Dema' },
+        { id: 5, BankAcount: "10000 91 232 3811", Company: "Summit Racing", name: 'Ohana' },
+        { id: 6, BankAcount: "10000 91 232 3811", Company: "JC Whitney", name: 'Sunny' },
+        { id: 7, BankAcount: "10000 91 232 3811", Company: "AutoZone", name: 'Supplier' },
+        { id: 8, BankAcount: "10000 91 232 3811", Company: "Pep Boys", name: 'Supplier' },
+        { id: 9, BankAcount: "10000 91 232 3811", Company: "Advance Auto Parts", name: 'Supplier' },
+        { id: 10, BankAcount: "10000 91 232 3811", Company: "O'Reilly Auto Parts", name: 'Supplier' },
     ]
 
 
@@ -50,6 +57,45 @@ const ActiveSuppliers = () => {
         handleCloseAlert(false);
         console.log(supplier)
     }
+
+
+    const filteredSupplierData = data.map((supplier) => {
+        const { StatusBg, ProductImage, ...filteredSupplier } = supplier;
+        return filteredSupplier;
+    });
+
+    const [showActions, setShowActions] = useState(Array(currentSuppliers?.length).fill(false));
+    const [openIndex, setOpenIndex] = useState(null); // Track the index of the currently open toggle
+
+    const toggleActions = (index) => {
+        const updatedShowActions = [...showActions];
+        updatedShowActions[index] = !updatedShowActions[index];
+
+        // Close the previously opened toggle
+        if (openIndex !== null && openIndex !== index) {
+            updatedShowActions[openIndex] = false;
+        }
+
+        setShowActions(updatedShowActions);
+        setOpenIndex(index); // Update the openIndex to the clicked index
+    };
+
+    const [showUserModal, setShowUserModal] = useState(null);
+
+    const handleShow = (supplier) => {
+        const updatedShowActions = [...showActions];
+        if (openIndex !== null) {
+            updatedShowActions[openIndex] = false;
+        }
+        // getUser(_id, "supplier")
+        setSupplier(supplier)
+        setShowUserModal(true);
+    }
+
+
+    const handleModalClose = () => {
+        setShowUserModal(false);
+    };
 
     return (
         <div className="mt-24 container px-4 mx-auto overflow-hidden">
@@ -109,7 +155,7 @@ const ActiveSuppliers = () => {
                                             </th>
                                         </tr>
                                     </thead>
-                                    {currentSuppliers.length > 0 && currentSuppliers.map((user) => (
+                                    {currentSuppliers.length > 0 && currentSuppliers.map((user, index) => (
                                         <tbody key={user.id} className="bg-white divide-y divide-gray-300 dark:divide-gray-700 dark:bg-gray-900">
                                             <tr>
                                                 <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
@@ -122,7 +168,7 @@ const ActiveSuppliers = () => {
                                                     <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 dark:bg-gray-800" style={{ color: '#977062', backgroundColor: '#EDE1DD' }}>
                                                         <BsCreditCard />
 
-                                                        <h2 className="text-sm font-normal">{user.phone}</h2>
+                                                        <h2 className="text-sm font-normal">{user.BankAcount}</h2>
                                                     </div>
                                                 </td>
                                                 <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
@@ -135,14 +181,46 @@ const ActiveSuppliers = () => {
                                                     </div>
                                                 </td>
                                                 <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                    {user.company}
+                                                    {user.Company}
                                                 </td>
-                                                <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                    <div className="flex items-center gap-x-6">
-                                                        <button onClick={() => handleRejectClick(user)} className="text-red-300 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
-                                                            Freeze
-                                                        </button>
-                                                    </div>
+                                                <td className="relative px-4 py-4 flex items-center justify-end">
+
+                                                    {showActions[index] && (
+                                                        <div
+                                                            className="absolute -top-14 right-20 z-100 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+                                                        >
+                                                            <ul className="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="benq-ex2710q-dropdown-button">
+                                                                <li>
+                                                                    <button onClick={() => handleShow(user.id)} className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                                        Show
+                                                                    </button>
+                                                                </li>
+                                                                <li>
+                                                                    <button
+                                                                        onClick={() => handleRejectClick(user)}
+                                                                        className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                                                    >
+                                                                        Freeze
+                                                                    </button>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="#"
+                                                                        className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                                                    >
+                                                                        Delete
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+
+                                                        </div>
+                                                    )}
+                                                    <button
+                                                        className="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
+                                                        type="button"
+                                                        onClick={() => toggleActions(index)}
+                                                    >
+                                                        <FiMoreVertical className="w-5 h-5" />
+                                                    </button>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -181,7 +259,41 @@ const ActiveSuppliers = () => {
                         <BsArrowRight className="w-5 h-5 rtl:-scale-x-100" />
                     </button>
                 </div>
+                
+                <DownloadButton filteredData={data} fileName="supplier" />
+
             </div>
+
+            {showUserModal && (
+                <Modal User={{
+                    ratings
+                        :
+                        [],
+                    _id
+                        :
+                        "6461d2f5fb38bfa51b8ece44",
+                    firstName
+                        :
+                        "ohana",
+                    lastName
+                        :
+                        "Girma",
+                    email
+                        :
+                        "ohana@gmail.com",
+                    phone
+                        :
+                        "+25199494945",
+                    role
+                        :
+                        "driver",
+                    createdAt
+                        :
+                        "2023-05-15T06:36:37.331Z",
+                    updatedAt: "2023-05-15T06:36:37.331Z"
+
+                }} handleModalClose={handleModalClose} />
+            )}
             {showAlert && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                     <div className="bg-red-400 rounded-lg p-6">
@@ -213,6 +325,7 @@ const ActiveSuppliers = () => {
                 </div>
 
             )}
+
         </div>
     )
 }

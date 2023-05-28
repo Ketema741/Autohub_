@@ -1,7 +1,5 @@
 import {
   GET_USERS,
-  GET_USER,
-  ADD_USER,
   ADD_CART,
   UPDATE_CART,
   DELETE_CART,
@@ -16,6 +14,15 @@ import {
   GET_DRIVER,
   GET_DRIVERS,
   FILTER_DRIVERS,
+  GET_SUPPLIERS,
+  GET_EXEPRTS,
+  GET_SERVISEPROVIERS,
+  GET_SUPPLIER,
+  GET_SERVISEPROVIER,
+  GET_EXEPRT,
+  FILTER_SERVISEPROVIERS,
+  FILTER_EXEPRTS,
+  FILTER_SUPPLIERS,
 } from '../Types';
 
 const userReducer = (state, action) => {
@@ -31,21 +38,44 @@ const userReducer = (state, action) => {
         ...state,
         drivers: action.payload.data,
       };
-
-    case GET_USER:
-      return {
-        ...state,
-        user: action.payload,
-      };
     case GET_DRIVER:
       return {
         ...state,
-        user: action.payload,
+        driver: action.payload.data,
       };
-    case ADD_USER:
+
+    case GET_SUPPLIERS:
       return {
         ...state,
-        users: [action.payload, ...state.users],
+        suppliers: action.payload.data,
+      };
+    case GET_SUPPLIER:
+      return {
+        ...state,
+        supplier: action.payload.data,
+      };
+
+    case GET_SERVISEPROVIERS:
+      return {
+        ...state,
+        serviceProviders: action.payload.data,
+      };
+
+    case GET_SERVISEPROVIER:
+      return {
+        ...state,
+        serviceProvider: action.payload.data,
+      };
+
+    case GET_EXEPRTS:
+      return {
+        ...state,
+        aficionados: action.payload.data,
+      };
+    case GET_EXEPRT:
+      return {
+        ...state,
+        aficionado: action.payload.data,
       };
 
     case UPDATE_USER:
@@ -56,17 +86,18 @@ const userReducer = (state, action) => {
     case ADD_CART:
       return {
         ...state,
-        favourites: [...action.payload],
+        carts: [...action.payload],
       };
     case UPDATE_CART:
       return {
         ...state,
-        favourites: [action.payload, ...state.favourites],
+        carts: [action.payload, ...state.carts],
       };
+
     case DELETE_CART:
       return {
         ...state,
-        favourites: state.favourites.filter(
+        carts: state.carts.filter(
           (favourite) => favourite._id !== action.payload,
         ),
       };
@@ -77,6 +108,7 @@ const userReducer = (state, action) => {
           (user) => user._id !== action.payload,
         ),
       };
+
     case CLEAR_USERS:
       return {
         ...state,
@@ -103,6 +135,7 @@ const userReducer = (state, action) => {
           return testString.includes(action.payload.toLowerCase());
         }),
       };
+
     case FILTER_DRIVERS: 
       return {
         ...state,
@@ -111,10 +144,38 @@ const userReducer = (state, action) => {
           return testString.includes(action.payload.toLowerCase());
         }),
       };
+
+    case FILTER_SERVISEPROVIERS: 
+      return {
+        ...state,
+        filteredServiceProviders: state.serviceProviders.filter(({ firstName, lastName }) => {
+          const testString = `${firstName}${lastName}`.toLowerCase();
+          return testString.includes(action.payload.toLowerCase());
+        }),
+      };
+    case FILTER_EXEPRTS: 
+      return {
+        ...state,
+        filteredAficionados: state.aficionados.filter(({ firstName, lastName }) => {
+          const testString = `${firstName}${lastName}`.toLowerCase();
+          return testString.includes(action.payload.toLowerCase());
+        }),
+      };
+    case FILTER_SUPPLIERS: 
+      return {
+        ...state,
+        filteredSuppliers: state.suppliers.filter(({ firstName, lastName }) => {
+          const testString = `${firstName}${lastName}`.toLowerCase();
+          return testString.includes(action.payload.toLowerCase());
+        }),
+      };
     case CLEAR_FILTER:
       return {
         ...state,
         filteredDrivers: null,
+        filteredServiceProviders: null,
+        filteredAficionados: null,
+        filteredSuppliers: null,
       };
     case USER_ERROR:
       return {

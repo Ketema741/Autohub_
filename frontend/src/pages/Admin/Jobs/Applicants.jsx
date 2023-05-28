@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom'
 
 import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';
 import { FiSearch } from 'react-icons/fi';
@@ -7,12 +8,13 @@ import { FiMoreVertical } from 'react-icons/fi';
 
 import moment from 'moment';
 
+import DownloadButton from '../Download'
 import avatar from '../../../data/avatar.jpg';
 import { Header } from '../../../components';
 import Modal from '../Modal'
 import UserContext from '../../../context/user/userContext';
 
-const Drivers = () => {
+const Applicants = () => {
 
     const userContext = useContext(UserContext);
     const { getUser, getUsers, drivers, driver, filteredDrivers, filterUsers, clearFilter } = userContext;
@@ -20,6 +22,8 @@ const Drivers = () => {
     useEffect(() => {
         getUsers("drivers")
     }, [])
+
+
 
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -97,6 +101,8 @@ const Drivers = () => {
 
     const [showUserModal, setShowUserModal] = useState(null);
 
+
+
     const handleModalClose = () => {
         setShowUserModal(false);
     };
@@ -107,9 +113,9 @@ const Drivers = () => {
             <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl overflow-hidden">
                 <div className="mb-8">
                     <div className="pt-0 pr-4 pb-0 pl-4 mt-0 mr-auto mb-0 ml-auto sm:flex sm:items-center sm:justify-between">
-                        <Header category="System Users" title="Pending Vehicle Aficionados" />
+                        <Header category="Jobs" title="Job Applicants" />
                         <div className="mt-4 mr-0 mb-0 ml-0 sm:mt-0">
-                            <p className="sr-only">Search Aficionados</p>
+                            <p className="sr-only">Search Applicants</p>
                             <div className="relative">
                                 <div className="flex items-center pt-0 pr-0 pb-0 pl-3 absolute inset-y-0 left-0 pointer-events-none">
                                     <p>
@@ -311,15 +317,19 @@ const Drivers = () => {
                             </span>
                         </div>
                     </div>
+
                     <button
                         onClick={() => goToPage(currentPage + 1)}
                         disabled={currentPage === totalPages} className="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
                         <span>
                             Next
+                    z
                         </span>
                         <BsArrowRight className="w-5 h-5 rtl:-scale-x-100" />
                     </button>
+
                 </div>
+                <DownloadButton filteredData={drivers} fileName="job_applicant" />
             </div>
 
             {showUserModal && (
@@ -360,4 +370,4 @@ const Drivers = () => {
     )
 }
 
-export default Drivers
+export default Applicants
