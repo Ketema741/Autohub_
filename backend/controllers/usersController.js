@@ -163,10 +163,10 @@ const signUpUser = async (req, res) => {
           address,
           password: hashedPassword,
           role: "driver",
-          experience,
-          birthday,
-          education,
-          workHistory,
+          experience: req.body?.experience,
+          birthday: req.body?.birthday,
+          education: req.body?.education,
+          workHistory: req.body?.workHistory,
         });
         if (driver) {
           res.status(201).json({
