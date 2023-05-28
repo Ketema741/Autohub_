@@ -173,16 +173,24 @@ const DriverSchema = new mongoose.Schema(
     types: {
       type: String,
     },
-    education: { type: String },
-    birthday: { type: String },
-    experience: { type: String },
-    workHistory: { type: String },
-    ratings: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "DriverRating",
-      },
-    ],
+    education: {
+      type: String,
+    },
+    birthday: {
+      type: String,
+    },
+    experience: {
+      type: String,
+    },
+    workHistory: {
+      type: String,
+    },
+    ratings: {
+      communication: [],
+      drivingSkills: [],
+      knowledgeOfRoutes: [],
+      professionalism: [],
+    },
   },
   { timestamps: true }
 );

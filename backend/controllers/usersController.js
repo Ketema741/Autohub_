@@ -164,6 +164,10 @@ const signUpUser = async (req, res) => {
           address,
           password: hashedPassword,
           role: "driver",
+          experience: "",
+          birthday: "",
+          education: "",
+          workHistory: "",
         });
         if (driver) {
           res.status(201).json({
@@ -187,21 +191,17 @@ const signUpUser = async (req, res) => {
           password: hashedPassword,
           role: "carAficionadosUser",
         });
-        if (carAficionadosUser) {
-          res.status(201).json({
-            _id: carAficionadosUser._id,
-            email: carAficionadosUser.email,
-            firstName: carAficionadosUser.firstName,
-            lastName: carAficionadosUser.lastName,
-            token: generateToken(
-              carAficionadosUser._id,
-              carAficionadosUser.role
-            ),
-          });
-        } else {
+        if (!carAficionadosUser) {
           res.status(400);
           throw new Error("User couldn't be Registered, Invalid credentials");
         }
+        res.status(201).json({
+          _id: carAficionadosUser._id,
+          email: carAficionadosUser.email,
+          firstName: carAficionadosUser.firstName,
+          lastName: carAficionadosUser.lastName,
+          token: generateToken(carAficionadosUser._id, carAficionadosUser.role),
+        });
         break;
       default:
         res.status(400);
@@ -492,6 +492,22 @@ const getServiceProviders = async (req, res) => {
   }
 };
 
+const getServiceProvider = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const serviceProvider = await models.ServiceProvider.findById(id).select(
+      "-password"
+    );
+    if (!serviceProvider) {
+      throw new Error("service Provider not found");
+    }
+    res.status(200).json({
+      data: serviceProvider,
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 const getDriver = async (req, res) => {
   try {
     const { id } = req.params;
@@ -617,4 +633,5 @@ module.exports = {
 
   // get user by IDs
   getDriver,
+  getServiceProvider,
 };

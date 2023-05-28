@@ -25,6 +25,9 @@ app.use("/notifications", require("./routes/NotificationRoutes"));
 app.use("/conversations", require("./routes/conversationsRoutes"));
 app.use("/messages", require("./routes/messagesRoutes"));
 
+// payment routes
+app.use("/payment", require("./routes/payRoutes"));
+
 // Connect to mongodb atlas in the cloud
 const port = process.env.PORT || 8080;
 mongoose

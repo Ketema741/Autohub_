@@ -21,6 +21,7 @@ const {
   updateDriver,
   updateCarAficionados,
   getDriver,
+  getServiceProvider,
 } = require("../controllers/usersController");
 
 const { verifyToken, verifyAdministrator } = require("../middleware/auth");
@@ -39,6 +40,7 @@ router.post("/register", signUpUser);
 router.post("/login", signInUser);
 router.get("/user", getUser);
 
+router.get("/service-provider/:user_id", verifyToken, getServiceProvider);
 //  updates
 router.put(
   "/update/customer/:user_id",
