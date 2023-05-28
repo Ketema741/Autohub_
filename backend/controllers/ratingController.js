@@ -33,15 +33,14 @@ const rateDriver = async (req, res) => {
     const updateDriverRating = await models.Driver.findByIdAndUpdate(
       driver._id,
       {
-        $addToSet: {
-          ratings: {
-            communication: rating?.communication,
-            drivingSkills: rating?.drivingSkills,
-            knowledgeOfRoutes: rating?.knowledgeOfRoutes,
-            professionalism: rating?.professionalism,
-          },
+        $push: {
+          communication: rating.communication,
+          drivingSkills: rating.drivingSkills,
+          knowledgeOfRoutes: rating.knowledgeOfRoutes,
+          professionalism: rating.professionalism,
         },
-      }
+      },
+      { new: true }
     );
 
     if (!rating) {
@@ -49,7 +48,9 @@ const rateDriver = async (req, res) => {
       throw new Error("Rating couldn't be saved. Something went wrong");
     }
 
-    res.status(201).json({ updateDriverRating, message: "Rating has been saved" });
+    res
+      .status(201)
+      .json({ updateDriverRating, message: "Rating has been saved" });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

@@ -40,7 +40,7 @@ router.post("/register", signUpUser);
 router.post("/login", signInUser);
 router.get("/user", getUser);
 
-router.get("/service-provider/:user_id", verifyToken, getServiceProvider);
+router.get("/service-provider/:id", getServiceProvider);
 //  updates
 router.put(
   "/update/customer/:user_id",

@@ -97,7 +97,6 @@ const signUpUser = async (req, res) => {
           res.status(201).json({
             _id: service_provider._id,
             email: service_provider.email,
-
             firstName: service_provider.firstName,
             lastName: service_provider.lastName,
 
@@ -492,19 +491,20 @@ const getServiceProviders = async (req, res) => {
   }
 };
 
+// get service provider
 const getServiceProvider = async (req, res) => {
   try {
     const { id } = req.params;
-    const serviceProvider = await models.ServiceProvider.findById(id).select(
-      "-password"
-    );
+    const serviceProvider = await models.ServiceProvider.findById(id).select("-password");
     if (!serviceProvider) {
-      throw new Error("service Provider not found");
+      res.status(404);
+      throw new Error("Service Provider not found");
     }
     res.status(200).json({
       data: serviceProvider,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error: error.message });
   }
 };
