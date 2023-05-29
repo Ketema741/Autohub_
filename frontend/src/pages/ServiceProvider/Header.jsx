@@ -1,35 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { HiChevronDown } from 'react-icons/hi';
-
-import bg from '../../assets/blogbg1.png';
-
 import { FaSearch } from 'react-icons/fa';
-
-
+import bg from '../../data/bg2.jpg'; // 2 3 6 8
+import UserContext from './../../context/user/userContext';
 
 const Header = () => {
+    const text = useRef('')
+    const userContext = useContext(UserContext)
+    const { filtered, clearFilter, filterUsers } = userContext
+
+    useEffect(() => {
+        if (filtered == null) {
+            text.current.value = ''
+        }
+    })
+
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedJob, setSelectedJob] = useState('Location');
-    const [inputValue, setInputValue] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('Location');
+
+
 
     const handleToggleJobList = () => setIsOpen(!isOpen);
 
-    const handleJobSelection = (job) => {
-        setSelectedJob(job);
-        setIsOpen(false);
+    const handleCategorySelection = (category) => {
+        // if (category !== 'Location') {
+        //     filterItems(category);
+        // } else {
+        //     clearFilter();
+        // }
+      setSelectedCategory(category);
+      setIsOpen(false);
     };
 
 
 
-    const handleSearch = () => {
-        console.log(selectedInternship);
+
+    const handleSearch = (e) => {
+        // if (e.target.value !== '') {
+        //     filterItems(e.target.value);
+        // } else {
+        //     clearFilter();
+        // }
+        console.log(e.target.value)
+
     };
 
     return (
         <div>
-            <div className="relative">
+            <div className="relative mb-8">
                 <img
-                    className="absolute inset-0 w-full h-full object-cover object-top"
+                    className="absolute inset-0 w-full h-full object-contained object-top"
                     src={bg}
                     width="400"
                     height="500"
@@ -37,7 +57,7 @@ const Header = () => {
                 />
                 <div
                     aria-hidden="true"
-                    className="absolute inset-0 w-full h-full bg-blue-900 bg-opacity-30 backdrop-blur-sm"
+                    className="absolute inset-0 w-full h-full bg-blue-900 bg-opacity-10 backdrop-blur-sm"
                 ></div>
                 <div className="relative container m-auto px-6 md:px-12 lg:px-6">
                     <div className="mb-12 pt-12 space-y-8 md:mb-20 md:pt-24 lg:w-8/12 lg:mx-auto">
@@ -54,9 +74,9 @@ const Header = () => {
                                     <input
                                         type="text"
                                         id="catJobName"
-                                        value={selectedJob}
+                                        value={selectedCategory}
                                         className="pl-3 w-full bg-white text-base font-medium cursor-pointer"
-                                        readOnly
+                                        onChange={(e) => setSelectedCategory(e.target.value)}
                                         onClick={handleToggleJobList}
                                     />
                                     <label htmlFor="toggleJobLstCat" className="absolute top-0 left-0 w-full h-full" onClick={handleToggleJobList} />
@@ -68,28 +88,37 @@ const Header = () => {
                                         className={`absolute transition-all duration-500 ease-in-out translate-y-10 opacity-0 invisible top-full left-0 w-full bg-white bg-opacity-80 rounded-lg py-2 ${isOpen ? 'peer-checked:opacity-100 peer-checked:visible peer-checked:translate-y-1' : ''
                                             }`}
                                     >
-                                        <ul className="flex flex-col w-full h-32 overflow-y-auto"
+                                        <ul
+                                            className="flex flex-col w-full h-32 overflow-y-auto"
                                             style={{ zIndex: '100', scrollbarWidth: 'thin', scrollbarColor: 'rgba(156, 163, 175, 0.5)' }}
                                         >
-                                            <li className="cursor-default transition hover:bg-gray-100 hover:bg-opacity-80 flex px-5 py-2">
-                                                Adama
+                                            <li
+                                                className="cursor-default transition hover:bg-gray-100 hover:bg-opacity-80 flex px-5 py-2"
+                                                onClick={() => handleCategorySelection('Location')}
+                                            >
+                                                Location
                                             </li>
-                                            <li className="cursor-default transition hover:bg-gray-100 hover:bg-opacity-80 flex px-5 py-2">
-                                                Hawasa
+                                            <li
+                                                className="cursor-default transition hover:bg-gray-100 hover:bg-opacity-80 flex px-5 py-2"
+                                                onClick={() => handleCategorySelection('Addis Ababa 4 kilo')}
+                                            >
+                                                4 kilo
                                             </li>
-                                            <li className="cursor-default transition hover:bg-gray-100 hover:bg-opacity-80 flex px-5 py-2">
-                                                Bishoftu
+                                            <li
+                                                className="cursor-default transition hover:bg-gray-100 hover:bg-opacity-80 flex px-5 py-2"
+                                                onClick={() => handleCategorySelection('22 Mazoria')}
+                                            >
+                                                22 Mazoria
                                             </li>
-
                                         </ul>
                                     </div>
                                 </div>
                                 <input
                                     type="text"
-                                    placeholder="Search..."
+                                    ref={text}
+                                    placeholder="Search... "
                                     className="w-full p-4 outline-none text-gray-600"
-                                    value={inputValue}
-                                    onChange={(e) => setInputValue(e.target.value)}
+                                    onChange={handleSearch}
                                 />
                                 <button
                                     type="button"

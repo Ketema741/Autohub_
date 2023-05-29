@@ -62,8 +62,8 @@ const jobReducer = (state, action) => {
     case FILTER_JOBS:
       return {
         ...state,
-        filtered: state.publicJobs.filter(({ category, name }) => {
-          const testString = `${category}${name}`.toLowerCase();
+        filtered: state.jobs.filter(({ category, title }) => {
+          const testString = `${category}${title}`.toLowerCase();
           return testString.includes(action.payload.toLowerCase());
         }),
       };

@@ -5,28 +5,33 @@ import ItemContext from '../context/item/itemContext';
 import bg from '../data/bg2.jpg'; // 2 3 6 8
 
 const Header = () => {
-
-    
     const text = useRef('')
-    
     const itemContext = useContext(ItemContext)
     const { filtered, clearFilter, filterItems } = itemContext
 
     useEffect(() => {
         if (filtered == null) {
-          text.current.value = ''
+            text.current.value = ''
         }
-      })
+    })
 
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedJob, setSelectedJob] = useState('Select');
+    const [selectedCategory, setSelectedCategory] = useState('Select');
+
+
 
     const handleToggleJobList = () => setIsOpen(!isOpen);
 
-    const handleJobSelection = (job) => {
-        setSelectedJob(job);
-        setIsOpen(false);
+    const handleCategorySelection = (category) => {
+        if (category !== 'Select') {
+            filterItems(category);
+        } else {
+            clearFilter();
+        }
+      setSelectedCategory(category);
+      setIsOpen(false);
     };
+
 
 
 
@@ -68,9 +73,9 @@ const Header = () => {
                                     <input
                                         type="text"
                                         id="catJobName"
-                                        value={selectedJob}
+                                        value={selectedCategory}
                                         className="pl-3 w-full bg-white text-base font-medium cursor-pointer"
-                                        readOnly
+                                        onChange={(e) => setSelectedCategory(e.target.value)}
                                         onClick={handleToggleJobList}
                                     />
                                     <label htmlFor="toggleJobLstCat" className="absolute top-0 left-0 w-full h-full" onClick={handleToggleJobList} />
@@ -82,13 +87,26 @@ const Header = () => {
                                         className={`absolute transition-all duration-500 ease-in-out translate-y-10 opacity-0 invisible top-full left-0 w-full bg-white bg-opacity-80 rounded-lg py-2 ${isOpen ? 'peer-checked:opacity-100 peer-checked:visible peer-checked:translate-y-1' : ''
                                             }`}
                                     >
-                                        <ul className="flex flex-col w-full h-32 overflow-y-auto"
+                                        <ul
+                                            className="flex flex-col w-full h-32 overflow-y-auto"
                                             style={{ zIndex: '100', scrollbarWidth: 'thin', scrollbarColor: 'rgba(156, 163, 175, 0.5)' }}
                                         >
-                                            <li className="cursor-default transition hover:bg-gray-100 hover:bg-opacity-80 flex px-5 py-2">
+                                            <li
+                                                className="cursor-default transition hover:bg-gray-100 hover:bg-opacity-80 flex px-5 py-2"
+                                                onClick={() => handleCategorySelection('Select')}
+                                            >
+                                                Select
+                                            </li>
+                                            <li
+                                                className="cursor-default transition hover:bg-gray-100 hover:bg-opacity-80 flex px-5 py-2"
+                                                onClick={() => handleCategorySelection('Cars')}
+                                            >
                                                 Cars
                                             </li>
-                                            <li className="cursor-default transition hover:bg-gray-100 hover:bg-opacity-80 flex px-5 py-2">
+                                            <li
+                                                className="cursor-default transition hover:bg-gray-100 hover:bg-opacity-80 flex px-5 py-2"
+                                                onClick={() => handleCategorySelection('Accessory')}
+                                            >
                                                 Accessory
                                             </li>
                                         </ul>

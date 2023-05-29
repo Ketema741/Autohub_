@@ -1,28 +1,51 @@
-import React, { useState } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import { HiChevronDown } from 'react-icons/hi';
-
-import bg from '../../assets/blogbg1.png';
 
 import { FaSearch } from 'react-icons/fa';
 
+import bg from '../../assets/blogbg1.png';
+import JobContext from './../../context/job/jobContext';
 
 
 const Header = () => {
+    const text = useRef('')
+
     const [isOpen, setIsOpen] = useState(false);
     const [selectedJob, setSelectedJob] = useState('Select');
-    const [inputValue, setInputValue] = useState('');
+
+    const jobContext = useContext(JobContext)
+    const { filtered, clearFilter, filterJobs } = jobContext
+
+
+    useEffect(() => {
+        if (filtered == null) {
+            text.current.value = ''
+        }
+    })
 
     const handleToggleJobList = () => setIsOpen(!isOpen);
 
     const handleJobSelection = (job) => {
+        if (job == 'Select') {
+            clearFilter()
+        } else {
+            filterJobs(job)
+        }
+
         setSelectedJob(job);
         setIsOpen(false);
     };
 
 
 
-    const handleSearch = () => {
-        console.log(selectedInternship);
+
+    const handleSearch = (e) => {
+        if (e.target.value !== '') {
+            filterJobs(e.target.value);
+        } else {
+            clearFilter();
+        }
+
     };
 
     return (
@@ -42,7 +65,7 @@ const Header = () => {
                 <div className="relative container m-auto px-6 md:px-12 lg:px-6">
                     <div className="mb-12 pt-12 space-y-8 md:mb-20 md:pt-24 lg:w-8/12 lg:mx-auto">
                         <h1 className="text-white text-center text-2xl font-bold sm:text-3xl md:text-4xl">
-                        Rev up your career as a driver with our job listings! Whether you're a seasoned pro or just starting out, we have the perfect opportunity for you.
+                            Rev up your career as a driver with our job listings! Whether you're a seasoned pro or just starting out, we have the perfect opportunity for you.
                         </h1>
                         <form className="w-full">
                             <div className="relative flex p-1 rounded-xl bg-white shadow-2xl md:p-2">
@@ -68,28 +91,43 @@ const Header = () => {
                                         className={`absolute transition-all duration-500 ease-in-out translate-y-10 opacity-0 invisible top-full left-0 w-full bg-white bg-opacity-80 rounded-lg py-2 ${isOpen ? 'peer-checked:opacity-100 peer-checked:visible peer-checked:translate-y-1' : ''
                                             }`}
                                     >
-                                        <ul className="flex flex-col w-full h-32 overflow-y-auto"
+                                        <ul
+                                            className="flex flex-col w-full h-32 overflow-y-auto"
                                             style={{ zIndex: '100', scrollbarWidth: 'thin', scrollbarColor: 'rgba(156, 163, 175, 0.5)' }}
                                         >
-                                            <li className="cursor-default transition hover:bg-gray-100 hover:bg-opacity-80 flex px-5 py-2">
+                                            <li
+                                                className="cursor-default transition hover:bg-gray-100 hover:bg-opacity-80 flex px-5 py-2"
+                                                onClick={() => handleJobSelection('Select')}
+                                            >
+                                                Select
+                                            </li>
+                                            <li
+                                                className="cursor-default transition hover:bg-gray-100 hover:bg-opacity-80 flex px-5 py-2"
+                                                onClick={() => handleJobSelection('Truck')}
+                                            >
                                                 Truck
                                             </li>
-                                            <li className="cursor-default transition hover:bg-gray-100 hover:bg-opacity-80 flex px-5 py-2">
-                                                Motorcyle
+                                            <li
+                                                className="cursor-default transition hover:bg-gray-100 hover:bg-opacity-80 flex px-5 py-2"
+                                                onClick={() => handleJobSelection('Motorcycle')}
+                                            >
+                                                Motorcycle
                                             </li>
-                                            <li className="cursor-default transition hover:bg-gray-100 hover:bg-opacity-80 flex px-5 py-2">
+                                            <li
+                                                className="cursor-default transition hover:bg-gray-100 hover:bg-opacity-80 flex px-5 py-2"
+                                                onClick={() => handleJobSelection('Taxi')}
+                                            >
                                                 Taxi
                                             </li>
-
                                         </ul>
                                     </div>
                                 </div>
                                 <input
                                     type="text"
-                                    placeholder="Your favorite position"
+                                    ref={text}
+                                    placeholder="Search... "
                                     className="w-full p-4 outline-none text-gray-600"
-                                    value={inputValue}
-                                    onChange={(e) => setInputValue(e.target.value)}
+                                    onChange={handleSearch}
                                 />
                                 <button
                                     type="button"

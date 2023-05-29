@@ -41,7 +41,7 @@ const DriverCard = ({ driver }) => {
 
   return (
 
-    <div className="group space-y-8 border-t-4 border-gray-100 dark:border-gray-800">
+    <div className="p-4 group space-y-8 border-t-4 bg-white shadow-md border-gray-100 dark:border-gray-800">
       <div className="mx-auto -mt-16 h-32 w-32 rotate-45 overflow-hidden rounded-[2rem]">
         <img
           className="mx-auto h-full w-full -rotate-45 scale-125 object-cover transition duration-300 group-hover:scale-[1.4]"

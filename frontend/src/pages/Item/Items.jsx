@@ -45,7 +45,7 @@ const Items = () => {
                     </div>
                     <div className="flex m-3 flex-wrap justify-center gap-1 items-center text-center">
                         {brands.map((item) => (
-                            <div key={item.id} className="bg-white h-44 dark:text-gray-200 dark:bg-secondary-dark-bg md:w-52  p-5 pt-9 rounded-2xl " >
+                            <div key={item.id} className="bg-white h-44 dark:text-gray-200 dark:bg-secondary-dark-bg md:w-52  p-5 pt-9 rounded-2xl transition duration-500 hover:scale-105 hover:shadow-inner" >
                                 <button
                                     type="button"
                                     style={{ color: item.iconColor, backgroundColor: item.iconBg }}

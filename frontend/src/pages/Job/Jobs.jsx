@@ -1,18 +1,18 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Navbar, Footer, Sidebar } from '../../components';
+import { FiX } from 'react-icons/fi';
+
 import JobCard from './JobCard';
+import Header from './Header'
+import { Navbar, Footer, Sidebar } from '../../components';
+
 import { useStateContext } from '../../context/ContextProvider';
 import JobContext from '../../context/job/jobContext';
 
 
-import { FiSearch } from 'react-icons/fi';
-import Header from './Header'
-import jobContext from './../../context/job/jobContext';
-
 const Jobs = () => {
 
   const jobContext = useContext(JobContext)
-  const { getJobs, jobs } = jobContext;
+  const { getJobs, jobs, filtered } = jobContext;
 
   const {
     setCurrentColor,
@@ -81,23 +81,29 @@ const Jobs = () => {
           <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full ">
             <Navbar />
           </div>
-
-
           <Header />
-
           <div className="py-16">
             <div className="container m-auto text-gray-500 md:px-12 xl:px-0">
-              <div className="grid gap-10 lg:grid-cols-6 px-16">
-                {jobs && jobs.map((job) => (
-                  <JobCard key={job._id} job={job} isOpen={isOpen} togglePopup={togglePopup} />
-                ))
-                }
-              </div>
+              {jobs !== null ? (
+                <div className="grid gap-10 lg:grid-cols-6 px-16">
+                  {filtered !== null ?
+                    filtered.map((job) => (
+                      <JobCard key={job._id} job={job} isOpen={isOpen} togglePopup={togglePopup} />
+                    ))
+                    :
+                    jobs.map((job) => (
+                      <JobCard key={job._id} job={job} isOpen={isOpen} togglePopup={togglePopup} />
+                    ))
+                  }
+                </div>
+              )
+                :
+                <div>loading...</div>
+              }
             </div>
           </div>
 
           <div className="mt-24 container px-5 mx-auto">
-
             {isOpen && (
               <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center">
                 <div className="absolute w-full h-full bg-gray-900 opacity-50" />
@@ -107,13 +113,7 @@ const Jobs = () => {
                     onClick={togglePopup}
                     className="absolute top-0 right-0 mt-4 mr-4"
                   >
-                    <svg
-                      className="h-6 w-6 fill-current text-gray-600"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path d="M10 8.586l4.95-4.95a1 1 0 0 1 1.414 1.414L11.414 10l4.95 4.95a1 1 0 0 1-1.414 1.414L10 11.414l-4.95 4.95a1 1 0 1 1-1.414-1.414L8.586 10 3.636 5.05a1 1 0 0 1 1.414-1.414L10 8.586z" />
-                    </svg>
+                    <FiX className="h-6 w-6 fill-current text-gray-600" />
                   </button>
 
                   <h2 className="text-2xl font-bold mb-4">
@@ -224,7 +224,6 @@ const Jobs = () => {
               </div>
             )}
           </div>
-
 
           <Footer />
         </div>

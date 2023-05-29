@@ -1,12 +1,10 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 
 import { FaSearch } from 'react-icons/fa';
 
 import ItemContext from '../../context/item/itemContext';
 
 const ItemFilter = () => {
-    const [searchValue, setSearchValue] = useState("");
-    const [isFocused, setIsFocused] = useState(false)
 
     const itemContext = useContext(ItemContext)
     const text = useRef('')
@@ -36,8 +34,6 @@ const ItemFilter = () => {
                     type="text"
                     className="w-full h-8 px-3 pr-8 text-sm font-medium placeholder-gray-400 border border-gray-200 rounded-full focus:outline-none focus:ring focus:ring-blue-200 transition-all duration-300"
                     placeholder="Search..."
-                    onFocus={() => setIsFocused(true)}
-                    onBlur={() => setIsFocused(false)}
                     onChange={onChange}
                     ref={text}
                 />
