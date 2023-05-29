@@ -1,20 +1,26 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import { Navbar, Footer, Sidebar } from '../../components';
 import ServiceProviderCard from './ServiceProviderCard';
 import { useStateContext } from '../../context/ContextProvider';
 import Header from './Header'
-
+import UserContext from '../../context/user/userContext';
 
 const ServiceProviders = () => {
+  const userContext = useContext(UserContext)
+  const { getUsers, serviceProviders, filteredServiceProviders } = userContext
+
   const {
     setCurrentColor,
     setCurrentMode,
     currentMode,
     activeMenu,
-    currentColor,
-
   } = useStateContext();
+
+  useEffect(() => {
+    getUsers("service-providers")
+
+  }, [])
 
   useEffect(() => {
     const currentThemeColor = localStorage.getItem('colorMode');
@@ -49,7 +55,26 @@ const ServiceProviders = () => {
             <Navbar />
           </div>
           <Header />
-          <ServiceProviderCard />
+          <div className="relative py-16">
+            <div className="container relative m-auto px-6 text-gray-500 md:px-12">
+              {serviceProviders !== null ? (
+                <div className="grid gap-6 md:mx-auto md:w-8/12 lg:w-full lg:grid-cols-3">
+                  {
+                    filteredServiceProviders !== null ?
+                      filteredServiceProviders.map(serviceProvider => (
+                        <ServiceProviderCard key={serviceProvider._id} serviceProvider={serviceProvider} />
+                      ))
+                      :
+                      serviceProviders.map(serviceProvider => (
+                        <ServiceProviderCard key={serviceProvider._id} serviceProvider={serviceProvider} />
+                      ))
+                  }
+                </div>
+              )
+                : <div>loading...</div>
+              }
+            </div>
+          </div>
           <Footer />
         </div>
       </div>
