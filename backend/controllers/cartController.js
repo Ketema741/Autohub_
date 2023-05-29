@@ -46,6 +46,18 @@ exports.getCart = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+exports.getCartById = async (req, res) => {
+  try {
+    const { cart_id } = req.params;
+    const cart = await Cart.findById(cart_id);
+    if (!cart) {
+      return res.status(404).json({ error: "Cart not found" });
+    }
+    res.json(cart);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
 exports.removeFromCart = async (req, res) => {
   try {
@@ -62,7 +74,9 @@ exports.removeFromCart = async (req, res) => {
     );
 
     if (!existingItem) {
-      return res.status(404).json({ error: "Product couldn't be found in cart" });
+      return res
+        .status(404)
+        .json({ error: "Product couldn't be found in cart" });
     }
 
     // Remove item from cart
@@ -70,7 +84,7 @@ exports.removeFromCart = async (req, res) => {
       (item) => item.productId.toString() !== productId
     );
     await cart.save();
-    res.sendStatus(204);
+    res.status(200).json(cart);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -79,7 +93,6 @@ exports.removeFromCart = async (req, res) => {
 exports.updateCartItem = async (req, res) => {
   try {
     const { productId } = req.params;
-    const { quantity } = req.body;
     const userId = req.user._id;
     const cart = await Cart.findOne({ userId });
 
@@ -96,12 +109,10 @@ exports.updateCartItem = async (req, res) => {
     }
 
     // Update item quantity
-    existingItem.quantity = quantity;
+    existingItem.quantity = req.body?.quantity || 1;
     await cart.save();
     res.json(cart);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
- 
 };
- 

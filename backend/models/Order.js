@@ -6,11 +6,11 @@ const OrderSchema = new mongoose.Schema({
     ref: "Customer",
     required: true,
   },
- 
+
   orderNumber: {
     type: String,
   },
- 
+
   isPaid: {
     type: Boolean,
     default: false,
@@ -24,27 +24,7 @@ const OrderSchema = new mongoose.Schema({
     default: false,
   },
 
-  items: [
-    {
-      name: {
-        type: String,
-        required: true,
-      },
-      supplier: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Supplier",
-        autopopulate: true,
-      },
-      quantity: {
-        type: Number,
-        required: true,
-      },
-      price: {
-        type: Number,
-        required: true,
-      },
-    },
-  ],
+  items: [],
   totalAmount: { type: Number },
 });
 
@@ -52,6 +32,4 @@ const models = {
   Order: mongoose.model("Order", OrderSchema),
 };
 
- 
 module.exports = models;
- 

@@ -1,6 +1,6 @@
 const stripe = require("stripe")(process.env.SECRET_KEY);
 const models = require("../models/Order");
-const Cart  = require("../models/Cart");
+const Cart = require("../models/Cart");
 
 const { generateRandomString } = require("../utils/random");
 
@@ -26,8 +26,8 @@ const getOrders = async (req, res) => {
 //  placing order controller
 const placeOrder = async (req, res) => {
   try {
-    const { id } = req.params;
-    const cart = await Cart.findById(id);
+    const { cart_id } = req.params;
+    const cart = await Cart.findById(cart_id);
     if (!cart) {
       throw new Error("That cart doesn't exist");
     }
@@ -39,7 +39,7 @@ const placeOrder = async (req, res) => {
     const _order = await models.Order.create({
       orderNumber: generateRandomString(12),
       owner: req.user,
-      items: order_items,
+      items: cart.items,
       totalAmount: total_price,
     });
     if (_order) {
@@ -85,12 +85,6 @@ const updateOrder = async (req, res) => {
       res.status(404);
       throw new Error("That order doesn't exist");
     }
-
-    const session = await stripe.checkout.sessions.retrieve(order.paymentId);
-    if (session.payment_status === "paid") {
-      await order.updateOne({ _id: orderId }, { isPaid: true });
-    }
-
     await saveSale(new Date(), order.totalAmount);
 
     res.status(200).json({ order });

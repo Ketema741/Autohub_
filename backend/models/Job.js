@@ -10,7 +10,7 @@ const jobSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    address: {
+    location: {
       type: String,
       required: true,
     },
