@@ -1,14 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Navbar, Footer, Sidebar } from '../../components';
 import JobCard from './JobCard';
 import { useStateContext } from '../../context/ContextProvider';
+import JobContext from '../../context/job/jobContext';
 
 
 import { FiSearch } from 'react-icons/fi';
-
-
 import Header from './Header'
+import jobContext from './../../context/job/jobContext';
+
 const Jobs = () => {
+
+  const jobContext = useContext(JobContext)
+  const { getJobs, jobs } = jobContext;
+
   const {
     setCurrentColor,
     setCurrentMode,
@@ -25,6 +30,9 @@ const Jobs = () => {
     }
   }, []);
 
+  useEffect(() => {
+    getJobs()
+  }, [])
   const [isOpen, setIsOpen] = useState(false);
 
   const togglePopup = () => {
@@ -76,7 +84,18 @@ const Jobs = () => {
 
 
           <Header />
-          <JobCard isOpen={isOpen} togglePopup={togglePopup} />
+
+          <div className="py-16">
+            <div className="container m-auto text-gray-500 md:px-12 xl:px-0">
+              <div className="grid gap-10 lg:grid-cols-6 px-16">
+                {jobs && jobs.map((job) => (
+                  <JobCard key={job._id} job={job} isOpen={isOpen} togglePopup={togglePopup} />
+                ))
+                }
+              </div>
+            </div>
+          </div>
+
           <div className="mt-24 container px-5 mx-auto">
 
             {isOpen && (

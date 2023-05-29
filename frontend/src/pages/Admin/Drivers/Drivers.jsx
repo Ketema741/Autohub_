@@ -16,39 +16,40 @@ import UserContext from '../../../context/user/userContext';
 const Drivers = () => {
 
     const userContext = useContext(UserContext);
-    const { getUser, getUsers, drivers, driver, filteredDrivers, filterUsers, clearFilter } = userContext;
-
-    useEffect(() => {
-        getUsers("drivers")
-    }, [])
-
+    const {
+      getUser,
+      getUsers,
+      drivers,
+      driver,
+      filteredDrivers,
+      filterUsers,
+      clearFilter
+    } = userContext;
+    
     const [currentPage, setCurrentPage] = useState(1);
-
     const [aficionado, setAficionado] = useState([]);
     const [showAlert, setShowAlert] = useState(null);
-
-    const handleRejectClick = (aficionado) => {
-        setShowAlert(true);
-        setAficionado(aficionado);
+    
+    useEffect(() => {
+      getUsers("drivers");
+    }, []);
+    
+    const handleRejectClick = (selectedAficionado) => {
+      setShowAlert(true);
+      setAficionado(selectedAficionado);
     };
-
+    
     const handleCloseAlert = () => {
-        setShowAlert(false);
+      setShowAlert(false);
     };
-
+    
     const PAGE_SIZE = 2;
-    let totalAficionado = 0
-    if (drivers) {
-        totalAficionado = drivers.length;
-    }
+    const totalAficionado = drivers ? drivers.length : 0;
     const totalPages = Math.ceil(totalAficionado / PAGE_SIZE);
     const startIndex = (currentPage - 1) * PAGE_SIZE;
     const endIndex = startIndex + PAGE_SIZE;
-
-    let currentDrivers = []
-    if (drivers) {
-        currentDrivers = drivers.slice(startIndex, endIndex);
-    }
+    const currentDrivers = drivers ? drivers.slice(startIndex, endIndex) : [];
+    
 
     const goToPage = (pageNumber) => {
         setCurrentPage(pageNumber);

@@ -20,7 +20,14 @@ import {
   CLEAR_USERS,
   CLEAR_FILTER,
   USER_ERROR,
-  GET_DRIVERS, GET_SUPPLIERS, GET_EXEPRT, GET_EXEPRTS, GET_SERVISEPROVIERS, FILTER_DRIVERS, GET_DRIVER, GET_SUPPLIER, GET_SERVISEPROVIER, FILTER_SUPPLIERS, FILTER_EXEPRTS, FILTER_SERVISEPROVIERS
+
+  GET_DRIVERS, GET_DRIVER, FILTER_DRIVERS,
+
+  GET_EXEPRTS, GET_EXEPRT, GET_PENDINGEXEPRTS, FILTER_EXEPRTS,
+
+  GET_SUPPLIERS, GET_PENDINGSUPPLIERS, GET_SUPPLIER, FILTER_SUPPLIERS,
+
+  GET_SERVISEPROVIERS, GET_SERVISEPROVIER, FILTER_SERVISEPROVIERS, APPROVE_SUPPLIER, APPROVE_EXPERT, REJECT_SUPPLIER, REJECT_EXPERT
 } from '../Types';
 
 const UserState = (props) => {
@@ -32,6 +39,7 @@ const UserState = (props) => {
     filteredDrivers: null,
 
     suppliers: null,
+    pendingSuppliers: null,
     supplier: null,
     filteredSuppliers: null,
 
@@ -40,6 +48,7 @@ const UserState = (props) => {
     filteredServiceProviders: null,
 
     aficionados: null,
+    pendingAficionados: null,
     aficionado: null,
     filteredAficionados: null,
 
@@ -85,6 +94,30 @@ const UserState = (props) => {
       });
     }
   };
+  // Get users
+  const getPendingUsers = async (userType) => {
+    let get_users
+    if (userType === "suppliers") {
+      get_users = GET_PENDINGSUPPLIERS;
+    }
+    else if (userType === "experts") {
+      get_users = GET_PENDINGEXEPRTS;
+    }
+
+    try {
+      const res = await axios.get(`/users/pending/${userType}`);
+      console.log(res.data)
+      dispatch({
+        type: get_users,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: USER_ERROR,
+        payload: err.response.msg,
+      });
+    }
+  };
 
   // Get user
   const getUser = async (_id, userType) => {
@@ -105,6 +138,57 @@ const UserState = (props) => {
 
     try {
       const res = await axios.get(`/users/${userType}/${_id}`);
+      dispatch({
+        type: get_user,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: USER_ERROR,
+        payload: err.response.msg,
+      });
+    }
+  };
+  // approve user
+  const approveUser = async (_id, userType) => {
+
+    let get_user
+    if (userType === "supplier") {
+      get_user = APPROVE_SUPPLIER;
+    }
+    else if (userType === "expert") {
+      get_user = APPROVE_EXPERT;
+    }
+   
+
+    try {
+      const res = await axios.get(`/users/approve/${userType}/${_id}`);
+      dispatch({
+        type: get_user,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: USER_ERROR,
+        payload: err.response.msg,
+      });
+    }
+  };
+
+  // approve user
+  const rejectUser = async (_id, userType) => {
+
+    let get_user
+    if (userType === "supplier") {
+      get_user = REJECT_SUPPLIER;
+    }
+    else if (userType === "expert") {
+      get_user = REJECT_EXPERT;
+    }
+   
+
+    try {
+      const res = await axios.get(`/users/reject/${userType}/${_id}`);
       dispatch({
         type: get_user,
         payload: res.data,
@@ -276,6 +360,7 @@ const UserState = (props) => {
         filteredDrivers: state.filteredDrivers,
 
         suppliers: state.suppliers,
+        pendingSuppliers: state.pendingSuppliers,
         supplier: state.supplier,
         filteredSuppliers: state.filteredSuppliers,
 
@@ -284,10 +369,12 @@ const UserState = (props) => {
         filteredServiceProviders: state.filteredServiceProviders,
 
         aficionados: state.aficionados,
+        pendingAficionados: state.pendingAficionados,
         aficionado: state.aficionado,
         filteredAficionados: state.filteredAficionados,
 
         getUsers,
+        getPendingUsers,
         getUser,
         addUser,
         addToCart,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 
 import * as XLSX from 'xlsx';
 import FileSaver from 'file-saver';
@@ -11,8 +11,17 @@ import avatar from '../../../data/avatar.jpg';
 import { Header } from '../../../components';
 import Modal from '../Modal' 
 import DownloadButton from '../Download'
+import UserContext from '../../../context/user/userContext';
 
 const ActiveSuppliers = () => {
+
+    const userContext = useContext(UserContext)
+
+    const { getUsers, Suppliers } = userContext
+
+    useEffect(() => {
+        getUsers("suppliers")
+    }, [])
     const [currentPage, setCurrentPage] = useState(1);
 
     const [supplier, setSupplier] = useState([]);
@@ -41,12 +50,12 @@ const ActiveSuppliers = () => {
     ]
 
 
-    const PAGE_SIZE = 2;
-    const totalSuppliers = data.length;
+    const PAGE_SIZE = 3;
+    const totalSuppliers = Suppliers ? Suppliers.length : 0 ;
     const totalPages = Math.ceil(totalSuppliers / PAGE_SIZE);
     const startIndex = (currentPage - 1) * PAGE_SIZE;
     const endIndex = startIndex + PAGE_SIZE;
-    const currentSuppliers = data.slice(startIndex, endIndex);
+    const currentSuppliers = Suppliers? Suppliers.slice(startIndex, endIndex) : [];
 
     const goToPage = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -156,11 +165,11 @@ const ActiveSuppliers = () => {
                                         </tr>
                                     </thead>
                                     {currentSuppliers.length > 0 && currentSuppliers.map((user, index) => (
-                                        <tbody key={user.id} className="bg-white divide-y divide-gray-300 dark:divide-gray-700 dark:bg-gray-900">
+                                        <tbody key={user._id} className="bg-white divide-y divide-gray-300 dark:divide-gray-700 dark:bg-gray-900">
                                             <tr>
                                                 <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                                                     <div className="inline-flex items-center gap-x-3">
-                                                        <span>{user.id}</span>
+                                                        <span>{index+1}</span>
                                                     </div>
                                                 </td>
                                                 <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">Jan 6, 2022</td>
@@ -168,20 +177,20 @@ const ActiveSuppliers = () => {
                                                     <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 dark:bg-gray-800" style={{ color: '#977062', backgroundColor: '#EDE1DD' }}>
                                                         <BsCreditCard />
 
-                                                        <h2 className="text-sm font-normal">{user.BankAcount}</h2>
+                                                        <h2 className="text-sm font-normal">{user.accountId}</h2>
                                                     </div>
                                                 </td>
                                                 <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                                     <div className="flex items-center gap-x-2">
                                                         <img className="object-cover w-8 h-8 rounded-full" src={avatar} alt="user" />
                                                         <div>
-                                                            <h2 className="text-sm font-medium text-gray-800 dark:text-white ">{user.name}</h2>
-                                                            <p className="text-xs font-normal text-gray-600 dark:text-gray-400">{user.name}@example.com</p>
+                                                            <h2 className="text-sm font-medium text-gray-800 dark:text-white ">{user.firstName}</h2>
+                                                            <p className="text-xs font-normal text-gray-600 dark:text-gray-400">{user.email}</p>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                    {user.Company}
+                                                    {user.companyName}
                                                 </td>
                                                 <td className="relative px-4 py-4 flex items-center justify-end">
 
@@ -286,7 +295,7 @@ const ActiveSuppliers = () => {
                         "+25199494945",
                     role
                         :
-                        "driver",
+                        "supplier",
                     createdAt
                         :
                         "2023-05-15T06:36:37.331Z",

@@ -23,6 +23,12 @@ import {
   FILTER_SERVISEPROVIERS,
   FILTER_EXEPRTS,
   FILTER_SUPPLIERS,
+  GET_PENDINGEXEPRTS,
+  GET_PENDINGSUPPLIERS,
+  APPROVE_SUPPLIER,
+  APPROVE_EXPERT,
+  REJECT_EXPERT,
+  REJECT_SUPPLIER,
 } from '../Types';
 
 const userReducer = (state, action) => {
@@ -49,6 +55,26 @@ const userReducer = (state, action) => {
         ...state,
         suppliers: action.payload.data,
       };
+    case GET_PENDINGSUPPLIERS:
+      return {
+        ...state,
+        pendingSuppliers: action.payload,
+      };
+    case APPROVE_SUPPLIER:
+      const approvedSupplierId = action.payload;
+      const updatedPendingSuppliers = state.pendingSuppliers.filter(user => user.id !== approvedSupplierId);
+      return {
+        ...state,
+        pendingSuppliers: updatedPendingSuppliers,
+      };
+    case REJECT_SUPPLIER:
+      const rejectedSupplierId = action.payload;
+      const newPendingSuppliers = state.pendingSuppliers.filter(user => user.id !== rejectedSupplierId);
+      return {
+        ...state,
+        pendingSuppliers: newPendingSuppliers,
+      };
+
     case GET_SUPPLIER:
       return {
         ...state,
@@ -72,6 +98,28 @@ const userReducer = (state, action) => {
         ...state,
         aficionados: action.payload.data,
       };
+    case GET_PENDINGEXEPRTS:
+      return {
+        ...state,
+        pendingAficionados: action.payload.data,
+      };
+
+    case APPROVE_EXPERT:
+      const approvedExpertId = action.payload;
+      const updatedPendingExperts = state.pendingExperts.filter(user => user.id !== approvedExpertId);
+      return {
+        ...state,
+        pendingAficionados: updatedPendingExperts,
+      };
+
+    case REJECT_EXPERT:
+      const rejectedExpertId = action.payload;
+      const newPendingExperts = state.pendingExperts.filter(user => user.id !== rejectedExpertId);
+      return {
+        ...state,
+        pendingAficionados: newPendingExperts,
+      };
+
     case GET_EXEPRT:
       return {
         ...state,
@@ -136,7 +184,7 @@ const userReducer = (state, action) => {
         }),
       };
 
-    case FILTER_DRIVERS: 
+    case FILTER_DRIVERS:
       return {
         ...state,
         filteredDrivers: state.drivers.filter(({ firstName, lastName }) => {
@@ -145,7 +193,7 @@ const userReducer = (state, action) => {
         }),
       };
 
-    case FILTER_SERVISEPROVIERS: 
+    case FILTER_SERVISEPROVIERS:
       return {
         ...state,
         filteredServiceProviders: state.serviceProviders.filter(({ firstName, lastName }) => {
@@ -153,7 +201,7 @@ const userReducer = (state, action) => {
           return testString.includes(action.payload.toLowerCase());
         }),
       };
-    case FILTER_EXEPRTS: 
+    case FILTER_EXEPRTS:
       return {
         ...state,
         filteredAficionados: state.aficionados.filter(({ firstName, lastName }) => {
@@ -161,7 +209,7 @@ const userReducer = (state, action) => {
           return testString.includes(action.payload.toLowerCase());
         }),
       };
-    case FILTER_SUPPLIERS: 
+    case FILTER_SUPPLIERS:
       return {
         ...state,
         filteredSuppliers: state.suppliers.filter(({ firstName, lastName }) => {

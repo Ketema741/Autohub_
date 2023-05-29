@@ -12,6 +12,16 @@ export const CLEAR_ITEMS = 'CLEAR_ITEMS';
 export const CLEAR_FILTER = 'CLEAR_FILTER';
 export const ITEM_ERROR = 'ITEM_ERROR';
 
+// JOB
+export const GET_JOBS = 'GET_JOBS';
+export const GET_JOB = 'GET_JOB';
+export const ADD_JOB = 'ADD_JOB';
+export const DELETE_JOB = 'DELETE_JOB';
+export const UPDATE_JOB = 'UPDATE_JOB';
+export const FILTER_JOBS = 'FILTER_JOBS';
+export const CLEAR_JOBS = 'CLEAR_JOBS';
+export const JOB_ERROR = 'JOB_ERROR';
+
 // alert
 export const SET_ALERT = 'SET_ALERT';
 export const REMOVE_ALERT = 'REMOVE_ALERT';
@@ -63,7 +73,10 @@ export const SERVISEPROVIER_ERROR = 'SERVISEPROVIER_ERROR';
 
 // system experts
 export const GET_EXEPRTS = 'GET_EXEPRTS';
+export const GET_PENDINGEXEPRTS = 'GET_PENDINGEXEPRTS';
 export const GET_EXEPRT = 'GET_EXEPRT';
+export const APPROVE_EXPERT = 'APPROVE_EXPERT';
+export const REJECT_EXPERT = 'REJECT_EXPERT';
 export const ADD_EXEPRT = 'ADD_EXEPRT';
 export const DELETE_EXEPRT = 'DELETE_EXEPRT';
 export const UPDATE_EXEPRT = 'UPDATE_EXEPRT';
@@ -73,7 +86,10 @@ export const EXEPRT_ERROR = 'EXEPRT_ERROR';
 
 // system suppliers
 export const GET_SUPPLIERS = 'GET_SUPPLIERS';
+export const GET_PENDINGSUPPLIERS = 'GET_PENDINGSUPPLIERS';
 export const GET_SUPPLIER = 'GET_SUPPLIER';
+export const APPROVE_SUPPLIER = 'APPROVE_SUPPLIER';
+export const REJECT_SUPPLIER = 'REJECT_SUPPLIER';
 export const ADD_SUPPLIER = 'ADD_SUPPLIER';
 export const DELETE_SUPPLIER = 'DELETE_SUPPLIER';
 export const UPDATE_SUPPLIER = 'UPDATE_SUPPLIER';
@@ -90,8 +106,6 @@ export const DELETE_CART = 'DELETE_CART';
 export const GET_POSTS = 'GET_POSTS';
 export const GET_POST = 'GET_POST';
 export const DELETE_POST = 'DELETE_POST';
-export const GET_JOBS = 'GET_JOBS';
-export const DELETE_JOB = 'DELETE_JOB';
 export const UPDATE_POST = 'UPDATE_POST';
 export const POST_ERROR = 'POST_ERROR';
 export const CLEAR_POSTS = 'CLEAR_POSTS';

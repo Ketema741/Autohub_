@@ -181,7 +181,7 @@ const ActiveServiceProviders = () => {
                                                             >
                                                                 <ul className="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="benq-ex2710q-dropdown-button">
                                                                     <li>
-                                                                        <button onClick={handleShow} className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                                        <button onClick={()=>handleShow(user._id)} className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                                                             Show
                                                                         </button>
                                                                     </li>
@@ -250,7 +250,7 @@ const ActiveServiceProviders = () => {
                                                             >
                                                                 <ul className="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="benq-ex2710q-dropdown-button">
                                                                     <li>
-                                                                        <button onClick={handleShow} className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                                        <button onClick={()=>handleShow(user._id)} className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                                                             Show
                                                                         </button>
                                                                     </li>

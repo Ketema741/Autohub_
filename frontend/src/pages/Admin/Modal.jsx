@@ -4,7 +4,7 @@ import { Header } from '../../components';
 
 
 const Modal = ({ User, handleModalClose }) => {
-    
+
     return (
         <div className=" bg-half-transparent fixed inset-0  flex justify-center items-center overflow-y-auto">
             <div className="float-right h-screen dark:text-gray-200 bg-white dark:bg-[#484B52] max-w-screen w-full sm:w-full md:w-full lg:w-full xl:w-1/2 2xl:w-1/3 overflow-y-auto rounded-lg" style={{ width: "70%", height: "90%" }}>
@@ -67,11 +67,40 @@ const Modal = ({ User, handleModalClose }) => {
                                                 <a className="text-blue-800" href={`mailto:${User.email}`}>{User.email}</a>
                                             </div>
                                         </div>
-                                        <div className="grid grid-cols-2">
-                                            <div className="px-4 py-2 font-semibold">Birthday</div>
-                                            <div className="px-4 py-2">{User.birthDay}</div>
-                                        </div>
+                                        {User.birthday &&
+                                            <div className="grid grid-cols-2">
+                                                <div className="px-4 py-2 font-semibold">Birthday</div>
+                                                <div className="px-4 py-2">{User.birthday}</div>
+                                            </div>
+                                        }
+                                        {User.role == "supplier" ?
+                                            <div className="grid grid-cols-2">
+                                                <div className="px-4 py-2 font-semibold">Company Name</div>
+                                                <div className="px-4 py-2">{User.companyName}</div>
+                                            </div>
+                                            : null
+                                        }
                                     </div>
+                                    {User.role == "driver" ?
+                                        <div className='mt-4 flex flex-col space-y-2'>
+
+                                            <div className="px-4 py-2 font-semibold">Education</div>
+                                            <div className="px-4 py-2">{User.education}</div>
+                                            <div className="px-4 py-2 font-semibold">Experience</div>
+                                            <div className="px-4 py-2">{User.experience}</div>
+                                            <div className="px-4 py-2 font-semibold">Work History</div>
+                                            <div className="px-4 py-2">{User.workHistory}</div>
+
+                                        </div>
+                                        : null
+                                    }
+                                    {User.role == "supplier" ?
+                                        <div className='mt-4 flex flex-col space-y-2'>
+                                            <div className="px-4 py-2 font-semibold">Description</div>
+
+                                        </div>
+                                        : null
+                                    }
                                 </div>
 
                             </div>

@@ -1,25 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';
-import { FiSearch, FiMoreVertical  } from 'react-icons/fi';
+import { FiSearch, FiMoreVertical } from 'react-icons/fi';
 import avatar from '../../../data/avatar.jpg';
 import { Header } from '../../../components';
 import Modal from '../Modal'
-
+import UserContext from '../../../context/user/userContext';
 
 
 const Suppliers = () => {
-    const data = [
-        { id: 1, company: "WeatherTech", name: 'Ketema Girma' },
-        { id: 2, company: "AutoAnything ", name: 'Betsi' },
-        { id: 3, company: "CARiD", name: 'Gatwech' },
-        { id: 4, company: "4 Wheel Parts ", name: 'Dema' },
-        { id: 5, company: "Summit Racing", name: 'Ohana' },
-        { id: 6, company: "JC Whitney", name: 'Sunny' },
-        { id: 7, company: "AutoZone", name: 'Supplier' },
-        { id: 8, company: "Pep Boys", name: 'Supplier' },
-        { id: 9, company: "Advance Auto Parts", name: 'Supplier' },
-        { id: 10, company: "O'Reilly Auto Parts", name: 'Supplier' },
-    ]
+
+    const userContext = useContext(UserContext)
+
+    const { getPendingUsers, pendingSuppliers } = userContext
+
+    useEffect(() => {
+        getPendingUsers("suppliers")
+    }, [])
 
     const [bankAccount, setBankAccount] = useState('');
     const handleInputChange = (event) => {
@@ -51,12 +47,12 @@ const Suppliers = () => {
 
     const [currentPage, setCurrentPage] = useState(1);
 
-    const PAGE_SIZE = 2;
-    const totalSuppliers = data.length;
+    const PAGE_SIZE = 3;
+    const totalSuppliers = pendingSuppliers ? pendingSuppliers.length : 0 ;
     const totalPages = Math.ceil(totalSuppliers / PAGE_SIZE);
     const startIndex = (currentPage - 1) * PAGE_SIZE;
     const endIndex = startIndex + PAGE_SIZE;
-    const currentSuppliers = data.slice(startIndex, endIndex);
+    const currentSuppliers = pendingSuppliers? pendingSuppliers.slice(startIndex, endIndex) : [];
 
     const goToPage = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -89,7 +85,7 @@ const Suppliers = () => {
     const [showUserModal, setShowUserModal] = useState(null);
 
     const handleShow = (supplier) => {
-        
+
         // getUser(_id, "supplier")
         setSupplier(supplier)
         setShowUserModal(true);
@@ -161,13 +157,13 @@ const Suppliers = () => {
                                         </tr>
                                     </thead>
                                     {currentSuppliers.length > 0 && currentSuppliers.map((supplier, index) => (
-                                        <tbody key={supplier.id} className="bg-white divide-y divide-gray-300 dark:divide-gray-700 dark:bg-gray-900">
+                                        <tbody key={supplier._id} className="bg-white divide-y divide-gray-300 dark:divide-gray-700 dark:bg-gray-900">
                                             <tr>
                                                 <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                                                     <div className="inline-flex items-center gap-x-3">
                                                         {/* <input type="checkbox" className="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700" /> */}
 
-                                                        <span>{supplier.id}</span>
+                                                        <span>{index + 1}</span>
                                                     </div>
                                                 </td>
                                                 <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">Jan 6, 2022</td>
@@ -176,15 +172,15 @@ const Suppliers = () => {
                                                     <div className="flex items-center gap-x-2">
                                                         <img className="object-cover w-8 h-8 rounded-full" src={avatar} alt="supplier" />
                                                         <div>
-                                                            <h2 className="text-sm font-medium text-gray-800 dark:text-white ">{supplier.name}</h2>
-                                                            <p className="text-xs font-normal text-gray-600 dark:text-gray-400">{supplier.name}@example.com</p>
+                                                            <h2 className="text-sm font-medium text-gray-800 dark:text-white ">{supplier.firtName}</h2>
+                                                            <p className="text-xs font-normal text-gray-600 dark:text-gray-400">{supplier.email}</p>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                    {supplier.company}
+                                                    {supplier.companyName}
                                                 </td>
-                                                
+
                                                 <td className="relative px-4 py-4 flex items-center justify-end">
 
                                                     {showActions[index] && (
@@ -267,34 +263,7 @@ const Suppliers = () => {
 
                 </div>
                 {showUserModal && (
-                    <Modal User={{
-                        ratings
-                            :
-                            [],
-                        _id
-                            :
-                            "6461d2f5fb38bfa51b8ece44",
-                        firstName
-                            :
-                            "ohana",
-                        lastName
-                            :
-                            "Girma",
-                        email
-                            :
-                            "ohana@gmail.com",
-                        phone
-                            :
-                            "+25199494945",
-                        role
-                            :
-                            "driver",
-                        createdAt
-                            :
-                            "2023-05-15T06:36:37.331Z",
-                        updatedAt: "2023-05-15T06:36:37.331Z"
-
-                    }} handleModalClose={handleModalClose} />
+                    <Modal User={supplier} handleModalClose={handleModalClose} />
                 )}
                 {showEditModal && (
                     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
