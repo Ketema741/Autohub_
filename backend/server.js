@@ -10,6 +10,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+app.use("/cart", require("./routes/cartRoutes"));
 app.use("/users", require("./routes/UsersRoutes"));
 app.use("/blogs", require("./routes/blogsRoutes"));
 app.use("/jobs", require("./routes/jobRoutes"));

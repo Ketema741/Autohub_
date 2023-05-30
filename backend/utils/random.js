@@ -1,16 +1,27 @@
+const generatedStrings = new Set();
+const characters =
+  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-// String generator func
-exports.generateRandomString = (length) => {
-  const characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  let randomString = "";
+function generateUniqueRandomString(length) {
+  while (true) {
+    const randomString = generateRandomString(length);
+
+    if (!generatedStrings.has(randomString)) {
+      generatedStrings.add(randomString);
+      return randomString;
+    }
+  }
+}
+
+function generateRandomString(length) {
+  let result = "";
 
   for (let i = 0; i < length; i++) {
     const randomIndex = Math.floor(Math.random() * characters.length);
-    randomString += characters.charAt(randomIndex);
+    result += characters.charAt(randomIndex);
   }
 
-  return randomString;
-};
+  return result;
+}
 
-
+module.exports = generateUniqueRandomString;

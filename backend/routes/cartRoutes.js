@@ -4,14 +4,15 @@ const { verifyToken } = require("../middleware/auth");
 const {
   addToCart,
   getCart,
+  getCartById,
   removeFromCart,
   updateCartItem,
 } = require("../controllers/cartController");
 
-router.get("/cart", verifyToken, getCart);
-router.post("/cart/add", verifyToken, addToCart);
-router.put("/cart/:productId", verifyToken, updateCartItem);
-router.delete("/cart/:productId", verifyToken, removeFromCart);
- 
+router.get("/", verifyToken, getCart);
+router.post("/add", verifyToken, addToCart);
+router.get("/:cart_id", verifyToken, getCartById);
+router.put("/update/:productId", verifyToken, updateCartItem);
+router.delete("/remove/:productId", verifyToken, removeFromCart);
+
 module.exports = router;
- 

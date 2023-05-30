@@ -123,6 +123,9 @@ const ServiceProviderSchema = new mongoose.Schema(
     vendorName: {
       type: String,
     },
+    ServiceArea: {
+      type:String
+    },
     profileImage: {
       type: String,
     },

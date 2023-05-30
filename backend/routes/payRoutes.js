@@ -1,7 +1,8 @@
 const router = require("express").Router();
 
-const { chapaInit } = require("../middleware/stripe");
+const { chapaInit, chapaVerify } = require("../middleware/chapa");
 
-router.post("/checkout/orders", chapaInit);
+router.post("/checkout/orders/:orderId", chapaInit);
+router.get("/verify/payment/:orderId", chapaVerify);
 
 module.exports = router;
