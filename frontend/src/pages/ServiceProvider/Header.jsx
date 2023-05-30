@@ -5,12 +5,12 @@ import bg from '../../data/bg2.jpg'; // 2 3 6 8
 import UserContext from './../../context/user/userContext';
 
 const Header = () => {
-    const text = useRef('')
     const userContext = useContext(UserContext)
-    const { filtered, clearFilter, filterUsers } = userContext
-
+    const { filteredServiceProviders, clearFilter, filterUsers } = userContext
+    
+    const text = useRef('')
     useEffect(() => {
-        if (filtered == null) {
+        if (filteredServiceProviders == null) {
             text.current.value = ''
         }
     })
@@ -23,26 +23,21 @@ const Header = () => {
     const handleToggleJobList = () => setIsOpen(!isOpen);
 
     const handleCategorySelection = (category) => {
-        // if (category !== 'Location') {
-        //     filterItems(category);
-        // } else {
-        //     clearFilter();
-        // }
-      setSelectedCategory(category);
-      setIsOpen(false);
+        if (category !== 'Location') {
+            filterUsers(category, "service-providers");
+        } else {
+            clearFilter();
+        }
+        setSelectedCategory(category);
+        setIsOpen(false);
     };
 
-
-
-
-    const handleSearch = (e) => {
-        // if (e.target.value !== '') {
-        //     filterItems(e.target.value);
-        // } else {
-        //     clearFilter();
-        // }
-        console.log(e.target.value)
-
+    const onChange = (e) => {
+        if (e.target.value !== '') {
+            filterUsers(e.target.value, "service-providers");
+        } else {
+            clearFilter();
+        }
     };
 
     return (
@@ -114,11 +109,11 @@ const Header = () => {
                                     </div>
                                 </div>
                                 <input
+                                    placeholder="Search... "
                                     type="text"
                                     ref={text}
-                                    placeholder="Search... "
-                                    className="w-full p-4 outline-none text-gray-600"
-                                    onChange={handleSearch}
+                                    onChange={onChange}
+                                    className="block  pt-3 pr-0 pb-3 pl-24 lg:mx-auto lg:w-full py-3 border border-gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm"
                                 />
                                 <button
                                     type="button"
