@@ -362,7 +362,7 @@ const updateDriver = async (req, res) => {
 
 const updateCarAficionados = async (req, res) => {
   try {
-    const user = await models.CarAficionadosUser.findById(req.params.user_id);
+    const user = await models.CarAficionados.findById(req.params.user_id);
 
     if (!user) {
       res.status(404);
@@ -372,7 +372,7 @@ const updateCarAficionados = async (req, res) => {
       throw new Error("Only account owner can update the profile");
     }
 
-    const updatedUser = await models.CarAficionadosUser.findByIdAndUpdate(
+    const updatedUser = await models.CarAficionados.findByIdAndUpdate(
       req.params.user_id,
       req.body,
       {
@@ -381,7 +381,7 @@ const updateCarAficionados = async (req, res) => {
     ).select("-password");
     res.status(200).json({
       data: updatedUser,
-      message: "CarAficionadosUser has been updated successfully",
+      message: "CarAficionados has been updated successfully",
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -439,7 +439,7 @@ const deleteServiceProvider = async (req, res) => {
 };
 const deleteCarAficionados = async (req, res) => {
   try {
-    const deletedUser = await models.CarAficionadosUser.findByIdAndDelete(
+    const deletedUser = await models.CarAficionados.findByIdAndDelete(
       req.params.user_id
     );
     if (!deletedUser) {
@@ -527,6 +527,36 @@ const getServiceProvider = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+const getCustomer = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const customer = await models.Customer.findById(id).select("-password");
+    if (!customer) {
+      throw new Error("Customer not found");
+    }
+    res.status(200).json({
+      data: customer,
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const getCarAficionadosById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const ca = await models.CarAficionados.findById(id).select("-password");
+    if (!ca) {
+      throw new Error("CarAficionados not found");
+    }
+    res.status(200).json({
+      data: ca,
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 const getDriver = async (req, res) => {
   try {
     const { id } = req.params;
@@ -652,5 +682,7 @@ module.exports = {
 
   // get user by IDs
   getDriver,
+  getCustomer,
   getServiceProvider,
+  getCarAficionadosById,
 };

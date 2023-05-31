@@ -37,7 +37,7 @@ router.delete("/job/delete/:id", verifyToken, deleteJob);
 router.post("/job/acceptence/:jobId", verifyToken, jobsAccptenceMail);
 
 router.post(
-  "/job/apply/:id",
+  "/job/apply/:jobId",
   verifyToken,
   upload.single("resume"),
   jobApplication

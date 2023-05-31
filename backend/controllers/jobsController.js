@@ -8,7 +8,6 @@ const { uploadToCloudinary } = require("../configurations/cloudinary");
 const addJob = async (req, res) => {
   try {
     const { title, description, location } = req.body;
-    console.log(req.body);
     if (!title || !description || !location) {
       res.status(400);
       throw new Error("Please add all the required fields");
@@ -17,7 +16,7 @@ const addJob = async (req, res) => {
     const employer = req.user;
     const imageFiles = req.files;
     const action = imageFiles.map((img) =>
-      uploadToCloudinary(img.path, "images")
+       uploadToCloudinary(img.path, "images")
     );
     const images_data = await Promise.all(action);
     const job = await Job.create({
@@ -43,7 +42,7 @@ const addJob = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-};
+};     
 
 const getJobs = async (req, res) => {
   try {
@@ -106,21 +105,21 @@ const deleteJob = async (req, res) => {
 const jobApplication = async (req, res) => {
   try {
     const resume = req.file;
+    console.log(req.file);
     const data = await uploadToCloudinary(resume.path, "Resumes");
 
-    const { id } = req.params;
-    console.log(id);
-    const job = await Job.findById(id);
+    const { jobId } = req.params;
+    const job = await Job.findById(jobId);
     if (!job) {
       res.status(404);
       throw new Error("That job does not exist");
     }
     const application = await Job.findByIdAndUpdate(
-      { _id: id },
+      { _id: jobId },
       {
         $addToSet: {
           applicants: {
-            applicant: req.user_.id,
+            applicant: req.user._id,
             applicant_info: req?.body,
             resume: {
               url: data.url,
