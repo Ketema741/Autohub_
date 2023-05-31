@@ -133,6 +133,7 @@ const signUpUser = async (req, res) => {
             email: supplier.email,
             firstName: supplier.firstName,
             lastName: supplier.lastName,
+            role:supplier.role,
             token: generateToken(supplier._id, supplier.role),
           });
         } else {
@@ -242,6 +243,7 @@ const signInUser = async (req, res) => {
         lastName: user.lastName,
         address: user.address,
         email,
+        role:user.role,
         token: generateToken(user._id, user.role),
       });
     } else {
@@ -527,6 +529,21 @@ const getServiceProvider = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+const getSupplier = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const supplier = await models.Supplier.findById(id).select("-password");
+    if (!supplier) {
+      res.status(404);
+      throw new Error("Supplier not found");
+    }
+    res.status(200).json({
+      data: supplier,
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 const getCustomer = async (req, res) => {
   try {
     const { id } = req.params;
@@ -683,6 +700,7 @@ module.exports = {
   // get user by IDs
   getDriver,
   getCustomer,
+  getSupplier,
   getServiceProvider,
   getCarAficionadosById,
 };

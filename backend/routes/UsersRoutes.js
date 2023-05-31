@@ -24,6 +24,7 @@ const {
   getServiceProvider,
   getCustomer,
   getCarAficionadosById,
+  getSupplier,
 } = require("../controllers/usersController");
 
 const { verifyToken, verifyAdministrator } = require("../middleware/auth");
@@ -113,10 +114,14 @@ router
   .get("/drivers", getDrivers)
   .get("/service-providers", getServiceProviders)
   .get("/suppliers", getSuppliers)
-  .get("/aficionados", getCarAficionados)
+  .get("/aficionados", getCarAficionados);
+
+router
   .get("/driver/:id", getDriver)
   .get("/customer/:id", getCustomer)
-  .get("/aficionados/:id", getCarAficionadosById);
+  .get("/supplier/:id", getSupplier)
+  .get("/aficionados/:id", getCarAficionadosById)
+  .get("/service-provider/:id", getServiceProvider);
 
 // Admin only routes
 router.get("/pending/suppliers", verifyAdministrator, getPendingSuppliers);
