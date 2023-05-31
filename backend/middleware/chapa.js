@@ -46,7 +46,6 @@ const chapaInit = async (req, res) => {
 };
 
 //  Verification
-
 const chapaVerify = async (req, res) => {
   const { orderId } = req.params;
   const order = await Order.findById(orderId);

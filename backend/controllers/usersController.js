@@ -92,6 +92,12 @@ const signUpUser = async (req, res) => {
           address,
           password: hashedPassword,
           role: "service provider",
+          vendorName: req.body?.vendorName,
+          ServiceArea: req.body?.ServiceArea,
+          bio: req.body?.bio,
+          servicesOffered: req.body?.servicesOffered,
+          workingHours: req.body?.workingHours,
+          specializations: req.body?.specializations,
         });
         if (service_provider) {
           res.status(201).json({
@@ -116,6 +122,10 @@ const signUpUser = async (req, res) => {
           address,
           password: hashedPassword,
           role: "supplier",
+          bio: req.body?.bio,
+          companyName: req.body?.companyName,
+          // workingHours: req.body?.workingHours,
+          // specializations: req.body?.specializations,
         });
         if (supplier) {
           res.status(201).json({
@@ -163,10 +173,16 @@ const signUpUser = async (req, res) => {
           address,
           password: hashedPassword,
           role: "driver",
-          experience: req.body?.experience,
+          experience: req.body?.drivingExperience,
           birthday: req.body?.birthday,
           education: req.body?.education,
-          workHistory: req.body?.workHistory,
+          workHistory: req.body?.employmentHistory,
+          licenseNumber: req.body?.licenseNumber,
+          licenseExpiryDate: req.body?.licenseExpiryDate,
+          hasCDL: req.body?.hasCDL,
+          references: req.body?.references,
+          vehicleType: req.body?.vehicleType,
+          additionalCertifications: req.body?.additionalCertifications,
         });
         if (driver) {
           res.status(201).json({
@@ -180,26 +196,27 @@ const signUpUser = async (req, res) => {
           res.status(400);
           throw new Error("User couldn't be Registered, Invalid credentials");
         }
-      case "CarAficionadosUser":
-        const carAficionadosUser = await models.CarAficionadosUser.create({
+        break;
+      case "caraficionados":
+        const carAficionados = await models.CarAficionados.create({
           email,
           firstName,
           lastName,
           phone,
           address,
           password: hashedPassword,
-          role: "carAficionadosUser",
+          role: "caraficionados",
         });
-        if (!carAficionadosUser) {
+        if (!carAficionados) {
           res.status(400);
           throw new Error("User couldn't be Registered, Invalid credentials");
         }
         res.status(201).json({
-          _id: carAficionadosUser._id,
-          email: carAficionadosUser.email,
-          firstName: carAficionadosUser.firstName,
-          lastName: carAficionadosUser.lastName,
-          token: generateToken(carAficionadosUser._id, carAficionadosUser.role),
+          _id: carAficionados._id,
+          email: carAficionados.email,
+          firstName: carAficionados.firstName,
+          lastName: carAficionados.lastName,
+          token: generateToken(carAficionados._id, carAficionados.role),
         });
         break;
       default:
@@ -540,7 +557,7 @@ const getDrivers = async (req, res) => {
 
 const getCarAficionados = async (req, res) => {
   try {
-    const CarAficionadosUser = await models.CarAficionadosUser.find({}).select(
+    const CarAficionadosUser = await models.CarAficionados.find({}).select(
       "-password"
     );
     res.status(200).json({

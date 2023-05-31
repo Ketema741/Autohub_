@@ -22,36 +22,26 @@ const jobSchema = mongoose.Schema(
     salary: {
       type: Number,
     },
-    active: {
+    isActive: {
       type: Boolean,
       default: true,
     },
+    jobImages: {
+      type: [Object],
+    },
     applicants: [
       {
+        applicant: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Driver",
+        },
         applicant_info: {
-          name: {
-            type: String,
-            required: true,
-          },
-          email: {
-            type: String,
-            required: true,
-          },
-          telephone: {
-            type: String,
-            required: true,
-          },
-          address: {
-            type: String,
-            required: true,
-          },
-          description: {
-            type: String,
-          },
+          type: Object,
+          required: true,
         },
         resume: {
           url: {
-            type: String ,
+            type: String,
             required: "Please upload your remsume",
           },
           public_id: {

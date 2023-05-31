@@ -1,26 +1,44 @@
-require("dotenv").config()
+require("dotenv").config();
 const Job = require("../models/Job");
+const models = require("../models/Users");
 
 const { sendMail } = require("../configurations/mail");
 const { uploadToCloudinary } = require("../configurations/cloudinary");
 
 const addJob = async (req, res) => {
-  const { title, description, address } = req.body;
   try {
-    if (!title || !description || !address) {
+    const { title, description, location } = req.body;
+    console.log(req.body);
+    if (!title || !description || !location) {
       res.status(400);
       throw new Error("Please add all the required fields");
     }
 
     const employer = req.user;
+    const imageFiles = req.files;
+    const action = imageFiles.map((img) =>
+      uploadToCloudinary(img.path, "images")
+    );
+    const images_data = await Promise.all(action);
     const job = await Job.create({
       title,
       description,
-      address,
+      location,
       employer,
+      jobImages: images_data,
     });
     if (job) {
-      res.status(201).json({ job });
+      const _job = await models.Job.findByIdAndUpdate(
+        { _id: job._id },
+        {
+          $addToSet: { carImages: images_data },
+        },
+        { new: true }
+      );
+      res.status(201).json({
+        data: _job,
+        message: "Job added successfully",
+      });
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -87,7 +105,6 @@ const deleteJob = async (req, res) => {
 
 const jobApplication = async (req, res) => {
   try {
-    const { name, email, telephone, address, description } = req.body;
     const resume = req.file;
     const data = await uploadToCloudinary(resume.path, "Resumes");
 
@@ -103,13 +120,8 @@ const jobApplication = async (req, res) => {
       {
         $addToSet: {
           applicants: {
-            applicant_info: {
-              name: name,
-              email: email,
-              telephone: telephone,
-              address: address,
-              description: description,
-            },
+            applicant: req.user_.id,
+            applicant_info: req?.body,
             resume: {
               url: data.url,
               public_id: data.public_id,
@@ -119,6 +131,23 @@ const jobApplication = async (req, res) => {
       },
       { new: true }
     );
+    if (application) {
+      await models.Driver.updateOne(
+        { _id: req.user._id },
+        {
+          experience: req.body?.drivingExperience,
+          birthday: req.body?.birthday,
+          education: req.body?.education,
+          workHistory: req.body?.employmentHistory,
+          licenseNumber: req.body?.licenseNumber,
+          licenseExpiryDate: req.body?.licenseExpiryDate,
+          hasCDL: req.body?.hasCDL,
+          references: req.body?.references,
+          vehicleType: req.body?.vehicleType,
+          additionalCertifications: req.body?.additionalCertifications,
+        }
+      );
+    }
     res.status(200).json({
       application,
       message: "Job has been updated successfully",
@@ -132,14 +161,16 @@ const jobApplication = async (req, res) => {
 const jobsAccptenceMail = async (req, res) => {
   try {
     const { name, email } = req.body;
-    const job = await Job.findById(req.params.jobId)
-    if(!job){
-      res.status(404)
-      throw new Error("Job couldn't be found")
+    const job = await Job.findById(req.params.jobId);
+    if (!job) {
+      res.status(404);
+      throw new Error("Job couldn't be found");
     }
-    if(!email || !name){
-      res.status(400)
-      throw new Error("No email address or name provided for mail destination. Please provide an email address and name")
+    if (!email || !name) {
+      res.status(400);
+      throw new Error(
+        "No email address or name provided for mail destination. Please provide an email address and name"
+      );
     }
     let mailOptions = {
       subject: `Congrat! ${name}! Your application for ${job.title} has been accepted.`,

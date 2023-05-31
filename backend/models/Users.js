@@ -123,8 +123,17 @@ const ServiceProviderSchema = new mongoose.Schema(
     vendorName: {
       type: String,
     },
-    ServiceArea: {
-      type:String
+    serviceArea: {
+      type: String,
+    },
+    servicesOffered: {
+      type: String,
+    },
+    workingHours: {
+      type: String,
+    },
+    specializations: {
+      type: String,
     },
     profileImage: {
       type: String,
@@ -188,6 +197,25 @@ const DriverSchema = new mongoose.Schema(
     workHistory: {
       type: String,
     },
+    licenseNumber: {
+      type: String,
+    },
+    licenseExpiryDate: {
+      type: String,
+    },
+    hasCDL: {
+      type: String,
+    },
+    references: {
+      type: String,
+    },
+    vehicleType: {
+      type: String,
+    },
+    additionalCertifications: {
+      type: String,
+    },
+
     ratings: {
       communication: [],
       drivingSkills: [],
@@ -237,7 +265,7 @@ const CustomerSchema = new mongoose.Schema(
   { timestamps: true }
 );
 // Expert user schema
-const CarAficionadosUser = new mongoose.Schema(
+const CarAficionadosSchema = new mongoose.Schema(
   {
     firstName: {
       type: String,
@@ -332,7 +360,7 @@ const models = {
   Customer: mongoose.model("Customer", CustomerSchema),
   ServiceProvider: mongoose.model("ServiceProvider", ServiceProviderSchema),
   Supplier: mongoose.model("Supplier", SupplierSchema),
-  Expert: mongoose.model("CarAficionadosUser", CarAficionadosUser),
+  CarAficionados: mongoose.model("CarAficionados", CarAficionadosSchema),
   TemporarySupplier: mongoose.model(
     "TemporarySupplier",
     TemporarySupplierSchema

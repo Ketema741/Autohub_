@@ -1,9 +1,7 @@
 const models = require("../models/Item");
 const { Supplier } = require("../models/Users");
 
-
 const { uploadToCloudinary } = require("../configurations/cloudinary");
-
 
 const addCategory = async (req, res) => {
   try {
@@ -39,7 +37,7 @@ const addItem = async (req, res) => {
         "No such a category! please add it before assigning item to item"
       );
     }
-  
+
     const item = await models.Item.create({
       supplier: req.user._id,
       category,
@@ -154,7 +152,6 @@ const deleteItem = async (req, res) => {
   }
 };
 
-
 // Tag to an item
 const assignTagsToProduct = async (req, res) => {
   const { itemId, tags } = req.body;
@@ -203,7 +200,16 @@ const getRelatedProducts = async (itemId) => {
 // Car Item
 const createCar = async (req, res) => {
   try {
-    const { make, model, year, price, description } = req.body;
+    const {
+      make,
+      model,
+      year,
+      price,
+      description,
+      engine,
+      fuelType,
+      isAvailable,
+    } = req.body;
     const imageFiles = req.files;
 
     const action = imageFiles.map((img) =>
@@ -217,6 +223,9 @@ const createCar = async (req, res) => {
       price,
       year,
       description,
+      engine,
+      fuelType,
+      isAvailable,
       carImages: images_data,
     });
     if (car) {
