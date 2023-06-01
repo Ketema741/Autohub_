@@ -6,6 +6,7 @@ import { io } from "socket.io-client";
 
 import {
   GET_CONVERSATIONS,
+  GET_CONVERSATION,
   MESSAGE_ERROR,
   GET_MESSAGES,
   GET_MESSAGE,
@@ -27,6 +28,7 @@ const ChatState = (props) => {
     conversations: null,
     arrivalChat: null,
     currentChat: null,
+    currentChatWithUser: null,
     messages: null,
     onlineUsers: null,
     error: null,
@@ -53,6 +55,23 @@ const ChatState = (props) => {
       console.log({ 'erro': err })
     }
   };
+  // Get conversation
+  const getConversation = async (firstUserId, sendUserId) => {
+    try {
+      const res = await axios.get(`/conversations/${firstUserId}/${sendUserId}`);
+      dispatch({
+        type: GET_CONVERSATION,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: MESSAGE_ERROR,
+        payload: err.response.msg,
+
+      });
+      console.log({ 'erro': err })
+    }
+  };
 
 
   // Get message
@@ -66,12 +85,25 @@ const ChatState = (props) => {
     } catch (err) {
       dispatch({
         type: MESSAGE_ERROR,
-        payload: err.response.msg,
+        payload: err.response,
       });
     }
   };
 
 
+  // conversation room
+  const createConversationRoom = async (users) => {
+
+    try {
+      const res = await axios.post("/conversations", users);
+      console.log(res)
+    } catch (err) {
+      dispatch({
+        type: MESSAGE_ERROR,
+        payload: err.response.msg,
+      });
+    }
+  };
   // send message
   const sendMessage = async (message) => {
 
@@ -171,6 +203,7 @@ const ChatState = (props) => {
         messages: state.messages,
         error: state.error,
         getConversations,
+        getConversation,
         getMessages,
         getMessage,
         sendMessage,
@@ -181,8 +214,7 @@ const ChatState = (props) => {
         getNotifications,
         sendNotification,
         deleteNotification,
-
-
+        createConversationRoom,
       }}
     >
       {props.children}

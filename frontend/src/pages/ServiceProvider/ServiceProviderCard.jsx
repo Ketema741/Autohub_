@@ -1,17 +1,24 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import product1 from '../../data/product1.jpg';
-import product2 from '../../data/product2.jpg';
-import product3 from '../../data/product3.jpg';
+import UserContext from "../../context/user/userContext";
 
 import { FaArrowRight } from 'react-icons/fa';
 
 const ServiceProviderCard = ({ serviceProvider }) => {
-  let image = product1
+  const userContext = useContext(UserContext)
+  const { getUser } = userContext
+  
+  useEffect(()=>{
+    getUser(serviceProvider._id, "service-provider")
 
+  }, [])
+  
+  let image = product1
   if (serviceProvider.images) {
     image = serviceProvider.images[0]
   }
+
   return (
 
     <div className="group space-y-6 border border-gray-100 dark:border-gray-700 rounded-3xl bg-white dark:bg-gray-800 px-8 py-12 text-center shadow-2xl shadow-gray-600/10 dark:shadow-none">
@@ -28,7 +35,7 @@ const ServiceProviderCard = ({ serviceProvider }) => {
       {serviceProvider.specializations}
       </p>
       <Link
-        to="/service-provider-detail/abacadaba"
+        to={`/service-provider-detail/${serviceProvider._id}`}
         className="relative mx-auto flex h-10 w-10 items-center justify-center before:absolute before:inset-0 before:rounded-full before:border before:border-gray-100 dark:before:border-gray-600 before:transition before:duration-300 group-hover:before:scale-125"
       >
         <FaArrowRight className="text-primary" />

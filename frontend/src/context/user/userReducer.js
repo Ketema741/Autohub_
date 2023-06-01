@@ -16,9 +16,9 @@ import {
   FILTER_DRIVERS,
   GET_SUPPLIERS,
   GET_EXEPRTS,
-  GET_SERVISEPROVIERS,
+  GET_SERVISEPROVIDERS,
   GET_SUPPLIER,
-  GET_SERVISEPROVIER,
+  GET_SERVISEPROVIDER,
   GET_EXEPRT,
   FILTER_SERVISEPROVIERS,
   FILTER_EXEPRTS,
@@ -29,6 +29,7 @@ import {
   APPROVE_EXPERT,
   REJECT_EXPERT,
   REJECT_SUPPLIER,
+  GET_USER,
 } from '../Types';
 
 const userReducer = (state, action) => {
@@ -36,7 +37,12 @@ const userReducer = (state, action) => {
     case GET_USERS:
       return {
         ...state,
-        users: action.payload,
+        customers: action.payload,
+      };
+    case GET_USER:
+      return {
+        ...state,
+        customer: action.payload.data,
       };
 
     case GET_DRIVERS:
@@ -81,13 +87,13 @@ const userReducer = (state, action) => {
         supplier: action.payload.data,
       };
 
-    case GET_SERVISEPROVIERS:
+    case GET_SERVISEPROVIDERS:
       return {
         ...state,
         serviceProviders: action.payload.data,
       };
 
-    case GET_SERVISEPROVIER:
+    case GET_SERVISEPROVIDER:
       return {
         ...state,
         serviceProvider: action.payload.data,
@@ -129,7 +135,7 @@ const userReducer = (state, action) => {
     case UPDATE_USER:
       return {
         ...state,
-        user: action.payload,
+        customer: action.payload,
       };
     case ADD_CART:
       return {
@@ -152,18 +158,22 @@ const userReducer = (state, action) => {
     case DELETE_USER:
       return {
         ...state,
-        users: state.users.filter(
-          (user) => user._id !== action.payload,
+        customers: state.customers.filter(
+          (customer) => customer._id !== action.payload,
         ),
       };
 
     case CLEAR_USERS:
       return {
         ...state,
-        users: null,
+        customers: null,
         filtered: null,
         error: null,
         current: null,
+        drivers: null,
+        serviceProviders: null,
+        aficionados: null,
+        suppliers: null,
       };
     case SET_CURRENT:
       return {
@@ -221,6 +231,7 @@ const userReducer = (state, action) => {
       return {
         ...state,
         filteredDrivers: null,
+        filteredUsers: null,
         filteredServiceProviders: null,
         filteredAficionados: null,
         filteredSuppliers: null,

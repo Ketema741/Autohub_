@@ -1,27 +1,81 @@
-import React from "react";
+import React, { useState, useContext, useEffect } from "react";
 
 import { SiBookstack } from "react-icons/si";
 
 import { useStateContext } from '../../context/ContextProvider';
 import Blog from "../../assets/undraw_job_offers_re_634p.svg";
+import AuthContext from "../../context/auth/authContext";
+import { useNavigate } from "react-router-dom";
+import ChatContext from "../../context/chat/chatContext";
+import UserContext from "../../context/user/userContext";
 
-const JobDetailCard = () => {
+
+const SVDetailCard = () => {
+
+    const navigate = useNavigate()
+
+    const authContext = useContext(AuthContext);
+    const userContext = useContext(UserContext);
+    const chatContext = useContext(ChatContext);
+
+    const { createConversationRoom, getConversation } = chatContext
+    const { serviceProvider, customer } = userContext
+    const { user, isUserAuthenticated, logout } = authContext
+
+    const [messageData, setMessageData] = useState({
+        senderId: null,
+        receiverId: null
+    });
+
+
 
     const { handleClick } = useStateContext();
+
+    const handleContact = () => {
+        if (!isUserAuthenticated || user?.role !== 'customer') {
+            window.alert("Login as a customer");
+            logout();
+            navigate("/login");
+            return;
+          }
+        
+          let updatedMessageData = null;
+          if (user?.role === "service provider") {
+            updatedMessageData = {
+              senderId: user?._id,
+              receiverId: customer?._id
+            };
+          } else {
+            updatedMessageData = {
+              senderId: user?._id,
+              receiverId: serviceProvider?._id
+            };
+          }
+        
+          if (!updatedMessageData.senderId || !updatedMessageData.receiverId) {
+            window.alert("Something went wrong. Try to login as a customer or service provider.");
+            return;
+          }
+      
+        createConversationRoom(updatedMessageData);
+        getConversation(updatedMessageData.senderId, updatedMessageData.receiverId);
+        handleClick("chat");
+      }
+      
 
     return (
         <div className="lg:flex" >
             <div className="relative mt-8 md:mt-16 space-y-8 sm:w-full sm:px-4 md:w-2/3 lg:ml-0 sm:mx-auto text-center lg:text-left lg:mr-auto lg:w-7/12">
                 <div className=" pt-6 pb-8 mb-4 py-8">
                     <h2 className="text-3xl font-bold text-blue-800 mb-4">
-                        Job Title
+                        Service providers name
                     </h2>
                     <p className="text-grey-700 mb-4 font-bold">
-                        Web Developer
+                        Service they give
                     </p>
 
                     <h2 className="text-2xl font-bold text-blue-800 mb-4">
-                        Job Description:
+                        Vehicle Service Provider Description:
                     </h2>
                     <p className="text-gray-700 mb-4 ml-10 sm:ml-2 sm:mr-2 md:mr-32 text-justify" style={{ zIndex: 1000 }}>
                         We are seeking a talented web developer to join our
@@ -113,7 +167,7 @@ const JobDetailCard = () => {
                         <div className="grid grid-cols-3 space-x-4 md:space-x-6 md:flex md:justify-center lg:justify-start">
                             <button
                                 type="button"
-                                onClick={() => handleClick("chat")}
+                                onClick={handleContact}
                                 className="p-4 border  dark:bg-gray-800 dark:border-gray-700 rounded-full duration-300 hover:border-cyan-400 hover:shadow-lg hover:shadow-cyan-600/20 dark:hover:border-cyan-300/30"
                             >
                                 <div className="flex justify-center space-x-4">
@@ -146,4 +200,4 @@ const JobDetailCard = () => {
     );
 };
 
-export default JobDetailCard;
+export default SVDetailCard;

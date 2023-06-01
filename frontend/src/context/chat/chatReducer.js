@@ -1,5 +1,6 @@
 import {
   GET_CONVERSATIONS,
+  GET_CONVERSATION,
   MESSAGE_ERROR,
   GET_MESSAGES,
   GET_MESSAGE,
@@ -20,6 +21,11 @@ const chatReducer = (state, action) => {
       return {
         ...state,
         conversations: action.payload,
+      };
+    case GET_CONVERSATION:
+      return {
+        ...state,
+        currentChat: action.payload,
       };
     case GET_MESSAGES:
       return {

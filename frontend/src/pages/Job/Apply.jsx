@@ -181,6 +181,7 @@ const Apply = ({ togglePopup }) => {
 
                                     </div>
                                 </div>
+                                
                                 <div className="mb-5">
                                     <label htmlFor="quantity" className="mb-3 block text-base font-medium text-[#07074D]">
                                         Quantity

@@ -14,7 +14,7 @@ const Chat = () => {
                 <div className={` border-l-2 ${index == 2 ? 'border-blue-500 bg-blue-100' : ' border-transparent hover:bg-gray-100'} p-3 space-y-4`}>
                     <div className='flex flex-row items-center space-x-2'>
                         <BsCheck2Circle className='h-4 w-4' />
-                        <strong className='flex-grow text-sm'> Nicola Tesla</strong>
+                        <strong className='flex-grow text-sm'> Ketema G.</strong>
                         <div className='text-sm text-gray-600'>5hr</div>
                     </div>
 

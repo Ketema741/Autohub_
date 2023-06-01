@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
-import { io } from "socket.io-client";
+import { io } from 'socket.io-client';
 import { format } from 'timeago.js';
 
 import { BsPersonCircle, BsCheck2Circle } from 'react-icons/bs';
@@ -7,30 +7,14 @@ import { MdOutlineCancel } from 'react-icons/md';
 import { RiSendPlaneFill } from 'react-icons/ri';
 
 import Button from './Button';
-import background from '../brands/bg-10.jpg'
+import background from '../brands/bg-10.jpg';
 
 import ChatContext from '../context/chat/chatContext';
-import AuthContext from "../context/auth/authContext";
+import AuthContext from '../context/auth/authContext';
+import UserContext from '../context/user/userContext';
+import Contact from './Contact';
 
-const Contacts = ({ conversation, currentUser }) => {
-  const cards = Array.from({ length: 10 }, (_, index) => (
-    <a href='#' key={index} className="block border-b ">
-      <div className={` border-l-2 ${index == 2 ? 'border-blue-500 bg-blue-100' : ' border-transparent hover:bg-gray-100'} p-3 space-y-4`}>
-        <div className='flex flex-row items-center space-x-2'>
-          <BsCheck2Circle className='h-4 w-4' />
-          <strong className='flex-grow text-sm'> Ketema</strong>
-          <div className='text-sm text-gray-600'>4hr</div>
-        </div>
-        <div className='flex flex-row space-x-1 items-center'>
-          <BsPersonCircle className='flex-none h-3 w-3' />
-          <div className='flex-grow truncate'> some message content will be here also I am going to participate in a hackaton</div>
-        </div>
-      </div>
-    </a>
-  ));
 
-  return <div>{cards}</div>;
-};
 
 const Message = ({ message, own, scroll }) => {
   return (
@@ -94,17 +78,17 @@ const Chat = () => {
   // backend
   useEffect(() => {
     socket.current.emit("addUser", user._id);
-    getConversations(user._id)
-    if (conversations) {
-      setCurrentChat(conversations[0])
-    }
-  }, [user, conversations]);
+  }, [user]);
+  
+  useEffect(() => {
+    getConversations(user._id);
+  }, [getConversations, user]);
+  
 
   useEffect(() => {
-    getMessages(currentChat?._id)
-
-    
-  }, [currentChat]);
+    getMessages(currentChat?._id);
+  }, [getMessages, currentChat]);
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -145,7 +129,7 @@ const Chat = () => {
           <div className='flex-auto overflow-y-auto'>
             {conversations && conversations.map((c) => (
               <div onClick={() => setCurrentChat(c)}>
-                <Contacts conversation={c} currentUser={user} />
+                <Contact conversation={c} currentUser={user} setCurrentChat={setCurrentChat} />
               </div>
             ))}
           </div>
@@ -153,8 +137,8 @@ const Chat = () => {
         <div className='w-4/5 border-l border-r border-gray-400 flex flex-col'>
           <div className='flex-none h-20 flex flex-row justify-between items-center p-5 border-b'>
             <div className='flex flex-col spaxe-y-1'>
-              <strong> Service Provider </strong>
-              <input type='text' placeholder='Add Conversation Title' className='text-sm text-black outline-none focus:boerder-b hover:boerder-b border-dashed placeholder-gray-600' />
+              <strong> Chat </strong>
+              <input type='text' readOnly placeholder='Make a Conversation' className='text-sm text-black outline-none focus:boerder-b hover:boerder-b border-dashed placeholder-gray-600' />
             </div>
             <Button
               icon={<MdOutlineCancel />}

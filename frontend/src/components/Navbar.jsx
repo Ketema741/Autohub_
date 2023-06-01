@@ -82,19 +82,19 @@ const Navbar = () => {
     }
   }, [screenSize]);
 
-  useEffect(() => {
-    if (user) {
-      getNotifications(user._id)
-
-    }
-  }, [user]);
+ 
   const onLogout = () => {
     logout();
   };
 
   const handleActiveMenu = () => setActiveMenu(!activeMenu);
 
-  
+  const handleChat = () => {
+    handleClick("chat")
+    if (user){
+      getNotifications(user?._id)
+    } 
+  }
 
   return (
     <div className="flex justify-between bg-gray-100 dark:bg-gray-800 dark:border-gray-700 shadow-2xl relative ">
@@ -129,7 +129,7 @@ const Navbar = () => {
               <NavButton
                 title="Chat"
                 dotColor="#FF5C8E"
-                customFunc={() => handleClick("chat")}
+                customFunc={handleChat}
                 color={currentColor}
                 icon={<BsChatLeft className="mx-auto w-6 h-6 text-gray-600 dark:text-gray-300" />}
               />
