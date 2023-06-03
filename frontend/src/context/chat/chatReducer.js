@@ -10,6 +10,7 @@ import {
   SET_ARRIVAL_MESSAGE,
   GET_NOTIFICATIONS,
   DELETE_NOTIFICATION,
+  CLEAR_CURRENT,
 } from '../Types';
 
 
@@ -57,6 +58,12 @@ const chatReducer = (state, action) => {
         return {
           ...state,
           messages: [...state.messages, action.payload]
+        };
+      case CLEAR_CURRENT:
+        return {
+          ...state,
+          messages: null,
+          currentChat:null
         };
       case MESSAGE_ERROR:
         return {
