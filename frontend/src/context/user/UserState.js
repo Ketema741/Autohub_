@@ -27,12 +27,14 @@ import {
 
   GET_SUPPLIERS, GET_PENDINGSUPPLIERS, GET_SUPPLIER, FILTER_SUPPLIERS,
 
-  GET_SERVISEPROVIERS, GET_SERVISEPROVIER, FILTER_SERVISEPROVIERS, APPROVE_SUPPLIER, APPROVE_EXPERT, REJECT_SUPPLIER, REJECT_EXPERT
+  GET_SERVISEPROVIDERS, GET_SERVISEPROVIDER, FILTER_SERVISEPROVIERS, APPROVE_SUPPLIER, APPROVE_EXPERT, REJECT_SUPPLIER, REJECT_EXPERT
 } from '../Types';
 
 const UserState = (props) => {
   const initialState = {
-    users: null,
+    customers: null,
+    customer: null,
+    filteredUsers: null,
 
     drivers: null,
     driver: null,
@@ -77,7 +79,7 @@ const UserState = (props) => {
       get_users = GET_EXEPRTS;
     }
     else if (userType === "service-providers") {
-      get_users = GET_SERVISEPROVIERS;
+      get_users = GET_SERVISEPROVIDERS;
     }
 
 
@@ -126,6 +128,9 @@ const UserState = (props) => {
     if (userType === "driver") {
       get_user = GET_DRIVER;
     }
+    else if (userType === "customer") {
+      get_user = GET_USER;
+    }
     else if (userType === "supplier") {
       get_user = GET_SUPPLIER;
     }
@@ -133,7 +138,7 @@ const UserState = (props) => {
       get_user = GET_EXEPRT;
     }
     else if (userType === "service-provider") {
-      get_user = GET_SERVISEPROVIER;
+      get_user = GET_SERVISEPROVIDER;
     }
 
     try {
@@ -142,6 +147,7 @@ const UserState = (props) => {
         type: get_user,
         payload: res.data,
       });
+      return res.data
     } catch (err) {
       dispatch({
         type: USER_ERROR,
@@ -351,8 +357,9 @@ const UserState = (props) => {
   return (
     <userContext.Provider
       value={{
-        users: state.users,
-        user: state.user,
+        customers: state.customers,
+        customer: state.customer,
+        filteredUsers: state.filteredUsers,
         current: state.current,
 
         drivers: state.drivers,
