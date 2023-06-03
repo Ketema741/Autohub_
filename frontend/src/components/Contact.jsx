@@ -2,16 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { BsPersonCircle, BsCheck2Circle } from 'react-icons/bs';
 import axios from '../context/axiosConfig'
 
-const Contacts = ({ conversation, currentUser, setCurrentChat }) => {
+const Contacts = ({ conversation, currentUser,currentChat }) => {
 
-  const [selectedChatId, setSelectedChatId] = useState(null);
   const [friend, setFriend] = useState(null);
+  
   const [currentChatId, setCurrentChatId] = useState(null);
+  const [selectedChatId, setSelectedChatId] = useState(null);
 
   useEffect(() => {
-    const friendId = setCurrentChat?.members?.find((m) => m !== currentUser._id);
-    setSelectedChatId(friendId)
-  }, [])
+    const _id = currentChat?.members?.find((m) => m !== currentUser._id);
+    setSelectedChatId(_id)
+  }, [currentChat])
   
 
   useEffect(() => {

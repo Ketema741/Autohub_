@@ -1,35 +1,17 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import { io } from 'socket.io-client';
-import { format } from 'timeago.js';
 
-import { BsPersonCircle, BsCheck2Circle } from 'react-icons/bs';
 import { MdOutlineCancel } from 'react-icons/md';
 import { RiSendPlaneFill } from 'react-icons/ri';
 
-import Button from './Button';
 import background from '../brands/bg-10.jpg';
 
 import ChatContext from '../context/chat/chatContext';
 import AuthContext from '../context/auth/authContext';
-import UserContext from '../context/user/userContext';
+
 import Contact from './Contact';
-
-
-
-const Message = ({ message, own, scroll }) => {
-  return (
-    <div ref={scroll} className={`flex  ${own ? 'flex-row-reverse space-x-reverse' : 'flex-row'} space-x-2`}>
-      <BsPersonCircle className='flex-none' />
-      <div className='flex flex-col'>
-        <div className={`flex  ${own ? 'flex-row-reverse bg-gray-200 ' : 'flex-row bg-blue-200'} space-x-2 rounded p-5`}>
-          {message.text}
-        </div>
-        <div className='text-sm text-gray-500'>{format(message.createdAt)}</div>
-      </div>
-    </div>
-  )
-
-};
+import Message from './Message'
+import Button from './Button';
 
 
 const Chat = () => {
@@ -40,18 +22,16 @@ const Chat = () => {
 
   const {
     messages,
-    getMessages,
     sendMessage,
     currentChat,
     setCurrentChat,
-    setArrivalMessage,
-    arrivalMessage,
     conversations,
     getConversations,
+    clearCurrent,
   } = chatContext;
 
   const [newMessage, setNewMessage] = useState("");
-
+  const [setArrivalMessage, arrivalMessage,] = useState("")
 
   const socket = useRef();
   const scrollRef = useRef();
@@ -65,30 +45,28 @@ const Chat = () => {
         createdAt: Date.now(),
       });
     });
-
   }, []);
 
+
   useEffect(() => {
-    arrivalMessage &&
-      currentChat?.members.includes(arrivalMessage.sender) &&
+    if (arrivalMessage && currentChat?.members.includes(arrivalMessage.senderId)) {
       setCurrentChat(arrivalMessage);
+    }
   }, [arrivalMessage, currentChat]);
 
-
-  // backend
   useEffect(() => {
     socket.current.emit("addUser", user._id);
   }, [user]);
-  
-  useEffect(() => {
-    getConversations(user._id);
-  }, [getConversations, user]);
-  
 
   useEffect(() => {
-    getMessages(currentChat?._id);
-  }, [getMessages, currentChat]);
-  
+    getConversations(user._id);
+  }, [user, getConversations]);
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -113,23 +91,29 @@ const Chat = () => {
 
   };
 
-  useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
 
   const handleChange = (event) => {
     setNewMessage(event.target.value);
   };
 
+  const handleUserClick = (room) => {
+    clearCurrent()
+    setCurrentChat(room)
+  }
   return (
     <div className="nav-item  fixed right-0 md:right-52 top-0 bg-white dark:bg-[#42464D] rounded-lg w-full md:w-3/4 h-screen">
       <div className="flex flex-row flex-auto rounded-tl-lg border-l shadow-xl bg-white h-full">
         <div className='flex flex-col w-1/5'>
           <div className='flex justify-center items-center flex-none h-24 bg-gray-100 text-black text-xl font-semibold' > Contacts </div>
           <div className='flex-auto overflow-y-auto'>
-            {conversations && conversations.map((c) => (
-              <div onClick={() => setCurrentChat(c)}>
-                <Contact conversation={c} currentUser={user} setCurrentChat={setCurrentChat} />
+            {conversations && conversations.map((room) => (
+              <div onClick={() => handleUserClick(room)}>
+                <Contact
+                  conversation={room}
+                  currentUser={user}
+                  setCurrentChat={setCurrentChat}
+                  currentChat={currentChat}
+                />
               </div>
             ))}
           </div>

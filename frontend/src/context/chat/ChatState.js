@@ -20,12 +20,14 @@ import {
   SEND_NOTIFICATION,
   SEND_NOTIFICATIONS,
   DELETE_NOTIFICATION,
+  CLEAR_CURRENT,
 
 } from '../Types';
 
 const ChatState = (props) => {
   const initialState = {
     conversations: null,
+    conversation: null,
     arrivalChat: null,
     currentChat: null,
     currentChatWithUser: null,
@@ -183,6 +185,7 @@ const ChatState = (props) => {
 
   // socke.io get users
   const setCurrentChat = (text) => {
+    getMessages(text._id)
     dispatch({ type: SET_CHAT, payload: text });
   };
 
@@ -192,6 +195,10 @@ const ChatState = (props) => {
   };
 
 
+  // set current
+  const clearCurrent = () => {
+    dispatch({ type: CLEAR_CURRENT });
+  };
 
   return (
     <chatContext.Provider
@@ -211,6 +218,7 @@ const ChatState = (props) => {
         getUsers,
         setCurrentChat,
         setArrivalMessage,
+        clearCurrent,
         getNotifications,
         sendNotification,
         deleteNotification,
