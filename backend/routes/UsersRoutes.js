@@ -2,6 +2,11 @@ const express = require("express");
 const router = express.Router();
 
 const {
+  resetPassword,
+  forgotPassword,
+} = require("../configurations/resetPassword");
+
+const {
   signUpUser,
   signInUser,
   getCustomers,
@@ -122,6 +127,11 @@ router
   .get("/supplier/:id", getSupplier)
   .get("/aficionados/:id", getCarAficionadosById)
   .get("/service-provider/:id", getServiceProvider);
+
+// User forgot and reset password
+
+router.post("/account/forgot-password", forgotPassword);
+router.post("/account/reset-password", resetPassword);
 
 // Admin only routes
 router.get("/pending/suppliers", verifyAdministrator, getPendingSuppliers);

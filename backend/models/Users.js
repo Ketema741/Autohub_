@@ -37,6 +37,10 @@ const AdminSchema = new mongoose.Schema(
     role: {
       type: String,
     },
+    resetToken: {
+      token: { type: String },
+      resetTokenExpiration: { type: Date },
+    },
   },
   { timestamps: true }
 );
@@ -85,6 +89,10 @@ const SupplierSchema = new mongoose.Schema(
     },
     role: {
       type: String,
+    },
+    resetToken: {
+      token: { type: String },
+      resetTokenExpiration: { type: Date },
     },
   },
   { timestamps: true }
@@ -141,6 +149,10 @@ const ServiceProviderSchema = new mongoose.Schema(
     role: {
       type: String,
     },
+    resetToken: {
+      token: { type: String },
+      resetTokenExpiration: { type: Date },
+    },
   },
   { timestamps: true }
 );
@@ -175,7 +187,10 @@ const DriverSchema = new mongoose.Schema(
     address: {
       type: String,
     },
-
+    resetToken: {
+      token: { type: String },
+      resetTokenExpiration: { type: Date },
+    },
     profileImage: {
       type: String,
     },
@@ -261,6 +276,10 @@ const CustomerSchema = new mongoose.Schema(
     role: {
       type: String,
     },
+    resetToken: {
+      token: { type: String },
+      resetTokenExpiration: { type: Date },
+    },
   },
   { timestamps: true }
 );
@@ -301,6 +320,10 @@ const CarAficionadosSchema = new mongoose.Schema(
     role: {
       type: String,
       required: true,
+    },
+    resetToken: {
+      token: { type: String },
+      resetTokenExpiration: { type: Date },
     },
   },
   { timestamps: true }

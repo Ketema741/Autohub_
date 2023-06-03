@@ -3,13 +3,14 @@ const bcrypt = require("bcryptjs");
 const models = require("../models/Users");
 
 const getUserByEmail = async (email) => {
-  const [admin, customer, supplier, driver, serviceProvider] =
+  const [admin, customer, supplier, driver, caraficionados, serviceProvider] =
     await Promise.all([
       models.Customer.findOne({ email }),
       models.Admin.findOne({ email }),
       models.ServiceProvider.findOne({ email }),
       models.Driver.findOne({ email }),
       models.Supplier.findOne({ email }),
+      models.CarAficionados.findOne({ email }),
     ]);
 
   if (admin) {
@@ -25,6 +26,9 @@ const getUserByEmail = async (email) => {
   }
   if (driver) {
     return driver;
+  }
+  if (caraficionados) {
+    return caraficionados;
   }
   if (serviceProvider) {
     return serviceProvider;
@@ -133,7 +137,7 @@ const signUpUser = async (req, res) => {
             email: supplier.email,
             firstName: supplier.firstName,
             lastName: supplier.lastName,
-            role:supplier.role,
+            role: supplier.role,
             token: generateToken(supplier._id, supplier.role),
           });
         } else {
@@ -219,7 +223,7 @@ const signUpUser = async (req, res) => {
           firstName: carAficionados.firstName,
           lastName: carAficionados.lastName,
           token: generateToken(carAficionados._id, carAficionados.role),
-          role:carAficionados.role,
+          role: carAficionados.role,
         });
         break;
       default:
@@ -245,7 +249,7 @@ const signInUser = async (req, res) => {
         lastName: user.lastName,
         address: user.address,
         email,
-        role:user.role,
+        role: user.role,
         token: generateToken(user._id, user.role),
       });
     } else {
@@ -699,6 +703,8 @@ module.exports = {
   getCarAficionados,
   getUser,
 
+  // get User By Email
+  getUserByEmail,
   // get user by IDs
   getDriver,
   getCustomer,

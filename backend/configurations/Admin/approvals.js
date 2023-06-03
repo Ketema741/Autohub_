@@ -29,7 +29,8 @@ const approveSupplier = async (req, res) => {
     }
 
     const supplier = await Supplier.create({
-      name: temporarySupplier.name,
+      firstName: temporarySupplier.firstName,
+      lastName: temporarySupplier.lastName,
       email: temporarySupplier.email,
       password: temporarySupplier.password,
       phone: temporarySupplier.phone,
@@ -42,6 +43,7 @@ const approveSupplier = async (req, res) => {
       res.status(200).json({ message: "Supplier registration approved!" });
     }
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error: error.message });
   }
 };
@@ -66,4 +68,3 @@ module.exports = {
   approveSupplier,
   rejectSupplier,
 };
- 
