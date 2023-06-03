@@ -28,6 +28,8 @@ export const REMOVE_ALERT = 'REMOVE_ALERT';
 
 // alert
 export const ADD_TOCART = 'ADD_TOCART';
+export const GET_CARTITEMS = 'GET_CARTITEMS';
+export const UPDATE_CARTITEM = 'UPDATE_CARTiTEM';
 export const REMOVE_FROMCART = 'REMOVE_FROMCART';
 
 // authentication

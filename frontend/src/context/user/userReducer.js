@@ -30,6 +30,7 @@ import {
   REJECT_EXPERT,
   REJECT_SUPPLIER,
   GET_USER,
+  GET_CARTITEMS,
 } from '../Types';
 
 const userReducer = (state, action) => {
@@ -141,6 +142,11 @@ const userReducer = (state, action) => {
       return {
         ...state,
         carts: [...action.payload],
+      };
+    case GET_CARTITEMS:
+      return {
+        ...state,
+        carts: action.payload.items,
       };
     case UPDATE_CART:
       return {

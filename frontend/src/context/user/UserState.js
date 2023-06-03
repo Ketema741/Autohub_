@@ -1,8 +1,8 @@
 import React, { useReducer, useEffect, useContext } from 'react';
 import axios from 'axios';
-import userContext from './userContext';
 import AuthContext from '../auth/authContext';
 import userReducer from './userReducer';
+import userContext from './userContext';
 
 
 import {
@@ -27,14 +27,19 @@ import {
 
   GET_SUPPLIERS, GET_PENDINGSUPPLIERS, GET_SUPPLIER, FILTER_SUPPLIERS,
 
-  GET_SERVISEPROVIDERS, GET_SERVISEPROVIDER, FILTER_SERVISEPROVIERS, APPROVE_SUPPLIER, APPROVE_EXPERT, REJECT_SUPPLIER, REJECT_EXPERT
+  GET_SERVISEPROVIDERS, GET_SERVISEPROVIDER, FILTER_SERVISEPROVIERS, APPROVE_SUPPLIER, APPROVE_EXPERT, REJECT_SUPPLIER, REJECT_EXPERT, GET_CARTITEMS
 } from '../Types';
 
 const UserState = (props) => {
+
+
+
   const initialState = {
     customers: null,
     customer: null,
     filteredUsers: null,
+
+    carts:null,
 
     drivers: null,
     driver: null,
@@ -64,6 +69,7 @@ const UserState = (props) => {
 
   const authContext = useContext(AuthContext);
   const authenticateduser = authContext.user;
+  const { isUserAuthenticated } = authContext;
 
 
   // Get users
@@ -267,22 +273,36 @@ const UserState = (props) => {
   };
 
   // add To cart
-  const addToCart = async (user, item) => {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
+  const getCartItems = async () => {
+    try {
+      const res = await axios.get(`/cart`);
+      dispatch({
+        type: GET_CARTITEMS,
+        payload: res.data,
+      });
+    } catch (error) {
+      dispatch({ type: USER_ERROR });
+    }
+  };
+  
+  // add To cart
+  const addToCart = async (item) => {
+    const data = {
+      productId: item._id,
+      quantity: 1,
+    }
+
+    const cartData = {
+      productId: item,
+      quantity: 1,
+      price: item.price,
+    }
 
     try {
-      const res = await axios.put(
-        `/users/cart/${user._id}`,
-        JSON.stringify(item),
-        config,
-      );
+      const res = await axios.post(`/cart/add`, data);
       dispatch({
         type: UPDATE_CART,
-        payload: item,
+        payload: cartData,
       });
     } catch (error) {
       dispatch({ type: USER_ERROR });
@@ -313,11 +333,8 @@ const UserState = (props) => {
 
   // load user cart on first run or refresh
   useEffect(() => {
-    if (authenticateduser && authenticateduser.carts) {
-      dispatch({
-        type: ADD_CART,
-        payload: authenticateduser.carts,
-      });
+    if (isUserAuthenticated && authenticateduser) {
+      getCartItems()
     }
   }, [authenticateduser]);
 
@@ -362,6 +379,8 @@ const UserState = (props) => {
         filteredUsers: state.filteredUsers,
         current: state.current,
 
+        carts: state.carts,
+        
         drivers: state.drivers,
         driver: state.driver,
         filteredDrivers: state.filteredDrivers,
@@ -384,8 +403,11 @@ const UserState = (props) => {
         getPendingUsers,
         getUser,
         addUser,
+
         addToCart,
+        getCartItems,
         removeFromCart,
+
         clearUsers,
         deleteUser,
         setCurrent,
