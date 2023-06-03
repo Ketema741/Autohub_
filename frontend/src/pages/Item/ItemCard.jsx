@@ -23,7 +23,7 @@ const ItemCard = ({ item, currentColor }) => {
     navigate('/item-detail')
   }
   return (
-    <div key={item.id} className="rounded-xl bg-white shadow-md  focus:outline-none mx-5 w-72 xl:mb-0 mb-8 transition duration-500 hover:scale-105">
+    <div key={item._id} className="rounded-xl bg-white shadow-md  focus:outline-none mx-5 w-72 xl:mb-0 mb-8 transition duration-500 hover:scale-105">
         <img onClick={handleClick} src={item.itemImages.length >= 1 ? item.itemImages[0].url : '/public/img/gal-1.jpeg'} alt={item.title} className="px-4 pt-4 focus:outline-none w-full h-48" />
       <button onClick={handleClick} >
       </button>
