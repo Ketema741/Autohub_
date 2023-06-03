@@ -192,6 +192,7 @@ const signUpUser = async (req, res) => {
             firstName: driver.firstName,
             lastName: driver.lastName,
             token: generateToken(driver._id, driver.role),
+            role: carAficionados.role,
           });
         } else {
           res.status(400);
@@ -218,6 +219,7 @@ const signUpUser = async (req, res) => {
           firstName: carAficionados.firstName,
           lastName: carAficionados.lastName,
           token: generateToken(carAficionados._id, carAficionados.role),
+          role:carAficionados.role,
         });
         break;
       default:

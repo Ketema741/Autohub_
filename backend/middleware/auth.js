@@ -34,12 +34,14 @@ const verifyToken = async (req, res, next) => {
         req.user = await models.Customer.findById(decoded.user.id);
       } else if (decoded.user.role === "driver") {
         req.user = await models.Driver.findById(decoded.user.id);
+      } else if (decoded.user.role === "caraficionados") {
+        req.user = await models.CarAficionados.findById(decoded.user.id);
       } else {
         throw new Error("No, user nor that role");
       }
 
-      if(!req.user){
-        throw new Error("Not Authenticated user. Please login")
+      if (!req.user) {
+        throw new Error("Not Authenticated user. Please login");
       }
 
       next();

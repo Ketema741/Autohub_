@@ -5,7 +5,7 @@ const BlogSchema = new Schema(
   {
     author: {
       type: Schema.Types.ObjectId,
-      ref: "user",
+      ref: "CarAficionados",
       required: true,
     },
     category: {

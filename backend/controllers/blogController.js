@@ -1,5 +1,6 @@
 require("dotenv").config();
 const model = require("../models/Blog");
+const { CarAficionados } = require("../models/Users");
 const {
   purgeFromCloudinary,
   uploadToCloudinary,
@@ -40,7 +41,16 @@ const addBlog = async (req, res) => {
       res.status(400);
       throw new Error("Please, add all the required fields");
     }
+    const user = await CarAficionados.findById(req.user._id);
 
+    if (!user) {
+      res.status(404);
+      throw new Error("Author or blog not found ");
+    }
+    if (user.role !== "caraficionados") {
+      res.status(403);
+      throw new Error("You've to login as CarAficionados to add blog post");
+    }
     const imageFile = req.file;
     const images_data = await uploadToCloudinary(imageFile?.path, "images");
 
