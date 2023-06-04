@@ -254,7 +254,7 @@ const signInUser = async (req, res) => {
       });
     } else {
       res.status(400);
-      throw new Error("Couldn't login user with these credentials");
+      throw new Error("Couldn't login user with those credentials");
     }
   } catch (error) {
     res.status(500).json({ error: error.message });

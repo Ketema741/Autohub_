@@ -5,6 +5,7 @@ const CategorySchema = new Schema({
   name: {
     type: String,
     required: true,
+    unique:true,
   },
 });
 
@@ -100,12 +101,9 @@ const carSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Car", carSchema);
-
-const models = {
+module.exports = {
   Category: mongoose.model("Category", CategorySchema),
   Item: mongoose.model("Item", ItemSchema),
   Car: mongoose.model("Car", carSchema),
 };
 
-module.exports = models;

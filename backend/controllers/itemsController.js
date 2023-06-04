@@ -1,4 +1,4 @@
-const models = require("../models/Item");
+const { Item, Category, Car } = require("../models/Item");
 const { Supplier } = require("../models/Users");
 
 const { uploadToCloudinary } = require("../configurations/cloudinary");
@@ -7,7 +7,7 @@ const addCategory = async (req, res) => {
   try {
     const { name } = req.body;
 
-    const category = await models.Category.create({ name });
+    const category = await Category.create({ name });
     if (category) {
       res.status(201).json({
         data: category,
@@ -21,6 +21,15 @@ const addCategory = async (req, res) => {
   }
 };
 
+const getCategories = async (req, res) => {
+  try {
+    const categories = await Category.find();
+    res.status(200).json(categories);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch categories" });
+  }
+};
+
 const addItem = async (req, res) => {
   try {
     const { categoryId, name, price, description } = req.body;
@@ -30,7 +39,7 @@ const addItem = async (req, res) => {
       uploadToCloudinary(img.path, "images")
     );
     const images_data = await Promise.all(imgs);
-    const category = await models.Category.findById(categoryId);
+    const category = await Category.findById(categoryId);
     if (!category) {
       res.status(404);
       throw new Error(
@@ -38,7 +47,7 @@ const addItem = async (req, res) => {
       );
     }
 
-    const item = await models.Item.create({
+    const item = await Item.create({
       supplier: req.user._id,
       category,
       name,
@@ -47,7 +56,7 @@ const addItem = async (req, res) => {
       itemImages: images_data,
     });
     if (item) {
-      await models.Item.findByIdAndUpdate(
+      await Item.findByIdAndUpdate(
         { _id: item._id },
         {
           $addToSet: { itemImages: images_data },
@@ -69,7 +78,7 @@ const addItem = async (req, res) => {
 
 const getItems = async (req, res) => {
   try {
-    const item = await models.Item.find({});
+    const item = await Item.find({});
     if (item) {
       res.status(200).json({
         data: item,
@@ -85,7 +94,7 @@ const getItems = async (req, res) => {
 const getItem = async (req, res) => {
   try {
     const { id } = req.params;
-    const item = await models.Item.findById(id);
+    const item = await Item.findById(id);
     if (item) {
       const relatedItems = await getRelatedProducts(item._id);
       res.status(200).json({
@@ -103,7 +112,7 @@ const getItem = async (req, res) => {
 const updateItem = async (req, res) => {
   try {
     const { id } = req.params;
-    const item = await models.Item.findById(id);
+    const item = await Item.findById(id);
     if (!item) {
       res.status(400);
       throw new Error("Item couldn't be found");
@@ -120,7 +129,7 @@ const updateItem = async (req, res) => {
       res.status(403);
       throw new Error("Unauthorized!, Only item owner can update ");
     }
-    const updatedItem = await models.Item.findByIdAndUpdate(id, req.body, {
+    const updatedItem = await Item.findByIdAndUpdate(id, req.body, {
       new: true,
     });
     if (updatedItem) {
@@ -139,7 +148,7 @@ const updateItem = async (req, res) => {
 const deleteItem = async (req, res) => {
   try {
     const { id } = req.params;
-    const item = await models.Item.findByIdAndDelete(id);
+    const item = await Item.findByIdAndDelete(id);
     if (item) {
       res.status(200).json({
         message: "Item deleted successfully",
@@ -156,7 +165,7 @@ const deleteItem = async (req, res) => {
 const assignTagsToProduct = async (req, res) => {
   const { itemId, tags } = req.body;
   try {
-    const product = await models.Item.findById(itemId);
+    const product = await Item.findById(itemId);
     if (!product) {
       return res.status(404).json({ error: "Item not found" });
     }
@@ -176,10 +185,10 @@ const assignTagsToProduct = async (req, res) => {
 //  querying related products
 const getRelatedProducts = async (itemId) => {
   try {
-    const currentProduct = await models.Item.findById(itemId);
+    const currentProduct = await Item.findById(itemId);
     const { category, tags } = currentProduct;
 
-    const relatedProducts = await models.Item.aggregate([
+    const relatedProducts = await Item.aggregate([
       {
         $match: {
           $or: [{ category }, { tags: { $in: tags } }],
@@ -216,7 +225,7 @@ const createCar = async (req, res) => {
       uploadToCloudinary(img.path, "images")
     );
     const images_data = await Promise.all(action);
-    const car = await models.Car.create({
+    const car = await Car.create({
       supplier: req.user._id,
       make,
       model,
@@ -229,7 +238,7 @@ const createCar = async (req, res) => {
       carImages: images_data,
     });
     if (car) {
-      const _car = await models.Car.findByIdAndUpdate(
+      const _car = await Car.findByIdAndUpdate(
         { _id: car._id },
         {
           $addToSet: { carImages: images_data },
@@ -248,7 +257,7 @@ const createCar = async (req, res) => {
 
 const getCar = async (req, res) => {
   try {
-    const car = await models.Car.findById(req.params.id);
+    const car = await Car.findById(req.params.id);
     if (!car) {
       return res.status(404).json({ error: "That car couldn't be found" });
     }
@@ -260,7 +269,7 @@ const getCar = async (req, res) => {
 
 const updateCar = async (req, res) => {
   try {
-    const car = await models.Car.findByIdAndUpdate(req.params.id, req.body, {
+    const car = await Car.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });
     if (!car) {
@@ -274,7 +283,7 @@ const updateCar = async (req, res) => {
 
 const deleteCar = async (req, res) => {
   try {
-    const car = await models.Car.findByIdAndDelete(req.params.id);
+    const car = await Car.findByIdAndDelete(req.params.id);
     if (!car) {
       return res.status(404).json({ error: "That car couldn't be found" });
     }
@@ -285,9 +294,9 @@ const deleteCar = async (req, res) => {
 };
 
 const getAllCars = async (req, res) => {
-  console.log(models.Car);
+  console.log(Car);
   try {
-    const cars = await models.Car.find({});
+    const cars = await Car.find({});
     if (cars) {
       res.status(200).json({
         data: cars,
@@ -302,6 +311,7 @@ const getAllCars = async (req, res) => {
 
 module.exports = {
   addCategory,
+  getCategories,
   addItem,
   getItems,
   getItem,
