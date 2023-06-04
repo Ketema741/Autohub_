@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MdOutlineCancel } from 'react-icons/md';
 import { useStateContext } from '../../../context/ContextProvider';
 import { HtmlEditor, Inject, Link, QuickToolbar, RichTextEditorComponent, Table, Toolbar } from '@syncfusion/ej2-react-richtexteditor';
@@ -7,42 +7,34 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
 import { customToolbarSettings } from './Toolbar';
-import ItemContext from '../../../context/item/itemContext';
 
 
-const CarForm = ({ handleData, itemData }) => {
-  const itemContext = useContext(ItemContext);
-  const { addItem } = itemContext;
+const CarForm = ({ handleData, itemData, categories, getCategories, createCategory }) => {
+
+
+  const [newCategory, setNewCategory] = useState("");
+
   const [content, setContent] = useState('');
 
   const { currentColor, setEditItem } = useStateContext();
-  const [formData, setFormData] = useState({
-    title: '',
-    category: '',
-    brand: '',
-    materrial: '',
-    quantity: '',
-    price: '',
-    description: '',
-    date: '',
-  });
   const initialValues = {
-    title: '',
+    name: '',
     category: '',
     brand: '',
-    quantity: '',
-    materrial: '',
-    price: '',
+    quantity: null,
+    price: null,
     description: '',
-    manufacturingDate: '',
   };
+
+  const [formData, setFormData] = useState(initialValues);
+
   const validationSchema = Yup.object().shape({
-    title: Yup.string().required('Title is required'),
+    name: Yup.string().required('name is required'),
     category: Yup.string().required('Category is required'),
     brand: Yup.string().required('Brand is required'),
     price: Yup.string().required('Price is required'),
-    materrial: Yup.string().required('Materrial is required'),
-    manufacturingDate: Yup.string().required('manufacturingDate is required'),
+    // materrial: Yup.string().required('Materrial is required'),
+    // manufacturingDate: Yup.string().required('manufacturingDate is required'),
     quantity: Yup.string()
       .required('quantity is required')
       .min(1, 'quantity must be at least 1 characters long'),
@@ -51,8 +43,8 @@ const CarForm = ({ handleData, itemData }) => {
   const validateForm = (values) => {
     const errors = {};
 
-    if (!values.title) {
-      errors.title = ' Title is required';
+    if (!values.name) {
+      errors.name = ' name is required';
     }
     if (!values.category) {
       errors.category = ' Category is required';
@@ -60,9 +52,9 @@ const CarForm = ({ handleData, itemData }) => {
     if (!values.brand) {
       errors.brand = ' Brand is required';
     }
-    if (!values.manufacturingDate) {
-      errors.manufacturingDate = 'Manufacturing Date is required';
-    }
+    // if (!values.manufacturingDate) {
+    //   errors.manufacturingDate = 'Manufacturing Date is required';
+    // }
 
     if (!values.quantity) {
       errors.quantity = 'quantity is required';
@@ -70,19 +62,18 @@ const CarForm = ({ handleData, itemData }) => {
       errors.quantity = 'quantity must be at least 5 characters long';
     }
 
-    if (!values.materrial) {
-      errors.materrial = 'materrial is required';
-    }
+    // if (!values.materrial) {
+    //   errors.materrial = 'materrial is required';
+    // }
 
     if (!values.price) {
       errors.price = 'price is required';
     } else if (values.price.length < 10) {
       errors.price = 'price must be at least 10 characters long';
     }
-
-    
     return errors;
   };
+
 
   useEffect(() => {
     if (itemData) {
@@ -90,19 +81,25 @@ const CarForm = ({ handleData, itemData }) => {
     }
   }, [])
 
+  useEffect(() => {
+    getCategories()
+  }, [])
 
-  const onChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+
+
+  const handleCreateCategory = () => {
+    if (newCategory.trim() !== "") {
+      // createCategory()
+      setNewCategory("");
+    } else {
+      alert("Please enter a category name.");
+    }
   };
 
   const handleSubmit = (values) => {
-    console.log(values);
+    values.description = content
     handleData(values)
-    // setUploadType('')
-    // addItem(formData, images)
+
 
   };
 
@@ -111,6 +108,22 @@ const CarForm = ({ handleData, itemData }) => {
       <div className="mt-24 float-right h-screen dark:text-gray-200 bg-white dark:bg-[#484B52] max-w-screen w-full sm:w-full md:w-full lg:w-full xl:w-1/2 2xl:w-1/3 overflow-y-auto rounded-lg" style={{ width: "70%", height: "90%" }}>
         <div className="flex justify-between items-center p-4 m-4">
           <p className="font-semibold text-lg" style={{ color: currentColor }}>Add Car Accessory Property</p>
+          <div>
+            <input
+              type="text"
+              placeholder="Create New Category"
+              className="rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+              value={newCategory}
+              onChange={(e) => setNewCategory(e.target.value)}
+            />
+            <button
+              type="submit"
+              onClick={handleCreateCategory}
+              className="rounded-md py-2 px-4 bg-[#5F63FF] text-white font-medium text-base ml-2"
+            >
+              Create
+            </button>
+          </div>
           <button
             type="button"
             onClick={() => setEditItem(false)}
@@ -133,17 +146,17 @@ const CarForm = ({ handleData, itemData }) => {
                 <div className="-mx-3 flex flex-wrap">
                   <div className="w-full px-3 sm:w-1/2">
                     <div className="mb-5">
-                      <label htmlFor="title" className="mb-3 block text-base font-medium text-[#07074D]">
-                        Item title
+                      <label htmlFor="name" className="mb-3 block text-base font-medium text-[#07074D]">
+                        Item name
                       </label>
                       <Field
                         type="text"
-                        name="title"
-                        id="Title"
-                        placeholder="Item Title"
+                        name="name"
+                        id="name"
+                        placeholder="Item name"
                         className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                       />
-                      <ErrorMessage name="title" component="div" className="text-red-500" />
+                      <ErrorMessage name="name" component="div" className="text-red-500" />
                     </div>
 
                   </div>
@@ -153,15 +166,26 @@ const CarForm = ({ handleData, itemData }) => {
                         Item Category
                       </label>
                       <Field
-                        type="text"
+                        as="select"
                         name="category"
-                        id="category"
-                        placeholder="Category"
+                        id="Category"
                         className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                      />
+                      >
+
+                        <option value="">Select Category</option>
+                        {categories ? (
+                          categories.map((category) => (
+                            <option key={category._id} value={category.name}>
+                              {category.name}
+                            </option>
+                          ))
+                        ) : (
+                          <option value="">loading ..</option>
+                        )}
+
+                      </Field>
                       <ErrorMessage name="category" component="div" className="text-red-500" />
                     </div>
-
                   </div>
                 </div>
 
@@ -180,9 +204,8 @@ const CarForm = ({ handleData, itemData }) => {
                       />
                       <ErrorMessage name="brand" component="div" className="text-red-500" />
                     </div>
-
                   </div>
-                  <div className="w-full px-3 sm:w-1/2">
+                  {/* <div className="w-full px-3 sm:w-1/2">
                     <div className="mb-5">
                       <label htmlFor="materrial" className="mb-3 block text-base font-medium text-[#07074D]">
                         Materrial
@@ -196,8 +219,7 @@ const CarForm = ({ handleData, itemData }) => {
                       />
                       <ErrorMessage name="materrial" component="div" className="text-red-500" />
                     </div>
-
-                  </div>
+                  </div> */}
                 </div>
                 <div className="mb-5">
                   <label htmlFor="quantity" className="mb-3 block text-base font-medium text-[#07074D]">
@@ -231,7 +253,7 @@ const CarForm = ({ handleData, itemData }) => {
                     </div>
                   </div>
 
-                  <div className="w-full px-3 sm:w-1/2">
+                  {/* <div className="w-full px-3 sm:w-1/2">
                     <div className="mb-5">
                       <label htmlFor="manufacturingDate" className="mb-3 block text-base font-medium text-[#07074D]">
                         Manufacturing Date
@@ -244,7 +266,7 @@ const CarForm = ({ handleData, itemData }) => {
                       />
                       <ErrorMessage name="manufacturingDate" component="div" className="text-red-500" />
                     </div>
-                  </div>
+                  </div> */}
 
                 </div>
 
