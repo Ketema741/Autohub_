@@ -53,6 +53,13 @@ const UserRole = () => {
                 url: '/driver/resume',
                 desc: 'Upload Your Resume',
             };
+        } else if (user.role === 'cutomer') {
+            userRole = {
+                icon: <AiOutlineCloudUpload />,
+                title: 'Edit Profile',
+                url: '/profile',
+                desc: 'Upload Your Resume',
+            };
         }
 
         if (userRole) {

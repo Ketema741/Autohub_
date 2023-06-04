@@ -49,9 +49,12 @@ const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
 
 const Navbar = () => {
   const authContext = useContext(AuthContext);
+  const userContext = useContext(UserContext);
   const chatContext = useContext(ChatContext);
   const { getNotifications, notifications } = chatContext;
   const { isUserAuthenticated, user, logout } = authContext;
+
+  const { carts } = userContext;
 
 
   const {
@@ -121,7 +124,7 @@ const Navbar = () => {
                 style={{ background: "#FF5C8E" }}
                 className="absolute inline-flex items-center justify-center rounded-full h-4 w-4 right-2 top-2 text-white text-center"
               >
-                0
+                {carts? carts.length: 0 }
               </span>
             </div>
 
@@ -133,12 +136,12 @@ const Navbar = () => {
                 color={currentColor}
                 icon={<BsChatLeft className="mx-auto w-6 h-6 text-gray-600 dark:text-gray-300" />}
               />
-              <span
+              {/* <span
                 style={{ background: "#FF5C8E" }}
                 className="absolute inline-flex items-center justify-center rounded-full h-4 w-4 right-2 top-2 text-white text-center"
               >
                 0
-              </span>
+              </span> */}
             </div>
 
             <div className=" relative flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg">

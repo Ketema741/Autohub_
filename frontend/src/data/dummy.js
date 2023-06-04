@@ -392,13 +392,6 @@ export const LinePrimaryYAxis = {
 };
 
 
-const currencyFormatter = new Intl.NumberFormat(undefined, { style: 'currency', currency: 'ETB' });
-
-const formatCurrency = (value) => {
-  return currencyFormatter.format(value);
-};
-
-
 
 export const employeesGrid = [
   {
@@ -539,32 +532,7 @@ export const miniLinks = [
   }
 ];
 
-export const cartData = [
-  {
-    id: 1,
-    quantity: 2,
-    image: product5,
-    name: 'butterscotch ice-cream',
-    category: 'Milk product',
-    price: '$250',
-  },
-  {
-    id: 2,
-    quantity: 1,
-    image: product6,
-    name: 'Supreme fresh tomato',
-    category: 'Vegetable Item',
-    price: '$450',
-  },
-  {
-    id: 3,
-    quantity: 3,
-    image: product7,
-    name: 'Red color candy',
-    category: 'Food Item',
-    price: '$190',
-  },
-];
+
 
 
 export const earningData = [

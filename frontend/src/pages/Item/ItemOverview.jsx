@@ -4,9 +4,16 @@ import product2 from "../../data/product10.jpg";
 import product3 from "../../data/product11.jpg";
 import { useStateContext } from "../../context/ContextProvider";
 import ItemContext from "../../context/item/itemContext";
+import UserContext from "../../context/user/userContext";
+import AuthContext from "../../context/auth/authContext";
 
 const ItemOverview = () => {
-  const itemContext = useContext(ItemContext)
+  const itemContext = useContext(ItemContext);
+  const userContext = useContext(UserContext);
+  const authContext = useContext(AuthContext);
+
+  const { isUserAuthenticated, user } = authContext;
+  const { addToCart, carts } = userContext;
   const { item } = itemContext;
 
   const { currentColor } = useStateContext();
@@ -22,6 +29,24 @@ const ItemOverview = () => {
     setCurrentImage(currentImage === images.length - 1 ? 0 : currentImage + 1);
   };
 
+  const handleAddToCart = () => {
+    if (isUserAuthenticated) {
+      if (user.role === "customer") {
+        const itemExistsInCart = carts.some((cartItem) => cartItem.productId._id === item._id);
+        if (itemExistsInCart) {
+          alert("Item already exists in the cart.");
+        } else {
+          addToCart(item);
+        }
+      } else {
+        alert("Please log in as a customer to add items to your cart.");
+      }
+    } else {
+      alert("Please log in to add items to your cart.");
+    }
+  };
+  
+  
   return (
     <div className="flex flex-wrap items-center justify-center lg:justify-between px-6 py-12">
       {item ? (
@@ -109,6 +134,7 @@ const ItemOverview = () => {
                 style={{ backgroundColor: currentColor }}
                 type="button"
                 className="h-14 px-6 py-2 font-semibold rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white"
+                onClick={handleAddToCart}
               >
                 Add to Cart
               </button>

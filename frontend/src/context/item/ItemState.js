@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useContext, useEffect, useReducer } from 'react';
 import axios from 'axios';
 import itemContext from './itemContext';
 import itemReducer from './itemReducer';
@@ -19,12 +19,14 @@ import {
 } from '../Types';
 
 const Itemstate = (props) => {
+
   const initialState = {
     items: null,
     publicItems: null,
     item: null,
     current: null,
     filtered: null,
+    
   };
 
   const [state, dispatch] = useReducer(itemReducer, initialState);
