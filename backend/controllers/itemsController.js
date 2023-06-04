@@ -218,9 +218,24 @@ const createCar = async (req, res) => {
       engine,
       fuelType,
       isAvailable,
+      seatingCapacity,
     } = req.body;
-    const imageFiles = req.files;
 
+    const imageFiles = req.files;
+    console.log(req.body);
+    if (
+      !make ||
+      !model ||
+      !year ||
+      !price ||
+      !description ||
+      !engine ||
+      !fuelType ||
+      !seatingCapacity
+    ) {
+      res.status(400);
+      throw new Error("Please add all the required fields");
+    }
     const action = imageFiles.map((img) =>
       uploadToCloudinary(img.path, "images")
     );
@@ -232,6 +247,7 @@ const createCar = async (req, res) => {
       price,
       year,
       description,
+      seatingCapacity,
       engine,
       fuelType,
       isAvailable,
@@ -294,7 +310,6 @@ const deleteCar = async (req, res) => {
 };
 
 const getAllCars = async (req, res) => {
-  console.log(Car);
   try {
     const cars = await Car.find({});
     if (cars) {

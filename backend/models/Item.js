@@ -5,7 +5,7 @@ const CategorySchema = new Schema({
   name: {
     type: String,
     required: true,
-    unique:true,
+    unique: true,
   },
 });
 
@@ -38,7 +38,10 @@ const ItemSchema = new Schema(
       type: Number,
       default: 1,
     },
-
+    isAvailable: {
+      type: Boolean,
+      default: true,
+    },
     tags: {
       type: [String],
       default: [],
@@ -62,14 +65,13 @@ const carSchema = new mongoose.Schema({
     required: true,
   },
   year: {
-    type: Number,
+    type: Date,
     required: true,
   },
   price: {
     type: Number,
     required: true,
   },
-
   engine: {
     type: String,
     required: true,
@@ -90,10 +92,8 @@ const carSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
-
   color: {
     type: String,
-    required: true,
   },
   carImages: {
     type: [Object],
@@ -106,4 +106,3 @@ module.exports = {
   Item: mongoose.model("Item", ItemSchema),
   Car: mongoose.model("Car", carSchema),
 };
-
