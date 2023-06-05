@@ -11,6 +11,8 @@ import {
   CLEAR_ITEMS,
   CLEAR_FILTER,
   ITEM_ERROR,
+  CREATE_CATEGORY,
+  GET_CATEGORIES,
 } from '../Types';
 
 const itemReducer = (state, action) => {
@@ -34,6 +36,16 @@ const itemReducer = (state, action) => {
       return {
         ...state,
         items: [action.payload, ...state.items],
+      };
+    case GET_CATEGORIES:
+      return {
+        ...state,
+        categories: action.payload,
+      };
+    case CREATE_CATEGORY:
+      return {
+        ...state,
+        categories: [action.payload, ...state.categories],
       };
     case UPDATE_ITEM:
       return {

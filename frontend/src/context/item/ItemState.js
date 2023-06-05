@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useReducer } from 'react';
-import axios from 'axios';
+import axios from '../axiosConfig';
 import itemContext from './itemContext';
 import itemReducer from './itemReducer';
 
@@ -16,6 +16,8 @@ import {
   CLEAR_ITEMS,
   CLEAR_FILTER,
   ITEM_ERROR,
+  CREATE_CATEGORY,
+  GET_CATEGORIES,
 } from '../Types';
 
 const Itemstate = (props) => {
@@ -26,6 +28,7 @@ const Itemstate = (props) => {
     item: null,
     current: null,
     filtered: null,
+    categories:null
     
   };
 
@@ -80,19 +83,50 @@ const Itemstate = (props) => {
     }
   };
 
-  // add item
-  const addItem = async (item, images) => {
-    item.itemImages = images;
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
+  const getCategories = async () =>{
     try {
-      const res = await axios.post('api/items', item, config);
+      const res = await axios.get("/items/category/all");
+      console.log(res.data)
+      dispatch({
+        type: GET_CATEGORIES,
+        payload: res.data,
+      });
+    } catch (err) {
+      console.log(err)
+      dispatch({
+        type: ITEM_ERROR,
+        payload: err.response,
+        
+      });
+    }
+  }
 
-      dispatch({ type: ADD_ITEM, payload: res.data });
+  // create category
+  const createCategory = async (_id) => {
+    try {
+      const res = await axios.post("/items/create-category");
+      console.log(res.data)
+      dispatch({
+        type: CREATE_CATEGORY,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: ITEM_ERROR,
+        payload: err.response.message,
+      });
+    }
+  };
+
+  // add item
+  const addItem = async (item) => {
+    
+    try {
+      const res = await axios.post('/items/add-item', item);
+      console.log(res.response)
+      // dispatch({ type: ADD_ITEM, payload: res.data });
     } catch (error) {
+      console.log(error)
       dispatch({ type: ITEM_ERROR });
     }
   };
@@ -107,6 +141,7 @@ const Itemstate = (props) => {
         'Content-Type': 'application/json',
       },
     };
+
     try {
       const res = await axios.post(`api/items/image`, id_obj, config);
     } catch (error) {
@@ -176,6 +211,7 @@ const Itemstate = (props) => {
       value={{
         items: state.items,
         publicItems: state.publicItems,
+        categories: state.categories,
         item: state.item,
         current: state.current,
         filtered: state.filtered,
@@ -183,6 +219,8 @@ const Itemstate = (props) => {
         getPublicItems,
         getItem,
         addItem,
+        getCategories,
+        createCategory,
         clearItems,
         deleteItem,
         removeImage,

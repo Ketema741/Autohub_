@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MdOutlineCancel } from 'react-icons/md';
 import { useStateContext } from '../../../context/ContextProvider';
 import { HtmlEditor, Inject, Link, QuickToolbar, RichTextEditorComponent, Table, Toolbar } from '@syncfusion/ej2-react-richtexteditor';
@@ -7,105 +7,82 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
 import { customToolbarSettings } from './Toolbar';
-import ItemContext from '../../../context/item/itemContext';
 
 
-const CarForm = ({ handleData, itemData }) => {
-    const itemContext = useContext(ItemContext);
-    const { addItem } = itemContext;
+const CarForm = ({ handleData, itemData, categories, getCategories, createCategory }) => {
+
+    const [newCategory, setNewCategory] = useState("");
     const [content, setContent] = useState('');
 
     const { currentColor, setEditItem } = useStateContext();
-    const [formData, setFormData] = useState({
-        title: '',
-        category: '',
-        brand: '',
-        model: '',
-        quantity: '',
-        price: '',
-        description: '',
-        date: '',
-    });
+
     const initialValues = {
-        title: '',
-        category: '',
-        brand: '',
+        make: '',
         quantity: '',
         model: '',
-        price: '',
+        price: null,
         description: '',
-        manufacturingDate: '',
+        year: null,
+        engine: null,
+        seatingCapacity: null,
+        fuelType: null,
+        carImages: null,
+        color: null,
+        isAvailable: null,
     };
+
+    const [formData, setFormData] = useState(initialValues);
+
     const validationSchema = Yup.object().shape({
-        title: Yup.string().required('Title is required'),
-        category: Yup.string().required('Category is required'),
-        brand: Yup.string().required('Brand is required'),
+        make: Yup.string().required('make is required'),
         quantity: Yup.string()
-            .required('quantity is required')
-            .min(1, 'quantity must be at least 1 characters long'),
-        model: Yup.string().required('model is required'),
+            .required('Quantity is required')
+            .min(1, 'Quantity must be at least 1 character long'),
+        model: Yup.string().required('Model is required'),
         price: Yup.string().required('Price is required'),
-        manufacturingDate: Yup.string().required('manufacturingDate is required'),
+        year: Yup.string().required('Manufacturing Date is required'),
+        engine: Yup.string().required('Engine is required'),
+        isAvailable: Yup.string().required('Availablity is required'),
+        seatingCapacity: Yup.string().required('Seating Capacity is required'),
+        fuelType: Yup.string().required('Fuel Type is required'),
+        color: Yup.string().required('color is required'),
     });
-
-    const validateForm = (values) => {
-        const errors = {};
-
-        if (!values.title) {
-            errors.title = ' Title is required';
-        }
-        if (!values.category) {
-            errors.category = ' Category is required';
-        }
-        if (!values.brand) {
-            errors.brand = ' Brand is required';
-        }
-        if (!values.quantity) {
-            errors.quantity = 'quantity is required';
-        } else if (values.quantity.length < 5) {
-            errors.quantity = 'quantity must be at least 5 characters long';
-        }
-
-        if (!values.manufacturingDate) {
-            errors.manufacturingDate = 'Manufacturing Date is required';
-        }
-
-        if (!values.model) {
-            errors.model = 'model is required';
-        }
-
-        if (!values.price) {
-            errors.price = 'price is required';
-        } else if (values.price.length < 10) {
-            errors.price = 'price must be at least 10 characters long';
-        }
-
-       
-
-        return errors;
-    };
 
     useEffect(() => {
         if (itemData) {
-            setFormData(itemData)
+            setFormData(itemData);
         }
-    }, [])
+    }, []);
 
+    useEffect(() => {
+        getCategories()
+    }, []);
+
+
+    const handleCreateCategory = () => {
+        if (newCategory.trim() !== "") {
+            // createCategory()
+            setNewCategory("");
+        } else {
+            alert("Please enter a category name.");
+        }
+    };
 
     const handleSubmit = (values) => {
-        values.description = content
-        console.log(values)
-        handleData(values)
-        // setUploadType('')
-        // addItem(formData, images)
-
+        values.description = content;
+        handleData(values);
     };
 
     return (
         <div className=" bg-half-transparent fixed inset-0  flex justify-center items-center overflow-y-auto">
-            <div className="mt-24 float-right h-screen dark:text-gray-200 bg-white dark:bg-[#484B52] max-w-screen w-full sm:w-full md:w-full lg:w-full xl:w-1/2 2xl:w-1/3 overflow-y-auto rounded-lg" style={{ width: "70%", height: "90%" }}>
+            <div
+                className="mt-24 float-right h-screen dark:text-gray-200 bg-white dark:bg-[#484B52] max-w-screen w-full sm:w-full md:w-full lg:w-full xl:w-1/2 2xl:w-1/3 overflow-y-auto rounded-lg"
+                style={{ width: '70%', height: '90%' }}
+            >
                 <div className="flex justify-between items-center p-4 m-4">
-                    <p className="font-semibold text-lg" style={{ color: currentColor }}>Add Car Property</p>
+                    <p className="font-semibold text-lg" style={{ color: currentColor }}>
+                        Add Car Property
+                    </p>
                     <button
                         type="button"
                         onClick={() => setEditItem(false)}
@@ -121,61 +98,25 @@ const CarForm = ({ handleData, itemData }) => {
                         <Formik
                             initialValues={initialValues}
                             onSubmit={handleSubmit}
-                            validate={validateForm}
                             validationSchema={validationSchema}
                         >
                             <Form>
+                                
                                 <div className="-mx-3 flex flex-wrap">
                                     <div className="w-full px-3 sm:w-1/2">
                                         <div className="mb-5">
-                                            <label htmlFor="title" className="mb-3 block text-base font-medium text-[#07074D]">
-                                                Item title
+                                            <label htmlFor="make" className="mb-3 block text-base font-medium text-[#07074D]">
+                                                make
                                             </label>
                                             <Field
                                                 type="text"
-                                                name="title"
-                                                id="Title"
-                                                placeholder="Item Title"
+                                                name="make"
+                                                id="make"
+                                                placeholder="Car make"
                                                 className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                             />
-                                            <ErrorMessage name="title" component="div" className="text-red-500" />
+                                            <ErrorMessage name="make" component="div" className="text-red-500" />
                                         </div>
-
-                                    </div>
-                                    <div className="w-full px-3 sm:w-1/2">
-                                        <div className="mb-5">
-                                            <label htmlFor="category" className="mb-3 block text-base font-medium text-[#07074D]">
-                                                Item Category
-                                            </label>
-                                            <Field
-                                                type="text"
-                                                name="category"
-                                                id="Category"
-                                                placeholder="Category"
-                                                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                            />
-                                            <ErrorMessage name="category" component="div" className="text-red-500" />
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div className="-mx-3 flex flex-wrap">
-                                    <div className="w-full px-3 sm:w-1/2">
-                                        <div className="mb-5">
-                                            <label htmlFor="brand" className="mb-3 block text-base font-medium text-[#07074D]">
-                                                Brand
-                                            </label>
-                                            <Field
-                                                type="text"
-                                                name="brand"
-                                                id="Brand"
-                                                placeholder="Car Brand"
-                                                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                            />
-                                            <ErrorMessage name="brand" component="div" className="text-red-500" />
-                                        </div>
-
                                     </div>
                                     <div className="w-full px-3 sm:w-1/2">
                                         <div className="mb-5">
@@ -191,7 +132,72 @@ const CarForm = ({ handleData, itemData }) => {
                                             />
                                             <ErrorMessage name="model" component="div" className="text-red-500" />
                                         </div>
+                                    </div>
+                                </div>
 
+                                <div className="-mx-3 flex flex-wrap">
+                                    <div className="w-full px-3 sm:w-1/2">
+                                        <div className="mb-5">
+                                            <label htmlFor="engine" className="mb-3 block text-base font-medium text-[#07074D]">
+                                                engine
+                                            </label>
+                                            <Field
+                                                type="text"
+                                                name="engine"
+                                                id="engine"
+                                                placeholder="Car engine"
+                                                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                            />
+                                            <ErrorMessage name="engine" component="div" className="text-red-500" />
+                                        </div>
+                                    </div>
+                                    <div className="w-full px-3 sm:w-1/2">
+                                        <div className="mb-5">
+                                            <label htmlFor="seatingCapacity" className="mb-3 block text-base font-medium text-[#07074D]">
+                                                Seating Capacity
+                                            </label>
+                                            <Field
+                                                type="text"
+                                                name="seatingCapacity"
+                                                id="seatingCapacity"
+                                                placeholder="Car seatingCapacity"
+                                                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                            />
+                                            <ErrorMessage name="seatingCapacity" component="div" className="text-red-500" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="-mx-3 flex flex-wrap">
+                                    <div className="w-full px-3 sm:w-1/2">
+                                        <div className="mb-5">
+                                            <label htmlFor="fuelType" className="mb-3 block text-base font-medium text-[#07074D]">
+                                                Fuel Type
+                                            </label>
+                                            <Field
+                                                type="text"
+                                                name="fuelType"
+                                                id="fuelType"
+                                                placeholder="Car fuelType"
+                                                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                            />
+                                            <ErrorMessage name="fuelType" component="div" className="text-red-500" />
+                                        </div>
+                                    </div>
+                                    <div className="w-full px-3 sm:w-1/2">
+                                        <div className="mb-5">
+                                            <label htmlFor="color" className="mb-3 block text-base font-medium text-[#07074D]">
+                                                Color
+                                            </label>
+                                            <Field
+                                                type="text"
+                                                name="color"
+                                                id="color"
+                                                placeholder="Car color"
+                                                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                            />
+                                            <ErrorMessage name="color" component="div" className="text-red-500" />
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="mb-5">
@@ -207,6 +213,24 @@ const CarForm = ({ handleData, itemData }) => {
                                         className="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                     />
                                     <ErrorMessage name="quantity" component="div" className="text-red-500" />
+                                </div>
+                                <div className="mb-5">
+                                    <label htmlFor="quantity" className="mb-3 block text-base font-medium text-[#07074D]">
+                                        Select Availability
+                                    </label>
+                                    <Field
+                                        as="select"
+                                        name="isAvailable"
+                                        id="isAvailable"
+                                        className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                    >
+                                        <option value="">Select Availability</option>
+
+                                        <option value="yes">Yes</option>
+                                        <option value="no">No</option>
+                                    </Field>
+                                    <ErrorMessage name="isAvailable" component="div" className="text-red-500" />
+
                                 </div>
 
                                 <div className="-mx-3 flex flex-wrap">
@@ -233,21 +257,17 @@ const CarForm = ({ handleData, itemData }) => {
                                             </label>
                                             <Field
                                                 type="date"
-                                                name="manufacturingDate"
-                                                id="ManufacturingDate"
+                                                name="year"
+                                                id="year"
                                                 className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                             />
-                                            <ErrorMessage name="manufacturingDate" component="div" className="text-red-500" />
+                                            <ErrorMessage name="year" component="div" className="text-red-500" />
                                         </div>
                                     </div>
-
                                 </div>
 
                                 <div className="mb-5">
-                                    <label
-                                        htmlFor="quantity"
-                                        className="mb-3 block text-base font-medium text-[#07074D]"
-                                    >
+                                    <label htmlFor="quantity" className="mb-3 block text-base font-medium text-[#07074D]">
                                         Detail Description
                                     </label>
                                     <RichTextEditorComponent change={args => setContent(args.value)} toolbarSettings={customToolbarSettings}>
@@ -258,20 +278,17 @@ const CarForm = ({ handleData, itemData }) => {
                                 <div>
                                     <button
                                         type="submit"
-                                        className="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none"
-                                        style={{ backgroundColor: currentColor }}
+                                        className="rounded-md w-full py-4 px-8 flex justify-center items-center bg-[#5F63F2] text-white font-medium text-lg"
                                     >
-                                        Submit
+                                        Add Item
                                     </button>
                                 </div>
-
                             </Form>
                         </Formik>
                     </div>
                 </div>
             </div>
         </div>
-
     );
 };
 

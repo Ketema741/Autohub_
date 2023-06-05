@@ -1,18 +1,18 @@
 // import React, { useState } from 'react';
-// import { Link } from 'react-router-dom'
-// import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import { Link } from 'react-router-dom'
+import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 // import { FaTrashAlt, FaEdit } from 'react-icons/fa';
-// import { AiOutlinePlus } from 'react-icons/ai';
+import { AiOutlinePlus } from 'react-icons/ai';
 
 // import { DeleteWarning } from '../../components';
-// import { useStateContext } from '../../context/ContextProvider';
+import { useStateContext } from '../../context/ContextProvider';
 
 // const ItemTable = ({ supplierItems }) => {
 //     const [showWarning, setShowWarning] = useState(false);
-//     const {
-//         currentColor
-//     } = useStateContext();
+    // const {
+    //     currentColor
+    // } = useStateContext();
 
 //     // const handleDelete = () => {
 //     //   onDelete();
@@ -119,6 +119,10 @@ import { Header } from '../../components';
 import { AiOutlineClose } from 'react-icons/ai';
 
 const ItemTable = () => {
+    const {
+        currentColor
+    } = useStateContext();
+    
     const [orders, setOrders] = useState(ordersData);
     const [currentPage, setCurrentPage] = useState(1);
     const PAGE_SIZE = 5;
@@ -241,7 +245,13 @@ const ItemTable = () => {
                                                 Location
                                             </th>
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                                Actions
+                                                <TooltipComponent content="Add Item" position="TopCenter">
+                                                    <Link to="/supplier/add-item" >
+                                                        <span className="text-white inline-flex items-center  rounded-full bg-violet-50 p-2 text-xs font-semibold" style={{ backgroundColor: currentColor }}>
+                                                            <AiOutlinePlus />
+                                                        </span>
+                                                    </Link>
+                                                </TooltipComponent>
                                             </th>
                                         </tr>
                                     </thead>

@@ -65,9 +65,8 @@ const AuthState = (props) => {
   // login user
   const userLogin = async (formData) => {
     try {
-      console.log(formData)
       const res = await axios.post('/users/login', JSON.stringify(formData));
-      console.log(res);
+      console.log(res.data);
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data,
