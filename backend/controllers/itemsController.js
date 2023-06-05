@@ -216,7 +216,6 @@ const createCar = async (req, res) => {
       description,
       engine,
       fuelType,
-      isAvailable,
       seatingCapacity,
     } = req.body;
 
@@ -249,7 +248,6 @@ const createCar = async (req, res) => {
       seatingCapacity,
       engine,
       fuelType,
-      isAvailable,
       carImages: images_data,
     });
     if (car) {

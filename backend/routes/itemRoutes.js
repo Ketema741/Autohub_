@@ -58,7 +58,6 @@ router.get("/cars/get", getAllCars).get("/car/:id", getCar);
 router.post("/cars/add", verifyToken, upload.array("carImages", 6), createCar);
 router.put("/cars/update/:id", updateCar);
 router.delete("/cars/delete/:id", deleteCar);
-
 router.post("/item/add/tag", verifyToken, assignTagsToProduct);
 
 module.exports = router;
