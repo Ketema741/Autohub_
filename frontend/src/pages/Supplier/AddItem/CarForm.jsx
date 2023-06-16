@@ -278,7 +278,7 @@ const CarForm = ({ handleData, itemData, categories, getCategories, createCatego
                                 <div>
                                     <button
                                         type="submit"
-                                        className="rounded-md w-full py-4 px-8 flex justify-center items-center bg-[#5F63F2] text-white font-medium text-lg"
+                                        className="rounded-md w-full py-4 px-8 flex justify-center items-center bg-[#1E4DB7] text-white font-medium text-lg"
                                     >
                                         Add Item
                                     </button>
