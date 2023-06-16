@@ -9,9 +9,8 @@ import * as Yup from 'yup';
 import { customToolbarSettings } from './Toolbar';
 
 
-const CarForm = ({ handleData, itemData, categories, getCategories, createCategory }) => {
+const CarForm = ({ handleData, getCategories }) => {
 
-    const [newCategory, setNewCategory] = useState("");
     const [content, setContent] = useState('');
 
     const { currentColor, setEditItem } = useStateContext();
@@ -31,8 +30,6 @@ const CarForm = ({ handleData, itemData, categories, getCategories, createCatego
         isAvailable: null,
     };
 
-    const [formData, setFormData] = useState(initialValues);
-
     const validationSchema = Yup.object().shape({
         make: Yup.string().required('make is required'),
         quantity: Yup.string()
@@ -49,24 +46,8 @@ const CarForm = ({ handleData, itemData, categories, getCategories, createCatego
     });
 
     useEffect(() => {
-        if (itemData) {
-            setFormData(itemData);
-        }
-    }, []);
-
-    useEffect(() => {
         getCategories()
     }, []);
-
-
-    const handleCreateCategory = () => {
-        if (newCategory.trim() !== "") {
-            // createCategory()
-            setNewCategory("");
-        } else {
-            alert("Please enter a category name.");
-        }
-    };
 
     const handleSubmit = (values) => {
         values.description = content;

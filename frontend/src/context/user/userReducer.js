@@ -68,12 +68,15 @@ const userReducer = (state, action) => {
         pendingSuppliers: action.payload,
       };
     case APPROVE_SUPPLIER:
-      const approvedSupplierId = action.payload;
-      const updatedPendingSuppliers = state.pendingSuppliers.filter(user => user.id !== approvedSupplierId);
+      const approvedSupplierId = action.payload._id;
+      const updatedPendingSuppliers = state.pendingSuppliers.filter(user => user._id !== approvedSupplierId);
+      const updatedActiveSuppliers = [action.payload, ...state.suppliers];
       return {
         ...state,
         pendingSuppliers: updatedPendingSuppliers,
+        suppliers: updatedActiveSuppliers,
       };
+
     case REJECT_SUPPLIER:
       const rejectedSupplierId = action.payload;
       const newPendingSuppliers = state.pendingSuppliers.filter(user => user.id !== rejectedSupplierId);

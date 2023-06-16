@@ -1,9 +1,10 @@
 import React, { useReducer, useEffect, useContext } from 'react';
-import axios from 'axios';
+import axios from "../axiosConfig"
 import AuthContext from '../auth/authContext';
 import userReducer from './userReducer';
 import userContext from './userContext';
 
+import { toast } from 'react-toastify';
 
 import {
   GET_USERS,
@@ -38,8 +39,8 @@ const UserState = (props) => {
     customers: null,
     customer: null,
     filteredUsers: null,
-
-    carts:null,
+    error: null,
+    carts: null,
 
     drivers: null,
     driver: null,
@@ -171,7 +172,7 @@ const UserState = (props) => {
     else if (userType === "expert") {
       get_user = APPROVE_EXPERT;
     }
-   
+
 
     try {
       const res = await axios.get(`/users/approve/${userType}/${_id}`);
@@ -197,7 +198,7 @@ const UserState = (props) => {
     else if (userType === "expert") {
       get_user = REJECT_EXPERT;
     }
-   
+
 
     try {
       const res = await axios.get(`/users/reject/${userType}/${_id}`);
@@ -284,7 +285,7 @@ const UserState = (props) => {
       dispatch({ type: USER_ERROR });
     }
   };
-  
+
   // add To cart
   const addToCart = async (item) => {
     const data = {
@@ -366,6 +367,70 @@ const UserState = (props) => {
     dispatch({ type: filter_users, payload: text });
   };
 
+  const approveSupplier = async (data, supplier) => {
+    try {
+      const approvePromise = new Promise((resolve, reject) => {
+        axios.post(`/users/approve/suppliers/${supplier._id}`, data)
+          .then((res) => {
+            dispatch({
+              type: APPROVE_SUPPLIER,
+              payload: supplier,
+            });
+
+            resolve(res);
+          })
+          .catch((err) => {
+            dispatch({ type: USER_ERROR });
+            reject(err);
+          });
+      });
+
+      toast.promise(approvePromise, {
+        pending: 'Approving...',
+        success: 'Approed successful!',
+        error: `Approving failed try again later!`,
+      });
+      state.error = null;
+    } catch (error) {
+      toast.error(`${state.error}`);
+    }
+  }
+  const rejectSupplier = async (_id) => {
+    console.log(_id);
+    try {
+      const rejectPromise = new Promise((resolve, reject) => {
+        axios.post(`/users/reject/suppliers/${_id}`)
+          .then((res) => {
+            dispatch({
+              type: REJECT_SUPPLIER,
+              payload: _id,
+            });
+
+            resolve(res);
+          })
+          .catch((err) => {
+            dispatch({
+              type: USER_ERROR,
+              payload: err.response
+
+            });
+            reject(err);
+          });
+      });
+
+      toast.promise(rejectPromise, {
+        pending: 'Rejecting...',
+        success: 'Application Rejected successful!',
+        error: `Reject failed please try again later!`,
+      });
+      state.error = null;
+    } catch (error) {
+      toast.error(`${state.error}`);
+    }
+  }
+
+
+
   // clear filter
   const clearFilter = () => {
     dispatch({ type: CLEAR_FILTER });
@@ -380,7 +445,7 @@ const UserState = (props) => {
         current: state.current,
 
         carts: state.carts,
-        
+
         drivers: state.drivers,
         driver: state.driver,
         filteredDrivers: state.filteredDrivers,
@@ -403,6 +468,9 @@ const UserState = (props) => {
         getPendingUsers,
         getUser,
         addUser,
+
+        approveSupplier,
+        rejectSupplier,
 
         addToCart,
         getCartItems,

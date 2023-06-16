@@ -4,11 +4,12 @@ import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { RiDeleteBinLine } from 'react-icons/ri';
 
-import { useStateContext } from '../../../context/ContextProvider';
-import CarForm from './CarForm'
-import AccessoryForm from './AccessoryForm'
+import CarForm from './CarForm';
+import AccessoryForm from './AccessoryForm';
+
 import ItemContext from '../../../context/item/itemContext';
-import CloudinaryUploadWidget from '../../../cloudinary/CloudinaryUploadWidget';
+import { useStateContext } from '../../../context/ContextProvider';
+
 import UploadImage from '../../../cloudinary/UploadImage';
 
 const Parse = require('html-react-parser')
@@ -18,7 +19,6 @@ const AddItemDetail = () => {
     const itemContext = useContext(ItemContext);
     const { addItem, categories, getCategories, createCategory } = itemContext;
 
-    const [selectedImages, setSelectedImages] = useState([]);
     const [itemData, setItemData] = useState(null);
 
     // image upload start here
@@ -31,11 +31,6 @@ const AddItemDetail = () => {
         setImageToRemove(null);
         setImages((prev) => prev.filter((img) => img.public_id !== public_id));
     };
-    // item image end here
-
-    useEffect(() => {
-        console.log(selectedImages);
-    }, [selectedImages]);
 
     const {
         currentColor,
@@ -47,7 +42,6 @@ const AddItemDetail = () => {
         setEditItem(false)
         setItemData(data)
     };
-
 
     const [uploadType, setUploadType] = useState('car');
     const handleRadioChange = (e) => {
@@ -64,9 +58,6 @@ const AddItemDetail = () => {
         addItem(itemData); // Update the itemData state
 
     };
-
-
-
 
     return (
         <div className="m-2 md:m-10 mt-24 p-2 md:p-10 ">
@@ -153,8 +144,6 @@ const AddItemDetail = () => {
                         </div>
                     }
 
-
-
                     {/* <ItemInfo /> */}
                     {!itemData &&
                         <div className="flex justify-center mt-4">
@@ -206,7 +195,7 @@ const AddItemDetail = () => {
                                         <button
                                             onClick={handleSubmit}
                                             type='submit'
-                                            disabled={selectedImages.length === 0}
+                                            disabled={images.length === 0}
                                             className="m-4 rounded-2xl hover:bg-blue-600 px-10 py-3 hover:shadow-lg"
                                             style={{ backgroundColor: currentColor }}
                                         >
