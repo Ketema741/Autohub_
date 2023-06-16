@@ -1,14 +1,19 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import moment from 'moment';
+import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';
 import { FiSearch, FiMoreVertical } from 'react-icons/fi';
+import { AiOutlinePlus } from 'react-icons/ai';
 
 
 import avatar from '../../../data/avatar.jpg';
 import { Header } from '../../../components';
 import Modal from '../Modal'
+import PostForm from './PostForm';
+
 import UserContext from '../../../context/user/userContext';
+
 
 const ActiveJobs = () => {
 
@@ -93,10 +98,15 @@ const ActiveJobs = () => {
         setShowUserModal(true);
     }
 
+    
+    
+    const [addJob, setAddJob] = useState(false);
+    const handleData = (data) => {
+        setAddJob(!addJob)
+        
+    };
+    
     const [showUserModal, setShowUserModal] = useState(null);
-
-
-
     const handleModalClose = () => {
         setShowUserModal(false);
     };
@@ -148,12 +158,22 @@ const ActiveJobs = () => {
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                                 Aficionado Name
                                             </th>
-
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                                 Email
                                             </th>
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                                 Actions
+                                            </th>
+                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                                <div className="flex justify-center mt-4">
+                                                    <TooltipComponent content="Add Job" position="LeftCenter">
+                                                        <button type="button" onClick={handleData} className="mb-4 rounded-full hover:bg-blue-600 p-4 hover:shadow-lg" style={{ backgroundColor: "#1E4DB7" }}>
+                                                            <span className=" font-medium text-white">
+                                                                <AiOutlinePlus />
+                                                            </span>
+                                                        </button>
+                                                    </TooltipComponent>
+                                                </div>
                                             </th>
                                         </tr>
                                     </thead>
@@ -356,6 +376,9 @@ const ActiveJobs = () => {
                 </div>
 
             )}
+
+            {addJob &&
+            <PostForm handleData={handleData} />}
         </div>
     )
 }

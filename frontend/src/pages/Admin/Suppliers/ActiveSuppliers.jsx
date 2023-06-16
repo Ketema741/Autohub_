@@ -17,7 +17,7 @@ const ActiveSuppliers = () => {
 
     const userContext = useContext(UserContext)
 
-    const { getUsers, Suppliers } = userContext
+    const { getUsers, suppliers } = userContext
 
     useEffect(() => {
         getUsers("suppliers")
@@ -51,11 +51,11 @@ const ActiveSuppliers = () => {
 
 
     const PAGE_SIZE = 3;
-    const totalSuppliers = Suppliers ? Suppliers.length : 0 ;
+    const totalSuppliers = suppliers ? suppliers.length : 0 ;
     const totalPages = Math.ceil(totalSuppliers / PAGE_SIZE);
     const startIndex = (currentPage - 1) * PAGE_SIZE;
     const endIndex = startIndex + PAGE_SIZE;
-    const currentSuppliers = Suppliers? Suppliers.slice(startIndex, endIndex) : [];
+    const currentSuppliers = suppliers? suppliers.slice(startIndex, endIndex) : [];
 
     const goToPage = (pageNumber) => {
         setCurrentPage(pageNumber);

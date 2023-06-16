@@ -1,6 +1,8 @@
 import React, { useReducer, useEffect } from 'react';
 import setAuthToken from '../../utils/setAuthToken';
 import axios from '../axiosConfig';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import AuthContext from './authContext';
 import authReducer from './authReducer';
@@ -29,19 +31,39 @@ const AuthState = (props) => {
 
   // Register user
   const register = async (formData) => {
-   
-    try {
-      const res = await axios.post('/users/register', JSON.stringify(formData));
-      dispatch({
-        type: REGISTER_SUCCESS,
-        payload: res.data,
-      });
-    } catch (err) {
-      dispatch({
-        type: REGISTER_FAIL,
-        payload: err.response.data,
-      });
-    }
+
+      try {
+        const registrationPromise = new Promise((resolve, reject) => {
+          axios
+            .post('/users/register', JSON.stringify(formData))
+            .then((res) => {
+              dispatch({
+                type: REGISTER_SUCCESS,
+                payload: res.data,
+              });
+
+              resolve(res);
+            })
+            .catch((err) => {
+              dispatch({
+                type: REGISTER_FAIL,
+                payload: err.response.data,
+              });
+
+              reject(err);
+            });
+        });
+
+        toast.promise(registrationPromise, {
+          pending: 'Registering...',
+          success: 'Registration successful! If you are a supplier, you will receive an acceptance email. Otherwise, please return to the homepage and log in.',
+          error: `Registration failed: ${state.error.error}`,       
+        });
+        state.error = null;
+      } catch (error) {
+        toast.error(`${state.error.error}`);
+      }
+    
   };
 
   const removeImage = async (public_id) => {
@@ -49,7 +71,7 @@ const AuthState = (props) => {
       public_id: public_id,
     };
 
-   
+
     try {
       const res = await axios.post(`/users/image`, id_obj, config);
       console.log(res);
@@ -66,18 +88,25 @@ const AuthState = (props) => {
   const userLogin = async (formData) => {
     try {
       const res = await axios.post('/users/login', JSON.stringify(formData));
-      console.log(res.data);
+
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data,
       });
 
-      loadUser();
+      if (formData.userType != "supplier") {
+
+        loadUser();
+      }
+
+      toast.success('Login successful!');
     } catch (err) {
       dispatch({
         type: LOGIN_FAIL,
         payload: err.response.data.error,
       });
+
+      toast.error('Login failed. Please check your credentials.');
 
       console.log('error ', err.response.data);
     }

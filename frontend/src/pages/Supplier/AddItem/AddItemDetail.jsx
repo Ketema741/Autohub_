@@ -47,9 +47,6 @@ const AddItemDetail = () => {
         console.log(selectedImages);
       }, [selectedImages]);
       
-      
-    
-
     const {
         currentColor,
         editItem,
@@ -59,7 +56,6 @@ const AddItemDetail = () => {
     const handleData = (data) => {
         setEditItem(false)
         setItemData(data)
-
     };
 
 

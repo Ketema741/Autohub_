@@ -7,44 +7,35 @@ import VehicleExpertRegistration from './VehicleExpertRegistration';
 import NormalUserRegistration from './NormalUserRegistration';
 import { useNavigate } from "react-router-dom";
 
-import { Alert } from '../../components'
-
 import AuthContext from './../../context/auth/authContext';
-import AlertContext from "../../context/alert/alertContext";
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const RegistrationForm = (props) => {
+const RegistrationForm = () => {
+    const navigate = useNavigate();
 
     const authContext = useContext(AuthContext);
-    const alertContext = useContext(AlertContext);
 
-    const [isLoading, setIsLoading] = useState(false);
-    const { setAlert } = alertContext;
-    const { error, isUserAuthenticated, loadUser, userLoading, register } = authContext;
-
-    useEffect(() => {
-        if (isUserAuthenticated) {
-            loadUser()
-            navigate('/');
-        }
-
-        if (error) {
-            setAlert(error.error, 'danger');
-            setIsLoading(false)
-        }
-
-        // eslint-disable-next-line
-    }, [loadUser, error, isUserAuthenticated, props.history]);
+    const { error, isUserAuthenticated, user, loadUser, register, logout } = authContext;
 
     const [step, setStep] = useState(1);
-    const [role, setRole] = useState(null);
+    const [userType, setUserType] = useState(null);
     const [carSupplierInfo, setCarSupplierInfo] = useState(null);
     const [driverInfo, setDriverInfo] = useState(null);
     const [vehicleExpertInfo, setVehicleExpertInfo] = useState(null);
     const [userInfo, setUserInfo] = useState(null);
 
-    const handleSelectType = (role) => {
-        setRole(role);
+
+    useEffect(() => {
+        if(user && user.role){
+            navigate('/');
+        }
+        // eslint-disable-next-line
+    }, [user]);
+
+    const handleSelectType = (userType) => {
+        setUserType(userType);
         setStep(2);
     };
 
@@ -71,23 +62,34 @@ const RegistrationForm = (props) => {
         setStep(3);
     }
 
+    const handleBackHome = () => {
+        logout();
+        navigate("/")
+    }
+
+    const handleRestart = () => {
+        setCarSupplierInfo(null);
+        setDriverInfo(null);
+        setVehicleExpertInfo(null);
+        setUserInfo(null);
+        setStep(1);
+    }
+
     const handleSubmit = (event) => {
         event.preventDefault();
         let mergedObject;
 
-        setIsLoading(userLoading);
-
         if (carSupplierInfo) {
-            mergedObject = { ...role, ...carSupplierInfo };
+            mergedObject = { ...userType, ...carSupplierInfo };
         }
         else if (driverInfo) {
-            mergedObject = { ...role, ...driverInfo };
+            mergedObject = { ...userType, ...driverInfo };
         }
         else if (vehicleExpertInfo) {
-            mergedObject = { ...role, ...vehicleExpertInfo };
+            mergedObject = { ...userType, ...vehicleExpertInfo };
         }
         else if (userInfo) {
-            mergedObject = { ...role, ...userInfo };
+            mergedObject = { ...userType, ...userInfo };
         }
 
         register(mergedObject)
@@ -101,7 +103,7 @@ const RegistrationForm = (props) => {
             formComponent = <SelectType onSelect={handleSelectType} />;
             break;
         case 2:
-            switch (role.role) {
+            switch (userType.userType) {
                 case 'supplier':
                     formComponent = <SupplierRegistration onSubmit={handleCarSupplierRegistration} handlePrev={handlePrev} />;
                     break;
@@ -122,34 +124,23 @@ const RegistrationForm = (props) => {
             formComponent = (
                 <form onSubmit={handleSubmit}>
                     <h2>Step 3: Confirm Registration Information</h2>
-                    <Alert />
-                    
 
-                    {isLoading &&
-                        <div className="flex justify-center items-center">
-                            <div className="relative">
-                                <div className="w-12 h-12 rounded-full absolute border-2 border-solid border-gray-200"></div>
-                                <div className="w-12 h-12 rounded-full animate-spin absolute border-2 border-solid border-blue-500 border-t-transparent"></div>
-                            </div>
-                        </div>
-
-                    }
                     {carSupplierInfo && (
                         <div className="my-8 bg-gray-100 p-4 rounded-lg">
-                            <p className="mb-2">User Type: {role.role}</p>
-                            <p className="mb-2">First Name: {role.firstName}</p>
-                            <p className="mb-2">Last Name: {role.lastName}</p>
-                            <p className="mb-2">Email: {role.email}</p>
+                            <p className="mb-2">User Type: {userType.userType}</p>
+                            <p className="mb-2">First Name: {userType.firstName}</p>
+                            <p className="mb-2">Last Name: {userType.lastName}</p>
+                            <p className="mb-2">Email: {userType.email}</p>
                             <p className="mb-2">Phone: {carSupplierInfo.phone}</p>
                             <p className="mb-2">Company Name: {carSupplierInfo.companyName}</p>
                         </div>
                     )}
                     {driverInfo && (
                         <div className="my-8 bg-gray-100 p-4 rounded-lg">
-                            <p className="mb-2">First Name: {role.firstName}</p>
-                            <p className="mb-2">Last Name: {role.lastName}</p>
-                            <p className="mb-2">Email: {role.email}</p>
-                            <p className="mb-2">Role: {role.role}</p>
+                            <p className="mb-2">First Name: {userType.firstName}</p>
+                            <p className="mb-2">Last Name: {userType.lastName}</p>
+                            <p className="mb-2">Email: {userType.email}</p>
+                            <p className="mb-2">userType: {userType.userType}</p>
                             <p className="mb-2">Phone: {driverInfo.phone}</p>
                             <p className="mb-2">Vehicle Make and Model: {driverInfo.vehicleMakeModel}</p>
                             <p className="mb-2">Driver's License Number: {driverInfo.licenseNumber}</p>
@@ -157,17 +148,18 @@ const RegistrationForm = (props) => {
                     )}
                     {vehicleExpertInfo && (
                         <div className="my-8 bg-gray-100 p-4 rounded-lg">
-                            <p className="mb-2">First Name: {role.firstName}</p>
-                            <p className="mb-2">Last Name: {role.lastName}</p>
-                            <p className="mb-2">Email: {role.email}</p>
-                            <p className="mb-2">Role: {role.role}</p>
+                            <p className="mb-2">First Name: {userType.firstName}</p>
+                            <p className="mb-2">Last Name: {userType.lastName}</p>
+                            <p className="mb-2">Email: {userType.email}</p>
+                            <p className="mb-2">userType: {userType.userType}</p>
                             <p className="mb-2">Phone: {vehicleExpertInfo.phone}</p>
                         </div>
                     )}
                     {userInfo && (
                         <div className="my-8 bg-gray-100 p-4 rounded-lg">
-                            <p className="mb-2">Name: {role.firstName}</p>
-                            <p className="mb-2">Email: {role.email}</p>
+                            <p className="mb-2">First Name: {userType.firstName}</p>
+                            <p className="mb-2">Last Name: {userType.lastName}</p>
+                            <p className="mb-2">Email: {userType.email}</p>
                             <p className="mb-2">Phone: {userInfo.phone}</p>
                         </div>
                     )}
@@ -176,7 +168,7 @@ const RegistrationForm = (props) => {
                         <button
                             type="button"
                             className="bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600"
-                            onClick={() => setStep(1)}
+                            onClick={handleRestart}
                         >
                             Restart
                         </button>
@@ -185,6 +177,13 @@ const RegistrationForm = (props) => {
                             type="submit"
                         >
                             Submit
+                        </button>
+                        <button
+                            className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+                            type="button"
+                            onClick={handleBackHome}
+                        >
+                            Home Page
                         </button>
                     </div>
                 </form>
@@ -198,6 +197,19 @@ const RegistrationForm = (props) => {
 
         <div className="mt-14 min-w-screen  bg-white flex items-center justify-center px-5 py-1">
             {formComponent}
+
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
         </div>
 
     );

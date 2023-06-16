@@ -13,12 +13,14 @@ import {
 const authReducer = (state, action) => {
   switch (action.type) {
     case USER_LOADED:
-      return {
-        ...state,
-        isUserAuthenticated: true,
-        userLoading: false,
-        user: action.payload.data,
-      };
+      if(action.payload.data){
+        return {
+          ...state,
+          isUserAuthenticated: true,
+          userLoading: false,
+          user: action.payload.data,
+        };
+      }
     case REGISTER_SUCCESS:
       localStorage.setItem('token', action.payload.token);
       return {

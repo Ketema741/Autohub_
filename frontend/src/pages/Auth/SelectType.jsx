@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 
 const SelectType = ({ onSelect }) => {
   const validationSchema = Yup.object({
-    role: Yup.string().required('User Type is required'),
+    userType: Yup.string().required('User Type is required'),
     firstName: Yup.string().required('First Name is required'),
     lastName: Yup.string().required('Last name is required'),
     email: Yup.string().email('Invalid email address').required('Email is required'),
@@ -14,7 +14,7 @@ const SelectType = ({ onSelect }) => {
   });
 
   const initialValues = {
-    role: '',
+    userType: '',
     firstName: '',
     lastName: '',
     email: '',
@@ -24,17 +24,6 @@ const SelectType = ({ onSelect }) => {
   const handleSubmit = (values) => {
     onSelect(values);
   };
-
-  const validateForm = (values) => {
-    const errors = {};
-
-    if (!values.email.includes('@')) {
-      errors.email = 'Invalid email address';
-    }
-
-    return errors;
-  };
-  
 
   return (
     <div className="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style={{ maxWidth: "1000px" }}>
@@ -46,7 +35,6 @@ const SelectType = ({ onSelect }) => {
           <Formik
             initialValues={initialValues}
             onSubmit={handleSubmit}
-            validate={validateForm}
             validationSchema={validationSchema}
           >
             <Form>
@@ -60,15 +48,15 @@ const SelectType = ({ onSelect }) => {
                   <Field
                     as="select"
                     className="w-full border border-gray-400 p-2 rounded-md"
-                    name="role"
+                    name="userType"
                   >
                     <option value="">Select Type</option>
-                    <option value="user">Normal User</option>
+                    <option value="customer">Normal User</option>
                     <option value="supplier">Car or Accessory Supplier</option>
                     <option value="driver">Driver</option>
                     <option value="expert">Vehicle Expert</option>
                   </Field>
-                  <ErrorMessage name="role" component="div" className="text-red-500" />
+                  <ErrorMessage name="userType" component="div" className="text-red-500" />
                 </div>
 
                 <div className="flex -mx-3">

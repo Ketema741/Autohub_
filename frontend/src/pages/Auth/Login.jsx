@@ -7,7 +7,9 @@ import { FaEnvelope } from 'react-icons/fa';
 import { FiUserPlus } from 'react-icons/fi';
 import { FcGoogle } from 'react-icons/fc';
 
-import { Alert } from '../../components'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import AlertContext from "../../context/alert/alertContext";
 import AuthContext from "../../context/auth/authContext";
 import loginsvg from '../../brands/undraw_access_account_re_8spm.svg'
@@ -23,6 +25,7 @@ const Login = (props) => {
 
     useEffect(() => {
         if (isUserAuthenticated) {
+            setIsLoading(false)
             loadUser()
             navigate('/');
         }
@@ -56,17 +59,14 @@ const Login = (props) => {
         }
         if (errors) {
             setIsLoading(false);
-
         }
         return errors;
     };
 
     const handleSubmit = (values) => {
-        setIsLoading(userLoading);
+        setIsLoading(true);
         userLogin(values);
     };
-
-
 
     return (
 
@@ -90,7 +90,7 @@ const Login = (props) => {
                                     <span className="bg-gray-100 px-4 text-xs text-black uppercase"> Or Login With Email</span>
                                 </div>
                             </div>
-                            <Alert />
+                          
                             
 
                             {isLoading &&
@@ -171,6 +171,18 @@ const Login = (props) => {
                     </div>
                 </div>
             </div>
+            <ToastContainer
+                position="top-center"
+                autoClose={2000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
         </div>
     )
 };
