@@ -3,15 +3,23 @@ const bcrypt = require("bcryptjs");
 const models = require("../models/Users");
 
 const getUserByEmail = async (email) => {
-  const [admin, customer, supplier, driver, caraficionados, serviceProvider] =
-    await Promise.all([
-      models.Customer.findOne({ email }),
-      models.Admin.findOne({ email }),
-      models.ServiceProvider.findOne({ email }),
-      models.Driver.findOne({ email }),
-      models.Supplier.findOne({ email }),
-      models.CarAficionados.findOne({ email }),
-    ]);
+  const [
+    admin,
+    customer,
+    temporarySupplier,
+    supplier,
+    driver,
+    caraficionados,
+    serviceProvider,
+  ] = await Promise.all([
+    models.Customer.findOne({ email }),
+    models.Admin.findOne({ email }),
+    models.ServiceProvider.findOne({ email }),
+    models.Driver.findOne({ email }),
+    models.Supplier.findOne({ email }),
+    models.CarAficionados.findOne({ email }),
+    models.TemporarySupplier.findOne({ email }),
+  ]);
 
   if (admin) {
     return admin;
@@ -19,6 +27,10 @@ const getUserByEmail = async (email) => {
 
   if (customer) {
     return customer;
+  }
+
+  if (temporarySupplier) {
+    return temporarySupplier;
   }
 
   if (supplier) {
