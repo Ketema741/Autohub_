@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
-import { FiSettings } from 'react-icons/fi';
-import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+
+
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { Navbar, Footer, Sidebar } from '../../components';
 import { useStateContext } from '../../context/ContextProvider';
@@ -28,7 +30,7 @@ const ItemDetail = () => {
   return (
     <div className={currentMode === "Dark" ? "dark" : ""}>
       <div className="flex relative dark:bg-main-dark-bg">
-        
+
         {activeMenu ? (
           <div className="w-52 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
             <Sidebar />
@@ -48,12 +50,24 @@ const ItemDetail = () => {
           <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full ">
             <Navbar />
           </div>
-          
+
           <ItemOverview />
           <DropdownContainer />
           <Footer />
         </div>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 };

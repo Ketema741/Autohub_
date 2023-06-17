@@ -1,11 +1,14 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { toast } from 'react-toastify';
 
 import { SiBookstack } from "react-icons/si";
 
-import { useStateContext } from '../../context/ContextProvider';
 import Blog from "../../assets/undraw_job_offers_re_634p.svg";
+
 import AuthContext from "../../context/auth/authContext";
-import { useNavigate } from "react-router-dom";
+import { useStateContext } from '../../context/ContextProvider';
 import ChatContext from "../../context/chat/chatContext";
 import UserContext from "../../context/user/userContext";
 
@@ -32,36 +35,34 @@ const SVDetailCard = () => {
     const { handleClick } = useStateContext();
 
     const handleContact = () => {
-        if (!isUserAuthenticated || user?.role !== 'customer') {
-            window.alert("Login as a customer");
-            logout();
-            navigate("/login");
+        if (!user || !isUserAuthenticated || user?.role !== 'customer') {
+            toast.info("Please Login as a customer");
             return;
-          }
-        
-          let updatedMessageData = null;
-          if (user?.role === "service provider") {
+        } 
+
+        let updatedMessageData = null;
+        if (user?.role === "service provider") {
             updatedMessageData = {
-              senderId: user?._id,
-              receiverId: customer?._id
+                senderId: user?._id,
+                receiverId: customer?._id
             };
-          } else {
+        } else {
             updatedMessageData = {
-              senderId: user?._id,
-              receiverId: serviceProvider?._id
+                senderId: user?._id,
+                receiverId: serviceProvider?._id
             };
-          }
-        
-          if (!updatedMessageData.senderId || !updatedMessageData.receiverId) {
-            window.alert("Something went wrong. Try to login as a customer or service provider.");
+        }
+
+        if (!updatedMessageData.senderId || !updatedMessageData.receiverId) {
+            toast.info("Something went wrong. Try to login as a customer or service provider.");
             return;
-          }
-      
+        }
+
         createConversationRoom(updatedMessageData);
         getConversation(updatedMessageData.senderId, updatedMessageData.receiverId);
         handleClick("chat");
-      }
-      
+    };
+
 
     return (
         <div className="lg:flex" >
