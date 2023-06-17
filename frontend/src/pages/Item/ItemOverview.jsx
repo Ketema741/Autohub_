@@ -32,9 +32,13 @@ const ItemOverview = () => {
   const handleAddToCart = () => {
     if (isUserAuthenticated) {
       if (user.role === "customer") {
-        const itemExistsInCart = carts.some((cartItem) => cartItem.productId._id === item._id);
-        if (itemExistsInCart) {
-          alert("Item already exists in the cart.");
+        if (carts) {
+          const itemExistsInCart = carts.some((cartItem) => cartItem.productId._id === item._id);
+          if (itemExistsInCart) {
+            alert("Item already exists in the cart.");
+          } else {
+            addToCart(item);
+          }
         } else {
           addToCart(item);
         }
@@ -45,6 +49,7 @@ const ItemOverview = () => {
       alert("Please log in to add items to your cart.");
     }
   };
+  
   
   
   return (
