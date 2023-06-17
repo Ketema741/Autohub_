@@ -89,7 +89,6 @@ const UserState = (props) => {
       get_users = GET_SERVISEPROVIDERS;
     }
 
-
     try {
       const res = await axios.get(`/users/${userType}`);
       dispatch({
@@ -198,7 +197,6 @@ const UserState = (props) => {
     else if (userType === "expert") {
       get_user = REJECT_EXPERT;
     }
-
 
     try {
       const res = await axios.get(`/users/reject/${userType}/${_id}`);
