@@ -39,7 +39,7 @@ const UserRole = () => {
                 url: '/admin-dashboard',
                 desc: 'Admin Dashboard',
             };
-        } else if (user.role === 'serviceProvider') {
+        } else if (user.role === 'service provider') {
             userRole = {
                 icon: <FaChartLine />,
                 title: 'Dashboard',

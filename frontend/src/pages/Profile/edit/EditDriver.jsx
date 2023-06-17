@@ -4,8 +4,12 @@ import { useStateContext } from '../../../context/ContextProvider';
 import { HtmlEditor, Inject, Link, QuickToolbar, RichTextEditorComponent, Table, Toolbar } from '@syncfusion/ej2-react-richtexteditor';
 
 import { customToolbarSettings } from './Toolbar';
+import AuthContext from '../../../context/auth/authContext';
 
-const Edit = ({ handleModalClose, user, handleUpdate }) => {
+const Edit = ({ handleModalClose, user }) => {
+    const authContext = useContext(AuthContext);
+
+    const { updateUser } = authContext;
 
     const [content, setContent] = useState('');
 
@@ -14,9 +18,10 @@ const Edit = ({ handleModalClose, user, handleUpdate }) => {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
-        type: '',
-        education: '',
-        workHistory: '',
+        phone: user.phone,
+        type: user.type,
+        education: user.education,
+        workHistory: user.workHistory,
         birthDay: '',
         description: '',
     });
@@ -31,7 +36,7 @@ const Edit = ({ handleModalClose, user, handleUpdate }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         formData.description = content
-        handleUpdate(formData)
+        updateUser(formData, user._id, "driver")
 
     };
 
@@ -119,6 +124,25 @@ const Edit = ({ handleModalClose, user, handleUpdate }) => {
                                 <div className="w-full px-3 sm:w-1/2">
                                     <div className="mb-5">
                                         <label
+                                            htmlFor="phone"
+                                            className="mb-3 block text-base font-medium text-[#07074D]"
+                                        >
+                                            Phone
+                                        </label>
+                                        <input
+                                            type="text"
+                                            name="phone"
+                                            id="phone"
+                                            value={formData.phone}
+                                            onChange={onChange}
+                                            placeholder='e.g. autohub@gmail.com'
+                                            className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="w-full px-3 sm:w-1/2">
+                                    <div className="mb-5">
+                                        <label
                                             htmlFor="type"
                                             className="mb-3 block text-base font-medium text-[#07074D]"
                                         >
@@ -181,7 +205,7 @@ const Edit = ({ handleModalClose, user, handleUpdate }) => {
                                         >
                                             Work History
                                         </label>
-                                        <input
+                                        <textarea
                                             type="text"
                                             name="WorkHistory"
                                             id="WorkHistory"
@@ -189,7 +213,7 @@ const Edit = ({ handleModalClose, user, handleUpdate }) => {
                                             value={formData.workHistory}
                                             onChange={onChange}
                                             className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                        />
+                                        ></textarea>
                                     </div>
                                 </div>
                             </div>

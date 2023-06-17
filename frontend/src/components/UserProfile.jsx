@@ -59,9 +59,9 @@ const UserProfile = ({ onLogout }) => {
             </div>
           </Link>
         ))}
-        
-        {user?.role != "driver" && user?.role != "customer" &&
-        <UserRole /> 
+
+        {(user?.role != "driver" && user?.role != "customer" && user?.role != "service provider") &&
+          <UserRole />
         }
       </div>
       <div className="mt-5">

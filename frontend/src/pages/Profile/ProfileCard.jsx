@@ -1,16 +1,16 @@
 import React from 'react';
-import avatar from '../../data/avatar.jpg'
+import avatar from '../../assets/useravatar.svg'
 import moment from 'moment'
 
 const ProfileCard = ({ user, currentColor, handleShow }) => {
   return (
     <div className="bg-white p-3 border-t-4 b" style={{ borderColor: currentColor }}>
       <div className="mt-8 text-center">
-        <img src={avatar} alt="" className="m-auto h-24 w-24 rounded-full object-cover lg:h-28 lg:w-28" />
+        <img src={user.profileImage? user.profileImage:avatar} alt="" className="m-auto h-24 w-24 rounded-full object-cover lg:h-28 lg:w-28" />
         <h5 className="mt-4 hidden text-xl font-semibold text-gray-600 lg:block dark:text-gray-300">
           {user.firstName}
         </h5>
-        <span className="hidden text-gray-400 lg:block">Driver</span>
+        <span className="hidden text-gray-400 lg:block">{user.role}</span>
       </div>
       <div className="border border-gray-300 my-4"></div>
 
@@ -31,7 +31,7 @@ const ProfileCard = ({ user, currentColor, handleShow }) => {
         </h3>
       }
 
-      {user.role == "service-provider" &&
+      {user.role == "serviceProvider" &&
         <h3 className="text-gray-600 font-lg text-semibold leading-6">
           Having a comprehensive service provider profile enhances your credibility and allows us to showcase your expertise effectively to our users. It demonstrates your commitment to delivering exceptional vehicle services while enabling us to better understand how your offerings align with our customers' needs.
         </h3>

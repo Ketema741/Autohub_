@@ -8,12 +8,14 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   CLEAR_ERRORS,
+  UPDATE_USER,
+  USER_ERROR,
 } from '../Types';
 
 const authReducer = (state, action) => {
   switch (action.type) {
     case USER_LOADED:
-      if(action.payload.data){
+      if (action.payload.data) {
         return {
           ...state,
           isUserAuthenticated: true,
@@ -50,6 +52,18 @@ const authReducer = (state, action) => {
         user: null,
         error: action.payload,
       };
+
+    case USER_ERROR:
+      return {
+        ...state,
+        error: action.payload
+      };
+    case UPDATE_USER:
+      return {
+        ...state,
+        user: action.payload,
+      };
+
     case CLEAR_ERRORS:
       return {
         ...state,

@@ -250,17 +250,10 @@ const UserState = (props) => {
 
   // update user
   const updateUser = async (user, userType) => {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-
     try {
       const res = await axios.put(
         `/users/${userType}/${user._id}`,
-        user,
-        config
+        user
       );
       dispatch({
         type: UPDATE_USER,
@@ -366,6 +359,7 @@ const UserState = (props) => {
   };
 
   const approveSupplier = async (data, supplier) => {
+    
     try {
       const approvePromise = new Promise((resolve, reject) => {
         axios.post(`/users/approve/suppliers/${supplier._id}`, data)
