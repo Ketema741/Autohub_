@@ -57,7 +57,7 @@ const AuthState = (props) => {
         toast.promise(registrationPromise, {
           pending: 'Registering...',
           success: 'Registration successful! If you are a supplier, you will receive an acceptance email. Otherwise, please return to the homepage and log in.',
-          error: `Registration failed: ${state.error.error}`,       
+          error: `Registration failed: ${state.error?.error}`,       
         });
         state.error = null;
       } catch (error) {
