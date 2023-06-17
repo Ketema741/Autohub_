@@ -6,7 +6,9 @@ import { BsTelephone } from 'react-icons/bs'
 import { AiOutlineMail } from 'react-icons/ai'
 import { FaStar } from 'react-icons/fa'
 
+import avatar from '../../assets/useravatar.svg'
 import UserContext from '../../context/user/userContext';
+import Profile from './../Profile/Profile';
 
 const DriverCard = ({ driver }) => {
   const navigate = useNavigate()
@@ -41,11 +43,11 @@ const DriverCard = ({ driver }) => {
 
   return (
 
-    <div className="p-4 group space-y-8 border-t-4 bg-white shadow-md border-gray-100 dark:border-gray-800">
+    <div className="mb-8 p-4 group space-y-8 border-t-4 bg-white shadow-md border-gray-100 dark:border-gray-800">
       <div className="mx-auto -mt-16 h-32 w-32 rotate-45 overflow-hidden rounded-[2rem]">
         <img
           className="mx-auto h-full w-full -rotate-45 scale-125 object-cover transition duration-300 group-hover:scale-[1.4]"
-          src={driver1}
+          src={driver.profileImage ? driver.profileImage : avatar}
           alt="driver"
           loading="lazy"
           width="640"

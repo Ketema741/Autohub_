@@ -6,6 +6,7 @@ import { FaStar } from 'react-icons/fa'
 
 import DriverRating from './DriverRating'
 import driver1 from '../../data/avatar.jpg';
+import avatar from '../../assets/useravatar.svg'
 
 const DetailCard = ({ driver }) => {
     const renderStars = (rating) => {
@@ -34,7 +35,7 @@ const DetailCard = ({ driver }) => {
                     <div className="mx-auto -mt-16 h-32 w-32 rotate-45 overflow-hidden rounded-[2rem]">
                         <img
                             className="mx-auto h-full w-full -rotate-45 scale-125 object-cover transition duration-300 group-hover:scale-[1.4]"
-                            src={driver1}
+                            src={driver.profileImage ? driver.profileImage : avatar}
                             alt="driver"
                             loading="lazy"
                             width="640"

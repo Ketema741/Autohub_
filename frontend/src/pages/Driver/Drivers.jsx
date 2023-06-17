@@ -112,7 +112,7 @@ const Drivers = () => {
                   </div>
 
                   {drivers !== null ? (
-                    <div className="grid gap-28 py-20 md:grid-cols-3 md:gap-12">
+                    <div className="grid gap-32 py-20 md:grid-cols-3 md:gap-12">
                       {
                         filteredDrivers !== null ?
                           filteredDrivers.map(driver => (
