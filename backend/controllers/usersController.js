@@ -282,7 +282,8 @@ const updateCustomer = async (req, res) => {
       res.status(404);
       throw new Error("Couldn't be updated, Customer not found ");
     }
-    if (user._id !== req.user.id.toString()) {
+    if (user._id.toString() !== req.user.id) {
+      res.status(403);
       throw new Error("Only account owner can update the profile");
     }
     const updatedUser = await models.Customer.findByIdAndUpdate(
@@ -308,9 +309,10 @@ const updateServiceProvider = async (req, res) => {
       res.status(404);
       throw new Error("Couldn't be updated, Service Provider not found ");
     }
-    if (user._id !== req.user.id.toString()) {
-      throw new Error("Only account owner can update the profile");
-    }
+      if (user._id.toString() !== req.user.id) {
+        res.status(403);
+        throw new Error("Only account owner can update the profile");
+      }
     const updatedUser = await models.ServiceProvider.findByIdAndUpdate(
       req.params.user_id,
       req.body,
@@ -335,7 +337,8 @@ const updateSupplier = async (req, res) => {
       res.status(404);
       throw new Error("Couldn't be updated, Supplier not found ");
     }
-    if (user._id !== req.user.id.toString()) {
+      if (user._id.toString() !== req.user.id) {
+      res.status(403);
       throw new Error("Only account owner can update the profile");
     }
     const updatedUser = await models.Supplier.findByIdAndUpdate(
@@ -361,7 +364,8 @@ const updateDriver = async (req, res) => {
       res.status(404);
       throw new Error("Couldn't be updated, User not found ");
     }
-    if (user._id !== req.user.id.toString()) {
+      if (user._id.toString() !== req.user.id) {
+      res.status(403);
       throw new Error("Only account owner can update the profile");
     }
     const updatedUser = await models.Driver.findByIdAndUpdate(
@@ -388,7 +392,8 @@ const updateCarAficionados = async (req, res) => {
       res.status(404);
       throw new Error("Couldn't be updated, User not found ");
     }
-    if (user._id !== req.user.id.toString()) {
+      if (user._id.toString() !== req.user.id) {
+      res.status(403);
       throw new Error("Only account owner can update the profile");
     }
 

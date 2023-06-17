@@ -1,35 +1,31 @@
 require("dotenv").config();
+const path = require("path");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { getUserByEmail } = require("../controllers/usersController");
 const { sendResetPasswordEmail } = require("./mail");
+const Users = require("../models/Users");
 
 const getUserByEmailWithResetToken = async (email) => {
   const [admin, customer, supplier, driver, caraficionados, serviceProvider] =
     await Promise.all([
-      models.Customer.findOne({
-        email,
-        "resetToken.resetTokenExpiration": { $gt: new Date() },
+      Users.Customer.findOne({
+        email
       }),
-      models.Admin.findOne({
-        email,
-        "resetToken.resetTokenExpiration": { $gt: new Date() },
+      Users.Admin.findOne({
+        email
       }),
-      models.ServiceProvider.findOne({
-        email,
-        "resetToken.resetTokenExpiration": { $gt: new Date() },
+      Users.ServiceProvider.findOne({
+        email
       }),
-      models.Driver.findOne({
-        email,
-        "resetToken.resetTokenExpiration": { $gt: new Date() },
+      Users.Driver.findOne({
+        email
       }),
-      models.Supplier.findOne({
+      Users.Supplier.findOne({
         email,
-        "resetToken.resetTokenExpiration": { $gt: new Date() },
       }),
-      models.CarAficionados.findOne({
-        email,
-        "resetToken.resetTokenExpiration": { $gt: new Date() },
+      Users.CarAficionados.findOne({
+        email
       }),
     ]);
 
@@ -80,10 +76,9 @@ const forgotPassword = async (req, res) => {
     await user.save();
 
     // Send password reset email
-    const resetLink = `http://localhost:6767/account/reset-password/${token}`;
-    const isSend = await sendResetPasswordEmail(email, resetLink);
+    const resetLink = `http://localhost:6767/users/account/reset-password/${token}`;
+    await sendResetPasswordEmail(email, resetLink);
 
-    console.log(isSend);
     res.status(200).json({ message: "Password reset email sent" });
   } catch (error) {
     console.error(error);
@@ -93,29 +88,60 @@ const forgotPassword = async (req, res) => {
 
 const resetPassword = async (req, res) => {
   try {
-    const { email, password } = req.body;
-
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const { email, newPassword } = req.body;
+    if (!email || newPassword) {
+      res.status(400);
+      throw new Error("Provide your email and new password");
+    }
     const user = await getUserByEmailWithResetToken(email);
-
+    console.log(user);
     if (!user) {
-      return res.status(404).json({ message: "Invalid or expired token" });
+      res.status(404);
+      throw new Error("No user with email. Please enter your correct email ");
     }
 
-    // Update user's password
-    user.password = hashedPassword;
-    user.resetToken = {};
-    await user.save();
+     if (
+      new Date(user.resetToken.resetTokenExpiration).getTime() <
+      new Date().getTime()
+    ) {
+      res.status(400);
+      throw new Error("The reset token has expired");
+    }
 
-    res.status(200).json({ message: "Password reset successful" });
+    // Send the password reset template to the client
+    const filePath = path.join(__dirname, "/static/reset-password.html");
+    res.sendFile(filePath);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: error.message });
+  }
+};
+    // Update user's password
+//     const salt = await bcrypt.genSalt(10);
+//     const hashedPassword = await bcrypt.hash(newPassword, salt);
+//     user.password = hashedPassword;
+//     user.resetToken = {};
+//     await user.save();
+//     console.log(user);
+//     res.status(200).json({ message: "Password updated successful" });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+
+const getTemplate = async (req, res) => {
+  try {
+    
+    const filePath = path.join(__dirname, "/static/reset-password.html");
+    res.sendFile(filePath);
+  } catch (error) {
+    console.log(error);
   }
 };
 
 module.exports = {
   forgotPassword,
   resetPassword,
+  getTemplate,
 };
