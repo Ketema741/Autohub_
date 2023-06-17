@@ -54,7 +54,7 @@ const SelectType = ({ onSelect }) => {
                     <option value="customer">Normal User</option>
                     <option value="supplier">Car or Accessory Supplier</option>
                     <option value="driver">Driver</option>
-                    <option value="expert">Vehicle Expert</option>
+                    <option value="caraficionados">Car Aficionados</option>
                   </Field>
                   <ErrorMessage name="userType" component="div" className="text-red-500" />
                 </div>

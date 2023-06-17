@@ -107,13 +107,13 @@ const RegistrationForm = () => {
                 case 'supplier':
                     formComponent = <SupplierRegistration onSubmit={handleCarSupplierRegistration} handlePrev={handlePrev} />;
                     break;
-                case 'user':
+                case 'customer':
                     formComponent = <NormalUserRegistration onSubmit={handleUserRegistration} handlePrev={handlePrev} />;
                     break;
                 case 'driver':
                     formComponent = <DriverRegistration onSubmit={handleDriverRegistration} handlePrev={handlePrev} />;
                     break;
-                case 'expert':
+                case 'caraficionados':
                     formComponent = <VehicleExpertRegistration onSubmit={handleVehicleExpertRegistration} handlePrev={handlePrev} />;
                     break;
                 default:
