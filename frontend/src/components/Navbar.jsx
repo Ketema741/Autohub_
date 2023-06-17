@@ -128,8 +128,8 @@ const Navbar = () => {
                 </span>
               </div>
             }
-            {user?.role == "customer" || user?.role == "serviceProvider" &&
-              <div className="relative flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg" >
+            {(user?.role === "customer" || user?.role === "serviceProvider") && (
+              <div className="relative flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg">
                 <NavButton
                   title="Chat"
                   dotColor="#FF5C8E"
@@ -138,13 +138,14 @@ const Navbar = () => {
                   icon={<BsChatLeft className="mx-auto w-6 h-6 text-gray-600 dark:text-gray-300" />}
                 />
                 {/* <span
-                style={{ background: "#FF5C8E" }}
-                className="absolute inline-flex items-center justify-center rounded-full h-4 w-4 right-2 top-2 text-white text-center"
-              >
-                0
-              </span> */}
+                  style={{ background: "#FF5C8E" }}
+                  className="absolute inline-flex items-center justify-center rounded-full h-4 w-4 right-2 top-2 text-white text-center"
+                >
+                  0
+                </span> */}
               </div>
-            }
+            )}
+
 
             <div className=" relative flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg">
               <NavButton
