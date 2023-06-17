@@ -43,7 +43,7 @@ const rateDriver = async (req, res) => {
         },
       },
       { new: true }
-    );
+    ).select("-password");
 
     if (!rating) {
       res.status(500);

@@ -6,53 +6,6 @@ const { getUserByEmail } = require("../controllers/usersController");
 const { sendResetPasswordEmail } = require("./mail");
 const Users = require("../models/Users");
 
-const getUserByEmailWithResetToken = async (email) => {
-  const [admin, customer, supplier, driver, caraficionados, serviceProvider] =
-    await Promise.all([
-      Users.Customer.findOne({
-        email
-      }),
-      Users.Admin.findOne({
-        email
-      }),
-      Users.ServiceProvider.findOne({
-        email
-      }),
-      Users.Driver.findOne({
-        email
-      }),
-      Users.Supplier.findOne({
-        email,
-      }),
-      Users.CarAficionados.findOne({
-        email
-      }),
-    ]);
-
-  if (admin) {
-    return admin;
-  }
-
-  if (customer) {
-    return customer;
-  }
-
-  if (supplier) {
-    return supplier;
-  }
-  if (driver) {
-    return driver;
-  }
-  if (caraficionados) {
-    return caraficionados;
-  }
-  if (serviceProvider) {
-    return serviceProvider;
-  }
-
-  return null;
-};
-
 const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
@@ -67,16 +20,16 @@ const forgotPassword = async (req, res) => {
       { userId: user._id, email: user.email },
       process.env.SECRET_JWT,
       {
-        expiresIn: "1h",
+        expiresIn: "3m",
       }
     );
 
     user.resetToken.token = token;
-    user.resetToken.resetTokenExpiration = Date.now() + 3600000;
+    user.resetToken.resetTokenExpiration = Date.now() + 180000;
     await user.save();
 
     // Send password reset email
-    const resetLink = `http://localhost:6767/users/account/reset-password/${token}`;
+    const resetLink = `http://localhost:6767/users/account/reset-password?token=${token}`;
     await sendResetPasswordEmail(email, resetLink);
 
     res.status(200).json({ message: "Password reset email sent" });
@@ -88,51 +41,54 @@ const forgotPassword = async (req, res) => {
 
 const resetPassword = async (req, res) => {
   try {
-    const { email, newPassword } = req.body;
-    if (!email || newPassword) {
+    const { email, newPassword, token } = req.body;
+    if (!email || !newPassword) {
       res.status(400);
       throw new Error("Provide your email and new password");
     }
-    const user = await getUserByEmailWithResetToken(email);
-    console.log(user);
+    const user = await getUserByEmail(email);
     if (!user) {
       res.status(404);
       throw new Error("No user with email. Please enter your correct email ");
     }
 
-     if (
+    console.log(
+      new Date(user.resetToken.resetTokenExpiration).getTime() <
+        new Date().getTime()
+    );
+    console.log(
+      new Date(user.resetToken.resetTokenExpiration).getTime(),
+      new Date().getTime()
+    );
+    if (user.resetToken.resetTokenExpiration === undefined) {
+      throw new Error(
+        "No reset token, Please click forgot password on login page"
+      );
+    }
+    if (
       new Date(user.resetToken.resetTokenExpiration).getTime() <
       new Date().getTime()
     ) {
       res.status(400);
-      throw new Error("The reset token has expired");
+      throw new Error(
+        "The reset token has expired, Please request password reset by clicking forgot password link"
+      );
     }
-
-    // Send the password reset template to the client
-    const filePath = path.join(__dirname, "/static/reset-password.html");
-    res.sendFile(filePath);
+    // Update user's password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+    user.password = hashedPassword;
+    user.resetToken = {};
+    await user.save();
+    res.status(200).json({ message: "Password updated successful" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: error.message });
   }
 };
-    // Update user's password
-//     const salt = await bcrypt.genSalt(10);
-//     const hashedPassword = await bcrypt.hash(newPassword, salt);
-//     user.password = hashedPassword;
-//     user.resetToken = {};
-//     await user.save();
-//     console.log(user);
-//     res.status(200).json({ message: "Password updated successful" });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: error.message });
-//   }
-// };
 
 const getTemplate = async (req, res) => {
   try {
-    
     const filePath = path.join(__dirname, "/static/reset-password.html");
     res.sendFile(filePath);
   } catch (error) {

@@ -11,7 +11,7 @@ const getBlogs = async (req, res) => {
   try {
     const blogs = await model.Blog.find({})
       .sort({ date: -1 })
-      .populate("user", "firstName userImage bio email ");
+      .populate("author", "firstName userImage bio email ");
 
     res.json(blogs);
   } catch (err) {
@@ -51,26 +51,19 @@ const addBlog = async (req, res) => {
       res.status(403);
       throw new Error("You've to login as CarAficionados to add blog post");
     }
-    const imageFile = req.file;
-    const images_data = await uploadToCloudinary(imageFile?.path, "images");
+    // const imageFile = req.file;
+    // const images_data = await uploadToCloudinary(imageFile?.path, "images");
 
-    const _blog = await model.Blog.create({
+    const blog = await model.Blog.create({
       author: req.user._id,
       title,
       excerpt,
       description,
       category,
       summary,
-      blogImage: images_data,
+      blogImage: req.body?.blogImage,
     });
-    if (_blog) {
-      const blog = await model.Blog.findByIdAndUpdate(
-        { _id: _blog._id },
-        {
-          blogImage: images_data,
-        }
-      );
-
+    if (blog) {
       res.status(201).json({
         data: blog,
         message: "Blog posted successfully",

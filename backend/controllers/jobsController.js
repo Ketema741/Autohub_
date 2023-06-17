@@ -14,35 +14,24 @@ const addJob = async (req, res) => {
     }
 
     const employer = req.user;
-    const imageFiles = req.files;
-    const action = imageFiles.map((img) =>
-       uploadToCloudinary(img.path, "images")
-    );
-    const images_data = await Promise.all(action);
+    console.log(req.body)
     const job = await Job.create({
       title,
       description,
       location,
       employer,
-      jobImages: images_data,
+      jobImages:req.body?.jobImages,
     });
     if (job) {
-      const _job = await models.Job.findByIdAndUpdate(
-        { _id: job._id },
-        {
-          $addToSet: { carImages: images_data },
-        },
-        { new: true }
-      );
       res.status(201).json({
-        data: _job,
+        data: job,
         message: "Job added successfully",
       });
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-};     
+};
 
 const getJobs = async (req, res) => {
   try {
