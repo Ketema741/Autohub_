@@ -51,7 +51,6 @@ const SupplierRegistration = ({ onSubmit, handlePrev }) => {
 
     const handleSubmit = (values) => {
         onSubmit(values);
-        console.log(values);
     };
 
     return (

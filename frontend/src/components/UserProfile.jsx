@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
-import { MdOutlineCancel } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
+import { MdOutlineCancel, MdOutlineManageAccounts, MdOutlineMail } from 'react-icons/md';
+
 import Button from './Button';
-import { userProfileData } from '../data/dummy';
+
 import { useStateContext } from '../context/ContextProvider';
-import avatar from '../data/avatar.jpg';
+import avatar from '../assets/useravatar.svg';
 import AuthContext from "../context/auth/authContext";
 import UserRole from './UserRole';
 
@@ -29,7 +30,7 @@ const UserProfile = ({ onLogout }) => {
       <div className="flex gap-5 items-center mt-6 border-color border-b-1 pb-6">
         <img
           className="rounded-full h-24 w-24"
-          src={avatar}
+          src={user?.profileImage? user?.profileImage:avatar}
           alt="user-profile"
         />
         {user &&
@@ -40,27 +41,45 @@ const UserProfile = ({ onLogout }) => {
         }
       </div>
       <div>
-        {userProfileData.map((item, index) => (
-          <Link to={item.url}>
-            <div key={index} className="flex gap-5 border-b-1 border-color p-4 hover:bg-light-gray cursor-pointer  dark:hover:bg-[#a5c2f4]">
+        
+          <Link to="/profile">
+            <div className="flex gap-5 border-b-1 border-color p-4 hover:bg-light-gray cursor-pointer  dark:hover:bg-[#a5c2f4]">
 
               <button
                 type="button"
-                style={{ color: item.iconColor, backgroundColor: item.iconBg }}
+                style={{ color: "rgb(87, 125, 134)", backgroundColor: "rgb(185, 237, 221)" }}
                 className=" text-xl rounded-lg p-3 hover:bg-light-gray"
               >
-                {item.icon}
+                <MdOutlineManageAccounts />
               </button>
 
               <div>
-                <p className="font-semibold dark:text-gray-200 ">{item.title}</p>
-                <p className="text-gray-500 text-sm dark:text-gray-400"> {item.desc} </p>
+                <p className="font-semibold dark:text-gray-200 ">My Profile</p>
+                <p className="text-gray-500 text-sm dark:text-gray-400"> Account Settings </p>
               </div>
             </div>
           </Link>
-        ))}
-        
-        <UserRole />
+          {/* <Link to="/profile">
+            <div className="flex gap-5 border-b-1 border-color p-4 hover:bg-light-gray cursor-pointer  dark:hover:bg-[#a5c2f4]">
+
+              <button
+                type="button"
+                style={{ color: '#03C9D7', backgroundColor: '#E5FAFB' }}
+                className=" text-xl rounded-lg p-3 hover:bg-light-gray"
+              >
+                <MdOutlineMail />
+              </button>
+
+              <div>
+                <p className="font-semibold dark:text-gray-200 ">My Inbox</p>
+                <p className="text-gray-500 text-sm dark:text-gray-400"> Messages </p>
+              </div>
+            </div>
+          </Link> */}
+
+        {(user?.role != "driver" && user?.role != "customer" && user?.role != "service provider") &&
+          <UserRole />
+        }
       </div>
       <div className="mt-5">
         <button

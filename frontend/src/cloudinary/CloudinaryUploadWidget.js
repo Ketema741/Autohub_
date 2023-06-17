@@ -4,8 +4,8 @@ class CloudinaryUploadWidget extends Component {
   componentDidMount() {
     var myWidget = window.cloudinary.createUploadWidget(
       {
-        cloudName: "ds373apvf",
-        uploadPreset: "item-renting"
+        cloudName: "dirocp1ht",
+        uploadPreset: "autohub-images"
       },
       (error, result) => {
         if (!error && result && result.event === "success") {

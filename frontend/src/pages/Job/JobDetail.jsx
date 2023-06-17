@@ -3,6 +3,10 @@ import React, { useEffect } from "react";
 import { Navbar, Footer, Sidebar } from "../../components";
 import { useStateContext } from "../../context/ContextProvider";
 
+
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { SiBookstack } from "react-icons/si";
 import Blog from "../../assets/undraw_job_offers_re_634p.svg";
 import JobDetailCard from './JobDetailCard'
@@ -70,6 +74,18 @@ const JobDetail = () => {
                     <Footer />
                 </div>
             </div>
+            <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
         </div>
     );
 };

@@ -5,6 +5,7 @@ import ServiceProviderCard from './ServiceProviderCard';
 import { useStateContext } from '../../context/ContextProvider';
 import Header from './Header'
 import UserContext from '../../context/user/userContext';
+import Loading from './Loading';
 
 const ServiceProviders = () => {
   const userContext = useContext(UserContext)
@@ -31,6 +32,15 @@ const ServiceProviders = () => {
     }
   }, []);
 
+  const RenderLoadings = () => {
+    const loadings = [];
+
+    for (let i = 0; i < 10; i++) {
+      loadings.push(<Loading key={i} />);
+    }
+
+    return loadings;
+  };
   return (
     <div className={currentMode === "Dark" ? "dark" : ""}>
       <div className="flex relative dark:bg-main-dark-bg">
@@ -71,7 +81,10 @@ const ServiceProviders = () => {
                   }
                 </div>
               )
-                : <div>loading...</div>
+                :
+                <div className="grid gap-6 md:mx-auto md:w-8/12 lg:w-full lg:grid-cols-3">
+                  <RenderLoadings />
+                </div>
               }
             </div>
           </div>

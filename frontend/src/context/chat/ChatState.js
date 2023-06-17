@@ -3,6 +3,7 @@ import axios from '../axiosConfig';
 import chatContext from './chatContext';
 import chatReducer from './chatReducer';
 import { io } from "socket.io-client";
+import { toast } from 'react-toastify';
 
 import {
   GET_CONVERSATIONS,
@@ -15,7 +16,7 @@ import {
   GET_USERS,
   SET_CHAT,
   SET_ARRIVAL_MESSAGE,
-  
+
   GET_NOTIFICATIONS,
   SEND_NOTIFICATION,
   SEND_NOTIFICATIONS,
@@ -35,7 +36,6 @@ const ChatState = (props) => {
     onlineUsers: null,
     error: null,
     notifications: null,
-
   };
 
   const [state, dispatch] = useReducer(chatReducer, initialState);
@@ -142,7 +142,41 @@ const ChatState = (props) => {
 
 
   // send notification
-  const sendNotification  = async (notification) => {
+  const sendNotificationToMany = async (notification) => {
+    try {
+      const notificationPromise = new Promise((resolve, reject) => {
+        axios.post("/notifications/send-to-all", notification)
+          .then((res) => {
+            dispatch({
+              type: APPROVE_SUPPLIER,
+              payload: supplier,
+            });
+
+            resolve(res);
+          })
+          .catch((err) => {
+            dispatch({
+              type: MESSAGE_ERROR,
+              payload: err.response,
+            });
+            reject(err);
+          });
+      });
+
+      toast.promise(notificationPromise, {
+        pending: 'Sending...',
+        success: 'Notification successfully Sent',
+        error: `Sending Notification Failed Try Again ater!`,
+      });
+      state.error = null;
+    } catch (error) {
+      toast.error(`${state.error}`);
+    }
+
+  };
+
+  // send notification
+  const sendNotificationToSingle = async (notification) => {
     try {
       const res = await axios.post("/notifications/send", notification);
       dispatch({ type: SEND_NOTIFICATION, payload: notification });
@@ -155,8 +189,8 @@ const ChatState = (props) => {
     }
   };
 
-   // send notification
-   const deleteNotification  = async (notificationId) => {
+  // send notification
+  const deleteNotification = async (notificationId) => {
     try {
       const res = await axios.post(`/notifications/${notificationId}`);
       dispatch({ type: DELETE_NOTIFICATION, payload: notificationId });
@@ -209,20 +243,26 @@ const ChatState = (props) => {
         currentChat: state.currentChat,
         messages: state.messages,
         error: state.error,
+
+        createConversationRoom,
         getConversations,
         getConversation,
+
         getMessages,
         getMessage,
         sendMessage,
-        addUser,
-        getUsers,
         setCurrentChat,
         setArrivalMessage,
         clearCurrent,
+
+        addUser,
+        getUsers,
+
         getNotifications,
-        sendNotification,
+        sendNotificationToSingle,
+        sendNotificationToMany,
         deleteNotification,
-        createConversationRoom,
+
       }}
     >
       {props.children}

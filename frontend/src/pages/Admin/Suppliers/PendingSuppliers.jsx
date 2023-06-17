@@ -6,34 +6,48 @@ import { Header } from '../../../components';
 import Modal from '../Modal'
 import UserContext from '../../../context/user/userContext';
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Suppliers = () => {
 
     const userContext = useContext(UserContext)
 
-    const { getPendingUsers, pendingSuppliers } = userContext
+    const {
+        getPendingUsers,
+        pendingSuppliers,
+        approveSupplier,
+        rejectSupplier,
+    } = userContext
 
     useEffect(() => {
         getPendingUsers("suppliers")
     }, [])
 
-    const [bankAccount, setBankAccount] = useState('');
+    const [accountId, setAcountId] = useState('');
     const handleInputChange = (event) => {
-        setBankAccount(event.target.value);
+        setAcountId(event.target.value);
     };
 
     const [supplier, setSupplier] = useState([]);
 
     const [showEditModal, setShowEditModal] = useState(null);
-    const handleEditClick = (supplier) => {
+
+    const handleApproveClick = (supplier) => {
         setShowEditModal(true);
         setSupplier(supplier);
+    };
+
+    const handleApprove = (e) => {
+        e.preventDefault();
+        approveSupplier({ "accountId": accountId }, { accountId: accountId, ...supplier });
     };
 
     const handleEditModalClose = () => {
         setShowEditModal(false);
     };
 
+    // hanlde rejection start herer
     const [showAlert, setShowAlert] = useState(null);
 
     const handleRejectClick = (supplier) => {
@@ -41,29 +55,30 @@ const Suppliers = () => {
         setSupplier(supplier);
     };
 
-    const handleCloseAlert = () => {
+    const handleCloseRejectConfirm = () => {
         setShowAlert(false);
     };
+
+    const handleRejectConfirm = () => {
+        rejectSupplier(supplier._id);
+    };
+    // handle rejection end here
+
 
     const [currentPage, setCurrentPage] = useState(1);
 
     const PAGE_SIZE = 3;
-    const totalSuppliers = pendingSuppliers ? pendingSuppliers.length : 0 ;
+    const totalSuppliers = pendingSuppliers ? pendingSuppliers.length : 0;
     const totalPages = Math.ceil(totalSuppliers / PAGE_SIZE);
     const startIndex = (currentPage - 1) * PAGE_SIZE;
     const endIndex = startIndex + PAGE_SIZE;
-    const currentSuppliers = pendingSuppliers? pendingSuppliers.slice(startIndex, endIndex) : [];
+    const currentSuppliers = pendingSuppliers ? pendingSuppliers.slice(startIndex, endIndex) : [];
 
     const goToPage = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
 
-    const handleClickSave = (e) => {
-        e.preventDefault();
-        setShowEditModal(false);
-        console.log(supplier)
-        console.log(bankAccount)
-    }
+
 
 
     const [showActions, setShowActions] = useState(Array(currentSuppliers?.length).fill(false));
@@ -195,7 +210,7 @@ const Suppliers = () => {
                                                                 </li>
                                                                 <li>
                                                                     <button
-                                                                        onClick={() => handleEditClick(supplier)}
+                                                                        onClick={() => handleApproveClick(supplier)}
                                                                         className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                                                                     >
                                                                         Approve
@@ -277,7 +292,7 @@ const Suppliers = () => {
                                 {/* Modal header */}
                                 <div className="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
 
-                                    <Header category="Confirmation" title={`Approve ${supplier.name} Application`} />
+                                    <Header category="Confirmation" title={`Approve ${supplier.firstName} ${supplier.lastName} Application`} />
 
                                     <button
                                         type="button"
@@ -316,7 +331,7 @@ const Suppliers = () => {
                                                 id="bank-accoun"
                                                 className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                 placeholder="account"
-                                                value={bankAccount}
+                                                value={accountId}
                                                 onChange={handleInputChange}
                                                 required
                                             />
@@ -326,11 +341,11 @@ const Suppliers = () => {
 
                                 <div className="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
                                     <button
-                                        onClick={handleClickSave}
+                                        onClick={handleApprove}
                                         type="submit"
                                         className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                                     >
-                                        Save
+                                        Approve
                                     </button>
                                 </div>
                             </form>
@@ -352,14 +367,14 @@ const Suppliers = () => {
                                 <button
                                     type="button"
                                     className="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5"
-                                    onClick={handleCloseAlert}
+                                    onClick={handleRejectConfirm}
                                 >
                                     Yes
                                 </button>
                                 <button
                                     type="button"
                                     className="text-white bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5"
-                                    onClick={handleCloseAlert}
+                                    onClick={handleCloseRejectConfirm}
                                 >
                                     Close
                                 </button>
@@ -370,6 +385,18 @@ const Suppliers = () => {
                 )}
 
             </div>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
         </div>
     )
 }

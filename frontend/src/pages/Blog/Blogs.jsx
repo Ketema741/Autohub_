@@ -1,14 +1,14 @@
 import React, { useEffect, useContext, Fragment, useRef } from 'react';
 
-import { FiSearch } from 'react-icons/fi'
+import { FiSearch } from 'react-icons/fi';
 
 import { Navbar, Footer, Sidebar } from '../../components';
 import { useStateContext } from '../../context/ContextProvider';
-import BlogCard from './BlogCard'
+import BlogCard from './BlogCard';
 
 import Header from './Header';
 import BlogContext from './../../context/blog/blogContext';
-
+import Loading from './Loading';
 
 const Blogs = () => {
 
@@ -45,6 +45,16 @@ const Blogs = () => {
     getBlogs()
     console.log(blogs)
   }, []);
+
+  const RenderLoadings = () => {
+    const loadings = [];
+
+    for (let i = 0; i < 10; i++) {
+      loadings.push(<Loading key={i} />);
+    }
+
+    return loadings;
+  };
 
 
   return (
@@ -104,10 +114,9 @@ const Blogs = () => {
                 </div>
               </div>
             </div>
-            <div id="read" className="w-full pt-2 pr-5 pb-6 pl-5 mt-0 mr-auto mb-0 ml-auto space-y-5 sm:py-8 md:py-12 sm:space-y-8 md:space-y-16 max-w-7xl">
-              <div className="grid grid-cols-12 sm:px-5 gap-x-8 gap-y-16">
-
-                {blogs ? (
+            {blogs ? (
+              <div id="read" className="w-full pt-2 pr-5 pb-6 pl-5 mt-0 mr-auto mb-0 ml-auto space-y-5 sm:py-8 md:py-12 sm:space-y-8 md:space-y-16 max-w-7xl">
+                <div className="grid grid-cols-12 sm:px-5 gap-x-8 gap-y-16">
                   <Fragment>
                     {
                       filtered !== null ?
@@ -120,12 +129,15 @@ const Blogs = () => {
                         ))
                     }
                   </Fragment>
-                )
-                  :
-                  <div> Loading... </div>
-                }
+                </div>
               </div>
-            </div>
+            )
+              :
+              <div className="mx-8 grid gap-32 py-20 md:grid-cols-3 md:gap-12">
+                <RenderLoadings />
+              </div>
+
+            }
           </div>
           {/* <CarouselCard /> */}
           <Footer />

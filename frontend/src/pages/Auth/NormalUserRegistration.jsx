@@ -33,7 +33,6 @@ const NormalUserRegistration = ({ onSubmit, handlePrev }) => {
 
     const handleSubmit = (values) => {
         onSubmit(values);
-        console.log(values);
     };
 
     return (

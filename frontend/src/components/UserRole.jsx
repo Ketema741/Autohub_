@@ -18,7 +18,7 @@ const UserRole = () => {
     let userRole = {};
 
     if (user) {
-        if (user.role === 'expert') {
+        if (user.role === 'caraficionados') {
             userRole = {
                 icon: <AiOutlineCloudUpload />,
                 title: 'Blog Post',
@@ -46,21 +46,8 @@ const UserRole = () => {
                 url: '/supplier',
                 desc: 'Service Provider Dashboard',
             };
-        } else if (user.role === 'driver') {
-            userRole = {
-                icon: <AiOutlineCloudUpload />,
-                title: 'Resume',
-                url: '/driver/resume',
-                desc: 'Upload Your Resume',
-            };
-        } else if (user.role === 'cutomer') {
-            userRole = {
-                icon: <AiOutlineCloudUpload />,
-                title: 'Edit Profile',
-                url: '/profile',
-                desc: 'Upload Your Resume',
-            };
-        }
+
+        } 
 
         if (userRole) {
             userRole = {

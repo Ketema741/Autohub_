@@ -28,36 +28,8 @@ const DriverRegistration = ({ onSubmit, handlePrev }) => {
             .min(10, 'Bio must be at least 5 characters long'),
     });
 
-    const validateForm = (values) => {
-        const errors = {};
-
-        if (!values.licenseNumber) {
-            errors.licenseNumber = 'License Number is required';
-        }
-
-        if (!values.bio) {
-            errors.bio = 'Bio is required';
-        } else if (values.bio.length < 5) {
-            errors.bio = 'Bio must be at least 5 characters long';
-        }
-
-        if (!values.address) {
-            errors.address = 'Address is required';
-        }
-
-        if (!values.phone) {
-            errors.phone = 'Phone is required';
-        } else if (values.phone.length < 10) {
-            errors.phone = 'Phone must be at least 10 characters long';
-        }
-
-        return errors;
-    };
-
-
     const handleSubmit = (values) => {
         onSubmit(values);
-        console.log(values);
     };
 
     return (
@@ -74,7 +46,6 @@ const DriverRegistration = ({ onSubmit, handlePrev }) => {
                     <Formik
                         initialValues={initialValues}
                         onSubmit={handleSubmit}
-                        validate={validateForm}
                         validationSchema={validationSchema}
                     >
                         <Form>

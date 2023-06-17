@@ -8,17 +8,21 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   CLEAR_ERRORS,
+  UPDATE_USER,
+  USER_ERROR,
 } from '../Types';
 
 const authReducer = (state, action) => {
   switch (action.type) {
     case USER_LOADED:
-      return {
-        ...state,
-        isUserAuthenticated: true,
-        userLoading: false,
-        user: action.payload.data,
-      };
+      if (action.payload.data) {
+        return {
+          ...state,
+          isUserAuthenticated: true,
+          userLoading: false,
+          user: action.payload.data,
+        };
+      }
     case REGISTER_SUCCESS:
       localStorage.setItem('token', action.payload.token);
       return {
@@ -48,6 +52,19 @@ const authReducer = (state, action) => {
         user: null,
         error: action.payload,
       };
+
+    case USER_ERROR:
+      return {
+        ...state,
+        error: action.payload
+      };
+    case UPDATE_USER:
+      return {
+        ...state,
+        user: action.payload,
+        updatedSuccessfully: true,
+      };
+
     case CLEAR_ERRORS:
       return {
         ...state,

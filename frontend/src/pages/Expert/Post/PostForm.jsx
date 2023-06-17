@@ -8,7 +8,7 @@ import BlogContext from '../../../context/blog/blogContext';
 
 
 
-const CarForm = () => {
+const PostForm = () => {
     const blogContext = useContext(BlogContext);
     const { current } = blogContext
     const { currentColor, setEditItem } = useStateContext();
@@ -80,4 +80,4 @@ const CarForm = () => {
     );
 };
 
-export default CarForm;
+export default PostForm;

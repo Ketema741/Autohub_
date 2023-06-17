@@ -6,6 +6,8 @@ import { useStateContext } from "../../context/ContextProvider";
 import ItemContext from "../../context/item/itemContext";
 import UserContext from "../../context/user/userContext";
 import AuthContext from "../../context/auth/authContext";
+import { toast } from 'react-toastify';
+
 
 const ItemOverview = () => {
   const itemContext = useContext(ItemContext);
@@ -32,21 +34,26 @@ const ItemOverview = () => {
   const handleAddToCart = () => {
     if (isUserAuthenticated) {
       if (user.role === "customer") {
-        const itemExistsInCart = carts.some((cartItem) => cartItem.productId._id === item._id);
-        if (itemExistsInCart) {
-          alert("Item already exists in the cart.");
+        if (carts) {
+          const itemExistsInCart = carts.some((cartItem) => cartItem.productId._id === item._id);
+          if (itemExistsInCart) {
+            toast.info("Item already exists in the cart.");
+          } else {
+            addToCart(item);
+          }
         } else {
           addToCart(item);
         }
       } else {
-        alert("Please log in as a customer to add items to your cart.");
+        toast.info("Please log in as a customer to add items to your cart.");
       }
     } else {
-      alert("Please log in to add items to your cart.");
+      toast.info("Please log in to add items to your cart.");
     }
   };
-  
-  
+
+
+
   return (
     <div className="flex flex-wrap items-center justify-center lg:justify-between px-6 py-12">
       {item ? (
@@ -141,6 +148,8 @@ const ItemOverview = () => {
             </div>
           </div>
         </>) : <div>loading...</div>}
+
+      
     </div>
   );
 };

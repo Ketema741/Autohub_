@@ -6,6 +6,9 @@ import { useStateContext } from "../../context/ContextProvider";
 import { SiBookstack } from "react-icons/si";
 import Blog from "../../assets/undraw_job_offers_re_634p.svg";
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import DetailCard from './DetailCard'
 const Parse = require("html-react-parser");
 
@@ -71,6 +74,18 @@ const Detail = () => {
                     <Footer />
                 </div>
             </div>
+            <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
         </div>
     );
 };

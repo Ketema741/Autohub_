@@ -8,9 +8,7 @@ import * as Yup from 'yup';
 
 import { customToolbarSettings } from './Toolbar';
 
-
-const CarForm = ({ handleData, itemData, categories, getCategories, createCategory }) => {
-
+const CarForm = ({ handleData, categories, getCategories, createCategory }) => {
 
   const [newCategory, setNewCategory] = useState("");
 
@@ -26,66 +24,19 @@ const CarForm = ({ handleData, itemData, categories, getCategories, createCatego
     description: '',
   };
 
-  const [formData, setFormData] = useState(initialValues);
-
   const validationSchema = Yup.object().shape({
     name: Yup.string().required('name is required'),
     category: Yup.string().required('Category is required'),
     brand: Yup.string().required('Brand is required'),
     price: Yup.string().required('Price is required'),
-    // materrial: Yup.string().required('Materrial is required'),
-    // manufacturingDate: Yup.string().required('manufacturingDate is required'),
     quantity: Yup.string()
       .required('quantity is required')
       .min(1, 'quantity must be at least 1 characters long'),
   });
 
-  const validateForm = (values) => {
-    const errors = {};
-
-    if (!values.name) {
-      errors.name = ' name is required';
-    }
-    if (!values.category) {
-      errors.category = ' Category is required';
-    }
-    if (!values.brand) {
-      errors.brand = ' Brand is required';
-    }
-    // if (!values.manufacturingDate) {
-    //   errors.manufacturingDate = 'Manufacturing Date is required';
-    // }
-
-    if (!values.quantity) {
-      errors.quantity = 'quantity is required';
-    } else if (values.quantity.length < 5) {
-      errors.quantity = 'quantity must be at least 5 characters long';
-    }
-
-    // if (!values.materrial) {
-    //   errors.materrial = 'materrial is required';
-    // }
-
-    if (!values.price) {
-      errors.price = 'price is required';
-    } else if (values.price.length < 10) {
-      errors.price = 'price must be at least 10 characters long';
-    }
-    return errors;
-  };
-
-
-  useEffect(() => {
-    if (itemData) {
-      setFormData(itemData)
-    }
-  }, [])
-
   useEffect(() => {
     getCategories()
   }, [])
-
-
 
   const handleCreateCategory = () => {
     if (newCategory.trim() !== "") {
@@ -99,8 +50,6 @@ const CarForm = ({ handleData, itemData, categories, getCategories, createCatego
   const handleSubmit = (values) => {
     values.description = content
     handleData(values)
-
-
   };
 
   return (
@@ -139,7 +88,6 @@ const CarForm = ({ handleData, itemData, categories, getCategories, createCatego
             <Formik
               initialValues={initialValues}
               onSubmit={handleSubmit}
-              validate={validateForm}
               validationSchema={validationSchema}
             >
               <Form>
@@ -205,21 +153,7 @@ const CarForm = ({ handleData, itemData, categories, getCategories, createCatego
                       <ErrorMessage name="brand" component="div" className="text-red-500" />
                     </div>
                   </div>
-                  {/* <div className="w-full px-3 sm:w-1/2">
-                    <div className="mb-5">
-                      <label htmlFor="materrial" className="mb-3 block text-base font-medium text-[#07074D]">
-                        Materrial
-                      </label>
-                      <Field
-                        type="text"
-                        name="materrial"
-                        id="materrial"
-                        placeholder="e.g. Polystar"
-                        className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                      />
-                      <ErrorMessage name="materrial" component="div" className="text-red-500" />
-                    </div>
-                  </div> */}
+                 
                 </div>
                 <div className="mb-5">
                   <label htmlFor="quantity" className="mb-3 block text-base font-medium text-[#07074D]">
@@ -252,22 +186,6 @@ const CarForm = ({ handleData, itemData, categories, getCategories, createCatego
                       <ErrorMessage name="price" component="div" className="text-red-500" />
                     </div>
                   </div>
-
-                  {/* <div className="w-full px-3 sm:w-1/2">
-                    <div className="mb-5">
-                      <label htmlFor="manufacturingDate" className="mb-3 block text-base font-medium text-[#07074D]">
-                        Manufacturing Date
-                      </label>
-                      <Field
-                        type="date"
-                        name="manufacturingDate"
-                        id="manufacturingDate"
-                        className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                      />
-                      <ErrorMessage name="manufacturingDate" component="div" className="text-red-500" />
-                    </div>
-                  </div> */}
-
                 </div>
 
                 <div className="mb-5">
@@ -285,7 +203,7 @@ const CarForm = ({ handleData, itemData, categories, getCategories, createCatego
                 <div>
                   <button
                     type="submit"
-                    className="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none"
+                    className="hover:shadow-form rounded-md bg-[#1E4DB7 py-3 px-8 text-center text-base font-semibold text-white outline-none"
                     style={{ backgroundColor: currentColor }}
                   >
                     Submit
