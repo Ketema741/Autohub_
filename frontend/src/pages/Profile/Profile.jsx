@@ -10,6 +10,7 @@ import AuthContext from "../../context/auth/authContext";
 
 import Navbar from './Navbar'
 
+import AboutAdmin from './about/AboutAdmin'
 import AboutDriver from './about/AboutDriver'
 import AboutCustomer from './about/AboutCustomer'
 import AboutServiceProvider from './about/AboutServiceProvider'
@@ -114,6 +115,7 @@ const Profile = () => {
                                             {user.role == "caraficionados" && <AboutExpert currentColor={currentColor} user={user} />}
                                             {user.role == "service provider" && <AboutServiceProvider currentColor={currentColor} user={user} />}
                                             {user.role == "customer" && <AboutCustomer currentColor={currentColor} user={user} />}
+                                            {user.role == "admin" && <AboutAdmin currentColor={currentColor} user={user} />}
 
                                             <div className="my-6"></div>
                                             {user.role == "driver" &&

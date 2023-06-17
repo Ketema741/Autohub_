@@ -6,7 +6,7 @@ const ProfileCard = ({ user, currentColor, handleShow }) => {
   return (
     <div className="bg-white p-3 border-t-4 b" style={{ borderColor: currentColor }}>
       <div className="mt-8 text-center">
-        <img src={user.profileImage? user.profileImage:avatar} alt="" className="m-auto h-24 w-24 rounded-full object-cover lg:h-28 lg:w-28" />
+        <img src={user.profileImage ? user.profileImage : avatar} alt="" className="m-auto h-24 w-24 rounded-full object-cover lg:h-28 lg:w-28" />
         <h5 className="mt-4 hidden text-xl font-semibold text-gray-600 lg:block dark:text-gray-300">
           {user.firstName}
         </h5>
@@ -18,6 +18,10 @@ const ProfileCard = ({ user, currentColor, handleShow }) => {
         <h3 className="text-gray-600 font-lg text-semibold leading-6">
           Having a complete profile greatly enhances our ability to evaluate your skills and match you with suitable job opportunities. It demonstrates your commitment and professionalism, and it allows us to assess how your expertise aligns with our clients' requirements.
         </h3>
+      }
+      {user.role == "admin" &&
+        <h3 className="text-gray-600 font-lg text-semibold leading-6">
+          This is one of the admin pages. Welcome to this page! If you would like to make any edits, please reach out to your higher-level admin for assistance.        </h3>
       }
       {user.role == "supplier" &&
         <h3 className="text-gray-600 font-lg text-semibold leading-6">
@@ -38,13 +42,15 @@ const ProfileCard = ({ user, currentColor, handleShow }) => {
       }
 
       <ul className="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
-        <li className="flex items-center py-3">
-          <span className="mx-auto">
-            <button onClick={handleShow} className={`bg-${currentColor} py-1 px-2 rounded text-white text-sm`} style={{ backgroundColor: currentColor }}>
-              Edit
-            </button>
-          </span>
-        </li>
+        {user.role != "admin" &&
+          <li className="flex items-center py-3">
+            <span className="mx-auto">
+              <button onClick={handleShow} className={`bg-${currentColor} py-1 px-2 rounded text-white text-sm`} style={{ backgroundColor: currentColor }}>
+                Edit
+              </button>
+            </span>
+          </li>
+        }
         <li className="flex items-center py-3 text-sm">
           <span className=''>Member since</span>
           <span className="ml-auto">

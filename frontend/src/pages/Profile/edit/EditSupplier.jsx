@@ -34,7 +34,6 @@ const Edit = ({ handleModalClose, user }) => {
         formData.description = content
         console.log(formData);
         updateUser(formData, user._id, "supplier")
-
     };
 
     return (
