@@ -3,6 +3,7 @@ import { useStateContext } from '../../context/ContextProvider';
 import ItemContext from '../../context/item/itemContext';
 import ItemCard from './ItemCard'
 import { brands } from '../../data/dummy';
+import Loading from './Loading';
 
 const Items = () => {
     const { currentColor } = useStateContext();
@@ -13,14 +14,24 @@ const Items = () => {
 
     useEffect(() => {
         getPublicItems()
-        
+
     }, []);
+
+    const RenderLoadings = () => {
+        const loadings = [];
+
+        for (let i = 0; i < 10; i++) {
+            loadings.push(<Loading key={i} />);
+        }
+
+        return loadings;
+    };
 
     return (
         <div className="focus:outline-none px-8">
             <div className="mx-auto container pt-24 ">
-                <div className="flex flex-wrap gap-x-2 gap-y-8 items-center justify-center">
-                    {publicItems !== null ? (
+                {publicItems !== null ? (
+                    <div className="flex flex-wrap gap-x-2 gap-y-8 items-center justify-center">
                         <Fragment>
                             {filtered !== null ?
                                 filtered?.map((item) => (
@@ -33,12 +44,13 @@ const Items = () => {
                             }
 
                         </Fragment>
-                    )
-                        :
-                        <div>loading...</div>
-                    }
-
-                </div>
+                    </div>
+                )
+                    :
+                    <div className="mx-8 grid gap-32 py-4 md:grid-cols-3 md:gap-12">
+                        <RenderLoadings />
+                    </div>
+                }
                 <div className="container pt-24">
                     <div className="flex justify-center m-8">
                         <p className="text-2xl font-bold">Popular Brands </p>
@@ -61,10 +73,10 @@ const Items = () => {
                                 </p>
                             </div>
                         ))}
-                        
+
                     </div>
                 </div>
-                
+
                 {/* <CarouselList /> */}
             </div>
 
