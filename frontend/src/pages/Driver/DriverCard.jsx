@@ -50,8 +50,7 @@ const DriverCard = ({ driver }) => {
           src={driver.profileImage ? driver.profileImage : avatar}
           alt="driver"
           loading="lazy"
-          width="640"
-          height="805"
+         
         />
       </div>
       <div className="space-y-4 text-center">

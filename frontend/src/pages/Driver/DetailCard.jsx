@@ -32,7 +32,7 @@ const DetailCard = ({ driver }) => {
         <div className="mt-24 flex flex-col justify-center items-center">
             <div className="relative flex flex-col items-center rounded-[20px] w-[80%] max-w-[95%] mx-auto bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:!shadow-none p-3">
                 <div className="group space-y-8 border-t-4 border-gray-100 dark:border-gray-800">
-                    <div className="mx-auto -mt-16 h-32 w-32 rotate-45 overflow-hidden rounded-[2rem]">
+                    <div className="mx-auto -mt-16 h-64 w-64 rotate-45 overflow-hidden rounded-[2rem]">
                         <img
                             className="mx-auto h-full w-full -rotate-45 scale-125 object-cover transition duration-300 group-hover:scale-[1.4]"
                             src={driver.profileImage ? driver.profileImage : avatar}
