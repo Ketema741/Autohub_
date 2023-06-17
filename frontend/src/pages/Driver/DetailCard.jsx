@@ -5,7 +5,6 @@ import { AiOutlineMail } from 'react-icons/ai'
 import { FaStar } from 'react-icons/fa'
 
 import DriverRating from './DriverRating'
-import driver1 from '../../data/avatar.jpg';
 import avatar from '../../assets/useravatar.svg'
 
 const DetailCard = ({ driver }) => {

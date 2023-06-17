@@ -1,20 +1,27 @@
 import React, { useEffect, useState, useContext } from "react";
+
+import { useNavigate } from 'react-router-dom'
+
 import { MdOutlineCancel } from 'react-icons/md';
+
 import { useStateContext } from '../../context/ContextProvider';
 import AuthContext from './../../context/auth/authContext';
-import { useNavigate } from 'react-router-dom'
+import JobContext from "../../context/job/jobContext";
 
 const Application = ({ togglePopup }) => {
     const navigate = useNavigate()
     const authContext = useContext(AuthContext);
-    const { user, isUserAuthenticated } = authContext
+    const { user, isUserAuthenticated, updateUser, updatedSuccessfully, error } = authContext
     const { currentColor } = useStateContext();
+
+    const jobContext = useContext(JobContext);
+    const { applyForJob } = jobContext;
 
     useEffect(() => {
         if (!isUserAuthenticated) {
             navigate("/login");
         }
-        if (user && user.role != "driver" ) {
+        if (user && user.role != "driver") {
             navigate("/login");
         }
     }, []);
@@ -27,12 +34,12 @@ const Application = ({ togglePopup }) => {
         phone: user?.phone || "",
         address: user?.address || "",
         licenseNumber: user?.licenseNumber || "",
-        licenseExpiryDate: user?.licenseExpiryDate ||"",
+        licenseExpiryDate: user?.licenseExpiryDate || "",
         drivingExperience: user?.drivingExperience || "",
         hasCDL: false,
         drivingRecord: user?.drivingRecord || "",
         employmentHistory: user?.employmentHistory || "",
-        references: user?.references ||"",
+        references: user?.references || "",
         availability: user?.availability || "",
         additionalCertifications: user?.additionalCertifications || "",
         vehicleType: user?.vehicleType || "",
@@ -50,11 +57,20 @@ const Application = ({ togglePopup }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(formData);
-        // addItem(formData, images)
+
+        applyForJob(user._id)
     };
 
     const handleNext = () => {
+        setStep(step + 1);
+    };
+
+    const handleUpdatProfile = (e) => {
+        e.preventDefault();
+        updateUser(formData, user._id, "driver")
+        if (!updatedSuccessfully) {
+            return
+        } 
         setStep(step + 1);
     };
 
@@ -82,6 +98,9 @@ const Application = ({ togglePopup }) => {
 
                         {step === 1 && (
                             <form onSubmit={handleNext}>
+                                <h2 className="text-2xl font-bold mb-8 text-center">
+                                    Complete Your Profile
+                                </h2>
                                 <h2 className="text-xl font-semibold mb-2">
                                     Step 1: Personal Information
                                 </h2>
@@ -326,7 +345,7 @@ const Application = ({ togglePopup }) => {
                             </form>
                         )}
                         {step === 3 && (
-                            <form onSubmit={handleSubmit}>
+                            <form onSubmit={handleUpdatProfile}>
                                 <h2 className="text-xl font-semibold mb-2">
                                     Step 3: Work History and Additional Information
                                 </h2>
@@ -437,7 +456,30 @@ const Application = ({ togglePopup }) => {
                                         className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
                                         type="submit"
                                     >
-                                        Submit
+                                        Complete Profile
+                                    </button>
+
+                                </div>
+                            </form>
+                        )}
+                        {step === 4 && (
+                            <form onSubmit={handleSubmit}>
+                                <h2 className="text-xl font-semibold mb-2">
+                                    Step 4: Click Appply To Complete Your Application
+                                </h2>
+                                <div className="flex justify-between">
+                                    <button
+                                        type="button"
+                                        className="bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600"
+                                        onClick={handlePrev}
+                                    >
+                                        Previous
+                                    </button>
+                                    <button
+                                        className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+                                        type="submit"
+                                    >
+                                        Apply
                                     </button>
 
                                 </div>

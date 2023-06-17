@@ -7,7 +7,7 @@ import { Navbar, Footer, Sidebar } from '../../components';
 
 import { useStateContext } from '../../context/ContextProvider';
 import JobContext from '../../context/job/jobContext';
-
+import Loading from './Loading'
 
 const Jobs = () => {
 
@@ -58,6 +58,16 @@ const Jobs = () => {
     setStep(step - 1);
   };
 
+  const RenderLoadings = () => {
+    const loadings = [];
+
+    for (let i = 0; i < 10; i++) {
+      loadings.push(<Loading key={i} />);
+    }
+
+    return loadings;
+  };
+
   return (
     <div className={currentMode === 'Dark' ? 'dark' : ''}>
       <div className="flex relative dark:bg-main-dark-bg">
@@ -98,13 +108,12 @@ const Jobs = () => {
                 </div>
               )
                 :
-                <div>loading...</div>
+                <div className="grid gap-10 lg:grid-cols-6 px-16">
+                  <RenderLoadings />
+                </div>
               }
             </div>
           </div>
-
-          
-
           <Footer />
         </div>
       </div>

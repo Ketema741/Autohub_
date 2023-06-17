@@ -101,6 +101,7 @@ const ActiveJobs = () => {
     
     
     const [addJob, setAddJob] = useState(false);
+    
     const handleData = (data) => {
         setAddJob(!addJob)
         

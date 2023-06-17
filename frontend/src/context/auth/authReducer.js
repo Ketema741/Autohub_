@@ -62,6 +62,7 @@ const authReducer = (state, action) => {
       return {
         ...state,
         user: action.payload,
+        updatedSuccessfully: true,
       };
 
     case CLEAR_ERRORS:

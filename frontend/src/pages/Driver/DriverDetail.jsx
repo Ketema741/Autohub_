@@ -61,7 +61,7 @@ const DriverDetail = () => {
                     {driver !== null ?
                         (<DetailCard driver={driver} />)
                         :
-                        <div>loading...</div>
+                        <div className='center'>loading...</div>
                     } 
 
                     <Footer />

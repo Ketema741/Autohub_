@@ -25,6 +25,7 @@ const AuthState = (props) => {
     currentUser: null,
     token: localStorage.token,
     isUserAuthenticated: null,
+    updatedSuccessfully: false,
     userLoading: true,
     error: null,
   };

@@ -31,6 +31,7 @@ const AddItemDetail = () => {
         setImageToRemove(null);
         setImages((prev) => prev.filter((img) => img.public_id !== public_id));
     };
+    // image upload end here
 
     const {
         currentColor,

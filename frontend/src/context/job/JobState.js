@@ -1,7 +1,8 @@
 import React, { useReducer } from 'react';
-import axios from 'axios';
+import axios from '../axiosConfig';
 import jobContext from './jobContext';
 import jobReducer from './jobReducer';
+import { toast } from 'react-toastify'
 
 import {
   GET_JOBS,
@@ -59,21 +60,71 @@ const JobState = (props) => {
     }
   };
 
-  // Add job
-  const addJob = async (job, images) => {
-    job.jobImages = images;
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
+  // Get job
+  const applyForJob = async (_id) => {
     try {
-      const res = await axios.post('/jobs', job, config);
+      const registrationPromise = new Promise((resolve, reject) => {
+        axios
+          .post(`/jobs/job/apply/${_id}`)
+          .then((res) => {
+            resolve(res);
+          })
+          .catch((err) => {
+            dispatch({
+              type: JOB_ERROR,
+              payload: err.message
+            });
 
-      dispatch({ type: ADD_JOB, payload: res.data });
+            reject(err);
+          });
+      });
+
+      toast.promise(registrationPromise, {
+        pending: 'Appling...',
+        success: 'Application successful! You will receive an email once your application accepted. Thank you!',
+        error: `Job Application failed Try again Later or Contact Admin through Email!`,
+      });
+      state.error = null;
     } catch (error) {
-      dispatch({ type: JOB_ERROR });
+      toast.error(`${state.error.error}`);
     }
+  };
+
+  // Add job
+  const addJob = async (job) => {
+    try {
+      const registrationPromise = new Promise((resolve, reject) => {
+        axios
+          .post('/jobs/post-job', job)
+          .then((res) => {
+            dispatch({
+              type: ADD_JOB,
+              payload: res.data
+            });
+
+            resolve(res);
+          })
+          .catch((err) => {
+            dispatch({
+              type: JOB_ERROR,
+              payload: err.message
+            });
+
+            reject(err);
+          });
+      });
+
+      toast.promise(registrationPromise, {
+        pending: 'Posting...',
+        success: 'Job posted successfully! ',
+        error: `Job Posting failed Try again!`,
+      });
+      state.error = null;
+    } catch (error) {
+      toast.error(`${state.error.error}`);
+    }
+
+
   };
 
   // Remove image
@@ -161,6 +212,7 @@ const JobState = (props) => {
         getJobs,
         getJob,
         addJob,
+        applyForJob,
         clearJobs,
         deleteJob,
         removeImage,
