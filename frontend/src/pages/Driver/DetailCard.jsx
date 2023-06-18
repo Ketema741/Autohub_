@@ -8,9 +8,32 @@ import DriverRating from './DriverRating'
 import avatar from '../../assets/useravatar.svg'
 
 const DetailCard = ({ driver }) => {
+
+    const { communication,
+        drivingSkills,
+        knowledgeOfRoutes,
+        professionalism } = driver
+
+
+    // Function to calculate the average rating
+    const calculateAverage = (ratings) => {
+        if (!ratings || ratings.length === 0) {
+            return 0; // Return 0 if the array is empty
+        }
+
+        const sum = ratings.reduce((total, rating) => total + rating, 0);
+        const average = sum / ratings.length;
+        return average.toFixed(2); // Return average with 2 decimal places
+    }
+
+    // Calculate average ratings for each category
+    const communicationAverage = calculateAverage(communication);
+    const drivingSkillsAverage = calculateAverage(drivingSkills);
+    const knowledgeOfRoutesAverage = calculateAverage(knowledgeOfRoutes);
+    const professionalismAverage = calculateAverage(professionalism);
+    
     const renderStars = (rating) => {
         const stars = [];
-
         for (let i = 1; i <= 5; i++) {
             stars.push(
                 <FaStar
@@ -69,20 +92,7 @@ const DetailCard = ({ driver }) => {
                     <div className="px-6 py-4 mb-4">
                         <h2 className="text-xl font-semibold mb-2">Professional Experience</h2>
                         <div className="flex flex-col space-y-4">
-                            <div className="">
-                                <p className="text-gray-700 font-bold mb-2">
-                                    Driver, ABC Trucking Company, Anytown, USA
-                                </p>
-                            </div>
-                            <div className="">
-                                <ul className="list-disc pl-4">
-                                    <li className="mb-1">Transported goods over long distances, delivering cargo safely and efficiently to various locations throughout the country.</li>
-                                    <li className="mb-1">Conducted routine vehicle maintenance checks and performed minor repairs as needed to ensure the safe operation of the truck.</li>
-                                    <li className="mb-1">Maintained accurate records of deliveries, including invoices, bills of lading, and other relevant documentation.</li>
-                                    <li className="mb-1">Communicated effectively with dispatchers, clients, and other drivers to coordinate delivery schedules and ensure timely delivery of goods.</li>
-                                    <li>Maintained a clean driving record with no accidents or violations.</li>
-                                </ul>
-                            </div>
+                            {driver.workHistory}
                         </div>
                     </div>
                 </div>
@@ -91,7 +101,7 @@ const DetailCard = ({ driver }) => {
                     <div className="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
                         <p className="text-sm text-gray-600">Education</p>
                         <p className="text-base font-medium text-navy-700 dark:text-white">
-                            Completed grade 12
+                            {driver.education}
                         </p>
                     </div>
 
@@ -103,32 +113,57 @@ const DetailCard = ({ driver }) => {
                     </div>
 
                     <div className="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
-                        <p className="text-sm text-gray-600">Type</p>
+                        <p className="text-sm text-gray-600">Vehicle Type</p>
                         <p className="text-base font-medium text-navy-700 dark:text-white">
-                            Truck Dvier
+                            {driver.vehicleType}
                         </p>
                     </div>
 
                     <div className="flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
-                        <p className="text-sm text-gray-600">Work History</p>
+                        <p className="text-sm text-gray-600">Address</p>
                         <p className="text-base font-medium text-navy-700 dark:text-white">
-                            Addis Ababa, Ethipia
+                            {driver.address}
                         </p>
                     </div>
                     <div className="flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
                         <p className="text-sm text-gray-600">Experience</p>
                         <p className="text-base font-medium text-navy-700 dark:text-white">
-                            3 years of driving experience
+                            {driver.experience}
                         </p>
                     </div>
 
-
-
                     <div className="flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
-                        <p className="text-sm text-gray-600">Birthday</p>
+                        <p className="text-sm text-gray-600">Have Commercial Driving License</p>
                         <p className="text-base font-medium text-navy-700 dark:text-white">
-                            20 July 1986
+                            {driver.hasCDL}
                         </p>
+                    </div>
+                    <div className="flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+                        <p className="text-sm text-gray-600">Driving License Number</p>
+                        <p className="text-base font-medium text-navy-700 dark:text-white">
+                            {driver.licenseNumber}
+                        </p>
+                    </div>
+                    <div className="flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+                        <p className="text-sm text-gray-600">License Expiry Date</p>
+                        <p className="text-base font-medium text-navy-700 dark:text-white">
+                            {driver.licenseExpiryDate}
+                        </p>
+                    </div>
+                </div>
+
+                <div className="mt-2 mb-4 w-full">
+                    <div className="px-6 py-4">
+                        <h2 className="text-xl font-semibold mb-2">Certifications</h2>
+                        <div className="flex flex-col space-y-4">
+                            {driver.additionalCertifications}
+                        </div>
+                    </div>
+                    <div className="px-6 py-4">
+                        <h2 className="text-xl font-semibold mb-2">References</h2>
+                        <div className="flex flex-col space-y-4">
+                            {driver.references}
+                        </div>
                     </div>
                 </div>
 
@@ -144,7 +179,7 @@ const DetailCard = ({ driver }) => {
                                     Professionalism
                                 </p>
                                 <div className="pt-4 flex w-3/4  items-center">
-                                    {renderStars(4)}
+                                    {renderStars(professionalismAverage)}
                                 </div>
                             </div>
 
@@ -153,7 +188,7 @@ const DetailCard = ({ driver }) => {
                                     Driving Skills
                                 </p>
                                 <div className="pt-4 flex w-3/4  items-center">
-                                    {renderStars(5)}
+                                    {renderStars(drivingSkillsAverage)}
                                 </div>
                             </div>
 
@@ -162,7 +197,7 @@ const DetailCard = ({ driver }) => {
                                     Knowledge of Routes
                                 </p>
                                 <div className="pt-4 flex w-3/4  items-center">
-                                    {renderStars(5)}
+                                    {renderStars(knowledgeOfRoutesAverage)}
                                 </div>
                             </div>
 
@@ -172,7 +207,7 @@ const DetailCard = ({ driver }) => {
                                 </p>
 
                                 <div className="pt-4 flex w-3/4  items-center">
-                                    {renderStars(3)}
+                                    {renderStars(communicationAverage)}
                                 </div>
                             </div>
                         </div>

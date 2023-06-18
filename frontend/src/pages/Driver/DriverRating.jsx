@@ -44,16 +44,6 @@ const DriverRating = (_id) => {
       <h2 className="text-xl font-medium mb-2">Rate The driver Based On The Criteria Written Below</h2>
       <div className="flex flex-col space-y-6">
         <div className="flex flex-col w-9/10 space-y-2">
-          <p className="font-medium">Punctuality</p>
-          <p className="text-gray-500">
-            The driver's ability to arrive on time for pickups and drop-offs.
-          </p>
-        </div>
-        <div className="pb-8 flex w-9/10 justify-center items-center">
-          {renderStars('punctuality')}
-        </div>
-
-        <div className="flex flex-col w-9/10 space-y-2">
           <p className="font-medium">Professionalism</p>
           <p className="text-gray-500">
             The driver's level of professionalism in terms of appearance, behavior, and communication.

@@ -17,10 +17,12 @@ const Edit = ({ handleModalClose, user }) => {
     const [formData, setFormData] = useState({
         firstName: user.firstName,
         lastName: user.lastName,
+        venderName: user.venderName,
+        workingHours: user.workingHours,
+        address: user.address,
         email: user.email,
         phone: user.phone,
-        birthDay: '',
-        description: '',
+        specializations: user.specializations,
     });
 
     const onChange = (e) => {
@@ -30,10 +32,11 @@ const Edit = ({ handleModalClose, user }) => {
         });
     };
 
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        formData.description = content
-        updateUser(formData, user._id, "serviceProvider")
+        formData.bio = content
+        updateUser(formData, user._id, "service-provider")
 
     };
 
@@ -97,29 +100,66 @@ const Edit = ({ handleModalClose, user }) => {
                                     </div>
                                 </div>
                             </div>
-
                             <div className="-mx-3 flex flex-wrap">
                                 <div className="w-full px-3 sm:w-1/2">
                                     <div className="mb-5">
                                         <label
-                                            htmlFor="email"
+                                            htmlFor="venderName"
                                             className="mb-3 block text-base font-medium text-[#07074D]"
                                         >
-                                            Email
+                                            Company Name
                                         </label>
                                         <input
                                             type="text"
-                                            name="email"
-                                            id="email"
-                                            value={formData.email}
+                                            name="venderName"
+                                            id="venderName"
+                                            placeholder="Vendor Name"
+                                            value={formData.venderName}
                                             onChange={onChange}
-                                            placeholder='e.g. autohub@gmail.com'
+                                            className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="w-full px-3 sm:w-1/2">
+                                    <div className="mb-5">
+                                        <label
+                                            htmlFor="workingHours"
+                                            className="mb-3 block text-base font-medium text-[#07074D]"
+                                        >
+                                            Working Hours
+                                        </label>
+                                        <input
+                                            type="text"
+                                            name="workingHours"
+                                            id="workingHours"
+                                            placeholder="Working Hours "
+                                            value={formData.workingHours}
+                                            onChange={onChange}
                                             className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                         />
                                     </div>
                                 </div>
                             </div>
                             <div className="-mx-3 flex flex-wrap">
+                                <div className="w-full px-3 sm:w-1/2">
+                                    <div className="mb-5">
+                                        <label
+                                            htmlFor="address"
+                                            className="mb-3 block text-base font-medium text-[#07074D]"
+                                        >
+                                            Address
+                                        </label>
+                                        <input
+                                            type="text"
+                                            name="address"
+                                            id="address"
+                                            placeholder="Email"
+                                            value={formData.address}
+                                            onChange={onChange}
+                                            className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                        />
+                                    </div>
+                                </div>
                                 <div className="w-full px-3 sm:w-1/2">
                                     <div className="mb-5">
                                         <label
@@ -132,45 +172,26 @@ const Edit = ({ handleModalClose, user }) => {
                                             type="text"
                                             name="phone"
                                             id="phone"
+                                            placeholder="phone"
                                             value={formData.phone}
                                             onChange={onChange}
-                                            placeholder='e.g. autohub@gmail.com'
                                             className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                         />
                                     </div>
                                 </div>
-                            </div>
-
-                            <div className="-mx-3 flex flex-wrap">
-                                <div className="w-full px-3 sm:w-1/2">
-                                    <div className="mb-5">
-                                        <label
-                                            htmlFor="birthDay"
-                                            className="mb-3 block text-base font-medium text-[#07074D]"
-                                        >
-                                            Birth Day
-                                        </label>
-                                        <input
-                                            type="date"
-                                            name="birthDay"
-                                            id="birthDay"
-                                            value={formData.birthDay}
-                                            onChange={onChange}
-                                            className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                        />
-                                    </div>
-                                </div>
-
                             </div>
 
                             <div className="mb-5">
                                 <label
-                                    htmlFor="description"
+                                    htmlFor="bio"
                                     className="mb-3 block text-base font-medium text-[#07074D]"
                                 >
                                     Detail Description
                                 </label>
                                 <RichTextEditorComponent change={args => setContent(args.value)} toolbarSettings={customToolbarSettings}>
+                                    <div>
+                                        {user.specializations}
+                                    </div>
                                     <Inject services={[HtmlEditor, Toolbar, Link, QuickToolbar, Table]} />
                                 </RichTextEditorComponent>
                             </div>

@@ -68,9 +68,9 @@ const Application = ({ togglePopup }) => {
     const handleUpdatProfile = (e) => {
         e.preventDefault();
         updateUser(formData, user._id, "driver")
-        if (!updatedSuccessfully) {
+        if (updatedSuccessfully) {
             return
-        } 
+        }
         setStep(step + 1);
     };
 
@@ -464,7 +464,7 @@ const Application = ({ togglePopup }) => {
                         )}
                         {step === 4 && (
                             <form onSubmit={handleSubmit}>
-                                <h2 className="text-xl font-semibold mb-2">
+                                <h2 className="text-xl font-semibold mb-24">
                                     Step 4: Click Appply To Complete Your Application
                                 </h2>
                                 <div className="flex justify-between">

@@ -56,7 +56,7 @@ const DriverCard = ({ driver }) => {
       <div className="space-y-4 text-center">
         <div className='flex flex-row justify-center items-center space-x-2 flex-wrap'>
           <h4 className="text-2xl text-gray-700 dark:text-white">{driver.firstName}  {driver.lastName}</h4>
-          <span className=" text-sm text-gray-500">Motorcycle rider</span>
+          <span className=" text-sm text-gray-500">{driver.vehicleType}</span>
 
         </div>
         <span className="mt-4 block text-sm text-gray-500">Please find below a list of drivers whom you can contact if you are interested in hiring them.
