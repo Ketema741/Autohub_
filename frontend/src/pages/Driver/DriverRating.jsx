@@ -2,10 +2,16 @@ import React, { useState, useContext } from 'react';
 import { FaStar } from 'react-icons/fa';
 import UserContext from '../../context/user/userContext';
 
+import AuthContext from './../../context/auth/authContext';
+import { toast } from 'react-toastify';
+
 const DriverRating = ({ _id }) => {
 
   const userContext = useContext(UserContext);
   const { rateDriver } = userContext;
+  const authContext = useContext(AuthContext);
+
+  const { user, isUserAuthenticated } = authContext;
 
   const [ratings, setRatings] = useState({
     punctuality: 0,
@@ -24,17 +30,14 @@ const DriverRating = ({ _id }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!user || !isUserAuthenticated ){
+      toast.warning("In order to rate this driver, you must first log in.");
+      return;
+    }
     rateDriver(ratings, _id)
 
-    console.log(_id);
 
-    // setRatings({
-    //   punctuality: 0,
-    //   professionalism: 0,
-    //   drivingSkills: 0,
-    //   knowledgeOfRoutes: 0,
-    //   communication: 0,
-    // });
   };
 
   const renderStars = (field) => {
