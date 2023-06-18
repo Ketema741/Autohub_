@@ -39,7 +39,7 @@ const addItem = async (req, res) => {
     //   uploadToCloudinary(img.path, "images")
     // );
     // const images_data = await Promise.all(imgs);
-    // console.log("ERRR", req.body)
+    console.log("ERRR", req.body)
     if (
       !categoryId ||
       !name ||
@@ -68,13 +68,6 @@ const addItem = async (req, res) => {
       itemImages,
     });
     if (item) {
-      await Item.findByIdAndUpdate(
-        { _id: item._id },
-        {
-          $addToSet: { itemImages: images_data },
-        }
-      );
-
       res.status(201).json({
         data: item,
         message: "Item added successfully",

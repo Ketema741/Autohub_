@@ -20,6 +20,7 @@ const addJob = async (req, res) => {
       description,
       location,
       employer,
+      excerpt: req.body?.excerpt,
       salary: req.body?.salary,
       jobImages: req.body?.jobImages,
     });

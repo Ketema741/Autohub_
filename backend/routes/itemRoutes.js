@@ -43,9 +43,8 @@ router.post(
 );
 router.get("/category/all", getCategories);
 
-
 router.post(
-  "/add-item",
+  "/item/add",
   verifyToken,
   grantAccess("createOwn", "item"),
   // upload.array("itemImages", 6),
@@ -55,7 +54,7 @@ router.post(
 // car
 
 router.get("/cars/get", getAllCars).get("/car/:id", getCar);
-router.post("/cars/add", verifyToken, upload.array("carImages", 6), createCar);
+router.post("/cars/add", verifyToken, createCar);
 router.put("/cars/update/:id", updateCar);
 router.delete("/cars/delete/:id", deleteCar);
 router.post("/item/add/tag", verifyToken, assignTagsToProduct);

@@ -6,6 +6,9 @@ const jobSchema = mongoose.Schema(
       type: String,
       require: "Job must have a title ",
     },
+    excerpt: {
+      type: String,
+    },
     description: {
       type: String,
       required: true,

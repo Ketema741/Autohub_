@@ -185,6 +185,7 @@ const signUpUser = async (req, res) => {
           address,
           password: hashedPassword,
           role: "supplier",
+          description: req.body?.description,
           bio: req.body?.bio,
           companyName: req.body?.companyName,
           // workingHours: req.body?.workingHours,

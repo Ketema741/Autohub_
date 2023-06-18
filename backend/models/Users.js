@@ -76,6 +76,10 @@ const SupplierSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    description:{
+      type:String,
+    }
+    ,
     bio: {
       type: String,
     },
