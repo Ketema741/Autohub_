@@ -8,17 +8,18 @@ import { Sidebar } from '../../components';
 import { useStateContext } from '../../context/ContextProvider';
 import AuthContext from "../../context/auth/authContext";
 
-import Navbar from './Navbar'
+import Navbar from './Navbar';
 
-import AboutAdmin from './about/AboutAdmin'
-import AboutDriver from './about/AboutDriver'
-import AboutCustomer from './about/AboutCustomer'
-import AboutServiceProvider from './about/AboutServiceProvider'
-import AboutSupplier from './about/AboutSupplier'
-import AboutExpert from './about/AboutExpert'
+import AboutAdmin from './about/AboutAdmin';
+import AboutDriver from './about/AboutDriver';
+import AboutCustomer from './about/AboutCustomer';
+import AboutServiceProvider from './about/AboutServiceProvider';
+import AboutSupplier from './about/AboutSupplier';
+import AboutExpert from './about/AboutExpert';
 
-import Experience from './Experience'
-import ProfileCard from './ProfileCard'
+import Experience from './Experience';
+import AdditionalInfo from './AdditionalInfo';
+import ProfileCard from './ProfileCard';
 
 import EditDriver from './edit/EditDriver';
 import EditExpert from './edit/EditExpert';
@@ -120,6 +121,9 @@ const Profile = () => {
                                             <div className="my-6"></div>
                                             {user.role == "driver" &&
                                                 <Experience currentColor={currentColor} user={user} />
+                                            }
+                                            {user.role == "service provider" &&
+                                                <AdditionalInfo currentColor={currentColor} user={user} />
                                             }
                                         </div>
                                     </div>

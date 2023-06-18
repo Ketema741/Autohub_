@@ -23,6 +23,7 @@ const Edit = ({ handleModalClose, user }) => {
         email: user.email,
         phone: user.phone,
         specializations: user.specializations,
+        bio: user.bio,
     });
 
     const onChange = (e) => {
@@ -120,6 +121,7 @@ const Edit = ({ handleModalClose, user }) => {
                                         />
                                     </div>
                                 </div>
+
                                 <div className="w-full px-3 sm:w-1/2">
                                     <div className="mb-5">
                                         <label
@@ -180,6 +182,25 @@ const Edit = ({ handleModalClose, user }) => {
                                     </div>
                                 </div>
                             </div>
+                            <div className="w-full px-3 ">
+                                <div className="mb-5">
+                                    <label
+                                        htmlFor="venderName"
+                                        className="mb-3 block text-base font-medium text-[#07074D]"
+                                    >
+                                        Summary
+                                    </label>
+                                    <textarea
+                                        type="text"
+                                        name="specializations"
+                                        id="specializations"
+                                        placeholder="Vendor Name"
+                                        value={formData.specializations}
+                                        onChange={onChange}
+                                        className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                    ></textarea>
+                                </div>
+                            </div>
 
                             <div className="mb-5">
                                 <label
@@ -190,7 +211,7 @@ const Edit = ({ handleModalClose, user }) => {
                                 </label>
                                 <RichTextEditorComponent change={args => setContent(args.value)} toolbarSettings={customToolbarSettings}>
                                     <div>
-                                        {user.specializations}
+                                        {user.bio}
                                     </div>
                                     <Inject services={[HtmlEditor, Toolbar, Link, QuickToolbar, Table]} />
                                 </RichTextEditorComponent>

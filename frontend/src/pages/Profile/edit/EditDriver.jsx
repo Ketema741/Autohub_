@@ -19,7 +19,7 @@ const Edit = ({ handleModalClose, user }) => {
         lastName: user.lastName,
         email: user.email,
         phone: user.phone,
-        type: user.type,
+        vehicleType: user.vehicleType,
         education: user.education,
         workHistory: user.workHistory,
         birthDay: '',
@@ -143,17 +143,17 @@ const Edit = ({ handleModalClose, user }) => {
                                 <div className="w-full px-3 sm:w-1/2">
                                     <div className="mb-5">
                                         <label
-                                            htmlFor="type"
+                                            htmlFor="vehicleType"
                                             className="mb-3 block text-base font-medium text-[#07074D]"
                                         >
-                                            Type
+                                            Vehicle Type
                                         </label>
                                         <input
-                                            type="text"
-                                            name="type"
-                                            id="type"
-                                            placeholder='Type Of Vehicle You drive'
-                                            value={formData.type}
+                                            vehicleType="text"
+                                            name="vehicleType"
+                                            id="vehicleType"
+                                            placeholder='vehicleType Of Vehicle You drive'
+                                            value={formData.vehicleType}
                                             onChange={onChange}
                                             className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                         />

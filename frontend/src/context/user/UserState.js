@@ -163,7 +163,7 @@ const UserState = (props) => {
   };
 
   // rating driver
-  const rateDriver = async (ratings, _id ) => {
+  const rateDriver = async (ratings, _id) => {
     try {
       const ratingPromise = new Promise((resolve, reject) => {
         const res = axios.post(`drivers/ratings/${_id}`, ratings)
@@ -178,7 +178,7 @@ const UserState = (props) => {
             console.log(err)
             reject(err);
           });
-          console.log(res)
+        console.log(res)
       });
 
       toast.promise(ratingPromise, {
@@ -265,7 +265,10 @@ const UserState = (props) => {
         payload: res.data,
       });
     } catch (error) {
-      dispatch({ type: USER_ERROR });
+      dispatch({
+        type: USER_ERROR,
+        payload: error
+      });
     }
   };
 
