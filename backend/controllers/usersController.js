@@ -370,7 +370,7 @@ const updateServiceProvider = async (req, res) => {
     ).select("-password");
     res.status(200).json({
       data: updatedUser,
-      message: "Customer has been updated successfully",
+      message: "Service Provider has been updated successfully",
     });
   } catch (error) {
     res.status(500).json({ error: error.message });

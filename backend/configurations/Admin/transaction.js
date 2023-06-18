@@ -1,16 +1,15 @@
 require("dotenv").config();
-const mongoose = require("mongoose");
 const { Order } = require("../../models/Order");
 const { Transaction } = require("../../models/Transactions");
+
 const calculateAmounts = async (orderId) => {
   try {
     const order = await Order.findById(orderId).populate("items");
     const itemsBySupplier = order.items.reduce((acc, item) => {
-      if (item.supplier) {
-        const supplierId = item.supplier.toString();
-        acc[supplierId] = acc[supplierId] || [];
-        acc[supplierId].push(item);
-      }
+      const supplierId = item.supplier.toString();
+      acc[supplierId] = acc[supplierId] || [];
+      acc[supplierId].push(item);
+
       return acc;
     }, {});
 
@@ -32,7 +31,8 @@ const calculateAmounts = async (orderId) => {
   }
 };
 
-const saveTransaction = async (orderId) => {
+const saveTransaction = async (req, res) => {
+  const { orderId } = req.params;
   try {
     const amounts = await calculateAmounts(orderId);
 
@@ -49,22 +49,20 @@ const saveTransaction = async (orderId) => {
       const amount = amounts[supplierId];
       const itemSupplier = order.items.find((item) => item.supplier);
 
-      const transaction = new Transaction({
-        supplier: itemSupplier.supplier,
-        revenue: amount,
-        totalItemsSold: order.items.length,
-        ItemsSold: order.items.map((item) => item.itemId),
-      });
-      if (transaction) {
-        await transaction.save();
-      } else {
-        throw new Error("Oops, sorry Transaction couldn't be saved");
-      }
+    console.log(amount, itemSupplier)
+      // if (transaction) {
+      //   await transaction.save();
+      //    res.status(200).json({
+      //      message: "Transaction saved successfully",
+      //    });
+      // } else {
+      //   throw new Error("Oops, sorry Transaction couldn't be saved");
+      // }
     }
 
-    return { message: "Transaction saved successfully" };
+   
   } catch (error) {
-    throw new Error(error.message);
+    res.status(500).json({ error: error.message });
   }
 };
 

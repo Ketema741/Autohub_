@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const transactionSchema = new mongoose.Schema(
+const TransactionSchema = new mongoose.Schema(
   {
     supplier: {
       type: mongoose.Schema.Types.ObjectId,
@@ -24,5 +24,6 @@ const transactionSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
-module.exports = mongoose.model("Transaction", transactionSchema);
+module.exports = {
+  Transaction: mongoose.model("Transaction", TransactionSchema),
+};

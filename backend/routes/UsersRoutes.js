@@ -64,7 +64,6 @@ router.put(
 router.put(
   "/update/service-provider/:user_id",
   verifyToken,
-  grantAccess("updateOwn", "profile"),
   updateServiceProvider
 );
 router.put(
@@ -145,6 +144,6 @@ router.delete(
   rejectSupplier
 );
 
-// router.post("/transfer/suppliers/:orderId", transferAmountToSupplierAccount);
+router.post("/slipt/order-item/:orderId", saveTransaction);
 
 module.exports = router;

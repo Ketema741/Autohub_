@@ -40,7 +40,7 @@ const chapaInit = async (req, res) => {
     if (data.status === "success") {
       await Order.updateOne({ _id: orderId }, { paymentId: tx_ref });
       // decrement the quantity of item in the order and it quantity is zero mark that item as unavailable
-      await saveTransaction(order._id);
+      
       for (const item of order.items) {
         const updatedItem = await Item.findByIdAndUpdate(item.productId, {
           $inc: { quantity: -item.quantity },
@@ -81,7 +81,9 @@ const chapaVerify = async (req, res) => {
       await Order.updateOne(
         { _id: orderId },
         { paymentId: verifySession.reference, isPaid: true }
-      );
+        );
+        await saveTransaction(order._id);
+
 
       const sale_record = await SaleRecord.create({
         customerFirstName: verifySession.data.first_name,

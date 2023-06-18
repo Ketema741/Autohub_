@@ -18,14 +18,12 @@ const roles = (() => {
 
   ac.grant("driver").updateOwn("profile");
   ac.grant("expert").updateOwn("profile");
-  ac.grant("service-provider").updateOwn("profile");
 
   ac.grant("admin")
     .extend("driver")
     .extend("expert")
     .extend("supplier")
     .extend("customer")
-    .extend("service-provider")
     .updateAny("profile")
     .deleteAny("profile");
 
