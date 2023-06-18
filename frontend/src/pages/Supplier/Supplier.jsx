@@ -1,5 +1,8 @@
 import React, { useEffect } from 'react';
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import {
   Navbar,
   Footer,
@@ -33,7 +36,7 @@ const Supplier = () => {
   return (
     <div className={currentMode === 'Dark' ? 'dark' : ''}>
       <div className="flex relative dark:bg-main-dark-bg">
-        
+
         {activeMenu ? (
           <div className="w-52 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
             <SupplierSidebar />
@@ -54,14 +57,26 @@ const Supplier = () => {
             <Navbar />
           </div>
           <div>
-            
-              <ItemTable supplierItems={supplierItems} />
-            
+
+            <ItemTable supplierItems={supplierItems} />
+
             <SupplierData />
           </div>
           <Footer />
         </div>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 };

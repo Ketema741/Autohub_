@@ -1,12 +1,16 @@
 import React from 'react';
-import { Navbar, Footer, SupplierSidebar} from '../../../components';
+
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import { Navbar, Footer, SupplierSidebar } from '../../../components';
 import { useStateContext } from '../../../context/ContextProvider';
 
 import AddItemDetail from './AddItemDetail';
 
 
 const AddItem = () => {
-    const { currentMode,  activeMenu } = useStateContext();
+    const { currentMode, activeMenu } = useStateContext();
 
     return (
         <div className={currentMode === 'Dark' ? 'dark' : ''}>
@@ -36,6 +40,18 @@ const AddItem = () => {
                     <Footer />
                 </div>
             </div>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
         </div>
     );
 };

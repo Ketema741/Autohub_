@@ -22,15 +22,13 @@ const PostForm = ({ handleData }) => {
         salary: '',
         description: '',
         image: '',
-        
+
     };
 
     const validationSchema = Yup.object().shape({
         title: Yup.string().required('Title is required'),
         location: Yup.string().required('Location is required'),
         salary: Yup.string().required('Salary is required'),
-        image: Yup.mixed().required('Job Description Image is required'),
-        description: Yup.string().required('Detail Description is required'),
     });
 
     // image upload start here
@@ -49,9 +47,11 @@ const PostForm = ({ handleData }) => {
         const formData = {
             ...values,
             description: content,
-            image: images && images.length > 0 ? images[0].url : null,
+            jobImages: images && images.length > 0 ? images[0].url : null,
         };
-        addJob(formData);
+        if (formData.jobImages) {
+            addJob(formData);
+        }
         console.log(formData);
     };
 
@@ -121,7 +121,6 @@ const PostForm = ({ handleData }) => {
                                         <RichTextEditorComponent change={(args) => setContent(args.value)} toolbarSettings={customToolbarSettings}>
                                             <Inject services={[HtmlEditor, Toolbar, Link, QuickToolbar, Table]} />
                                         </RichTextEditorComponent>
-                                        <ErrorMessage name="description" component="div" className="text-red-500" />
 
                                     </div>
                                     <div className="mb-5 flext justify-center">
@@ -134,12 +133,11 @@ const PostForm = ({ handleData }) => {
                                             Job Description Image
                                         </label>
                                         <UploadImage setImages={setImages} />
-                                        
+
                                     </div>
                                     <div>
                                         <button
                                             type="submit"
-                                            disabled={!images}
                                             className="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none"
                                             style={{ backgroundColor: currentColor }}
                                         >

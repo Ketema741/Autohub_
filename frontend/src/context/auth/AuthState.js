@@ -143,12 +143,13 @@ const AuthState = (props) => {
   const updateUser = async (user, _id, userType) => {
     try {
       const approvePromise = new Promise((resolve, reject) => {
-        axios.put(`/users/${userType}/${_id}`, user)
+        const res = axios.put(`/users/update/${userType}/${_id}`, user)
           .then((res) => {
             dispatch({
               type: UPDATE_USER,
-              payload: res.data,
+              payload: res.data.data,
             });
+            console.log(res)
 
             resolve(res);
           })
@@ -164,7 +165,7 @@ const AuthState = (props) => {
       toast.promise(approvePromise, {
         pending: 'Updating...',
         success: 'Profile updated successfully!',
-        error: `Update failed try again later!`,
+        error: `Update failed: ${state.error?state.error:" try again later!"}`,
       });
       state.error = null;
     } catch (error) {

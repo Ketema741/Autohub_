@@ -20,7 +20,7 @@ import {
 
 const JobState = (props) => {
   const initialState = {
-    jobs: null,
+    jobs: [],
     job: null,
     current: null,
     filtered: null,
@@ -48,9 +48,10 @@ const JobState = (props) => {
   const getJob = async (_id) => {
     try {
       const res = await axios.get(`/jobs/${_id}`);
+      console.log(res.data);
       dispatch({
         type: GET_JOB,
-        payload: res.data.data,
+        payload: res.data,
       });
     } catch (err) {
       dispatch({

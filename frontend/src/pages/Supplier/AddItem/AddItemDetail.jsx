@@ -44,19 +44,19 @@ const AddItemDetail = () => {
         setItemData(data)
     };
 
-    const [uploadType, setUploadType] = useState('car');
+    const [uploadType, setUploadType] = useState('cars');
     const handleRadioChange = (e) => {
         setUploadType(e.target.value);
     };
 
     const handleSubmit = () => {
-        if (uploadType === 'car') {
+        if (uploadType === 'cars') {
             itemData.carImages = images;
         } else {
             itemData.itemImages = images;
         }
 
-        addItem(itemData); // Update the itemData state
+        addItem(itemData, uploadType); // Update the itemData state
 
     };
 
@@ -80,8 +80,8 @@ const AddItemDetail = () => {
                                                 name="radio1"
                                                 id="radioButton1"
                                                 className="h-5 w-5"
-                                                value="car"
-                                                checked={uploadType === 'car'}
+                                                value="cars"
+                                                checked={uploadType === 'cars'}
                                                 onChange={handleRadioChange}
                                             />
                                             <label
@@ -115,32 +115,106 @@ const AddItemDetail = () => {
                         </div>
                     </div>
 
-                    {
-                        itemData &&
+                    { itemData &&
                         <div className='m-4 flex flex-col justify-start space-y-4'>
-                            <div>
-                                Title: {itemData.title}
-                            </div>
-                            <div>
-                                Price: {itemData.price}
-                            </div>
-                            <div>
+                            {itemData.make &&
+                                <div>
+                                <span className="text-bold">Title:</span>
+                                     {itemData.make}
+                                </div>
+                            }
+                            {itemData.name &&
+                                <div>
+                                <span className="text-bold">Title:</span>
 
-                                Category: {itemData.category}
-                            </div>
+                                     {itemData.name}
+                                </div>
+                            }
+
                             <div>
-                                brand: {itemData.brand}
-                            </div>
-                            <div>
-                                model: {itemData.model}
-                            </div>
-                            <div>
-                                quantity: {itemData.quantity}
+                            <span className="text-bold">Price:</span>
+
+                                 {itemData.price}
                             </div>
 
-                            Description
+                            {itemData.category &&
+                                <div>
+                                <span className="text-bold">Category:</span>
+
+                                     {itemData.category}
+                                </div>
+                            }
+
+                            {itemData.brand &&
+                                <div>
+                                <span className="text-bold">Brand: </span>
+
+                                   {itemData.brand}
+                                </div>
+                            }
+
+                            {itemData.model &&
+                                <div>
+                                <span className="text-bold">Model:</span>
+
+                                     {itemData.model}
+                                </div>
+                            }
+
+                            {itemData.isAvailable &&
+                                <div>
+                                <span className="text-bold">Is It Available:</span>
+
+                                     {itemData.seatingCapacity}
+                                </div>
+                            }
+                            {itemData.seatingCapacity &&
+                                <div>
+                                <span className="text-bold">Seating Capacity:</span>
+
+                                     {itemData.seatingCapacity}
+                                </div>
+                            }
+
+                            {itemData.engine &&
+                                <div>
+                                <span className="text-bold">Engine:</span>
+
+                                     {itemData.seatingCapacity}
+                                </div>
+                            }
+                            {itemData.fuelType &&
+                                <div>
+                                <span className="text-bold">Fuel Type:</span>
+
+                                     {itemData.seatingCapacity}
+                                </div>
+                            }
+
+                            {itemData.color &&
+                                <div>
+                                <span className="text-bold">Color:</span>
+
+                                     {itemData.seatingCapacity}
+                                </div>
+                            }
+                            {itemData.year &&
+                                <div>
+                                <span className="text-bold">Manufacturing Date:</span>
+
+                                     {itemData.seatingCapacity}
+                                </div>
+                            }
+
                             <div>
-                                {Parse(itemData.description)}
+                            <span className="text-bold">Quantity:</span>
+
+                                 {itemData.quantity}
+                            </div>
+
+
+                            <div>
+                                Description: {Parse(itemData.description)}
                             </div>
                         </div>
                     }
@@ -191,22 +265,18 @@ const AddItemDetail = () => {
                                     }
 
                                     <div className="flex flex-col justify-center space-y-24">
-                                       
+
                                         <UploadImage setImages={setImages} />
                                         <button
                                             onClick={handleSubmit}
                                             type='submit'
-                                            disabled={images.length === 0}
+
                                             className="m-4 rounded-2xl hover:bg-blue-600 px-10 py-3 hover:shadow-lg"
                                             style={{ backgroundColor: currentColor }}
                                         >
                                             Submit
                                         </button>
                                     </div>
-
-
-
-
                                 </div>
 
                             </div>
@@ -220,7 +290,7 @@ const AddItemDetail = () => {
 
             {editItem &&
                 <div>
-                    {uploadType == "car" ?
+                    {uploadType == "cars" ?
                         <CarForm
                             handleData={handleData}
                             itemData={itemData}

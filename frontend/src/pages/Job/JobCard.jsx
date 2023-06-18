@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
-import { useStateContext } from "../../context/ContextProvider";
-import { useNavigate } from "react-router-dom";
-import JobContext from "../../context/job/jobContext";
+import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import JobContext from '../../context/job/jobContext';
+const Parse = require('html-react-parser')
 
 
 const JobCard = ({ job }) => {
@@ -11,11 +11,11 @@ const JobCard = ({ job }) => {
 
   const handleView = () => {
     getJob(job._id)
-    navigate(`/job/${"job._id"}`);
+    navigate(`/job/${job._id}`);
   };
 
-  let  jobImage = "https://res.cloudinary.com/dmegiw31y/image/upload/v1681974584/careerNet/web_dev_nsbfd7.png"
-  if (job.jobImages[0]){
+  let jobImage = "https://res.cloudinary.com/dirocp1ht/image/upload/v1687035930/xbcsqwza62jvioajhf7j.svg"
+  if (job.jobImages && job.jobImages.length > 0) {
     jobImage = job.jobImages[0]
   }
 
@@ -35,10 +35,10 @@ const JobCard = ({ job }) => {
           {job.title}
         </h3>
         <p className="mb-6 text-gray-600 dark:text-gray-300">
-          {job.description}
+          {Parse(job.description)}
         </p>
         <button
-          onClick={() => handleView()}
+          onClick={handleView}
           type="button"
           className="block font-medium text-primary"
         >

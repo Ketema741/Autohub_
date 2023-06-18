@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useReducer } from 'react';
+import React, { useReducer } from 'react';
 import axios from '../axiosConfig';
 import itemContext from './itemContext';
 import itemReducer from './itemReducer';
-
+import { toast } from 'react-toastify';
 import {
   GET_ITEMS,
   GET_PUBLICITEMS,
@@ -21,15 +21,14 @@ import {
 } from '../Types';
 
 const Itemstate = (props) => {
-
   const initialState = {
     items: null,
     publicItems: null,
     item: null,
+    error: null,
     current: null,
     filtered: null,
-    categories:null
-    
+    categories: null
   };
 
   const [state, dispatch] = useReducer(itemReducer, initialState);
@@ -49,6 +48,7 @@ const Itemstate = (props) => {
       });
     }
   };
+
 
   // Get public items
   const getPublicItems = async () => {
@@ -83,7 +83,8 @@ const Itemstate = (props) => {
     }
   };
 
-  const getCategories = async () =>{
+
+  const getCategories = async () => {
     try {
       const res = await axios.get("/items/category/all");
       console.log(res.data)
@@ -96,10 +97,11 @@ const Itemstate = (props) => {
       dispatch({
         type: ITEM_ERROR,
         payload: err.response,
-        
+
       });
     }
   }
+
 
   // create category
   const createCategory = async (_id) => {
@@ -118,16 +120,38 @@ const Itemstate = (props) => {
     }
   };
 
+
   // add item
-  const addItem = async (item) => {
+  const addItem = async (item, type) => {
     
     try {
-      const res = await axios.post('/items/add-item', item);
-      console.log(res.response)
-      // dispatch({ type: ADD_ITEM, payload: res.data });
+      const addPromise = new Promise((resolve, reject) => {
+        axios.post(`/items/${type}/add`, item)
+          .then((res) => {
+            dispatch({
+              type: ADD_ITEM,
+              payload: res.data
+            });
+
+            resolve(res);
+          })
+          .catch((err) => {
+            dispatch({
+              type: ITEM_ERROR,
+              payload: err.response.data.error
+            });
+            reject(err);
+          });
+      });
+
+      toast.promise(addPromise, {
+        pending: 'Uploading...',
+        success: 'Item uploaded successfully!',
+        error: `Item Uploading failed: ${state.error? state.error:" try again later!"} `,
+      });
+      state.error = null;
     } catch (error) {
-      console.log(error)
-      dispatch({ type: ITEM_ERROR });
+      toast.error(`${state.error}`);
     }
   };
 

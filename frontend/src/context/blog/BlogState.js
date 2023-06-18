@@ -19,7 +19,7 @@ import {
 const Blogstate = (props) => {
   const initialState = {
     blogs: null,
-    jobs: null,
+    jobs: [],
     relatedPost: null,
     blog: null,
     current: null,
@@ -70,7 +70,7 @@ const Blogstate = (props) => {
   const getBlog = async (_id, category) => {
     filterBlogs(category)
     try {
-      const res = await axios.get(`/blogs/${_id}`);
+      const res = await axios.get(`/blogs/blog/${_id}`);
       dispatch({
         type: GET_POST,
         payload: res.data,
