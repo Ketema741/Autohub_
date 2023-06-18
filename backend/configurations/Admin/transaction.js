@@ -5,6 +5,9 @@ const { Transaction } = require("../../models/Transactions");
 const calculateAmounts = async (orderId) => {
   try {
     const order = await Order.findById(orderId).populate("items");
+    if (!order) {
+      throw new Error("Order not found");
+    }
     const itemsBySupplier = order.items.reduce((acc, item) => {
       const supplierId = item.supplier.toString();
       acc[supplierId] = acc[supplierId] || [];
@@ -25,6 +28,7 @@ const calculateAmounts = async (orderId) => {
       );
       amounts[supplierId] = totalAmount;
     }
+    console.log(amounts)
     return amounts;
   } catch (err) {
     console.error(err);
@@ -49,7 +53,7 @@ const saveTransaction = async (req, res) => {
       const amount = amounts[supplierId];
       const itemSupplier = order.items.find((item) => item.supplier);
 
-    console.log(amount, itemSupplier)
+      console.log(amount, itemSupplier);
       // if (transaction) {
       //   await transaction.save();
       //    res.status(200).json({
@@ -59,8 +63,6 @@ const saveTransaction = async (req, res) => {
       //   throw new Error("Oops, sorry Transaction couldn't be saved");
       // }
     }
-
-   
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

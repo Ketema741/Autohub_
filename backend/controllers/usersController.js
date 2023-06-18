@@ -719,6 +719,10 @@ const getUser = async (req, res) => {
       user = await models.Driver.findById(decoded.user.id).select(
         "-password -accountId"
       );
+    } else if (decoded.user.role === "caraficionados") {
+      user = await models.CarAficionados.findById(decoded.user.id).select(
+        "-password -accountId"
+      );
     }
 
     if (!user) {

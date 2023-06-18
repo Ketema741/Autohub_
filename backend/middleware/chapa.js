@@ -4,7 +4,6 @@ const generateUniqueRandomString = require("../utils/random");
 const { Order } = require("../models/Order");
 const { Item } = require("../models/Item");
 const { SaleRecord } = require("../models/Analytics");
-const { saveTransaction } = require("../configurations/Admin/transaction");
 
 const chapaInit = async (req, res) => {
   try {
@@ -40,7 +39,6 @@ const chapaInit = async (req, res) => {
     if (data.status === "success") {
       await Order.updateOne({ _id: orderId }, { paymentId: tx_ref });
       // decrement the quantity of item in the order and it quantity is zero mark that item as unavailable
-      
       for (const item of order.items) {
         const updatedItem = await Item.findByIdAndUpdate(item.productId, {
           $inc: { quantity: -item.quantity },
@@ -59,6 +57,7 @@ const chapaInit = async (req, res) => {
 const chapaVerify = async (req, res) => {
   const { orderId } = req.params;
   const order = await Order.findById(orderId);
+  console.log(orderId, order);
   if (!order) {
     return res.status(404).json({ error: "That order doesn't exist" });
   }
@@ -81,9 +80,7 @@ const chapaVerify = async (req, res) => {
       await Order.updateOne(
         { _id: orderId },
         { paymentId: verifySession.reference, isPaid: true }
-        );
-        await saveTransaction(order._id);
-
+      );
 
       const sale_record = await SaleRecord.create({
         customerFirstName: verifySession.data.first_name,
