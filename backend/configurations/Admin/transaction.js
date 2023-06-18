@@ -2,15 +2,15 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const { Order } = require("../../models/Order");
 const { Transaction } = require("../../models/Transactions");
-
 const calculateAmounts = async (orderId) => {
   try {
     const order = await Order.findById(orderId).populate("items");
     const itemsBySupplier = order.items.reduce((acc, item) => {
-      const supplierId = item.supplier.toString();
-      acc[supplierId] = acc[supplierId] || [];
-      acc[supplierId].push(item);
-
+      if (item.supplier) {
+        const supplierId = item.supplier.toString();
+        acc[supplierId] = acc[supplierId] || [];
+        acc[supplierId].push(item);
+      }
       return acc;
     }, {});
 
@@ -32,8 +32,7 @@ const calculateAmounts = async (orderId) => {
   }
 };
 
-const saveTransaction = async (req, res) => {
-  const { orderId } = req.params;
+const saveTransaction = async (orderId) => {
   try {
     const amounts = await calculateAmounts(orderId);
 
@@ -63,11 +62,9 @@ const saveTransaction = async (req, res) => {
       }
     }
 
-    res.status(200).json({
-      message: "Transaction saved successfully",
-    });
+    return { message: "Transaction saved successfully" };
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    throw new Error(error.message);
   }
 };
 

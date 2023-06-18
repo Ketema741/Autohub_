@@ -4,6 +4,7 @@ const generateUniqueRandomString = require("../utils/random");
 const { Order } = require("../models/Order");
 const { Item } = require("../models/Item");
 const { SaleRecord } = require("../models/Analytics");
+const { saveTransaction } = require("../configurations/Admin/transaction");
 
 const chapaInit = async (req, res) => {
   try {
@@ -39,13 +40,13 @@ const chapaInit = async (req, res) => {
     if (data.status === "success") {
       await Order.updateOne({ _id: orderId }, { paymentId: tx_ref });
       // decrement the quantity of item in the order and it quantity is zero mark that item as unavailable
+      await saveTransaction(order._id);
       for (const item of order.items) {
         const updatedItem = await Item.findByIdAndUpdate(item.productId, {
           $inc: { quantity: -item.quantity },
-          $set: { isAvailable: item.quantity === 0 ? false : true },
+          $set: { isAvailable: item.quantity < 1 ? false : true },
         });
       }
-      console.log(updatedItem);
     }
     res.status(200).json({ data, order });
   } catch (error) {

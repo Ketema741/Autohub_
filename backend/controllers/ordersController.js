@@ -1,8 +1,7 @@
-const stripe = require("stripe")(process.env.SECRET_KEY);
 const models = require("../models/Order");
 const Cart = require("../models/Cart");
 
-const { generateRandomString } = require("../utils/random");
+const generateUniqueRandomString = require("../utils/random");
 
 const { saveSale } = require("./analyticController");
 
@@ -37,7 +36,7 @@ const placeOrder = async (req, res) => {
     total_price = prices.reduce((a, b) => a + b);
 
     const _order = await models.Order.create({
-      orderNumber: generateRandomString(12),
+      orderNumber: generateUniqueRandomString(12),
       owner: req.user,
       items: cart.items,
       totalAmount: total_price,
@@ -85,7 +84,7 @@ const updateOrder = async (req, res) => {
       res.status(404);
       throw new Error("That order doesn't exist");
     }
-    console.log(order)
+    console.log(order);
     await saveSale(new Date(), order.totalAmount);
 
     res.status(200).json({ order });
