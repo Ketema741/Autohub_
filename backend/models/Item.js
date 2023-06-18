@@ -96,7 +96,7 @@ const carSchema = new mongoose.Schema({
     type: String,
   },
   carImages: {
-    type: [Object],
+    type: [],
     required: true,
   },
 });

@@ -222,6 +222,7 @@ const createCar = async (req, res) => {
       engine,
       fuelType,
       seatingCapacity,
+      carImages
     } = req.body;
 
     // const imageFiles = req.files;
@@ -258,7 +259,7 @@ const createCar = async (req, res) => {
     });
     if (car) {
       res.status(201).json({
-        data: _car,
+        data: car,
         message: "Car added successfully",
       });
     }

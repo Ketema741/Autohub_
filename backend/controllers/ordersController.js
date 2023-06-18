@@ -85,6 +85,7 @@ const updateOrder = async (req, res) => {
       res.status(404);
       throw new Error("That order doesn't exist");
     }
+    console.log(order)
     await saveSale(new Date(), order.totalAmount);
 
     res.status(200).json({ order });
