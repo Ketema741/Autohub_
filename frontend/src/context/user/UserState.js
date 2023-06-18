@@ -161,29 +161,34 @@ const UserState = (props) => {
       });
     }
   };
-  // approve user
-  const approveUser = async (_id, userType) => {
 
-    let get_user
-    if (userType === "supplier") {
-      get_user = APPROVE_SUPPLIER;
-    }
-    else if (userType === "expert") {
-      get_user = APPROVE_EXPERT;
-    }
-
-
+  // rating driver
+  const rateDriver = async (ratings, _id ) => {
     try {
-      const res = await axios.get(`/users/approve/${userType}/${_id}`);
-      dispatch({
-        type: get_user,
-        payload: res.data,
+      const ratingPromise = new Promise((resolve, reject) => {
+        const res = axios.post(`drivers/ratings/${_id}`, ratings)
+          .then((res) => {
+            resolve(res);
+          })
+          .catch((err) => {
+            dispatch({
+              type: USER_ERROR,
+              payload: err.response
+            });
+            console.log(err)
+            reject(err);
+          });
+          console.log(res)
       });
-    } catch (err) {
-      dispatch({
-        type: USER_ERROR,
-        payload: err.response.msg,
+
+      toast.promise(ratingPromise, {
+        pending: 'Rating...',
+        success: 'Rating successful!',
+        error: `Rating failed try again later!`,
       });
+      state.error = null;
+    } catch (error) {
+      toast.error(`${state.error}`);
     }
   };
 
@@ -359,7 +364,7 @@ const UserState = (props) => {
   };
 
   const approveSupplier = async (data, supplier) => {
-    
+
     try {
       const approvePromise = new Promise((resolve, reject) => {
         axios.post(`/users/approve/suppliers/${supplier._id}`, data)
@@ -460,6 +465,8 @@ const UserState = (props) => {
         getPendingUsers,
         getUser,
         addUser,
+
+        rateDriver,
 
         approveSupplier,
         rejectSupplier,

@@ -22,7 +22,7 @@ import {
 
 const Itemstate = (props) => {
   const initialState = {
-    items: null,
+    items: [],
     publicItems: null,
     item: null,
     error: null,
@@ -126,22 +126,23 @@ const Itemstate = (props) => {
     
     try {
       const addPromise = new Promise((resolve, reject) => {
-        axios.post(`/items/${type}/add`, item)
+        const res = axios.post(`/items/${type}/add`, item)
           .then((res) => {
             dispatch({
               type: ADD_ITEM,
               payload: res.data
             });
-
             resolve(res);
           })
           .catch((err) => {
             dispatch({
               type: ITEM_ERROR,
-              payload: err.response.data.error
+              payload: err.response
             });
+            console.log(err)
             reject(err);
           });
+          console.log(res)
       });
 
       toast.promise(addPromise, {

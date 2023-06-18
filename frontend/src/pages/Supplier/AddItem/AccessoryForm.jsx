@@ -17,8 +17,7 @@ const CarForm = ({ handleData, categories, getCategories, createCategory }) => {
   const { currentColor, setEditItem } = useStateContext();
   const initialValues = {
     name: '',
-    category: '',
-    brand: '',
+    categoryId: '',
     quantity: null,
     price: null,
     description: '',
@@ -26,8 +25,7 @@ const CarForm = ({ handleData, categories, getCategories, createCategory }) => {
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required('name is required'),
-    category: Yup.string().required('Category is required'),
-    brand: Yup.string().required('Brand is required'),
+    categoryId: Yup.string().required('Category is required'),
     price: Yup.string().required('Price is required'),
     quantity: Yup.string()
       .required('quantity is required')
@@ -110,12 +108,12 @@ const CarForm = ({ handleData, categories, getCategories, createCategory }) => {
                   </div>
                   <div className="w-full px-3 sm:w-1/2">
                     <div className="mb-5">
-                      <label htmlFor="category" className="mb-3 block text-base font-medium text-[#07074D]">
+                      <label htmlFor="categoryId" className="mb-3 block text-base font-medium text-[#07074D]">
                         Item Category
                       </label>
                       <Field
                         as="select"
-                        name="category"
+                        name="categoryId"
                         id="Category"
                         className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                       >
@@ -123,7 +121,7 @@ const CarForm = ({ handleData, categories, getCategories, createCategory }) => {
                         <option value="">Select Category</option>
                         {categories ? (
                           categories.map((category) => (
-                            <option key={category._id} value={category.name}>
+                            <option key={category._id} value={category._id}>
                               {category.name}
                             </option>
                           ))
@@ -132,29 +130,11 @@ const CarForm = ({ handleData, categories, getCategories, createCategory }) => {
                         )}
 
                       </Field>
-                      <ErrorMessage name="category" component="div" className="text-red-500" />
+                      <ErrorMessage name="categoryId" component="div" className="text-red-500" />
                     </div>
                   </div>
                 </div>
-
-                <div className="-mx-3 flex flex-wrap">
-                  <div className="w-full px-3 sm:w-1/2">
-                    <div className="mb-5">
-                      <label htmlFor="brand" className="mb-3 block text-base font-medium text-[#07074D]">
-                        Brand
-                      </label>
-                      <Field
-                        type="text"
-                        name="brand"
-                        id="brand"
-                        placeholder="Accessory Brand"
-                        className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                      />
-                      <ErrorMessage name="brand" component="div" className="text-red-500" />
-                    </div>
-                  </div>
-                 
-                </div>
+                
                 <div className="mb-5">
                   <label htmlFor="quantity" className="mb-3 block text-base font-medium text-[#07074D]">
                     Quantity
