@@ -20,7 +20,7 @@ router.post("/place-order/:cart_id", verifyToken, placeOrder);
 router.put(
   "/update/:orderId",
   verifyToken,
-  grantAccess("updateOwn", "order"),
+  // grantAccess("updateOwn", "order"),
   updateOrder
 );
 

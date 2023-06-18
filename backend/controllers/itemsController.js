@@ -82,10 +82,15 @@ const addItem = async (req, res) => {
 
 const getItems = async (req, res) => {
   try {
-    const item = await Item.find({});
-    if (item) {
+    const items = await Item.find({ isAvailable: true });
+
+    if (items.length > 0) {
       res.status(200).json({
-        data: item,
+        data: items,
+      });
+    } else {
+      res.status(404).json({
+        message: "No available items found",
       });
     }
   } catch (error) {

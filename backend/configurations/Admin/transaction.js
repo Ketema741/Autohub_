@@ -1,7 +1,7 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
-const stripe = require("stripe")(process.env.SECRET_KEY);
 const { Order } = require("../../models/Order");
+const { Transaction } = require("../../models/Transactions");
 
 const calculateAmounts = async (orderId) => {
   try {
@@ -32,7 +32,7 @@ const calculateAmounts = async (orderId) => {
   }
 };
 
-const transferAmountToSupplierAccount = async (req, res) => {
+const saveTransaction = async (req, res) => {
   const { orderId } = req.params;
   try {
     const amounts = await calculateAmounts(orderId);
@@ -49,24 +49,28 @@ const transferAmountToSupplierAccount = async (req, res) => {
     for (const supplierId in amounts) {
       const amount = amounts[supplierId];
       const itemSupplier = order.items.find((item) => item.supplier);
-      const accountId = itemSupplier.supplier.accountId;
 
-      // Transfer the amount to the supplier's account using Stripe API
-      const transfer = await stripe.transfers.create({
-        amount,
-        currency: "usd",
-        destination: "acct_1My9mmLm6q64Ud3c",
+      const transaction = new Transaction({
+        supplier: itemSupplier.supplier,
+        revenue: amount,
+        totalItemsSold: order.items.length,
+        ItemsSold: order.items.map((item) => item.itemId),
       });
-
-      res.status(200).json({
-        message: `Transfer for ${amount} successfully created: ${transfer.id}`,
-      });
+      if (transaction) {
+        await transaction.save();
+      } else {
+        throw new Error("Oops, sorry Transaction couldn't be saved");
+      }
     }
+
+    res.status(200).json({
+      message: "Transaction saved successfully",
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
 module.exports = {
-  transferAmountToSupplierAccount,
+  saveTransaction,
 };
