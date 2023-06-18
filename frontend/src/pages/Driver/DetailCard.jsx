@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { BsTelephone } from 'react-icons/bs'
 import { AiOutlineMail } from 'react-icons/ai'
@@ -12,26 +12,35 @@ const DetailCard = ({ driver }) => {
     const { communication,
         drivingSkills,
         knowledgeOfRoutes,
-        professionalism } = driver
+        professionalism } = driver.ratings
 
 
-    // Function to calculate the average rating
-    const calculateAverage = (ratings) => {
-        if (!ratings || ratings.length === 0) {
-            return 0; // Return 0 if the array is empty
-        }
+    const [communicationAverage, setCommunicationAverage] = useState(0);
+    const [drivingSkillsAverage, setDrivingSkillsAverage] = useState(0);
+    const [knowledgeOfRoutesAverage, setKnowledgeOfRoutesAverage] = useState(0);
+    const [professionalismAverage, setProfessionalismAverage] = useState(0);
 
-        const sum = ratings.reduce((total, rating) => total + rating, 0);
-        const average = sum / ratings.length;
-        return average.toFixed(2); // Return average with 2 decimal places
-    }
+    useEffect(() => {
+        // Function to calculate the average rating
+        const calculateAverage = (ratings) => {
+            console.log(ratings)
+            if (!ratings || ratings.length === 0) {
+                return 0; // Return 0 if the array is empty
+            }
 
-    // Calculate average ratings for each category
-    const communicationAverage = calculateAverage(communication);
-    const drivingSkillsAverage = calculateAverage(drivingSkills);
-    const knowledgeOfRoutesAverage = calculateAverage(knowledgeOfRoutes);
-    const professionalismAverage = calculateAverage(professionalism);
-    
+            const sum = ratings.reduce((total, rating) => total + rating, 0);
+            const average = sum / ratings.length;
+            return Math.round(average); // Return rounded average
+        };
+
+        // Calculate average ratings for each category
+        setCommunicationAverage(calculateAverage(communication));
+        setDrivingSkillsAverage(calculateAverage(drivingSkills));
+        setKnowledgeOfRoutesAverage(calculateAverage(knowledgeOfRoutes));
+        setProfessionalismAverage(calculateAverage(professionalism));
+    }, [communication, drivingSkills, knowledgeOfRoutes, professionalism]);
+
+
     const renderStars = (rating) => {
         const stars = [];
         for (let i = 1; i <= 5; i++) {
@@ -215,8 +224,9 @@ const DetailCard = ({ driver }) => {
                 </div>
 
 
-
-                <DriverRating />
+                {driver &&
+                    <DriverRating _id={driver._id} />
+                }
             </div>
         </div>
     )

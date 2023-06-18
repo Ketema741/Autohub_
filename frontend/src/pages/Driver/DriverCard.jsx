@@ -9,6 +9,7 @@ import { FaStar } from 'react-icons/fa'
 import avatar from '../../assets/useravatar.svg'
 import UserContext from '../../context/user/userContext';
 import Profile from './../Profile/Profile';
+import Experience from './../Profile/Experience';
 
 const DriverCard = ({ driver }) => {
   const navigate = useNavigate()
@@ -50,7 +51,7 @@ const DriverCard = ({ driver }) => {
           src={driver.profileImage ? driver.profileImage : avatar}
           alt="driver"
           loading="lazy"
-         
+
         />
       </div>
       <div className="space-y-4 text-center">
@@ -59,13 +60,17 @@ const DriverCard = ({ driver }) => {
           <span className=" text-sm text-gray-500">{driver.vehicleType}</span>
 
         </div>
-        <span className="mt-4 block text-sm text-gray-500">Please find below a list of drivers whom you can contact if you are interested in hiring them.
+        <span className="mt-4 block text-sm text-gray-500">
+          Vehicle Type - {driver.vehicleType ? ` ${driver.vehicleType}` : " Not specified"}
+        </span>
+        <span className="mt-4 block text-sm text-gray-500">
+          Years of driving experienc -  {driver.experience ? ` ${driver.experience}` : " Not specified"}
         </span>
 
         <div className="flex flex-col justify-center space-x-4 space-y-4 text-gray-500">
-          <div className='flex flex-row justify-center items-center flex-wrap space-x-4'>
+          {/* <div className='flex flex-row justify-center items-center flex-wrap space-x-4'>
             {renderStars(3)}
-          </div>
+          </div> */}
           <div className='flex flex-row justify-center items-center flex-wrap space-x-4'>
             <BsTelephone className="w-6 hover:text-primary" />
             <a href={`tel:${driver.phone}`}>

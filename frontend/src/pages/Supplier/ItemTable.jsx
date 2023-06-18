@@ -10,9 +10,9 @@ import { useStateContext } from '../../context/ContextProvider';
 
 // const ItemTable = ({ supplierItems }) => {
 //     const [showWarning, setShowWarning] = useState(false);
-    // const {
-    //     currentColor
-    // } = useStateContext();
+// const {
+//     currentColor
+// } = useStateContext();
 
 //     // const handleDelete = () => {
 //     //   onDelete();
@@ -117,12 +117,14 @@ import { FiMoreVertical } from 'react-icons/fi';
 import { ordersData } from './dummy';
 import { Header } from '../../components';
 import { AiOutlineClose } from 'react-icons/ai';
+import { toast } from 'react-toastify';
+
 
 const ItemTable = () => {
     const {
         currentColor
     } = useStateContext();
-    
+
     const [orders, setOrders] = useState(ordersData);
     const [currentPage, setCurrentPage] = useState(1);
     const PAGE_SIZE = 5;
@@ -159,6 +161,41 @@ const ItemTable = () => {
         console.log(item)
     };
 
+    const handleDelete = () => {
+        toast.dark(
+            <div className="flex flex-col items-center">
+                <div className="mr-2">Are you sure you want to delete this item?</div>
+                <div className="flex items-center">
+                    <button
+                        className=" bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
+                        onClick={() => {
+                            // Handle delete logic here
+                            console.log('Delete action triggered');
+                            toast.dismiss();
+                        }}
+                    >
+                        Delete
+                    </button>
+                    <button
+                        className="marker:bg-gray-300 hover:bg-gray-400 bg-gray-300 text-gray-700 px-3 py-1 rounded ml-2"
+                        onClick={() => {
+                            toast.dismiss();
+                        }}
+                    >
+                        Cancel
+                    </button>
+                </div>
+            </div>,
+            {
+                position: toast.POSITION.TOP_CENTER,
+                closeButton: false,
+                autoClose: false,
+                draggable: false,
+            }
+        );
+    };
+
+
     const handleCloseAlert = () => {
         setShowAlert(false);
     };
@@ -194,7 +231,7 @@ const ItemTable = () => {
             <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl overflow-hidden">
                 <div className="mb-8">
                     <div className="pt-0 pr-4 pb-0 pl-4 mt-0 mr-auto mb-0 ml-auto sm:flex sm:items-center sm:justify-between">
-                        <Header category="Order Details" title="Item Order Table" />
+                        <Header category="Order Details" title="List Of Item" />
                         <div className="mt-4 mr-0 mb-0 ml-0 sm:mt-0">
                             <p className="sr-only">Search Items</p>
                             <div className="relative">
@@ -227,11 +264,9 @@ const ItemTable = () => {
                                                 Item
                                             </th>
 
+
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                                Customer Name
-                                            </th>
-                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                                Total Amount
+                                                Price
                                             </th>
 
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -239,7 +274,7 @@ const ItemTable = () => {
                                             </th>
 
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                                Order Id
+                                                Item Id
                                             </th>
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                                 Location
@@ -278,9 +313,7 @@ const ItemTable = () => {
                                                     </td>
 
 
-                                                    <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                        {order.CustomerName}
-                                                    </td>
+
                                                     <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                         <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 dark:bg-gray-800" style={{ color: '#977062', backgroundColor: '#EDE1DD' }}>
                                                             <h2 className="text-sm font-normal">{order.TotalAmount}</h2>
@@ -289,15 +322,9 @@ const ItemTable = () => {
                                                     </td>
 
                                                     <td className="py-2 px-4 border-b">
-                                                        <select
-                                                            value={order.Status}
-                                                            onChange={(e) => handleStatusChange(order.OrderID, e.target.value)}
-                                                            className="bg-white border border-gray-300 rounded px-2 py-1"
-                                                        >
-                                                            <option value="Complete">Complete</option>
-                                                            <option value="Pending">Pending</option>
-                                                            <option value="Canceled">Canceled</option>
-                                                        </select>
+                                                        <div className="inline-flex items-center gap-x-3">
+                                                            <span>Available</span>
+                                                        </div>
                                                     </td>
 
                                                     <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
@@ -328,18 +355,18 @@ const ItemTable = () => {
                                                                             onClick={() => handleRejectClick(order)}
                                                                             className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                                                                         >
-                                                                            Freeze
+                                                                            Edit
                                                                         </button>
                                                                     </li>
                                                                     <li>
-                                                                        <a href="#"
+                                                                        <button
+                                                                            onClick={handleDelete}
                                                                             className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                                                                         >
                                                                             Delete
-                                                                        </a>
+                                                                        </button>
                                                                     </li>
                                                                 </ul>
-
                                                             </div>
                                                         )}
                                                         <button

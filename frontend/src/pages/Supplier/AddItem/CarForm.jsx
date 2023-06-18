@@ -138,7 +138,7 @@ const CarForm = ({ handleData, getCategories }) => {
                                                 Seating Capacity
                                             </label>
                                             <Field
-                                                type="text"
+                                                type="number"
                                                 name="seatingCapacity"
                                                 id="seatingCapacity"
                                                 placeholder="Car seatingCapacity"

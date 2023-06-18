@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 import { AiOutlinePlus } from 'react-icons/ai';
@@ -55,6 +55,7 @@ const AddItemDetail = () => {
         } else {
             itemData.itemImages = images;
         }
+        console.log(itemData)
 
         addItem(itemData, uploadType); // Update the itemData state
 
@@ -67,170 +68,263 @@ const AddItemDetail = () => {
                     <div className="text-lg font-medium uppercase p-4 text-center border-b tracking-wide  border-gray-200" style={{ color: currentColor }}>Add Item</div>
                     <div className="flex justify-center">
                         <div className="m-5 mx-auto max-w-md text-center">
-                            {!itemData ?
-                                <>
-                                    <label className="mb-3 block text-base font-medium text-[#07074D]">
-                                        What Do You Want To Upload ?
-                                    </label>
+                            {/* {!itemData ? */}
+                            <>
+                                <label className="mb-3 block text-base font-medium text-[#07074D]">
+                                    What Do You Want To Upload ?
+                                </label>
 
-                                    <div className="flex items-center space-x-6">
-                                        <div className="flex items-center">
-                                            <input
-                                                type="radio"
-                                                name="radio1"
-                                                id="radioButton1"
-                                                className="h-5 w-5"
-                                                value="cars"
-                                                checked={uploadType === 'cars'}
-                                                onChange={handleRadioChange}
-                                            />
-                                            <label
-                                                htmlFor="radioButton1"
-                                                className="pl-3 text-base font-medium text-[#07074D]"
-                                            >
-                                                Car
-                                            </label>
-                                        </div>
-                                        <div className="flex items-center">
-                                            <input
-                                                type="radio"
-                                                name="radio1"
-                                                id="radioButton2"
-                                                className="h-5 w-5"
-                                                value="accessory"
-                                                checked={uploadType === 'accessory'}
-                                                onChange={handleRadioChange}
-                                            />
-                                            <label
-                                                htmlFor="radioButton2"
-                                                className="pl-3 text-base font-medium text-[#07074D]"
-                                            >
-                                                Accessory
-                                            </label>
-                                        </div>
+                                <div className="flex items-center space-x-6">
+                                    <div className="flex items-center">
+                                        <input
+                                            type="radio"
+                                            name="radio1"
+                                            id="radioButton1"
+                                            className="h-5 w-5"
+                                            value="cars"
+                                            checked={uploadType === 'cars'}
+                                            onChange={handleRadioChange}
+                                        />
+                                        <label
+                                            htmlFor="radioButton1"
+                                            className="pl-3 text-base font-medium text-[#07074D]"
+                                        >
+                                            Car
+                                        </label>
                                     </div>
-                                </>
-                                : <div></div>
-                            }
+                                    <div className="flex items-center">
+                                        <input
+                                            type="radio"
+                                            name="radio1"
+                                            id="radioButton2"
+                                            className="h-5 w-5"
+                                            value="item"
+                                            checked={uploadType === 'item'}
+                                            onChange={handleRadioChange}
+                                        />
+                                        <label
+                                            htmlFor="radioButton2"
+                                            className="pl-3 text-base font-medium text-[#07074D]"
+                                        >
+                                            Accessory
+                                        </label>
+                                    </div>
+                                </div>
+                            </>
+                            {/* : <div></div> */}
+                            {/* } */}
                         </div>
                     </div>
+                    {/* {!itemData && */}
+                    <div className="flex justify-center mt-4">
+                        <TooltipComponent content="Add Item" position="LeftCenter">
+                            <button type="button" onClick={() => setEditItem(true)} className="mb-4 rounded-full hover:bg-blue-600 p-4 hover:shadow-lg" style={{ backgroundColor: currentColor }}>
+                                <span className=" font-medium text-white">
+                                    <AiOutlinePlus />
+                                </span>
+                            </button>
+                        </TooltipComponent>
+                    </div>
+                    {/* } */}
 
-                    { itemData &&
+                    {itemData &&
                         <div className='m-4 flex flex-col justify-start space-y-4'>
-                            {itemData.make &&
-                                <div>
-                                <span className="text-bold">Title:</span>
-                                     {itemData.make}
+                            <div className="-mx-3 flex flex-wrap">
+                                {itemData.make &&
+                                    <div className="w-full px-3 sm:w-1/2">
+                                        <div className="mb-5">
+                                            <span className="mb-3 block text-base font-medium text-[#07074D]">
+                                                Title:
+                                            </span>
+
+                                            <div className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                            >
+                                                {itemData.make}
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                {itemData.name &&
+                                    <div className="w-full px-3 sm:w-1/2">
+                                        <div className="mb-5">
+                                            <span className="mb-3 block text-base font-medium text-[#07074D]">
+                                                Title:
+                                            </span>
+
+                                            <div className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                            >
+                                                {itemData.name}                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                                <div className="w-full px-3 sm:w-1/2">
+                                    <div className="mb-5">
+                                        <span className="mb-3 block text-base font-medium text-[#07074D]">
+                                            Price:
+                                        </span>
+
+                                        <div className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                        >
+                                            {itemData.price}                                            </div>
+                                    </div>
                                 </div>
-                            }
-                            {itemData.name &&
-                                <div>
-                                <span className="text-bold">Title:</span>
 
-                                     {itemData.name}
+                                {itemData.category &&
+                                    <div className="w-full px-3 sm:w-1/2">
+                                        <div className="mb-5">
+                                            <span className="mb-3 block text-base font-medium text-[#07074D]">
+                                                Category:
+                                            </span>
+
+                                            <div className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                            >
+                                                {itemData.category}                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                                {itemData.brand &&
+                                    <div className="w-full px-3 sm:w-1/2">
+                                        <div className="mb-5">
+                                            <span className="mb-3 block text-base font-medium text-[#07074D]">
+                                                Brand:
+                                            </span>
+
+                                            <div className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                            >
+                                                {itemData.brand}                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                                {itemData.model &&
+                                    <div className="w-full px-3 sm:w-1/2">
+                                        <div className="mb-5">
+                                            <span className="mb-3 block text-base font-medium text-[#07074D]">
+                                                Model:
+                                            </span>
+
+                                            <div className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                            >
+                                                {itemData.model}                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                                {itemData.isAvailable &&
+                                    <div className="w-full px-3 sm:w-1/2">
+                                        <div className="mb-5">
+                                            <span className="mb-3 block text-base font-medium text-[#07074D]">
+                                                Is It Available:
+                                            </span>
+
+                                            <div className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                            >
+                                                {itemData.isAvailable}                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                {itemData.seatingCapacity &&
+                                    <div className="w-full px-3 sm:w-1/2">
+                                        <div className="mb-5">
+                                            <span className="mb-3 block text-base font-medium text-[#07074D]">
+                                                Seating Capacity:
+                                            </span>
+
+                                            <div className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                            >
+                                                {itemData.seatingCapacity}                                           </div>
+                                        </div>
+                                    </div>
+                                }
+
+                                {itemData.engine &&
+                                    <div className="w-full px-3 sm:w-1/2">
+                                        <div className="mb-5">
+                                            <span className="mb-3 block text-base font-medium text-[#07074D]">
+                                                Engine:
+                                            </span>
+
+                                            <div className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                            >
+                                                {itemData.seatingCapacity}                                         </div>
+                                        </div>
+                                    </div>
+                                }
+                                {itemData.fuelType &&
+                                    <div className="w-full px-3 sm:w-1/2">
+                                        <div className="mb-5">
+                                            <span className="mb-3 block text-base font-medium text-[#07074D]">
+                                                Fuel Type:
+                                            </span>
+
+                                            <div className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                            >
+                                                {itemData.fuelType}
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                                {itemData.color &&
+                                    <div className="w-full px-3 sm:w-1/2">
+                                        <div className="mb-5">
+                                            <span className="mb-3 block text-base font-medium text-[#07074D]">
+                                                Color:
+                                            </span>
+
+                                            <div className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                            >
+                                                {itemData.color}                                         </div>
+                                        </div>
+                                    </div>
+                                }
+                                {itemData.year &&
+                                    <div className="w-full px-3 sm:w-1/2">
+                                        <div className="mb-5">
+                                            <span className="mb-3 block text-base font-medium text-[#07074D]">
+                                                Manufacturing Date:
+                                            </span>
+
+                                            <div className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                            >
+                                                {itemData.year}                                         </div>
+                                        </div>
+                                    </div>
+                                }
+
+                                <div className="w-full px-3 sm:w-1/2">
+                                    <div className="mb-5">
+                                        <span className="mb-3 block text-base font-medium text-[#07074D]">
+                                            Quantity:
+                                        </span>
+
+                                        <div className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                        >
+                                            {itemData.quantity}                                         </div>
+                                    </div>
                                 </div>
-                            }
 
-                            <div>
-                            <span className="text-bold">Price:</span>
 
-                                 {itemData.price}
                             </div>
+                            <div className="w-full px-3 sm:w-1/2">
+                                <div className="mb-5">
+                                    <span className="mb-3 block text-base font-medium text-[#07074D]">
+                                        Description:
+                                    </span>
 
-                            {itemData.category &&
-                                <div>
-                                <span className="text-bold">Category:</span>
-
-                                     {itemData.category}
+                                    <div className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                    >
+                                        {Parse(itemData.description)}
+                                    </div>
                                 </div>
-                            }
-
-                            {itemData.brand &&
-                                <div>
-                                <span className="text-bold">Brand: </span>
-
-                                   {itemData.brand}
-                                </div>
-                            }
-
-                            {itemData.model &&
-                                <div>
-                                <span className="text-bold">Model:</span>
-
-                                     {itemData.model}
-                                </div>
-                            }
-
-                            {itemData.isAvailable &&
-                                <div>
-                                <span className="text-bold">Is It Available:</span>
-
-                                     {itemData.seatingCapacity}
-                                </div>
-                            }
-                            {itemData.seatingCapacity &&
-                                <div>
-                                <span className="text-bold">Seating Capacity:</span>
-
-                                     {itemData.seatingCapacity}
-                                </div>
-                            }
-
-                            {itemData.engine &&
-                                <div>
-                                <span className="text-bold">Engine:</span>
-
-                                     {itemData.seatingCapacity}
-                                </div>
-                            }
-                            {itemData.fuelType &&
-                                <div>
-                                <span className="text-bold">Fuel Type:</span>
-
-                                     {itemData.seatingCapacity}
-                                </div>
-                            }
-
-                            {itemData.color &&
-                                <div>
-                                <span className="text-bold">Color:</span>
-
-                                     {itemData.seatingCapacity}
-                                </div>
-                            }
-                            {itemData.year &&
-                                <div>
-                                <span className="text-bold">Manufacturing Date:</span>
-
-                                     {itemData.seatingCapacity}
-                                </div>
-                            }
-
-                            <div>
-                            <span className="text-bold">Quantity:</span>
-
-                                 {itemData.quantity}
-                            </div>
-
-
-                            <div>
-                                Description: {Parse(itemData.description)}
                             </div>
                         </div>
                     }
 
                     {/* <ItemInfo /> */}
-                    {!itemData &&
-                        <div className="flex justify-center mt-4">
-                            <TooltipComponent content="Add Item" position="LeftCenter">
-                                <button type="button" onClick={() => setEditItem(true)} className="mb-4 rounded-full hover:bg-blue-600 p-4 hover:shadow-lg" style={{ backgroundColor: currentColor }}>
-                                    <span className=" font-medium text-white">
-                                        <AiOutlinePlus />
-                                    </span>
-                                </button>
-                            </TooltipComponent>
-                        </div>
-                    }
+
 
                     {/* images */}
                     <div className="w-full relative z-0 px-5 md:px-0 md:py-16 ">

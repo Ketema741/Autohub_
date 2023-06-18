@@ -469,26 +469,7 @@ export const employeesGrid = [
 
 export const links = [
 
-  {
-    title: 'Pages',
-    links: [
-      {
-        name: 'orders',
-        url: 'orders',
-        icon: <AiOutlineShoppingCart />,
-      },
-      {
-        name: 'employees',
-        url: 'employees',
-        icon: <IoMdContacts />,
-      },
-      {
-        name: 'customers',
-        url: 'customers',
-        icon: <RiContactsLine />,
-      },
-    ],
-  },
+  
   
   {
     title: 'Charts',

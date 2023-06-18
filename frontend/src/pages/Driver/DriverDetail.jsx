@@ -4,6 +4,9 @@ import UserContext from '../../context/user/userContext';
 import { useStateContext } from '../../context/ContextProvider';
 import { Navbar, Footer, Sidebar } from '../../components';
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import DetailCard from './DetailCard'
 
 
@@ -62,12 +65,25 @@ const DriverDetail = () => {
                         (<DetailCard driver={driver} />)
                         :
                         <div className='center'>loading...</div>
-                    } 
+                    }
 
                     <Footer />
 
                 </div>
             </div>
+
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
         </div>
 
     );
