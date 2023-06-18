@@ -7,14 +7,16 @@ const {
   addBlog,
   deleteBlog,
   updateBlog,
+  getBlogByAuthor,
 } = require("../controllers/blogController");
 
 const { verifyToken } = require("../middleware/auth");
-const { upload } = require("../configurations/multer")
+const { upload } = require("../configurations/multer");
 
 router.get("/", getBlogs);
 router.get("/blog/:id", getBlog);
-router.post("/add/blog", verifyToken, upload.single("blogImage"), addBlog);
+router.get("/author/blogs", verifyToken, getBlogByAuthor);
+router.post("/add/blog", verifyToken, addBlog);
 router.put("/update/blog/:id", verifyToken, updateBlog);
 router.delete("/delete/blog/:id", verifyToken, deleteBlog);
 

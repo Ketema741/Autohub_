@@ -34,6 +34,25 @@ const getBlog = async (req, res) => {
   }
 };
 
+const getBlogByAuthor = async (req, res) => {
+  try {
+    const authorId = req.user.id;
+    const blogs = await model.Blog.find({ author: authorId }).populate(
+      "author",
+      "firstName userImage bio email"
+    );
+    if (!blogs) {
+      return res.status(404).json({ msg: "Blog not found" });
+    }
+
+    res.json(blogs);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ error: err.message });
+  }
+};
+
+
 const addBlog = async (req, res) => {
   try {
     const { title, excerpt, description, category, summary } = req.body;
@@ -139,4 +158,5 @@ module.exports = {
   getBlogs,
   updateBlog,
   deleteBlog,
+  getBlogByAuthor,
 };

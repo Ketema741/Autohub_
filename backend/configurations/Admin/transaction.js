@@ -8,6 +8,7 @@ const calculateAmounts = async (orderId) => {
     if (!order) {
       throw new Error("Order not found");
     }
+    console.log(order)
     const itemsBySupplier = order.items.reduce((acc, item) => {
       const supplierId = item.supplier.toString();
       acc[supplierId] = acc[supplierId] || [];

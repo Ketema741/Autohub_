@@ -24,7 +24,7 @@ exports.addToCart = async (req, res) => {
       if (!product) {
         return res.status(404).json({ error: "Product couldn't be found" });
       }
-      cart.items.push({ productId, quantity, price: product.price });
+      cart.items.push(product);
     }
 
     await cart.save();
