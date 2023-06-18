@@ -1,38 +1,18 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { MdOutlineCancel } from 'react-icons/md';
 import { HtmlEditor, Inject, Link, QuickToolbar, RichTextEditorComponent, Table, Toolbar } from '@syncfusion/ej2-react-richtexteditor';
 
-import { RiDeleteBinLine } from 'react-icons/ri';
-
 import { customToolbarSettings } from './Toolbar';
-import BlogContext from '../../../context/blog/blogContext';
-import UploadImage from '../../../cloudinary/UploadImage';
 
-const PostForm = ({ setAddBlog, currentColor }) => {
-    const blogContext = useContext(BlogContext);
-    const { postBlog } = blogContext;
-
+const EditForm = ({ blog, setEditItem, currentColor }) => {
 
     const [formState, setFormState] = useState({
-        title: "",
-        excerpt: "",
-        summary: "",
-        description: "",
-        takeaways: "",
-        category: "",
+        category: blog.category,
+        title: blog.title,
+        excerpt: blog.excerpt,
+        takeaways: blog.takeaways,
+        content: blog.content,
     });
-
-    // image upload start here
-    const [images, setImages] = useState([]);
-    const [imageToRemove, setImageToRemove] = useState();
-
-    const handleDelete = (imgObj) => {
-        const public_id = imgObj.public_id;
-        setImageToRemove(public_id);
-        setImageToRemove(null);
-        setImages((prev) => prev.filter((img) => img.public_id !== public_id));
-    };
-    // image upload end here
 
     const handleChange = (e) => {
         setFormState({
@@ -43,12 +23,17 @@ const PostForm = ({ setAddBlog, currentColor }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        const { category, title, excerpt, takeaways, content } = formState;
+        const formData = {
+            category,
+            title,
+            excerpt,
+            takeaways,
+            description: content,
+        };
+        console.log(formData);
 
-        if (images && images.length > 0) {
-            formState.blogImages = images[0]
-            console.log(formState);
-            postBlog(formState)
-        }
+        // addItem(formData, images)
     };
 
     return (
@@ -58,7 +43,7 @@ const PostForm = ({ setAddBlog, currentColor }) => {
                     <p className="font-semibold text-lg" style={{ color: currentColor }}>Make A Blog Post</p>
                     <button
                         type="button"
-                        onClick={() => setAddBlog(false)}
+                        onClick={() => setEditItem(false)}
                         style={{ color: 'rgb(153, 171, 180)', borderRadius: '50%' }}
                         className="text-2xl p-3 hover:drop-shadow-xl hover:bg-light-gray"
                     >
@@ -68,39 +53,6 @@ const PostForm = ({ setAddBlog, currentColor }) => {
 
                 <div className="flex flex-col px-4 sm:px-6 md:px-8 lg:px-10 py-5 w-full">
                     <div className="mx-auto w-full">
-                        <div className="w-full px-3 sm:w-1/2">
-                            <div className="mb-5">
-                                <label htmlFor="description" className="mb-3 block text-base font-medium text-[#07074D]">
-                                    Image
-                                </label>
-                                <UploadImage setImages={setImages} />
-                            </div>
-                        </div>
-                        {images &&
-                            <div className="flex  w-full flex-wrap  p-5">
-                                <div className="grid grid-cols-3 gap-3">
-                                    {images.map((image, index) => (
-                                        <div key={index} className="w-35 bg-white p-3">
-                                            <img
-                                                src={image.url}
-                                                alt={`Selected ${index + 1}`}
-                                                className="h-40 w-full object-cover"
-                                            />
-                                            {imageToRemove !== image.public_id && (
-                                                <div className="mt-3 flex">
-                                                    <div className="mr-auto">
-                                                        <button onClick={() => handleDelete(image)} className=" text-gray-400 hover:text-red-600">
-                                                            <RiDeleteBinLine />
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            )}
-                                        </div>
-                                    ))
-                                    }
-                                </div>
-                            </div>
-                        }
                         <form onSubmit={handleSubmit}>
 
                             <div className="-mx-3 flex flex-wrap">
@@ -114,7 +66,6 @@ const PostForm = ({ setAddBlog, currentColor }) => {
                                             id="category"
                                             name="category"
                                             value={formState.category}
-                                            required
                                             onChange={handleChange}
                                             className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                         />
@@ -130,32 +81,28 @@ const PostForm = ({ setAddBlog, currentColor }) => {
                                             type="text"
                                             id="title"
                                             name="title"
-                                            required
-
                                             value={formState.title}
                                             onChange={handleChange}
                                             className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                         />
                                     </div>
                                 </div>
-                                <div className="w-full px-3 sm:w-1/2">
+                                <div className="w-full px-3">
 
-                                    <div className="mb-5">
+                                    <div className="mb-5 ">
                                         <label htmlFor="excerpt" className="mb-3 block text-base font-medium text-[#07074D]">
                                             Excerpt
                                         </label>
                                         <textarea
                                             id="excerpt"
                                             name="excerpt"
-                                            required
-
                                             value={formState.excerpt}
                                             onChange={handleChange}
-                                            className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                            className="min-h-[100px] w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                         ></textarea>
                                     </div>
                                 </div>
-                                <div className="w-full px-3 sm:w-1/2">
+                                <div className="w-full px-3">
                                     <div className="mb-5">
                                         <label htmlFor="takeaways" className="mb-3 block text-base font-medium text-[#07074D]">
                                             Takeaways
@@ -164,39 +111,24 @@ const PostForm = ({ setAddBlog, currentColor }) => {
                                             id="takeaways"
                                             name="takeaways"
                                             value={formState.takeaways}
-                                            required
                                             onChange={handleChange}
-                                            className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                        ></textarea>
-                                    </div>
-                                </div>
-                                <div className="w-full px-3 sm:w-1/2">
-                                    <div className="mb-5">
-                                        <label htmlFor="summary" className="mb-3 block text-base font-medium text-[#07074D]">
-                                            summary
-                                        </label>
-                                        <textarea
-                                            id="summary"
-                                            name="summary"
-                                            value={formState.summary}
-                                            required
-                                            onChange={handleChange}
-                                            className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                            className="min-h-[100px] w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                         ></textarea>
                                     </div>
                                 </div>
                             </div>
 
 
-
                             <div className="mb-5">
-                                <label htmlFor="description" className="mb-3 block text-base font-medium text-[#07074D]">
+                                <label htmlFor="content" className="mb-3 block text-base font-medium text-[#07074D]">
                                     Detail Description
                                 </label>
                                 <RichTextEditorComponent
-                                    change={(args) => setFormState({ ...formState, description: args.value })}
+                                    value={formState.content}
+                                    change={(args) => setFormState({ ...formState, content: args.value })}
                                     toolbarSettings={customToolbarSettings}
                                 >
+                                    <div>{blog.description}</div>
                                     <Inject services={[HtmlEditor, Toolbar, Link, QuickToolbar, Table]} />
                                 </RichTextEditorComponent>
                             </div>
@@ -207,7 +139,7 @@ const PostForm = ({ setAddBlog, currentColor }) => {
                                     className="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none"
                                     style={{ backgroundColor: currentColor }}
                                 >
-                                    Post
+                                    Edit
                                 </button>
                             </div>
                         </form>
@@ -218,4 +150,4 @@ const PostForm = ({ setAddBlog, currentColor }) => {
     );
 };
 
-export default PostForm;
+export default EditForm;

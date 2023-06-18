@@ -9,6 +9,7 @@ import {
   SET_CURRENT,
   GET_JOBS,
   DELETE_POST,
+  GET_AUTHORPOSTS,
 } from '../Types';
 
 
@@ -18,6 +19,11 @@ const blogReducer = (state, action) => {
       return {
         ...state,
         blogs: action.payload,
+      };
+    case GET_AUTHORPOSTS:
+      return {
+        ...state,
+        privateBlogs: action.payload,
       };
     case GET_JOBS:
       return {

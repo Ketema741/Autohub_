@@ -1,5 +1,6 @@
 import React from 'react'
 import { FaBriefcase } from 'react-icons/fa';
+const Parse = require('html-react-parser')
 
 import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 
@@ -15,7 +16,7 @@ const Experience = ({ currentColor, user }) => {
                     <span className="tracking-wide">Summary</span>
                 </div>
 
-                <div className="text-gray-600">{user.specializations}</div>
+                <div className="text-gray-800">{user.specializations}</div>
             </div>
 
             {user.bio &&
@@ -27,7 +28,7 @@ const Experience = ({ currentColor, user }) => {
                         <span className="tracking-wide">Detail</span>
                     </div>
 
-                    <div className="text-gray-600">{user.bio}</div>
+                    <div className="text-gray-800">{Parse(user.bio)}</div>
                 </div>
             }
 
