@@ -35,9 +35,7 @@ const {
 
 const { verifyToken, verifyAdministrator } = require("../middleware/auth");
 const { grantAccess } = require("../middleware/rolesMiddleware");
-const {
-  transferAmountToSupplierAccount,
-} = require("../configurations/Admin/transfer");
+const { saveTransaction } = require("../configurations/Admin/transaction");
 const {
   getPendingSuppliers,
   approveSupplier,
@@ -147,6 +145,6 @@ router.delete(
   rejectSupplier
 );
 
-router.post("/transfer/suppliers/:orderId", transferAmountToSupplierAccount);
+// router.post("/transfer/suppliers/:orderId", transferAmountToSupplierAccount);
 
 module.exports = router;
