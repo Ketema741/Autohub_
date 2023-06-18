@@ -158,8 +158,10 @@ const AuthState = (props) => {
               type: USER_ERROR,
               payload: err
             });
+            console.log(err)
             reject(err);
           });
+          console.log(res)
       });
 
       toast.promise(approvePromise, {
