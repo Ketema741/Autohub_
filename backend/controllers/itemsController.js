@@ -32,13 +32,25 @@ const getCategories = async (req, res) => {
 
 const addItem = async (req, res) => {
   try {
-    const { categoryId, name, price, description } = req.body;
-    const imageFiles = req.files;
+    const { categoryId, name, price, description, itemImages } = req.body;
+    // const imageFiles = req.files;
 
-    const imgs = imageFiles.map((img) =>
-      uploadToCloudinary(img.path, "images")
-    );
-    const images_data = await Promise.all(imgs);
+    // const imgs = imageFiles.map((img) =>
+    //   uploadToCloudinary(img.path, "images")
+    // );
+    // const images_data = await Promise.all(imgs);
+    // console.log("ERRR", req.body)
+    if (
+      !categoryId ||
+      !name ||
+      !price ||
+      !description ||
+      !itemImages
+    ) {
+      res.status(400);
+      throw new Error("Please add all the required fields");
+    }
+
     const category = await Category.findById(categoryId);
     if (!category) {
       res.status(404);
@@ -53,7 +65,7 @@ const addItem = async (req, res) => {
       name,
       price,
       description,
-      itemImages: images_data,
+      itemImages,
     });
     if (item) {
       await Item.findByIdAndUpdate(
@@ -219,7 +231,7 @@ const createCar = async (req, res) => {
       seatingCapacity,
     } = req.body;
 
-    const imageFiles = req.files;
+    // const imageFiles = req.files;
     console.log(req.body);
     if (
       !make ||
@@ -229,15 +241,16 @@ const createCar = async (req, res) => {
       !description ||
       !engine ||
       !fuelType ||
-      !seatingCapacity
+      !seatingCapacity ||
+      !carImages
     ) {
       res.status(400);
       throw new Error("Please add all the required fields");
     }
-    const action = imageFiles.map((img) =>
-      uploadToCloudinary(img.path, "images")
-    );
-    const images_data = await Promise.all(action);
+    // const action = imageFiles.map((img) =>
+    //   uploadToCloudinary(img.path, "images")
+    // );
+    // const images_data = await Promise.all(action);
     const car = await Car.create({
       supplier: req.user._id,
       make,
@@ -248,16 +261,9 @@ const createCar = async (req, res) => {
       seatingCapacity,
       engine,
       fuelType,
-      carImages: images_data,
+      carImages,
     });
     if (car) {
-      const _car = await Car.findByIdAndUpdate(
-        { _id: car._id },
-        {
-          $addToSet: { carImages: images_data },
-        },
-        { new: true }
-      );
       res.status(201).json({
         data: _car,
         message: "Car added successfully",

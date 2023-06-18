@@ -14,13 +14,14 @@ const addJob = async (req, res) => {
     }
 
     const employer = req.user;
-    console.log(req.body)
+    console.log(req.body);
     const job = await Job.create({
       title,
       description,
       location,
       employer,
-      jobImages:req.body?.jobImages,
+      salary: req.body?.salary,
+      jobImages: req.body?.jobImages,
     });
     if (job) {
       res.status(201).json({

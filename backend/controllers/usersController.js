@@ -49,6 +49,53 @@ const getUserByEmail = async (email) => {
   return null;
 };
 
+const getUserById = async (id) => {
+  const [
+    admin,
+    customer,
+    temporarySupplier,
+    supplier,
+    driver,
+    caraficionados,
+    serviceProvider,
+  ] = await Promise.all([
+    models.Customer.findById(id),
+    models.Admin.findById(id),
+    models.ServiceProvider.findById(id),
+    models.Driver.findById(id),
+    models.Supplier.findById(id),
+    models.CarAficionados.findById(id),
+    models.TemporarySupplier.findById(id),
+  ]);
+
+  if (admin) {
+    return admin;
+  }
+
+  if (customer) {
+    return customer;
+  }
+
+  if (temporarySupplier) {
+    return temporarySupplier;
+  }
+
+  if (supplier) {
+    return supplier;
+  }
+  if (driver) {
+    return driver;
+  }
+  if (caraficionados) {
+    return caraficionados;
+  }
+  if (serviceProvider) {
+    return serviceProvider;
+  }
+
+  return null;
+};
+
 const signUpUser = async (req, res) => {
   try {
     const { firstName, lastName, email, phone, password, address, userType } =
@@ -309,10 +356,10 @@ const updateServiceProvider = async (req, res) => {
       res.status(404);
       throw new Error("Couldn't be updated, Service Provider not found ");
     }
-      if (user._id.toString() !== req.user.id) {
-        res.status(403);
-        throw new Error("Only account owner can update the profile");
-      }
+    if (user._id.toString() !== req.user.id) {
+      res.status(403);
+      throw new Error("Only account owner can update the profile");
+    }
     const updatedUser = await models.ServiceProvider.findByIdAndUpdate(
       req.params.user_id,
       req.body,
@@ -337,7 +384,7 @@ const updateSupplier = async (req, res) => {
       res.status(404);
       throw new Error("Couldn't be updated, Supplier not found ");
     }
-      if (user._id.toString() !== req.user.id) {
+    if (user._id.toString() !== req.user.id) {
       res.status(403);
       throw new Error("Only account owner can update the profile");
     }
@@ -364,7 +411,7 @@ const updateDriver = async (req, res) => {
       res.status(404);
       throw new Error("Couldn't be updated, User not found ");
     }
-      if (user._id.toString() !== req.user.id) {
+    if (user._id.toString() !== req.user.id) {
       res.status(403);
       throw new Error("Only account owner can update the profile");
     }
@@ -392,7 +439,7 @@ const updateCarAficionados = async (req, res) => {
       res.status(404);
       throw new Error("Couldn't be updated, User not found ");
     }
-      if (user._id.toString() !== req.user.id) {
+    if (user._id.toString() !== req.user.id) {
       res.status(403);
       throw new Error("Only account owner can update the profile");
     }
@@ -722,6 +769,7 @@ module.exports = {
 
   // get User By Email
   getUserByEmail,
+  getUserById,
   // get user by IDs
   getDriver,
   getCustomer,

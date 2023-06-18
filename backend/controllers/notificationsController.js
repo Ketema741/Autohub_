@@ -1,15 +1,20 @@
 const Notification = require("../models/Notification");
+const { getUserById } = require("./usersController");
 
 const sendNotification = async (req, res) => {
   try {
     const { message, recipient, content } = req.body;
+    const _recipient = await getUserById(recipient);
+    if (!_recipient) {
+      res.status(404);
+      throw new Error("User not found");
+    }
 
     const notification = new Notification({
       message,
-      recipient,
+      recipient:_recipient,
       content,
     });
-
     await notification.save();
 
     res

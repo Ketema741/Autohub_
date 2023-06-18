@@ -12,7 +12,7 @@ const { verifyToken } = require("../middleware/auth");
 
 router.post("/send", sendNotification);
 router.post("/send-to-all", sendNotificationToAll);
-router.get("/:userId", getNotification);
+router.get("/user/:userId", getNotification);
 router.delete("/:id", verifyToken, deleteNotification);
 
 module.exports = router;

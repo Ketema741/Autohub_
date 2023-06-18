@@ -48,7 +48,7 @@ router.post(
   "/add-item",
   verifyToken,
   grantAccess("createOwn", "item"),
-  upload.array("itemImages", 6),
+  // upload.array("itemImages", 6),
   addItem
 );
 
