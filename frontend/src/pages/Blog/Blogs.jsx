@@ -42,9 +42,14 @@ const Blogs = () => {
       setCurrentColor(currentThemeColor);
       setCurrentMode(currentThemeMode);
     }
-    getBlogs()
-    console.log(blogs)
   }, []);
+
+  useEffect(() => {
+    getBlogs()
+
+  }, [])
+
+  console.log(blogs)
 
   const RenderLoadings = () => {
     const loadings = [];
@@ -121,11 +126,11 @@ const Blogs = () => {
                     {
                       filtered !== null ?
                         filtered.map(blog => (
-                          <BlogCard blog={blog} />
+                          <BlogCard id={blog} />
                         ))
                         :
                         blogs.map(blog => (
-                          <BlogCard blog={blog} />
+                          <BlogCard blogPost={blog} />
                         ))
                     }
                   </Fragment>

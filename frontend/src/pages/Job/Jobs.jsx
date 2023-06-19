@@ -33,6 +33,7 @@ const Jobs = () => {
   useEffect(() => {
     getJobs()
   }, [])
+  
   const [isOpen, setIsOpen] = useState(false);
 
   const togglePopup = () => {

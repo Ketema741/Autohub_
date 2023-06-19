@@ -12,6 +12,7 @@ import {
   POST_BLOG,
   DELETE_BLOG,
   UPDATE_BLOG,
+  GET_RELATEDPOSTS,
 } from '../Types';
 
 
@@ -32,14 +33,7 @@ const blogReducer = (state, action) => {
         ...state,
         privateBlogs: action.payload,
       };
-    case GET_JOBS:
-      return {
-        ...state,
-        jobs: state.blogs.filter(({ title, category }) => {
-          const testString = `${title}${category}`.toLowerCase();
-          return testString.includes(action.payload.toLowerCase());
-        }),
-      };
+   
 
     case GET_POST:
       return {
@@ -88,6 +82,14 @@ const blogReducer = (state, action) => {
         return {
           ...state,
           filtered: state.blogs.filter(({ title, category }) => {
+            const testString = `${title}${category}`.toLowerCase();
+            return testString.includes(action.payload.toLowerCase());
+          }),
+        };
+        case GET_RELATEDPOSTS:
+        return {
+          ...state,
+          relatedBlogs: state.blogs.filter(({ title, category }) => {
             const testString = `${title}${category}`.toLowerCase();
             return testString.includes(action.payload.toLowerCase());
           }),

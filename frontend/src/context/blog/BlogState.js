@@ -15,21 +15,21 @@ import {
   CLEAR_FILTER,
   POST_ERROR,
   UPDATE_BLOG,
-  GET_JOBS,
   GET_AUTHORPOSTS,
   POST_BLOG,
-  DELETE_BLOG
+  DELETE_BLOG,
+  GET_RELATEDPOSTS
 } from '../Types';
 
 const Blogstate = (props) => {
   const initialState = {
     blogs: [],
-    jobs: [],
     privateBlogs: [],
     relatedPost: null,
     blog: null,
     current: null,
     filtered: null,
+    relatedBlogs: null,
   };
 
   const [state, dispatch] = useReducer(blogReducer, initialState);
@@ -182,7 +182,7 @@ const Blogstate = (props) => {
 
   // Get blog
   const getBlog = async (_id, category) => {
-    filterBlogs(category)
+    getRelatedBlogs(category)
     try {
       const res = await axios.get(`/blogs/blog/${_id}`);
       dispatch({
@@ -198,10 +198,7 @@ const Blogstate = (props) => {
   };
 
 
-  // get jobs
-  const getJobs = (text) => {
-    dispatch({ type: GET_JOBS, payload: text });
-  };
+ 
 
   // clear posts
   const clearPosts = () => {
@@ -225,6 +222,11 @@ const Blogstate = (props) => {
     dispatch({ type: FILTER_POSTS, payload: text });
   };
 
+  // filter blogs
+  const getRelatedBlogs = (text) => {
+    dispatch({ type: GET_RELATEDPOSTS, payload: text });
+  };
+
   // clear filter
   const clearFilter = () => {
     dispatch({ type: CLEAR_FILTER });
@@ -234,7 +236,7 @@ const Blogstate = (props) => {
     <blogContext.Provider
       value={{
         blogs: state.blogs,
-        jobs: state.jobs,
+        relatedBlogs: state.relatedBlogs,
         privateBlogs: state.privateBlogs,
         blog: state.blog,
         current: state.current,
@@ -245,12 +247,12 @@ const Blogstate = (props) => {
         postBlog,
         deleteBlog,
         getBlog,
-        getJobs,
         updateBlog,
         clearPosts,
         setCurrent,
         clearCurrent,
         filterBlogs,
+        getRelatedBlogs,
         clearFilter,
       }}
     >
