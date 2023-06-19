@@ -8,8 +8,9 @@ import {
   POST_ERROR,
   SET_CURRENT,
   GET_JOBS,
-  DELETE_POST,
   GET_AUTHORPOSTS,
+  POST_BLOG,
+  DELETE_BLOG,
 } from '../Types';
 
 
@@ -19,6 +20,11 @@ const blogReducer = (state, action) => {
       return {
         ...state,
         blogs: action.payload,
+      };
+    case POST_BLOG:
+      return {
+        ...state,
+        privateBlogs: [action.payload, ...state.privateBlogs],
       };
     case GET_AUTHORPOSTS:
       return {
@@ -39,6 +45,11 @@ const blogReducer = (state, action) => {
         ...state,
         blog: action.payload,
       };
+    case DELETE_BLOG:
+      return {
+        ...state,
+        privateBlogs: state.privateBlogs.filter((blog) => blog._id !== action.payload),
+      };
     
     case CLEAR_POSTS:
       return {
@@ -58,7 +69,7 @@ const blogReducer = (state, action) => {
         ...state,
         current: null,
       };
-    case DELETE_POST:
+    case DELETE_BLOG:
       return {
         ...state,
         posts: state.posts.filter((post) => post._id !== action.payload),

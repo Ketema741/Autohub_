@@ -5,14 +5,9 @@ import { HtmlEditor, Inject, Link, QuickToolbar, RichTextEditorComponent, Table,
 import { RiDeleteBinLine } from 'react-icons/ri';
 
 import { customToolbarSettings } from './Toolbar';
-import BlogContext from '../../../context/blog/blogContext';
 import UploadImage from '../../../cloudinary/UploadImage';
 
-const PostForm = ({ setAddBlog, currentColor }) => {
-    const blogContext = useContext(BlogContext);
-    const { postBlog } = blogContext;
-
-
+const PostForm = ({ postBlog, setAddBlog, currentColor }) => {
     const [formState, setFormState] = useState({
         title: "",
         excerpt: "",
@@ -45,7 +40,7 @@ const PostForm = ({ setAddBlog, currentColor }) => {
         e.preventDefault();
 
         if (images && images.length > 0) {
-            formState.blogImages = images[0]
+            formState.blogImage = images[0]
             console.log(formState);
             postBlog(formState)
         }

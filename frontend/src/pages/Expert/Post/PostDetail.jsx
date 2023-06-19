@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 import { AiOutlinePlus } from 'react-icons/ai';
 
-import { useStateContext } from '../../../context/ContextProvider';
 import PostForm from './PostForm'
 import PostCard from './PostCard'
 
+import { useStateContext } from '../../../context/ContextProvider';
+import BlogContext from '../../../context/blog/blogContext';
+
 const PostDetail = ({ privateBlogs }) => {
+    const blogContext = useContext(BlogContext);
+    const { postBlog, deleteBlog } = blogContext;
+
     const {  currentColor } = useStateContext();
 
     const [addBlog, setAddBlog ] = useState(false);
@@ -40,7 +45,7 @@ const PostDetail = ({ privateBlogs }) => {
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3">
 
                                 {privateBlogs.map(blog => (
-                                    <PostCard key={blog._id} blog={blog} />
+                                    <PostCard key={blog._id} deleteBlog={deleteBlog} blog={blog} />
                                 ))}
                             </div> 
                         </div>
@@ -49,7 +54,7 @@ const PostDetail = ({ privateBlogs }) => {
             </div>
             {addBlog &&
                 <div className='w-full'>
-                    <PostForm currentColor={currentColor} setAddBlog={setAddBlog} />
+                    <PostForm postBlog={postBlog} currentColor={currentColor} setAddBlog={setAddBlog} />
                 </div>
             }
         </div>

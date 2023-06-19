@@ -107,9 +107,10 @@ export const DELETE_CART = 'DELETE_CART';
 
 // blog post
 export const GET_POSTS = 'GET_POSTS';
+export const POST_BLOG = 'POST_BLOG';
 export const GET_AUTHORPOSTS = 'GET_AUTHORPOSTS';
 export const GET_POST = 'GET_POST';
-export const DELETE_POST = 'DELETE_POST';
+export const DELETE_BLOG = 'DELETE_BLOG';
 export const UPDATE_POST = 'UPDATE_POST';
 export const POST_ERROR = 'POST_ERROR';
 export const CLEAR_POSTS = 'CLEAR_POSTS';

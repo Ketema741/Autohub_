@@ -7,21 +7,48 @@ import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import { useStateContext } from '../../../context/ContextProvider';
 import { DeleteWarning } from '../../../components';
 import EditForm from './EditForm';
+import { toast } from 'react-toastify';
 
-
-const Posts = ({ blog }) => {
+const Posts = ({ blog, deleteBlog }) => {
 
     const { currentColor } = useStateContext();
     const [showWarning, setShowWarning] = useState(false);
 
-    const [ editItem, setEditItem ] = useState(false);
+    const [editItem, setEditItem] = useState(false);
 
+    const handleDeleteConfrim = () => {
+        deleteBlog(blog._id);
+        toast.dismiss();
+    }
     const handleDelete = () => {
-        console.log('delete');
-
+        toast.dark(
+            <div className="flex flex-col items-center">
+                <div className="mr-2">Are you sure you want to delete this item?</div>
+                <div className="flex items-center">
+                    <button
+                        className=" bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
+                        onClick={handleDeleteConfrim}
+                    >
+                        Delete
+                    </button>
+                    <button
+                        className="marker:bg-gray-300 hover:bg-gray-400 bg-gray-300 text-gray-700 px-3 py-1 rounded ml-2"
+                        onClick={() => {
+                            toast.dismiss();
+                        }}
+                    >
+                        Cancel
+                    </button>
+                </div>
+            </div>,
+            {
+                position: toast.POSITION.TOP_CENTER,
+                closeButton: false,
+                autoClose: false,
+                draggable: false,
+            }
+        );
     };
-
-
 
 
     return (
@@ -33,7 +60,7 @@ const Posts = ({ blog }) => {
                     <button
                         type="button"
                         onClick={handleDelete}
-                        style={{ color:currentColor }}
+                        style={{ color: currentColor }}
                         className="z-0 relative text-xl rounded-full hover:bg-light-gray"
                     >
                         <FaTrashAlt />
@@ -43,13 +70,13 @@ const Posts = ({ blog }) => {
                     <button
                         type="button"
                         onClick={() => setEditItem(!editItem)}
-                        style={{ color:currentColor }}
+                        style={{ color: currentColor }}
                         className="relative text-xl rounded-full hover:bg-light-gray"
                     >
                         <FiEdit />
                     </button>
                 </TooltipComponent>
-                
+
             </div>
 
             <h3 className="py-4 text-2xl font-semibold text-gray-800 dark:text-white">

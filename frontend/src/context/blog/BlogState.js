@@ -16,12 +16,14 @@ import {
   POST_ERROR,
   UPDATE_POST,
   GET_JOBS,
-  GET_AUTHORPOSTS
+  GET_AUTHORPOSTS,
+  POST_BLOG,
+  DELETE_BLOG
 } from '../Types';
 
 const Blogstate = (props) => {
   const initialState = {
-    blogs: null,
+    blogs: [],
     jobs: [],
     privateBlogs: [],
     relatedPost: null,
@@ -69,13 +71,13 @@ const Blogstate = (props) => {
     }
   };
   // Post blogs
-  const postBlog = async ({blog}) => {
+  const postBlog = async (blog) => {
     try {
       const blogPostPromise = new Promise((resolve, reject) => {
         const res = axios.post("blogs/add/blog", blog)
           .then((res) => {
             dispatch({
-              type: GET_POSTS,
+              type: POST_BLOG,
               payload: res.data,
             });
             console.log(res)
@@ -85,7 +87,7 @@ const Blogstate = (props) => {
           .catch((err) => {
             dispatch({
               type: POST_ERROR,
-              payload: err.response.data,
+              payload: err.response.data.message,
             });
             console.log(err)
             reject(err);
@@ -122,6 +124,42 @@ const Blogstate = (props) => {
     }
   };
 
+  
+  // Delete blogs
+  const deleteBlog = async (id) => {
+    try {
+      const deletePostPromise = new Promise((resolve, reject) => {
+        const res = axios.delete(`blogs/delete/blog/${id}`)
+          .then((res) => {
+            dispatch({
+              type: DELETE_BLOG,
+              payload: id,
+            });
+            console.log(res)
+
+            resolve(res);
+          })
+          .catch((err) => {
+            dispatch({
+              type: POST_ERROR,
+              payload: err.response.data.message,
+            });
+            console.log(err)
+            reject(err);
+          });
+        console.log(res)
+      });
+
+      toast.promise(deletePostPromise, {
+        pending: 'Deleting...',
+        success: 'Blog deleted successfully!',
+        error: `Blog deleting failed: ${state.error ? state.error : " try again later!"}`,
+      });
+      state.error = null;
+    } catch (error) {
+      toast.error(`${state.error}`);
+    }
+  };
 
 
   // Get blog
@@ -187,6 +225,7 @@ const Blogstate = (props) => {
         getBlogs,
         getPrivateBlogs,
         postBlog,
+        deleteBlog,
         getBlog,
         getJobs,
         updatePost,
