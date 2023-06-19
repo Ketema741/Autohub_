@@ -9,7 +9,7 @@ import { DeleteWarning } from '../../../components';
 import EditForm from './EditForm';
 import { toast } from 'react-toastify';
 
-const Posts = ({ blog, deleteBlog }) => {
+const Posts = ({ updateBlog, blog, deleteBlog }) => {
 
     const { currentColor } = useStateContext();
     const [showWarning, setShowWarning] = useState(false);
@@ -86,7 +86,7 @@ const Posts = ({ blog, deleteBlog }) => {
                 {blog.excerpt}
             </p>
 
-            {editItem && <EditForm currentColor={currentColor} setEditItem={setEditItem} blog={blog} />}
+            {editItem && <EditForm updateBlog={updateBlog} currentColor={currentColor} setEditItem={setEditItem} blog={blog} />}
             {showWarning && <DeleteWarning handleDelete={handleDelete} setShowWarning={setShowWarning} />}
         </div>
 

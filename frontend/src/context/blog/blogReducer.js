@@ -11,6 +11,7 @@ import {
   GET_AUTHORPOSTS,
   POST_BLOG,
   DELETE_BLOG,
+  UPDATE_BLOG,
 } from '../Types';
 
 
@@ -39,62 +40,71 @@ const blogReducer = (state, action) => {
           return testString.includes(action.payload.toLowerCase());
         }),
       };
-    
+
     case GET_POST:
       return {
         ...state,
         blog: action.payload,
       };
-    case DELETE_BLOG:
-      return {
-        ...state,
-        privateBlogs: state.privateBlogs.filter((blog) => blog._id !== action.payload),
-      };
-    
-    case CLEAR_POSTS:
-      return {
-        ...state,
-        posts: null,
-        filtered: null,
-        error: null,
-        current: null,
-      };
-    case SET_CURRENT:
-      return {
-        ...state,
-        blog: action.payload,
-      };
-    case CLEAR_CURRENT:
-      return {
-        ...state,
-        current: null,
-      };
-    case DELETE_BLOG:
-      return {
-        ...state,
-        posts: state.posts.filter((post) => post._id !== action.payload),
-      };
-    case FILTER_POSTS:
-      return {
-        ...state,
-        filtered: state.blogs.filter(({ title, category }) => {
-          const testString = `${title}${category}`.toLowerCase();
-          return testString.includes(action.payload.toLowerCase());
-        }),
-      };
-    case CLEAR_FILTER:
-      return {
-        ...state,
-        filtered: null,
-      };
-    case POST_ERROR:
-      return {
-        ...state,
-        error: action.payload,
-      };
-    default:
-      throw new Error(`Unsupported type of: ${action.type}`);
-  }
-};
 
-export default blogReducer;
+    case UPDATE_BLOG:
+      return {
+        ...state,
+        privateBlogs: state.privateBlogs.map((blog) =>
+          blog._id === action.payload._id ? action.payload : blog,
+        ),
+      }
+
+        case DELETE_BLOG:
+        return {
+          ...state,
+          privateBlogs: state.privateBlogs.filter((blog) => blog._id !== action.payload),
+        };
+
+        case CLEAR_POSTS:
+        return {
+          ...state,
+          posts: null,
+          filtered: null,
+          error: null,
+          current: null,
+        };
+        case SET_CURRENT:
+        return {
+          ...state,
+          blog: action.payload,
+        };
+        case CLEAR_CURRENT:
+        return {
+          ...state,
+          current: null,
+        };
+        case DELETE_BLOG:
+        return {
+          ...state,
+          posts: state.posts.filter((post) => post._id !== action.payload),
+        };
+        case FILTER_POSTS:
+        return {
+          ...state,
+          filtered: state.blogs.filter(({ title, category }) => {
+            const testString = `${title}${category}`.toLowerCase();
+            return testString.includes(action.payload.toLowerCase());
+          }),
+        };
+        case CLEAR_FILTER:
+        return {
+          ...state,
+          filtered: null,
+        };
+        case POST_ERROR:
+        return {
+          ...state,
+          error: action.payload,
+        };
+        default:
+      throw new Error(`Unsupported type of: ${action.type}`);
+      }
+  };
+
+  export default blogReducer;

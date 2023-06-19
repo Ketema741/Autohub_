@@ -14,7 +14,7 @@ import {
   CLEAR_POSTS,
   CLEAR_FILTER,
   POST_ERROR,
-  UPDATE_POST,
+  UPDATE_BLOG,
   GET_JOBS,
   GET_AUTHORPOSTS,
   POST_BLOG,
@@ -107,24 +107,42 @@ const Blogstate = (props) => {
   };
 
   // update blogs
-  const updatePost = async () => {
+  const updateBlog = async (blog, id) => {
     try {
-      const res = await axios.put('/blogs');
-      dispatch({
-        type: UPDATE_POST,
-        payload: res.data,
-      });
-    } catch (err) {
-      dispatch({
-        type: POST_ERROR,
-        payload: err.response.msg,
+      const blogUpdatePromise = new Promise((resolve, reject) => {
+        const res = axios.put(`blogs/update/blog/${id}`, blog)
+          .then((res) => {
+            dispatch({
+              type: UPDATE_BLOG,
+              payload: res.data,
+            });
+            console.log(res)
 
+            resolve(res);
+          })
+          .catch((err) => {
+            dispatch({
+              type: POST_ERROR,
+              payload: err.response.data.message,
+            });
+            console.log(err)
+            reject(err);
+          });
+        console.log(res)
       });
-      console.log({ 'erro': err })
+
+      toast.promise(blogUpdatePromise, {
+        pending: 'Updating...',
+        success: 'Blog updated successfully!',
+        error: `Blog Update failed: ${state.error ? state.error : " try again later!"}`,
+      });
+      state.error = null;
+    } catch (error) {
+      toast.error(`${state.error}`);
     }
   };
 
-  
+
   // Delete blogs
   const deleteBlog = async (id) => {
     try {
@@ -228,7 +246,7 @@ const Blogstate = (props) => {
         deleteBlog,
         getBlog,
         getJobs,
-        updatePost,
+        updateBlog,
         clearPosts,
         setCurrent,
         clearCurrent,

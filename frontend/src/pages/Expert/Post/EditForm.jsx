@@ -4,14 +4,14 @@ import { HtmlEditor, Inject, Link, QuickToolbar, RichTextEditorComponent, Table,
 
 import { customToolbarSettings } from './Toolbar';
 
-const EditForm = ({ blog, setEditItem, currentColor }) => {
+const EditForm = ({ updateBlog, blog, setEditItem, currentColor }) => {
 
     const [formState, setFormState] = useState({
         category: blog.category,
         title: blog.title,
         excerpt: blog.excerpt,
         takeaways: blog.takeaways,
-        content: blog.content,
+        description: blog.description,
     });
 
     const handleChange = (e) => {
@@ -23,17 +23,7 @@ const EditForm = ({ blog, setEditItem, currentColor }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const { category, title, excerpt, takeaways, content } = formState;
-        const formData = {
-            category,
-            title,
-            excerpt,
-            takeaways,
-            description: content,
-        };
-        console.log(formData);
-
-        // addItem(formData, images)
+        updateBlog(formState, blog._id)
     };
 
     return (
@@ -120,12 +110,12 @@ const EditForm = ({ blog, setEditItem, currentColor }) => {
 
 
                             <div className="mb-5">
-                                <label htmlFor="content" className="mb-3 block text-base font-medium text-[#07074D]">
+                                <label htmlFor="description" className="mb-3 block text-base font-medium text-[#07074D]">
                                     Detail Description
                                 </label>
                                 <RichTextEditorComponent
-                                    value={formState.content}
-                                    change={(args) => setFormState({ ...formState, content: args.value })}
+                                    value={formState.description}
+                                    change={(args) => setFormState({ ...formState, description: args.value })}
                                     toolbarSettings={customToolbarSettings}
                                 >
                                     <div>{blog.description}</div>
@@ -136,10 +126,10 @@ const EditForm = ({ blog, setEditItem, currentColor }) => {
                             <div>
                                 <button
                                     type="submit"
-                                    className="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none"
+                                    className="hover:shadow-form rounded-md bg-[rgb(106,100,241)] py-3 px-8 text-center text-base font-semibold text-white outline-none"
                                     style={{ backgroundColor: currentColor }}
                                 >
-                                    Edit
+                                    Update
                                 </button>
                             </div>
                         </form>

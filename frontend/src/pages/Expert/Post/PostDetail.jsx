@@ -11,7 +11,7 @@ import BlogContext from '../../../context/blog/blogContext';
 
 const PostDetail = ({ privateBlogs }) => {
     const blogContext = useContext(BlogContext);
-    const { postBlog, deleteBlog } = blogContext;
+    const { postBlog, updateBlog, deleteBlog } = blogContext;
 
     const {  currentColor } = useStateContext();
 
@@ -45,7 +45,7 @@ const PostDetail = ({ privateBlogs }) => {
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3">
 
                                 {privateBlogs.map(blog => (
-                                    <PostCard key={blog._id} deleteBlog={deleteBlog} blog={blog} />
+                                    <PostCard updateBlog={updateBlog} key={blog._id} deleteBlog={deleteBlog} blog={blog} />
                                 ))}
                             </div> 
                         </div>
