@@ -35,7 +35,10 @@ const {
 
 const { verifyToken, verifyAdministrator } = require("../middleware/auth");
 const { grantAccess } = require("../middleware/rolesMiddleware");
-const { saveTransaction } = require("../configurations/Admin/transaction");
+const {
+  saveTransaction,
+  sumRevenueForSupplier,
+} = require("../configurations/Admin/transactions");
 const {
   getPendingSuppliers,
   approveSupplier,
@@ -145,5 +148,11 @@ router.delete(
 );
 
 router.post("/slipt/order-item/:orderId", saveTransaction);
+//  Only supplier and Admin
+router.get(
+  "/supplier/get-revenue/:supplierId",
+  verifyToken,
+  sumRevenueForSupplier
+);
 
 module.exports = router;

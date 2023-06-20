@@ -7,15 +7,21 @@ const TransactionSchema = new mongoose.Schema(
       ref: "Supplier",
       required: true,
     },
-    revenue: {
+    orderId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Order",
+      required: true,
+    },
+
+    amount: {
       type: Number,
       required: true,
     },
-    totalItemsSold: {
+    totalItems: {
       type: Number,
       required: true,
     },
-    ItemsSold: [
+    itemsSold: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Item",
