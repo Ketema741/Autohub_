@@ -132,7 +132,7 @@ router
 // User forgot and reset password
 router.post("/account/forgot-password", forgotPassword);
 router.post("/account/reset-password/", resetPassword);
-router.get("/account/reset-password/:token", getTemplate);
+router.get("/account/reset-password/", getTemplate);
 
 // Admin only routes
 router.get("/pending/suppliers", verifyAdministrator, getPendingSuppliers);

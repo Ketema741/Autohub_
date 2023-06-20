@@ -29,7 +29,7 @@ const forgotPassword = async (req, res) => {
     await user.save();
 
     // Send password reset email
-    const resetLink = `http://localhost:6767/users/account/reset-password?token=${token}`;
+    const resetLink = `http://localhost:${process.env.PORT}/users/account/reset-password?token=${token}`;
     await sendResetPasswordEmail(email, resetLink);
 
     res.status(200).json({ message: "Password reset email sent" });
