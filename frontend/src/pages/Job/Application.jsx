@@ -8,7 +8,10 @@ import { useStateContext } from '../../context/ContextProvider';
 import AuthContext from './../../context/auth/authContext';
 import JobContext from "../../context/job/jobContext";
 
-const Application = ({ togglePopup }) => {
+import UploadFile from './../../cloudinary/UploadFile';
+import {toast} from 'react-toastify';
+import DeleteWarning from './../../components/DeleteWarning';
+const Application = ({ togglePopup, job }) => {
     const navigate = useNavigate()
     const authContext = useContext(AuthContext);
     const { user, isUserAuthenticated, updateUser, updatedSuccessfully, error } = authContext
@@ -16,6 +19,18 @@ const Application = ({ togglePopup }) => {
 
     const jobContext = useContext(JobContext);
     const { applyForJob } = jobContext;
+
+    // image upload start here
+    const [file, setFiles] = useState([]);
+    const [fileToRemove, setFilesToRemove] = useState();
+
+    const handleDelete = (files) => {
+        const public_id = files.public_id;
+        setFilesToRemove(public_id);
+        setFilesToRemove(null);
+        setFiles((prev) => prev.filter((file) => fil.public_id !== public_id));
+    };
+    // image upload end here
 
     useEffect(() => {
         if (!isUserAuthenticated) {
@@ -45,8 +60,6 @@ const Application = ({ togglePopup }) => {
         vehicleType: user?.vehicleType || "",
     });
 
-
-
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevFormData) => ({
@@ -58,7 +71,14 @@ const Application = ({ togglePopup }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        applyForJob(user._id)
+        let driver = formData
+        if (file.lenth > 0) {
+            
+        } 
+        driver.resume = file[0]
+        console.log(driver)
+
+        applyForJob(job._id, driver)
     };
 
     const handleNext = () => {
@@ -205,6 +225,15 @@ const Application = ({ togglePopup }) => {
                                                 onChange={handleInputChange}
                                                 required
                                             />
+                                        </div>
+                                        <div className="mb-5">
+                                            <label
+                                                className="block text-gray-700 font-semibold mb-2"
+                                                htmlFor="address"
+                                            >
+                                                Resume
+                                            </label>
+
                                         </div>
 
                                     </div>
@@ -467,7 +496,11 @@ const Application = ({ togglePopup }) => {
                                 <h2 className="text-xl font-semibold mb-24">
                                     Step 4: Click Appply To Complete Your Application
                                 </h2>
+                                <div className="flex justify-center items-center mb-8">
+                                    <UploadFile setFiles={setFiles} />
+                                </div>
                                 <div className="flex justify-between">
+
                                     <button
                                         type="button"
                                         className="bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600"
@@ -475,12 +508,14 @@ const Application = ({ togglePopup }) => {
                                     >
                                         Previous
                                     </button>
-                                    <button
-                                        className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
-                                        type="submit"
-                                    >
-                                        Apply
-                                    </button>
+                                    {file.length > 0 &&
+                                        <button
+                                            className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+                                            type="submit"
+                                        >
+                                            Apply
+                                        </button>
+                                    }
 
                                 </div>
                             </form>
