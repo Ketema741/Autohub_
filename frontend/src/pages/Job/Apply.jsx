@@ -81,10 +81,8 @@ const Apply = ({ togglePopup }) => {
 
     const handleSubmit = (values) => {
         values.description = content
-        console.log(values)
         handleData(values)
-        // setUploadType('')
-        // addItem(formData, images)
+       
 
     };
 

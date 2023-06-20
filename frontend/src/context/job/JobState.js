@@ -62,20 +62,20 @@ const JobState = (props) => {
   };
 
   // Get job
-  const applyForJob = async (_id) => {
+  const applyForJob = async (_id, driver) => {
     try {
       const registrationPromise = new Promise((resolve, reject) => {
         axios
-          .post(`/jobs/job/apply/${_id}`)
+          .post(`/jobs/job/apply/${_id}`, driver)
           .then((res) => {
             resolve(res);
           })
           .catch((err) => {
             dispatch({
               type: JOB_ERROR,
-              payload: err.message
+              payload: err.response,
             });
-
+            console.log(err)
             reject(err);
           });
       });

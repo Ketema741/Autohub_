@@ -81,10 +81,6 @@ const Login = (props) => {
                     <div className=" flex flex-col items-center justify-center">
                         <div className="flex flex-col px-4 sm:px-6 md:px-8 lg:px-10 rounded-md w-full max-w-md">
                             <div className="font-medium self-center text-xl sm:text-2xl uppercase text-gray-800">Login To Your Account</div>
-                            <button className="relative mt-6 border rounded-md py-2 text-sm text-gray-800 bg-gray-200 hover:bg-gray-300">
-                                <span className="absolute left-0 top-0 flex items-center justify-center h-full w-10 text-blue-500"><FcGoogle /></span>
-                                <span>Login with Google</span>
-                            </button>
                             <div className="relative mt-10 h-px bg-gray-300">
                                 <div className="absolute left-0 top-0 flex justify-center w-full -mt-2">
                                     <span className="bg-gray-100 px-4 text-xs text-black uppercase"> Or Login With Email</span>
@@ -143,7 +139,7 @@ const Login = (props) => {
 
                                         <div className="flex items-center mb-6 -mt-4">
                                             <div className="flex ml-auto">
-                                                <a href="#" className="inline-flex text-xs sm:text-sm text-blue-500 hover:text-blue-700">Forgot Your Password?</a>
+                                                <a href="http://localhost:8080/users/account/forgot-password" className="inline-flex text-xs sm:text-sm text-blue-500 hover:text-blue-700">Forgot Your Password?</a>
                                             </div>
                                         </div>
 
