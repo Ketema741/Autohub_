@@ -46,7 +46,7 @@ const chapaInit = async (req, res) => {
         });
       }
     }
-    res.status(200).json({ data, order });
+    res.status(200).json({ order });
   } catch (error) {
     console.log(error.message);
     res.status(500).json(error.message);
