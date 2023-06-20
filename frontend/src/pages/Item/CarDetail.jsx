@@ -1,17 +1,15 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect } from 'react';
+
+
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { Navbar, Footer, Sidebar } from '../../components';
 import { useStateContext } from '../../context/ContextProvider';
-import ItemOverview from './ItemOverview';
+import CarOverview from './CarOverview';
 
-import ItemContext from '../../context/item/itemContext';
 
-const ItemDetail = () => {
-  const itemContext = useContext(ItemContext);
-  const { car, item } = itemContext
-
+const CarDetail = () => {
   const {
     setCurrentColor,
     setCurrentMode,
@@ -53,9 +51,7 @@ const ItemDetail = () => {
             <Navbar />
           </div>
 
-         
-          <ItemOverview item={item} car={car} />
-          
+          <CarOverview />
           <Footer />
         </div>
       </div>
@@ -74,4 +70,4 @@ const ItemDetail = () => {
     </div>
   );
 };
-export default ItemDetail;
+export default CarDetail;

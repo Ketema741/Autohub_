@@ -23,9 +23,7 @@ const Card = ({ item }) => {
                 <div className="pricing flex items-center">
                     {" "}
                     <div className="price ">{item.price} ETB</div>
-                    <div className="ml-2 text-xs ">
-                        $<del>1320</del>
-                    </div>
+                    
                 </div>
                 <div className="flex items-center my-2">
                     <button className="border px-3 py-1 text-xs rounded-lg mr-1 ">

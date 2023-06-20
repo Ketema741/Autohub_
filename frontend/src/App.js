@@ -14,6 +14,7 @@ import {
   Admin,
   Supplier,
   ItemDetail,
+  CarDetail,
   EditItemDetail,
   AddItem,
   Jobs,
@@ -69,6 +70,7 @@ const App = () => {
                       <Route path="/admin-dashboard" element={<Admin />} />
 
                       <Route path="/item-detail" element={<ItemDetail />} />
+                      <Route path="/car-detail" element={<CarDetail />} />
                       <Route path="/supplier-dashboard" element={<Supplier />} />
                       <Route path="/supplier/edit-item-detail" element={<EditItemDetail />} />
                       <Route path="/supplier/add-item" element={<AddItem />} />

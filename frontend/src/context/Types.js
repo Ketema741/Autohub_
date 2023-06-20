@@ -1,6 +1,7 @@
 // items
 export const GET_ITEMS = 'GET_ITEMS';
 export const GET_CARS = 'GET_CARS';
+export const GET_CAR = 'GET_CAR';
 export const CREATE_CATEGORY = 'CREATE_CATEGORY';
 export const GET_PUBLICITEMS = 'GET_PUBLICITEMS';
 export const GET_ITEM = 'GET_ITEM';

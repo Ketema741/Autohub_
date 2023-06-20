@@ -19,12 +19,14 @@ import {
   CREATE_CATEGORY,
   GET_CATEGORIES,
   GET_CARS,
+  GET_CAR,
 } from '../Types';
 
 const Itemstate = (props) => {
   const initialState = {
     items: [],
     cars: [],
+    car:null,
     publicItems: null,
     item: null,
     error: null,
@@ -50,6 +52,7 @@ const Itemstate = (props) => {
       });
     }
   };
+
   // Get supplier items
   const getCars = async () => {
     try {
@@ -57,6 +60,22 @@ const Itemstate = (props) => {
       dispatch({
         type: GET_CARS,
         payload: res.data.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: ITEM_ERROR,
+        payload: err.response.msg,
+      });
+    }
+  };
+
+  // Get supplier items
+  const getCar = async (id) => {
+    try {
+      const res = await axios.get(`/items/car/${id}`);
+      dispatch({
+        type: GET_CAR,
+        payload: res.data,
       });
     } catch (err) {
       dispatch({
@@ -255,6 +274,7 @@ const Itemstate = (props) => {
       value={{
         items: state.items,
         cars: state.cars,
+        car: state.car,
         publicItems: state.publicItems,
         categories: state.categories,
         item: state.item,
@@ -262,6 +282,7 @@ const Itemstate = (props) => {
         filtered: state.filtered,
         getItems,
         getCars,
+        getCar,
         getPublicItems,
         getItem,
         addItem,
