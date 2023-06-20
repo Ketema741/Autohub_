@@ -74,7 +74,6 @@ const AuthState = (props) => {
       public_id: public_id,
     };
 
-
     try {
       const res = await axios.post(`/users/image`, id_obj, config);
       console.log(res);
@@ -90,18 +89,13 @@ const AuthState = (props) => {
   // login user
   const userLogin = async (formData) => {
     try {
-      const res = await axios.post('/users/login', JSON.stringify(formData));
+      const res = await axios.post('/users/login', formData);
 
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data,
       });
-
-      if (formData.userType != "supplier") {
-
-        loadUser();
-      }
-
+      loadUser();
       toast.success('Login successful!');
     } catch (err) {
       dispatch({

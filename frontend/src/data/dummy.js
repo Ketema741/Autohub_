@@ -831,15 +831,14 @@ export const themeColors = [
 ];
 
 export const Categories = [
-  { name: 'Intenships' },
-  { name: 'Resume' },
-  { name: 'Study' },
-  { name: 'Career Advice' },
+  { name: 'Car Reviews and Comparisons' },
+  { name: 'Maintenance and Repair Tips' },
+  { name: 'Driving and Safety' },
+  { name: 'Green and Electric Vehicles' },
 ]
 
 export const userProfileData = [
   {
-
     icon: <MdOutlineManageAccounts />,
     title: 'My Profile',
     url: '/profile',

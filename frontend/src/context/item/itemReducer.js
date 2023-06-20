@@ -13,6 +13,8 @@ import {
   ITEM_ERROR,
   CREATE_CATEGORY,
   GET_CATEGORIES,
+  GET_CARS,
+  GET_CAR,
 } from '../Types';
 
 const itemReducer = (state, action) => {
@@ -21,6 +23,17 @@ const itemReducer = (state, action) => {
       return {
         ...state,
         items: action.payload,
+      };
+    case GET_CARS:
+      return {
+        ...state,
+        cars: action.payload,
+      };
+    case GET_CAR:
+      return {
+        ...state,
+        car: action.payload,
+        item: null,
       };
     case GET_PUBLICITEMS:
       return {
@@ -31,6 +44,7 @@ const itemReducer = (state, action) => {
       return {
         ...state,
         item: action.payload,
+        car: null,
       };
     case ADD_ITEM:
       return {

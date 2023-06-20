@@ -4,16 +4,18 @@ import ItemContext from '../../context/item/itemContext';
 import ItemCard from './ItemCard'
 import { brands } from '../../data/dummy';
 import Loading from './Loading';
+import CarCard from './CarCard';
 
 const Items = () => {
     const { currentColor } = useStateContext();
 
     const itemContext = useContext(ItemContext)
-    const { filtered, publicItems, getPublicItems } = itemContext
+    const { filtered, cars, publicItems, getPublicItems, getCars } = itemContext
 
 
     useEffect(() => {
         getPublicItems()
+        getCars()
 
     }, []);
 
@@ -75,9 +77,26 @@ const Items = () => {
                         ))}
 
                     </div>
+
+                    {cars.length > 0 ? (
+                        <div className="mt-24 flex flex-wrap gap-x-2 gap-y-8 items-center justify-center">
+                            <Fragment>
+                                {cars !== null &&
+                                    cars.map((car) => (
+                                        <CarCard item={car} currentColor={currentColor} />
+                                    ))
+                                }
+                            </Fragment>
+                        </div>
+                    )
+                        :
+                        <div className="mx-8 grid gap-32 py-4 md:grid-cols-3 md:gap-12">
+                            <RenderLoadings />
+                        </div>
+                    }
+
                 </div>
 
-                {/* <CarouselList /> */}
             </div>
 
         </div>

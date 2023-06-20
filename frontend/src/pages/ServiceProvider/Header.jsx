@@ -7,7 +7,7 @@ import UserContext from './../../context/user/userContext';
 const Header = () => {
     const userContext = useContext(UserContext)
     const { filteredServiceProviders, clearFilter, filterUsers } = userContext
-    
+
     const text = useRef('')
     useEffect(() => {
         if (filteredServiceProviders == null) {
@@ -57,8 +57,7 @@ const Header = () => {
                 <div className="relative container m-auto px-6 md:px-12 lg:px-6">
                     <div className="mb-12 pt-12 space-y-8 md:mb-20 md:pt-24 lg:w-8/12 lg:mx-auto">
                         <h1 className="text-white text-center text-2xl font-bold sm:text-3xl md:text-4xl">
-                            Rev up your career as a driver with our job listings! Whether you're a seasoned pro or just starting out, we have the perfect opportunity for you.
-                        </h1>
+                            Discover the leading vehicle service providers that offer reliable and professional solutions to keep your car running smoothly.                        </h1>
                         <form className="w-full">
                             <div className="relative flex p-1 rounded-xl bg-white shadow-2xl md:p-2">
                                 <div

@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react';
 import { MdOutlineCancel } from 'react-icons/md';
 import { useStateContext } from '../../../context/ContextProvider';
 import { HtmlEditor, Inject, Link, QuickToolbar, RichTextEditorComponent, Table, Toolbar } from '@syncfusion/ej2-react-richtexteditor';
-
 import { customToolbarSettings } from './Toolbar';
 
 import AuthContext from '../../../context/auth/authContext';
@@ -17,7 +16,7 @@ const Edit = ({ handleModalClose, user }) => {
     const [formData, setFormData] = useState({
         firstName: user.firstName,
         lastName: user.lastName,
-        venderName: user.venderName,
+        vendorName: user.vendorName,
         workingHours: user.workingHours,
         address: user.address,
         email: user.email,
@@ -33,12 +32,11 @@ const Edit = ({ handleModalClose, user }) => {
         });
     };
 
-
     const handleSubmit = (e) => {
         e.preventDefault();
         formData.bio = content
+        console.log(formData)
         updateUser(formData, user._id, "service-provider")
-
     };
 
     return (
@@ -105,17 +103,17 @@ const Edit = ({ handleModalClose, user }) => {
                                 <div className="w-full px-3 sm:w-1/2">
                                     <div className="mb-5">
                                         <label
-                                            htmlFor="venderName"
+                                            htmlFor="vendorName"
                                             className="mb-3 block text-base font-medium text-[#07074D]"
                                         >
                                             Company Name
                                         </label>
                                         <input
                                             type="text"
-                                            name="venderName"
-                                            id="venderName"
+                                            name="vendorName"
+                                            id="vendorName"
                                             placeholder="Vendor Name"
-                                            value={formData.venderName}
+                                            value={formData.vendorName}
                                             onChange={onChange}
                                             className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                         />
@@ -185,7 +183,7 @@ const Edit = ({ handleModalClose, user }) => {
                             <div className="w-full px-3 ">
                                 <div className="mb-5">
                                     <label
-                                        htmlFor="venderName"
+                                        htmlFor="specializations"
                                         className="mb-3 block text-base font-medium text-[#07074D]"
                                     >
                                         Summary
@@ -194,7 +192,7 @@ const Edit = ({ handleModalClose, user }) => {
                                         type="text"
                                         name="specializations"
                                         id="specializations"
-                                        placeholder="Vendor Name"
+                                        placeholder="Summary"
                                         value={formData.specializations}
                                         onChange={onChange}
                                         className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"

@@ -28,7 +28,7 @@ const Parse = require('html-react-parser')
 const BlogDetail = () => {
   const navigate = useNavigate()
   const blogContext = useContext(BlogContext);
-  const { current, blog, filtered, getBlog, setCurrent, filterBlogs } = blogContext;
+  const { blog, relatedBlogs, setCurrent, filterBlogs } = blogContext;
 
 
   const handleView = (post) => {
@@ -39,7 +39,7 @@ const BlogDetail = () => {
     navigate(`/blogs`)
   }
   const [comments, setComments] = useState([]);
-  
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const newComment = {
@@ -51,7 +51,7 @@ const BlogDetail = () => {
     event.target.comment.value = '';
   };
 
- 
+
 
   const {
     setCurrentColor,
@@ -151,7 +151,7 @@ const BlogDetail = () => {
                       <div className="mt-12 md:mt-0 lg:absolute -right-10 lg:w-7/12" style={{ maxWidth: '550px', zInde: 0 }}>
                         <div className="relative w-full">
                           <div aria-hidden="true" className="absolute scale-75 md:scale-110 inset-0 m-auto w-full h-full md:w-96 md:h-96 rounded-full rotate-45 bg-gradient-to-r from-sky-500 to-cyan-300 blur-3xl"></div>
-                          <img src={blog.blogImages[0]} className="relative w-full rounded-lg" alt="wath illustration roudend-md" loading="lazy" style={{width:'550px', height:"510px"}} />
+                          <img src={blog.blogImages[0]} className="relative w-full rounded-lg" alt="wath illustration roudend-md" loading="lazy" style={{ width: '550px', height: "510px" }} />
                         </div>
                       </div>
                     </div>
@@ -173,8 +173,8 @@ const BlogDetail = () => {
                         <div className="absolute left-1/2 transform -translate-x-1/2 -top-14">
                           <img alt='autho name' className="h-24 w-24 align-middle rounded-full" src={resume} />
                         </div>
-                        <h3 className="text-black mt-4 mb-4 text-xl font-bold">{blog.user.firstName}</h3>
-                        <p className="text-white text-ls">{blog.user.bio}</p>
+                        <h3 className="text-black mt-4 mb-4 text-xl font-bold">{blog.author?.firstName}</h3>
+                        <p className="text-white text-ls">{blog.author?.bio}</p>
                       </div>
                       <CommentSection blog={blog} />
 
@@ -183,20 +183,21 @@ const BlogDetail = () => {
                       <div className="lg:sticky relative top-8">
                         <div className="bg-white shadow-lg rounded-lg p-8 pb-12 mb-8">
                           <h3 className="text-xl mb-8 font-semibold border-b pb-4">Related Posts</h3>
-                          {filtered && filtered.map((post, index) => (
-                            <div>
-                              <div className="flex items-center w-full mb-4">
-                                <div className="w-16 flex-none">
-                                  <img src={Blog} alt='{post.title}' className="h-14 w-14 align-middle bg-gray-200 rounded-full" />
+                          {relatedBlogs && relatedBlogs.map((post, index) => (
+                            <div key={index}>
+                              {post._id != blog._id &&
+                                <div className="flex items-center w-full mb-4">
+                                  <div className="w-16 flex-none">
+                                    <img src={Blog} alt='{post.title}' className="h-14 w-14 align-middle bg-gray-200 rounded-full" />
+                                  </div>
+                                  <div className="flex-grow ml-4">
+                                    <p className="text-gray-500 font-xs">34hr ago</p>
+                                    <button type='button' onClick={() => handleView(post)} className="text-md">
+                                      {post.title}
+                                    </button>
+                                  </div>
                                 </div>
-                                <div className="flex-grow ml-4">
-                                  <p className="text-gray-500 font-xs">34hr ago</p>
-                                  <button type='button' onClick={() => handleView(post)} className="text-md">
-                                    {post.title}
-                                  </button>
-                                </div>
-                              </div>
-
+                              }
                             </div>
                           ))}
                         </div>
@@ -221,12 +222,12 @@ const BlogDetail = () => {
                   </div>
                 </div>
                 <div className="flext justify-right items-right pl-24 my-8">
-                  <h3 className="text-semibold text-3xl   pb-3 mb-3"> Other content by {blog.user.firstName}</h3>
+                  <h3 className="text-semibold text-3xl   pb-3 mb-3"> Other content by {blog.author?.firstName}</h3>
                   <Carousel />
                 </div>
               </div>
 
-            ) : (<div>Loading...</div>
+            ) : (<div className="text-center">Loading...</div>
             )}
           </div>
 

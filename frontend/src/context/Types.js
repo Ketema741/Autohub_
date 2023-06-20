@@ -1,5 +1,7 @@
 // items
 export const GET_ITEMS = 'GET_ITEMS';
+export const GET_CARS = 'GET_CARS';
+export const GET_CAR = 'GET_CAR';
 export const CREATE_CATEGORY = 'CREATE_CATEGORY';
 export const GET_PUBLICITEMS = 'GET_PUBLICITEMS';
 export const GET_ITEM = 'GET_ITEM';
@@ -107,12 +109,15 @@ export const DELETE_CART = 'DELETE_CART';
 
 // blog post
 export const GET_POSTS = 'GET_POSTS';
+export const POST_BLOG = 'POST_BLOG';
+export const GET_AUTHORPOSTS = 'GET_AUTHORPOSTS';
 export const GET_POST = 'GET_POST';
-export const DELETE_POST = 'DELETE_POST';
-export const UPDATE_POST = 'UPDATE_POST';
+export const DELETE_BLOG = 'DELETE_BLOG';
+export const UPDATE_BLOG = 'UPDATE_BLOG';
 export const POST_ERROR = 'POST_ERROR';
 export const CLEAR_POSTS = 'CLEAR_POSTS';
 export const FILTER_POSTS = 'FILTER_POSTS';
+export const GET_RELATEDPOSTS = 'GET_RELATEDPOSTS';
 export const GET_POSTDETAILS = 'GET_POSTDETAILS';
 export const GET_RECENTPOSTS = 'GET_RECENTPOSTS';
 export const GET_CATEGORIES = 'GET_CATEGORIES';

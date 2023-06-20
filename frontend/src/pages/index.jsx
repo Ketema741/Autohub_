@@ -13,6 +13,7 @@ export { default as JobCard } from './Job/JobCard';
 export { default as JobDetail } from './Job/JobDetail';
 
 export { default as ItemDetail } from './Item/ItemDetail';
+export { default as CarDetail } from './Item/ItemDetail';
 export { default as ItemFilter } from './Item/ItemFilter';
 
 export { default as Blogs } from './Blog/Blogs';

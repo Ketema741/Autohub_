@@ -3,10 +3,16 @@ import React, { useEffect, useContext } from 'react';
 import { Navbar, Footer, Sidebar } from '../../../components';
 import { useStateContext } from '../../../context/ContextProvider';
 
+import BlogContext from '../../../context/blog/blogContext';
+
 import PostDetail from './PostDetail';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Blogs = () => {
     const { setCurrentColor, setCurrentMode, currentMode, activeMenu } = useStateContext();
+    const blogContext = useContext(BlogContext);
+    const { getPrivateBlogs, privateBlogs } = blogContext;
 
     useEffect(() => {
         const currentThemeColor = localStorage.getItem('colorMode');
@@ -15,9 +21,13 @@ const Blogs = () => {
             setCurrentColor(currentThemeColor);
             setCurrentMode(currentThemeMode);
         }
-      
+
     }, []);
 
+
+    useEffect(() => {
+        getPrivateBlogs();
+    }, [])
 
 
     return (
@@ -44,10 +54,23 @@ const Blogs = () => {
                         <Navbar />
                     </div>
 
-                    <PostDetail />
+                    <PostDetail privateBlogs={privateBlogs} />
                     <Footer />
                 </div>
             </div>
+
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
         </div>
 
     );

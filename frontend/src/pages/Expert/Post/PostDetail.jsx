@@ -1,19 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 import { AiOutlinePlus } from 'react-icons/ai';
 
-import { useStateContext } from '../../../context/ContextProvider';
 import PostForm from './PostForm'
-import Posts from './Posts'
+import PostCard from './PostCard'
 
+import { useStateContext } from '../../../context/ContextProvider';
+import BlogContext from '../../../context/blog/blogContext';
 
-const PostDetail = () => {
-    const {
-        currentColor,
-        editItem,
-        setEditItem,
-    } = useStateContext();
+const PostDetail = ({ privateBlogs }) => {
+    const blogContext = useContext(BlogContext);
+    const { postBlog, updateBlog, deleteBlog } = blogContext;
+
+    const {  currentColor } = useStateContext();
+
+    const [addBlog, setAddBlog ] = useState(false);
 
     const handleRadioChange = (e) => {
         setUploadType(e.target.value);
@@ -30,7 +32,7 @@ const PostDetail = () => {
                         </div>
                         <div className="flex justify-center mt-4">
                             <TooltipComponent content="Add Post" position="topCenter">
-                                <button type="button" onClick={() => setEditItem(true)} className="mb-4 rounded-full hover:bg-blue-600 p-3 hover:shadow-lg" style={{ backgroundColor: currentColor }}>
+                                <button type="button" onClick={() => setAddBlog(true)} className="mb-4 rounded-full hover:bg-blue-600 p-3 hover:shadow-lg" style={{ backgroundColor: currentColor }}>
                                     <span className=" font-medium text-white">
                                         <AiOutlinePlus />
                                     </span>
@@ -38,14 +40,21 @@ const PostDetail = () => {
                             </TooltipComponent>
                         </div>
                     </div>
-                    <Posts />
+                    {privateBlogs &&
+                        <div className="flex w-full flex-wrap content-center justify-center p-12 bg-gray-200">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3">
 
-
+                                {privateBlogs.map(blog => (
+                                    <PostCard updateBlog={updateBlog} key={blog._id} deleteBlog={deleteBlog} blog={blog} />
+                                ))}
+                            </div> 
+                        </div>
+                    }
                 </div>
             </div>
-            {editItem &&
+            {addBlog &&
                 <div className='w-full'>
-                    <PostForm />
+                    <PostForm postBlog={postBlog} currentColor={currentColor} setAddBlog={setAddBlog} />
                 </div>
             }
         </div>
