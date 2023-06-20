@@ -1,4 +1,6 @@
 require("dotenv").config();
+const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Types;
 const { Order } = require("../../models/Order");
 const { Supplier } = require("../../models/Users");
 const { Transaction } = require("../../models/Transactions");
@@ -75,30 +77,38 @@ const saveTransaction = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
-
 const sumRevenueForSupplier = async (req, res) => {
   const { supplierId } = req.params;
-  try {
-    const supplier = await Supplier.findById(supplierId);
 
-    if (supplier._id.toString() !== req.user.id) {
-      res.status(403);
-      throw new Error("Only account owner can access revenue");
+  try {
+    const supplier = await Supplier.findById(supplierId)
+      .populate("firstName lastName email phone supplierImage role bio")
+      .select("-password");
+
+    if (!supplier) {
+      return res.status(404).json({
+        message: `No supplier found with ID: ${supplierId}`,
+        supplierId,
+      });
     }
-    if (req.user.role !== "admin") {
-      res.status(403);
-      throw new Error(
-        "Access denied! You're couldn't access the revenue, only Owner or Administrator"
-      );
+
+    if (supplier._id.toString() !== req.user.id && req.user.role !== "admin") {
+      return res.status(403).json({
+        message:
+          "Access denied! Only the owner or administrator can access the revenue.",
+        supplierId,
+      });
     }
     const totalRevenue = await Transaction.aggregate([
       {
-        $match: { supplier: supplierId },
+        $match: {
+          supplier: mongoose.Types.ObjectId.createFromHexString(supplierId),
+        },
       },
       {
         $group: {
           _id: "$supplier",
-          totalRevenue: { $sum: "$revenue" },
+          totalRevenue: { $sum: "$amount" },
         },
       },
     ]);
@@ -114,6 +124,7 @@ const sumRevenueForSupplier = async (req, res) => {
     res.status(200).json({
       message: "Total revenue calculated successfully",
       supplierId,
+      supplier,
       totalRevenue: totalRevenue[0].totalRevenue,
     });
   } catch (err) {

@@ -78,8 +78,7 @@ const SupplierSchema = new mongoose.Schema(
     },
     description:{
       type:String,
-    }
-    ,
+    },
     bio: {
       type: String,
     },
