@@ -95,11 +95,16 @@ const deleteJob = async (req, res) => {
 
 const jobApplication = async (req, res) => {
   try {
-    const resume = req.file;
-    console.log(req.file);
-    const data = await uploadToCloudinary(resume.path, "Resumes");
+    // const resume = req.file;
+    // console.log(req.file);
+    // const data = await uploadToCloudinary(resume.path, "Resumes");
 
     const { jobId } = req.params;
+    const { resume } = req.body;
+    if (!resume) {
+      res.status(400);
+      throw new Error("Please upload a resume or CV for your application ");
+    }
     const job = await Job.findById(jobId);
     if (!job) {
       res.status(404);
@@ -113,8 +118,8 @@ const jobApplication = async (req, res) => {
             applicant: req.user._id,
             applicant_info: req?.body,
             resume: {
-              url: data.url,
-              public_id: data.public_id,
+              url: resume.url,
+              public_id: resume.public_id,
             },
           },
         },
@@ -140,7 +145,7 @@ const jobApplication = async (req, res) => {
     }
     res.status(200).json({
       application,
-      message: "Job has been updated successfully",
+      message: "Job application added successfully",
     });
   } catch (error) {
     console.log(error);

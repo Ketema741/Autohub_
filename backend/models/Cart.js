@@ -15,7 +15,11 @@ const cartSchema = new mongoose.Schema({
       },
       quantity: { type: Number, default: 1 },
       price: { type: Number, required: true },
-      supplierId: { type: Number, required: true },
+      supplierId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Supplier",
+        required: true,
+      },
     },
   ],
 });
