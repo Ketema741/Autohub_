@@ -32,7 +32,6 @@ const Blogs = () => {
   };
 
 
-
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu } = useStateContext();
 
   useEffect(() => {
@@ -93,11 +92,10 @@ const Blogs = () => {
               <div className="pt-0 pr-4 pb-0 pl-4 mt-0 mr-auto mb-0 ml-auto sm:flex sm:items-center sm:justify-around">
                 <div>
                   <h2 className="mb-4 text-center text-2xl font-bold text-gray-800 dark:text-white md:text-4xl">
-                    Find Your Next Career
+                    Unleash Your Inner Gearhead
                   </h2>
                   <p className="text-gray-600 dark:text-gray-300 lg:mx-auto lg:w-8/12">
-                    Start your journey towards a fulfilling career today by browsing our listings
-                  </p>
+                  Exploring the Exciting World of Vehicles                    </p>
                 </div>
 
                 <div className="mt-4 mr-0 mb-0 ml-0 sm:mt-0">

@@ -38,7 +38,7 @@ const SVDetailCard = () => {
         if (!user || !isUserAuthenticated || user?.role !== 'customer') {
             toast.info("Please Login as a customer");
             return;
-        } 
+        }
 
         let updatedMessageData = null;
         if (user?.role === "service provider") {
@@ -76,88 +76,16 @@ const SVDetailCard = () => {
                     </p>
 
                     <h2 className="text-2xl font-bold text-blue-800 mb-4">
-                        Vehicle Service Provider Description:
-                    </h2>
+                        Extensive Range of Services                    </h2>
                     <p className="text-gray-700 mb-4 ml-10 sm:ml-2 sm:mr-2 md:mr-32 text-justify" style={{ zIndex: 1000 }}>
-                        We are seeking a talented web developer to join our
-                        team. As a web developer, you will be responsible for
-                        designing, developing, and maintaining our company
-                        website. Your responsibilities will include working
-                        with the marketing team to design and develop website
-                        pages that are visually appealing, responsive, and
-                        user-friendly. You will also be responsible for
-                        ensuring the website is optimized for search engine
-                        rankings and implementing website analytics to monitor
-                        website traffic and user behavior.
+                        When choosing a vehicle service provider, it's important
+                        to consider the range of services they offer.
+                        At [Vehicle Service Provider Name], we pride ourselves on providing a comprehensive suite of automotive solutions. From routine maintenance tasks such as oil changes, tire rotations, and fluid checks to major repairs, diagnostics, and
+                        electrical work, our skilled technicians are equipped to handle it all. We understand the diverse needs of vehicle owners and strive to be your one-stop shop for all your automotive service requirements.
                     </p>
 
-                    <h3 className="text-xl font-bold text-blue-800 mb-4">
-                        Responsibilities
-                    </h3>
-                    <ul className="list-disc pl-8 mb-4 ml-10 sm:ml-2 sm:mr-2 md:mr-32 text-justify">
-                        <li className="text-gray-700 mb-2">
-                            Design and develop website pages using HTML, CSS,
-                            and JavaScript
-                        </li>
-                        <li className="text-gray-700 mb-2">
-                            Work with the marketing team to develop a website
-                            strategy that aligns with business objectives
-                        </li>
-                        <li className="text-gray-700 mb-2">
-                            Optimize website pages for search engine rankings
-                            and implement website analytics to monitor website
-                            traffic and user behavior
-                        </li>
-                        <li className="text-gray-700 mb-2">
-                            Collaborate with other developers and designers to
-                            ensure website consistency and functionality
-                        </li>
-                        <li className="text-gray-700 mb-2">
-                            Test website functionality and troubleshoot issues
-                            as they arise
-                        </li>
-                        <li className="text-gray-700 mb-2">
-                            Stay up-to-date with the latest web development
-                            technologies and trends
-                        </li>
-                    </ul>
-
-                    <h3 className="text-xl font-bold text-blue-800 mb-4">
-                        Requirements
-                    </h3>
-                    <ul className="list-disc pl-8 mb-4 ml-10 sm:ml-2 sm:mr-2 md:mr-32 text-justify">
-                        <li className="text-gray-700 mb-2">
-                            Bachelor's degree in computer science or a related
-                            field
-                        </li>
-                        <li className="text-gray-700 mb-2">
-                            Proven experience in web development with a strong
-                            portfolio
-                        </li>
-                        <li className="text-gray-700 mb-2">
-                            Experience with HTML, CSS, JavaScript, and
-                            responsive design
-                        </li>
-                        <li className="text-gray-700 mb-2">
-                            Knowledge of SEO and website analytics
-                        </li>
-                        <li className="text-gray-700 mb-2">
-                            Strong problem-solving skills and attention to
-                            detail
-                        </li>
-                        <li className="text-gray-700 mb-2">
-                            Excellent communication skills and ability to work
-                            collaboratively in a team environment
-                        </li>
-                    </ul>
-
-                    <p className="text-gray-700 ml-1 sm:ml-2 sm:mr-2 md:mr-32 text-justify">
-                        If you're interested in this opportunity and meet the
-                        requirements listed above, please submit your resume
-                        and portfolio for consideration.
-                    </p>
+                    
                 </div>
-
 
             </div>
             <div className="mt-8 md:mt-0 lg:absolute -right-10 lg:w-7/12">

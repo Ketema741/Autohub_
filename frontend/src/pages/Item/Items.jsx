@@ -9,11 +9,12 @@ const Items = () => {
     const { currentColor } = useStateContext();
 
     const itemContext = useContext(ItemContext)
-    const { filtered, publicItems, getPublicItems } = itemContext
+    const { filtered, cars, publicItems, getPublicItems, getCars } = itemContext
 
 
     useEffect(() => {
         getPublicItems()
+        getCars()
 
     }, []);
 
@@ -75,7 +76,30 @@ const Items = () => {
                         ))}
 
                     </div>
-                </div>
+
+                    {/* {cars.length > 0 ? (
+                        <div className="flex flex-wrap gap-x-2 gap-y-8 items-center justify-center">
+                            <Fragment>
+                                {filtered !== null ?
+                                    filtered?.map((item) => (
+                                        <ItemCard item={item} currentColor={currentColor} />
+                                    ))
+                                    :
+                                    cars.map((car) => (
+                                        <ItemCard item={car} currentColor={currentColor} />
+                                    ))
+                                }
+
+                            </Fragment>
+                        </div>
+                    )
+                        :
+                        <div className="mx-8 grid gap-32 py-4 md:grid-cols-3 md:gap-12">
+                            <RenderLoadings />
+                        </div>
+                    }
+                    */}
+                </div> 
 
                 {/* <CarouselList /> */}
             </div>

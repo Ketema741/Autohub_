@@ -18,11 +18,13 @@ import {
   ITEM_ERROR,
   CREATE_CATEGORY,
   GET_CATEGORIES,
+  GET_CARS,
 } from '../Types';
 
 const Itemstate = (props) => {
   const initialState = {
     items: [],
+    cars: [],
     publicItems: null,
     item: null,
     error: null,
@@ -48,6 +50,23 @@ const Itemstate = (props) => {
       });
     }
   };
+  // Get supplier items
+  const getCars = async () => {
+    try {
+      const res = await axios.get('/items/cars/get');
+      dispatch({
+        type: GET_CARS,
+        payload: res.data.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: ITEM_ERROR,
+        payload: err.response.msg,
+      });
+    }
+  };
+
+
 
 
   // Get public items
@@ -235,12 +254,14 @@ const Itemstate = (props) => {
     <itemContext.Provider
       value={{
         items: state.items,
+        cars: state.cars,
         publicItems: state.publicItems,
         categories: state.categories,
         item: state.item,
         current: state.current,
         filtered: state.filtered,
         getItems,
+        getCars,
         getPublicItems,
         getItem,
         addItem,
