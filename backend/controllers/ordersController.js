@@ -36,7 +36,6 @@ const getOrders = async (req, res) => {
   }
 };
 
-
 //  placing order controller
 const placeOrder = async (req, res) => {
   try {
