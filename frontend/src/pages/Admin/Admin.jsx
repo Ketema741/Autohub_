@@ -20,10 +20,13 @@ import Orders from './Orders/Orders';
 import Experts from './Experts/Experts';
 import Jobs from './Jobs/Jobs';
 import UserContext from '../../context/user/userContext';
+import AnalyticsContext from '../../context/analytics/analyticsContext';
 
 const Admin = () => {
   const userContext = useContext(UserContext);
+  const analyticsContext = useContext(AnalyticsContext);
 
+  const { getCustomerByLocation, customersByLocation } = analyticsContext;
   const { customerOrders, getCustomerOrders, verifyPayment, isPaymentVerified } = userContext
 
   const {
@@ -31,17 +34,14 @@ const Admin = () => {
     setCurrentMode,
     currentMode,
     activeMenu,
-    currentColor,
-    setActiveMenu,
     handleClick,
     isClicked,
-    setScreenSize,
-    screenSize,
   } = useStateContext();
 
 
   useEffect(() => {
-    getCustomerOrders()
+    getCustomerOrders();
+    getCustomerByLocation();
   }, [])
 
 
@@ -80,6 +80,9 @@ const Admin = () => {
           <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full ">
           </div>
           <div>
+            {(!isClicked.suppliers && !isClicked.drivers && !isClicked.serviceProviders && !isClicked.experts && !isClicked.jobs && !isClicked.orders) &&
+              <AdminContent customersByLocation={customersByLocation} />
+            }
             {isClicked.suppliers && <Suppliers />}
             {isClicked.drivers && <Drivers />}
             {isClicked.serviceProviders && <ServiceProviders />}
@@ -87,7 +90,6 @@ const Admin = () => {
             {isClicked.jobs && <Jobs />}
             {isClicked.orders && <Orders customerOrders={customerOrders} verifyPayment={verifyPayment} isPaymentVerified={isPaymentVerified} />}
 
-            {!isClicked.suppliers && !isClicked.drivers && !isClicked.serviceProviders && !isClicked.experts && !isClicked.jobs && !isClicked.orders && <AdminContent />}
 
           </div>
           <Footer />

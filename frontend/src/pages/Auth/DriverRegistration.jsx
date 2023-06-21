@@ -12,7 +12,18 @@ const DriverRegistration = ({ onSubmit, handlePrev }) => {
 
     const alertContext = useContext(AlertContext)
     const { setAlert } = alertContext
-    
+    const subcities = [
+        'Arada Subcity',
+        'Akaki-Kality Subcity',
+        'Bole Subcity',
+        'Gulele Subcity',
+        'Kirkos Subcity',
+        'Kolfe Keranio Subcity',
+        'Lideta Subcity',
+        'Nifas Silk-Lafto Subcity',
+        'Yeka Subcity',
+        'Addis Ketema Subcity'
+      ];
     const initialValues = {
         licenseNumber: '',
         bio: '',
@@ -90,18 +101,28 @@ const DriverRegistration = ({ onSubmit, handlePrev }) => {
 
                             <div className="flex -mx-3">
                                 <div className="w-full px-3 mb-12">
-                                    <label htmlFor="address" className="text-xs font-semibold px-1">Address</label>
+                                    <label htmlFor="address" className="text-xs font-semibold px-1">
+                                        Subcity
+                                    </label>
                                     <div className="flex">
                                         <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
                                             <IoLocationOutline className="text-gray-400 text-lg" />
                                         </div>
                                         <Field
+                                            as="select"
                                             id="address"
                                             type="text"
                                             name="address"
                                             className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
 
-                                        />
+                                        >
+                                            <option value="">Select A subcity</option>
+                                            {subcities.map((subcity) => (
+                                                <option key={subcity} value={subcity}>
+                                                    {subcity}
+                                                </option>
+                                            ))}
+                                        </Field>
                                     </div>
                                     <ErrorMessage name="address" component="div" className="text-red-500" />
                                 </div>
