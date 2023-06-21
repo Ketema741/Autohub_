@@ -26,7 +26,10 @@ const CarForm = ({ handleData, categories, getCategories, createCategory }) => {
   const validationSchema = Yup.object().shape({
     name: Yup.string().required('name is required'),
     categoryId: Yup.string().required('Category is required'),
-    price: Yup.string().required('Price is required'),
+    price: Yup.string()
+    .required('Price is required')
+    .min(1, 'Price must be at least 1 characters long'),
+
     quantity: Yup.string()
       .required('quantity is required')
       .min(1, 'quantity must be at least 1 characters long'),

@@ -36,11 +36,17 @@ const CarForm = ({ handleData, getCategories }) => {
             .required('Quantity is required')
             .min(1, 'Quantity must be at least 1 character long'),
         model: Yup.string().required('Model is required'),
-        price: Yup.string().required('Price is required'),
+        price: Yup.string()
+            .required('Price is required')
+            .min(1, 'Price must be at least 1 characters long'),
+
         year: Yup.string().required('Manufacturing Date is required'),
         engine: Yup.string().required('Engine is required'),
         isAvailable: Yup.string().required('Availablity is required'),
-        seatingCapacity: Yup.string().required('Seating Capacity is required'),
+        seatingCapacity: Yup.string()
+            .required('Seating Capacity is required')
+            .min(1, 'Seating Capacity Price must be at least 1 characters long'),
+
         fuelType: Yup.string().required('Fuel Type is required'),
         color: Yup.string().required('color is required'),
     });
@@ -82,7 +88,7 @@ const CarForm = ({ handleData, getCategories }) => {
                             validationSchema={validationSchema}
                         >
                             <Form>
-                                
+
                                 <div className="-mx-3 flex flex-wrap">
                                     <div className="w-full px-3 sm:w-1/2">
                                         <div className="mb-5">
