@@ -1,4 +1,5 @@
 const Notification = require("../models/Notification");
+const models = require("../models/Users")
 const { getUserById } = require("./usersController");
 
 const sendNotification = async (req, res) => {
