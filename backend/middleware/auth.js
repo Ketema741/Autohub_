@@ -75,7 +75,11 @@ const verifyAdministrator = async (req, res, next) => {
       throw new Error("Unauthorized, No token.");
     }
   } catch (err) {
-    res.status(403).json({ message: "User isn't an admin user" });
+    res
+      .status(403)
+      .json({
+        message: "User isn't an admin user. Please login as Administrator",
+      });
   }
 };
 

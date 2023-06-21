@@ -147,7 +147,7 @@ router.delete(
   rejectSupplier
 );
 
-router.post("/slipt/order-item/:orderId", saveTransaction);
+router.post("/slipt/order-item/:orderId", verifyAdministrator, saveTransaction);
 //  Only supplier and Admin
 router.get(
   "/supplier/get-revenue/:supplierId",

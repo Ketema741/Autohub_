@@ -7,20 +7,31 @@ const { saveSale } = require("./analyticController");
 
 const getOrders = async (req, res) => {
   try {
-    const orders = await models.Order.find({}).populate({
-      path: "items",
-      populate: {
-        path: "supplier",
-        model: "Supplier",
-        select: "-password",
-      },
-    });
+    const orders = await models.Order.find({})
+      .populate({
+        path: "items",
+        populate: [
+          {
+            path: "supplier",
+            model: "Supplier",
+            select: "-password",
+          },
+          {
+            path: "owner",
+            model: "Customer",
+            select: "-password",
+          },
+        ],
+      })
+      .populate("owner", "-password");
 
     res.status(200).json(orders);
   } catch (error) {
+    console.log(error)
     res.status(500).json({ error: error.message });
   }
 };
+
 
 //  placing order controller
 const placeOrder = async (req, res) => {
@@ -37,7 +48,7 @@ const placeOrder = async (req, res) => {
 
     const _order = await models.Order.create({
       orderNumber: generateUniqueRandomString(12),
-      owner: req.user,
+      owner: req.user.id,
       items: cart.items,
       totalAmount: total_price,
     });
@@ -138,6 +149,17 @@ const OrderWithCustomerDetail = async (req, res) => {
   }
 };
 
+const getAllUnPaidOrders = async (req, res) => {
+  try {
+    const unPaidOrders = await models.Order.find({ isPaid: false }).populate(
+      "owner"
+    );
+    res.status(200).json(unPaidOrders);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 module.exports = {
   getOrders,
   getOrder,
@@ -146,4 +168,5 @@ module.exports = {
   deleteOrder,
 
   OrderWithCustomerDetail,
+  getAllUnPaidOrders,
 };

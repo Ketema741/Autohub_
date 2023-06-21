@@ -64,6 +64,7 @@ const saveTransaction = async (req, res) => {
           throw new Error("Transaction couldn't be saved.");
         }
 
+        const result = await Transaction.find().populate(path)
         return transaction;
       })
     );
