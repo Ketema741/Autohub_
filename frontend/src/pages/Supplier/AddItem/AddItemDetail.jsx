@@ -11,7 +11,7 @@ import ItemContext from '../../../context/item/itemContext';
 import { useStateContext } from '../../../context/ContextProvider';
 
 import UploadImage from '../../../cloudinary/UploadImage';
-
+import { toast } from 'react-toastify';
 const Parse = require('html-react-parser')
 
 const AddItemDetail = () => {
@@ -50,14 +50,17 @@ const AddItemDetail = () => {
     };
 
     const handleSubmit = () => {
-        if (uploadType === 'cars') {
+        if (uploadType === 'cars' && images) {
             itemData.carImages = images;
-        } else {
+        } 
+        if(uploadType != 'cars' && images) {
             itemData.itemImages = images;
         }
-        console.log(itemData)
-
-        addItem(itemData, uploadType); // Update the itemData state
+        if(itemData.itemImages){
+            addItem(itemData, uploadType); // Update the itemData state
+        } else{
+            toast.error("upload image")
+        }
 
     };
 
