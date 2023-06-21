@@ -90,7 +90,10 @@ const chapaVerify = async (req, res) => {
         order: order._id,
       });
 
-      res.status(200).json(sale_record);
+      const _sale_record = await SaleRecord.findById(sale_record._id).populate(
+        "order"
+      );
+      res.status(200).json(_sale_record);
     } else {
       res.status(400).json({ message: "Order is not successfully paid" });
     }
