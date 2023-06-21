@@ -21,13 +21,17 @@ const getOrders = async (req, res) => {
             model: "Customer",
             select: "-password",
           },
+          {
+            path: "itemId",
+            model: "Item",
+          },
         ],
       })
       .populate("owner", "-password");
 
     res.status(200).json(orders);
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(500).json({ error: error.message });
   }
 };

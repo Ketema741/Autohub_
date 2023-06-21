@@ -77,6 +77,7 @@ const saveTransaction = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
 const sumRevenueForSupplier = async (req, res) => {
   const { supplierId } = req.params;
 
@@ -99,6 +100,7 @@ const sumRevenueForSupplier = async (req, res) => {
         supplierId,
       });
     }
+
     const totalRevenue = await Transaction.aggregate([
       {
         $match: {
@@ -121,11 +123,20 @@ const sumRevenueForSupplier = async (req, res) => {
       });
     }
 
+    const transactions = await Transaction.find({
+      supplier: supplierId,
+    }).populate("itemsSold");
+
+    const itemsSold = transactions.reduce((acc, transaction) => {
+      return acc.concat(transaction.itemsSold);
+    }, []);
+
     res.status(200).json({
       message: "Total revenue calculated successfully",
       supplierId,
       supplier,
       totalRevenue: totalRevenue[0].totalRevenue,
+      itemsSold,
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
