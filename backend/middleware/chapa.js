@@ -95,7 +95,8 @@ const chapaVerify = async (req, res) => {
       );
       res.status(200).json(_sale_record);
     } else {
-      res.status(400).json({ message: "Order is not successfully paid" });
+      res.status(400);
+      throw new Error({ message: "Order is not successfully paid" });
     }
   } catch (error) {
     res.status(500).json({ error: "Couldn't verify Order payment " });
