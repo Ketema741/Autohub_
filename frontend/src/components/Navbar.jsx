@@ -68,6 +68,15 @@ const Navbar = () => {
   } = useStateContext();
 
   useEffect(() => {
+    if (user) {
+      getNotifications(user?._id)
+    }
+  
+    
+  }, [user])
+  
+
+  useEffect(() => {
     const handleResize = () => setScreenSize(window.innerWidth);
 
     window.addEventListener("resize", handleResize);
@@ -94,9 +103,7 @@ const Navbar = () => {
 
   const handleChat = () => {
     handleClick("chat")
-    if (user) {
-      getNotifications(user?._id)
-    }
+    
   }
 
   return (
@@ -180,7 +187,7 @@ const Navbar = () => {
             {isClicked.cart && <Cart  user={user} />}
             {isClicked.chat && <Chat />}
             {isClicked.checkout && <Checkout user={user} />}
-            {isClicked.notification && <Notification />}
+            {isClicked.notification && <Notification user={user} />}
             {isClicked.userProfile && <UserProfile onLogout={onLogout} />}
           </Fragment>
           :

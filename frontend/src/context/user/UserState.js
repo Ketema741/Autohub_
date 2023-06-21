@@ -30,7 +30,7 @@ import {
 
   GET_SUPPLIERS, GET_PENDINGSUPPLIERS, GET_SUPPLIER, FILTER_SUPPLIERS,
 
-  GET_SERVISEPROVIDERS, GET_SERVISEPROVIDER, FILTER_SERVISEPROVIERS, APPROVE_SUPPLIER, APPROVE_EXPERT, REJECT_SUPPLIER, REJECT_EXPERT, GET_CARTITEMS, CHECK_OUT
+  GET_SERVISEPROVIDERS, GET_SERVISEPROVIDER, FILTER_SERVISEPROVIERS, APPROVE_SUPPLIER, APPROVE_EXPERT, REJECT_SUPPLIER, REJECT_EXPERT, GET_CARTITEMS, CHECK_OUT, VERIFY_PAYMENT
 } from '../Types';
 
 const UserState = (props) => {
@@ -46,6 +46,7 @@ const UserState = (props) => {
     order: null,
     chapaPaymentURL: null,
     customerOrders: [],
+    isPaymentVerified: false,
 
     drivers: null,
     driver: null,
@@ -358,6 +359,39 @@ const UserState = (props) => {
     }
   }
 
+   // verify payment 
+   const verifyPayment = async ( _id) => {
+    try {
+      const paymentVerifyPromise = new Promise((resolve, reject) => {
+        const res = axios.get(`payment/verify/payment/${_id}`)
+          .then((res) => {
+            dispatch({
+              type: VERIFY_PAYMENT,
+              payload: res.data
+            });
+            resolve(res);
+          })
+          .catch((err) => {
+            dispatch({
+              type: USER_ERROR,
+              payload: err.response.data
+            });
+            reject(err);
+          });
+        console.log(res)
+      });
+
+      toast.promise(paymentVerifyPromise, {
+        pending: 'Verfing payment status...',
+        success: 'Payment verified successful!',
+        error: "That order isn't paid yet",
+      });
+      // state.error = null;
+    } catch (error) {
+      toast.error(`${state.error}`);
+    }
+  };
+
   // add To cart
   const addToCart = async (item) => {
     const data = {
@@ -524,6 +558,7 @@ const UserState = (props) => {
         chapaPaymentURL: state.chapaPaymentURL,
         order: state.order,
         customerOrders: state.customerOrders,
+        isPaymentVerified: state.isPaymentVerified,
 
         drivers: state.drivers,
         driver: state.driver,
@@ -546,6 +581,7 @@ const UserState = (props) => {
         placeOrder,
         checkOutOrder,
         getCustomerOrders,
+        verifyPayment,
 
         getUsers,
         getPendingUsers,

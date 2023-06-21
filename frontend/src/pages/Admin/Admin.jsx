@@ -24,7 +24,7 @@ import UserContext from '../../context/user/userContext';
 const Admin = () => {
   const userContext = useContext(UserContext);
 
-  const { customerOrders, getCustomerOrders } = userContext
+  const { customerOrders, getCustomerOrders, verifyPayment, isPaymentVerified } = userContext
 
   const {
     setCurrentColor,
@@ -43,7 +43,7 @@ const Admin = () => {
   useEffect(() => {
     getCustomerOrders()
   }, [])
-  
+
 
   useEffect(() => {
     const currentThemeColor = localStorage.getItem('colorMode');
@@ -85,7 +85,7 @@ const Admin = () => {
             {isClicked.serviceProviders && <ServiceProviders />}
             {isClicked.experts && <Experts />}
             {isClicked.jobs && <Jobs />}
-            {isClicked.orders && <Orders customerOrders={customerOrders} />}
+            {isClicked.orders && <Orders customerOrders={customerOrders} verifyPayment={verifyPayment} isPaymentVerified={isPaymentVerified} />}
 
             {!isClicked.suppliers && !isClicked.drivers && !isClicked.serviceProviders && !isClicked.experts && !isClicked.jobs && !isClicked.orders && <AdminContent />}
 

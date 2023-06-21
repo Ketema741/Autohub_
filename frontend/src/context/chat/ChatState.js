@@ -124,7 +124,7 @@ const ChatState = (props) => {
   // Get Notifications
   const getNotifications = async (id) => {
     try {
-      const res = await axios.get('/notifications/' + id);
+      const res = await axios.get(`notifications/user/${id}`);
       dispatch({
         type: GET_NOTIFICATIONS,
         payload: res.data,
@@ -138,6 +138,7 @@ const ChatState = (props) => {
       console.log({ 'erro': err })
     }
   };
+  
 
 
 
@@ -147,10 +148,7 @@ const ChatState = (props) => {
       const notificationPromise = new Promise((resolve, reject) => {
         axios.post("/notifications/send-to-all", notification)
           .then((res) => {
-            dispatch({
-              type: APPROVE_SUPPLIER,
-              payload: supplier,
-            });
+            
 
             resolve(res);
           })
@@ -190,9 +188,9 @@ const ChatState = (props) => {
   };
 
   // send notification
-  const deleteNotification = async (notificationId) => {
+  const deleteNotification = async (notificationId, user) => {
     try {
-      const res = await axios.post(`/notifications/${notificationId}`);
+      const res = await axios.post(`/notifications/${notificationId}`, user);
       dispatch({ type: DELETE_NOTIFICATION, payload: notificationId });
 
     } catch (err) {
