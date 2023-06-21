@@ -66,7 +66,8 @@ const chapaVerify = async (req, res) => {
   };
   try {
     if (!order.paymentId) {
-      return res.status(400).json({ error: "That order isn't paid yet" });
+      res.status(400);
+      throw new Error({ error: "That order isn't paid yet" });
     }
     const tx_ref = order.paymentId;
     const response = await axios.get(
@@ -89,10 +90,12 @@ const chapaVerify = async (req, res) => {
         order: order._id,
       });
 
-      return res.status(200).json(sale_record);
+      res.status(200).json(sale_record);
+    } else {
+      res.status(400).json({ message: "Order is not successfully paid" });
     }
   } catch (error) {
-    return res.status(500).json(error.message);
+    res.status(500).json({ error: "Couldn't verify Order payment " });
   }
 };
 
