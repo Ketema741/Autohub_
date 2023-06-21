@@ -15,7 +15,6 @@ const Modal = ({ job, handleModalClose, acceptJobApplicant }) => {
     }
     
     
-
     return (
         <div className=" bg-half-transparent fixed inset-0  flex justify-center items-center overflow-y-auto">
             <div className="float-right h-screen dark:text-gray-200 bg-white dark:bg-[#484B52] max-w-screen w-full sm:w-full md:w-full lg:w-full xl:w-1/2 2xl:w-1/3 overflow-y-auto rounded-lg" style={{ width: "70%", height: "90%" }}>

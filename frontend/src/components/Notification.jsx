@@ -5,15 +5,15 @@ import { Button } from './index';
 import { useStateContext } from '../context/ContextProvider';
 import ChatContext from '../context/chat/chatContext';
 
-const Notification = () => {
+const Notification = ({ user }) => {
   const { currentColor } = useStateContext();
 
   const chatContext = useContext(ChatContext)
   const { notifications, deleteNotification } = chatContext
 
   const handleDelete = (_id) => {
-    // deleteNotification(_id)
-    console.log(_id)
+    deleteNotification(_id, user)
+
   }
 
   return (
@@ -27,27 +27,25 @@ const Notification = () => {
       </div>
       <div className="mt-5 h-[400px] overflow-y-auto">
         {notifications ? (
-          notifications.map((item) => (
-            <div className="leading-8 border-b-1 border-color p-3" key={item._id}>
+          notifications.map((notification) => (
+            <div className="leading-8 border-b-1 border-color p-3" key={notification._id}>
               <div className="flex items-center gap-5 p-3">
-                {/* <img className="rounded-full h-10 w-10" src={item.image} alt={item.message} /> */}
                 <div>
-                  <p className="font-semibold dark:text-gray-200">{item.message}</p>
-                  <p className="text-gray-500 text-sm dark:text-gray-400">{item.description}</p>
+                  <p className="font-semibold dark:text-gray-200">{notification.message}</p>
+                  <p className="text-gray-500 text-sm dark:text-gray-400">{notification.content}</p>
                 </div>
               </div>
 
-              <div className="mt-5">
-                {/* <Button color="white" bgColor={currentColor} text="Mark As Read" borderRadius="10px" width="full" /> */}
+              {/* <div className="mt-5">
                 <button
                   type="button"
-                  onClick={() => handleDelete(item._id)}
+                  onClick={() => handleDelete(notification._id)}
                   style={{ backgroundColor: currentColor, color: "white", borderRadius: "10px" }}
                   className={`bg-${currentColor}  p-3 w-full hover:drop-shadow-xl`}
                 >
                   Mark As Read
                 </button>
-              </div>
+              </div> */}
             </div>
           ))
         ) : (

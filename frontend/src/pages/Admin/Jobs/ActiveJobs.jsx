@@ -41,7 +41,7 @@ const ActiveJobs = () => {
         setShowAlert(false);
     };
 
-    const PAGE_SIZE = 2;
+    const PAGE_SIZE = 10;
     let totalAficionado = 0
     if (jobs) {
         totalAficionado = jobs.length;

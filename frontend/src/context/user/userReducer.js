@@ -2,6 +2,7 @@ import {
   GET_USERS,
   ADD_CART,
   GET_CUSTOMERORDERS,
+  VERIFY_PAYMENT,
   UPDATE_CART,
   DELETE_CART,
   DELETE_USER,
@@ -163,6 +164,11 @@ const userReducer = (state, action) => {
       return {
         ...state,
         chapaPaymentURL: action.payload,
+      };
+    case VERIFY_PAYMENT:
+      return {
+        ...state,
+        isPaymentVerified: action.payload,
       };
     case GET_CARTITEMS:
       return {

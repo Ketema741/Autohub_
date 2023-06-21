@@ -8,7 +8,7 @@ const Jobs = () => {
         <div>   
             <Notification />
             <ActiveJobs />
-            <Applicants />
+            {/* <Applicants /> */}
         </div>
     )
 }

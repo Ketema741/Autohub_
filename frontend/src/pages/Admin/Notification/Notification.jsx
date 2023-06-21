@@ -59,10 +59,10 @@ const Notification = () => {
                                                         >
                                                             <option value="">Select</option>
                                                             <option value="all">All Users</option>
-                                                            <option value="drivers">Drivers</option>
-                                                            <option value="suppliers">Suppliers</option>
-                                                            <option value="serviceProviders">Service providers</option>
-                                                            <option value="aficionados">Car Aficionados</option>
+                                                            <option value="driver">Drivers</option>
+                                                            <option value="supplier">Suppliers</option>
+                                                            <option value="serviceProvider">Service providers</option>
+                                                            {/* <option value="aficionado">Car Aficionados</option> */}
                                                         </Field>
                                                         <ErrorMessage name="category" component="div" className="text-red-500" />
                                                     </div>

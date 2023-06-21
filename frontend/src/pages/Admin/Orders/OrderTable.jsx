@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { FiSearch } from 'react-icons/fi';
 import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';
-import { FiMoreVertical } from 'react-icons/fi';
+import { FiMoreVertical,FiSearch } from 'react-icons/fi';
+import { AiOutlineClose, AiOutlineUser } from 'react-icons/ai';
+import { FaShoppingCart } from 'react-icons/fa';
 
-import { ordersData } from './dummy';
 import { Header } from '../../../components';
-import { AiOutlineClose } from 'react-icons/ai';
+
 import DownloadButton from '../Download'
 
-const OrderTable = ({ customerOrders }) => {
+const OrderTable = ({ customerOrders, verifyPayment, isPaymentVerified }) => {
     const [orders, setOrders] = useState(customerOrders);
     const [currentPage, setCurrentPage] = useState(1);
     const PAGE_SIZE = 10;
@@ -19,38 +19,17 @@ const OrderTable = ({ customerOrders }) => {
     const endIndex = Math.min(startIndex + PAGE_SIZE, totalOrders);
     const paginatedOrders = orders.slice(startIndex, endIndex);
 
-    const handleStatusChange = (orderId, newStatus) => {
-        const updatedOrders = orders.map((order) =>
-            order.OrderID === orderId ? { ...order, Status: newStatus } : order
-        );
-        setOrders(updatedOrders);
-        console.log(newStatus);
+    const handleStatusChange = (orderId) => {
+        console.log(orderId);
+        verifyPayment(orderId)
+
     };
 
     const goToPage = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
-    const filteredOrdersData = ordersData.map((order) => {
-        const { StatusBg, ProductImage, ...filteredOrder } = order;
-        return filteredOrder;
-    });
 
-
-
-    const [currentItem, setItem] = useState(null)
-    const [showAlert, setShowAlert] = useState(false)
-
-    const handleRejectClick = (item) => {
-        setShowAlert(true);
-        setItem(item);
-        console.log(item)
-    };
-
-    const handleCloseAlert = () => {
-        setShowAlert(false);
-    };
-
-    const [showActions, setShowActions] = useState(Array(filteredOrdersData?.length).fill(false));
+    const [showActions, setShowActions] = useState(Array(orders?.length).fill(false));
     const [openIndex, setOpenIndex] = useState(null); // Track the index of the currently open toggle
 
     const toggleActions = (index) => {
@@ -66,7 +45,6 @@ const OrderTable = ({ customerOrders }) => {
         setOpenIndex(index); // Update the openIndex to the clicked index
     };
 
-    const [showItemModal, setShowItemModal] = useState(null);
     const [selectedOrder, setSelectedOrder] = useState([]);
 
     const handleShow = (order) => {
@@ -75,13 +53,29 @@ const OrderTable = ({ customerOrders }) => {
     }
 
 
+    useEffect(() => {
+        if (isPaymentVerified) {
+            setShowPaymentModal(true)
+        }
+
+    }, [isPaymentVerified])
+
+    const [showPaymentModal, setShowPaymentModal] = useState(null);
+    const handleClosePaymentModal = () => {
+        setShowPaymentModal(false);
+    };
+
+    const [showItemModal, setShowItemModal] = useState(null);
     const handleModalClose = () => {
         setShowItemModal(false);
     };
 
+
+
+
     return (
         <div className="mt-24 container px-4 mx-auto overflow-hidden">
-            <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl overflow-hidden">
+            <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl overflow-hidden overflow-y-auto">
                 <div className="mb-8">
                     <div className="pt-0 pr-4 pb-0 pl-4 mt-0 mr-auto mb-0 ml-auto sm:flex sm:items-center sm:justify-between">
                         <Header category="Order Details" title="Item Order Table" />
@@ -201,19 +195,19 @@ const OrderTable = ({ customerOrders }) => {
                                                                     </li>
                                                                     <li>
                                                                         <button
-                                                                            onClick={() => handleRejectClick(order)}
+                                                                            onClick={() => handleStatusChange(order._id)}
                                                                             className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                                                                         >
-                                                                            Freeze
+                                                                            Verify
                                                                         </button>
                                                                     </li>
-                                                                    <li>
+                                                                    {/* <li>
                                                                         <a href="#"
                                                                             className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                                                                         >
                                                                             Delete
                                                                         </a>
-                                                                    </li>
+                                                                    </li> */}
                                                                 </ul>
 
                                                             </div>
@@ -264,20 +258,19 @@ const OrderTable = ({ customerOrders }) => {
                     </button>
                 </div>
 
-                <DownloadButton filteredData={filteredOrdersData} fileName="user_order" />
+                <DownloadButton filteredData={orders} fileName="user_order" />
 
                 {showItemModal &&
                     <div className=" bg-half-transparent fixed inset-0  flex justify-center items-center overflow-y-auto">
                         <div className="mt-24 float-right h-screen dark:text-gray-200 bg-white dark:bg-[#484B52] max-w-screen w-full sm:w-full md:w-full lg:w-full xl:w-1/2 2xl:w-1/3 overflow-y-auto rounded-lg" style={{ width: "70%", height: "90%" }}>
                             {/* Modal content */}
                             <div
-                                action="#"
                                 className="relative bg-white rounded-lg shadow dark:bg-gray-700"
                             >
                                 {/* Modal header */}
                                 <div className="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
 
-                                    <Header category="Checkout" title="User Detail" />
+                                    <Header category="Order" title="Order Detail" />
 
                                     <button
                                         type="button"
@@ -291,14 +284,103 @@ const OrderTable = ({ customerOrders }) => {
 
                                 {/* Modal body */}
                                 <div className="p-6 space-y-6">
-                                    {selectedOrder.length > 0 ?
-                                        <div className="grid grid-cols-6 gap-6">
+                                    {selectedOrder ?
+                                        <div>
+                                            <div className="flex items-center space-x-2 font-bold text-gray-900 leading-8">
+                                                <span >
+                                                    <AiOutlineUser className="text-blue-800 h-5" />
+                                                </span>
+                                                <span className="tracking-wide">Customer Order Detail</span>
+                                            </div>
+                                            <div className="text-gray-700">
+                                                <div className="grid md:grid-cols-2 text-sm">
+                                                    <div className="grid grid-cols-2">
+                                                        <div className="px-4 py-2 font-semibold"> First Name</div>
+                                                        {selectedOrder.owner.firstName}
+                                                        <div className="px-4 py-2"> </div>
+                                                    </div>
+                                                    <div className="grid grid-cols-2">
+                                                        <div className="px-4 py-2 font-semibold">Last Name</div>
+                                                        <div className="px-4 py-2">{selectedOrder.owner.lastName}</div>
+                                                    </div>
+
+                                                    <div className="grid grid-cols-2">
+                                                        <div className="px-4 py-2 font-semibold">Email</div>
+                                                        <div className="px-4 py-2">{selectedOrder.owner.address}</div>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                            <div className="flex items-center space-x-2 font-bold text-gray-900 leading-8">
+                                                <span >
+                                                    <FaShoppingCart className="text-blue-800 h-5" />
+                                                </span>
+                                                <span className="tracking-wide">Order Detail</span>
+                                            </div>
+                                            <div className="text-gray-700">
+                                                <div className="grid grid-cols-4">
+                                                    <div className="px-4 py-2 font-semibold">Total Amount</div>
+                                                    <div className="px-4 py-2">{selectedOrder.totalAmount}</div>
+                                                </div>
+                                                <div className="grid md:grid-cols-2 text-sm">
+
+                                                    {selectedOrder.items.length > 0 &&
+                                                        selectedOrder.items.map((item) => (
+                                                            <div className="grid grid-cols-2">
+                                                                <div className="px-4 py-2 font-semibold"> Item Name</div>
+                                                                <div className="px-4 py-2">{item.itemId.name}</div>
+
+                                                                <div className="px-4 py-2 font-semibold">Quantity</div>
+                                                                <div className="px-4 py-2">{item.quantity}</div>
+
+                                                                <div className="px-4 py-2 font-semibold">Single Item Price</div>
+                                                                <div className="px-4 py-2">{item.itemId.price}</div>
+                                                            </div>
+                                                        ))
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        : <div> loading ...</div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                {showPaymentModal &&
+                    <div className=" bg-half-transparent fixed inset-0  flex justify-center items-center overflow-y-auto">
+                        <div className="mt-24 float-right h-screen dark:text-gray-200 bg-white dark:bg-[#484B52] max-w-screen w-full sm:w-full md:w-full lg:w-full xl:w-1/2 2xl:w-1/3 overflow-y-auto rounded-lg" style={{ width: "70%", height: "90%" }}>
+                            {/* Modal content */}
+                            <div
+                                className="relative bg-white rounded-lg shadow dark:bg-gray-700"
+                            >
+                                {/* Modal header */}
+                                <div className="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
+
+                                    <Header category="Payment" title="Payment Detail" />
+
+                                    <button
+                                        type="button"
+                                        className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                        onClick={handleClosePaymentModal}
+                                        data-modal-hide="editUserModal"
+                                    >
+                                        <AiOutlineClose className="w-5 h-5" />
+                                    </button>
+                                </div>
+
+                                {/* Modal body */}
+                                <div className="p-6 space-y-6">
+                                    {isPaymentVerified ?
+                                        <div className="grid grid-cols-6 gap-x-6 gap-y-1">
                                             <div className="col-span-6 sm:col-span-3">
 
                                                 <p
                                                     className="text-gray-900 text-xl block w-full p-2.5 dark:text-white"
                                                 >
-                                                    {`${selectedOrder.owner.firstName}  ${selectedOrder.owner.lastName}`}
+                                                    {`${isPaymentVerified.paymentMetada.data?.first_name}  ${isPaymentVerified.paymentMetada.data?.last_name}`}
                                                 </p>
 
                                             </div>
@@ -306,18 +388,56 @@ const OrderTable = ({ customerOrders }) => {
                                                 <p
                                                     className="text-gray-900 text-xl block w-full p-2.5 dark:text-white"
                                                 >
-                                                    {selectedOrder.owner.firstName}
+                                                    {isPaymentVerified.paymentMetada.data?.email}
                                                 </p>
 
                                             </div>
                                             <div className="col-span-6 sm:col-span-3">
-                                                {selectedOrder.items.length > 0 &&
-                                                    selectedOrder.items.map((item) => (
-                                                        <div className="inline-flex items-center gap-x-3">
-                                                            <span>{item.itemId.name}</span>
-                                                        </div>
-                                                    ))
-                                                }
+                                                <p
+                                                    className="text-gray-900 text-xl block w-full p-2.5 dark:text-white"
+                                                >
+                                                    Total Amount
+                                                </p>
+
+                                            </div>
+                                            <div className="col-span-6 sm:col-span-3">
+                                                <p
+                                                    className="text-gray-900 text-xl block w-full p-2.5 dark:text-white"
+                                                >
+                                                    {isPaymentVerified.paymentMetada.data?.amount}
+                                                </p>
+
+                                            </div>
+                                            <div className="col-span-6 sm:col-span-3">
+
+                                                <p
+                                                    className="mb-4 mt-2 text-gray-900 text-xl block w-full p-2.5 dark:text-white"
+                                                >
+                                                    Currency
+                                                </p>
+                                            </div>
+                                            <div className="col-span-6 sm:col-span-3">
+                                                <p
+                                                    className="mb-4 mt-2 text-gray-900 text-xl block w-full p-2.5 dark:text-white"
+                                                >
+                                                    {isPaymentVerified.paymentMetada.data?.currency}
+                                                </p>
+
+                                            </div>
+                                            <div className="col-span-6 sm:col-span-3">
+
+                                                <p
+                                                    className="mb-4 mt-2 text-gray-900 text-xl block w-full p-2.5 dark:text-white"
+                                                >
+                                                    Status
+                                                </p>
+                                            </div>
+                                            <div className="col-span-6 sm:col-span-3">
+                                                <p
+                                                    className="mb-4 mt-2 text-gray-900 text-xl block w-full p-2.5 dark:text-white"
+                                                >
+                                                    {isPaymentVerified.order.isPaid ? "Paid" : "Not Paid"}
+                                                </p>
 
                                             </div>
                                         </div>
