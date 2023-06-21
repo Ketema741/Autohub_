@@ -127,6 +127,39 @@ const JobState = (props) => {
 
 
   };
+  // Add job
+  const acceptJobApplicant = async (id, driver) => {
+    try {
+      const registrationPromise = new Promise((resolve, reject) => {
+        axios
+          .post(`/jobs/job/acceptence/${id}`, driver)
+          .then((res) => {
+
+            resolve(res);
+          })
+          .catch((err) => {
+            dispatch({
+              type: JOB_ERROR,
+              payload: err.response.data
+            });
+            console.log(err)
+
+            reject(err);
+          });
+      });
+
+      toast.promise(registrationPromise, {
+        pending: 'Accepting...',
+        success: 'Applicant accepted successfully! ',
+        error: `Applicant Accepting  failed Try again!`,
+      });
+      state.error = null;
+    } catch (error) {
+      toast.error(`${state.error.error}`);
+    }
+
+
+  };
 
   // Remove image
   const removeImage = async (public_id) => {
@@ -214,6 +247,7 @@ const JobState = (props) => {
         getJob,
         addJob,
         applyForJob,
+        acceptJobApplicant,
         clearJobs,
         deleteJob,
         removeImage,

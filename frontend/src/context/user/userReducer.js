@@ -1,6 +1,7 @@
 import {
   GET_USERS,
   ADD_CART,
+  GET_CUSTOMERORDERS,
   UPDATE_CART,
   DELETE_CART,
   DELETE_USER,
@@ -31,6 +32,8 @@ import {
   REJECT_SUPPLIER,
   GET_USER,
   GET_CARTITEMS,
+  USER_ORDER,
+  CHECK_OUT,
 } from '../Types';
 
 const userReducer = (state, action) => {
@@ -146,10 +149,25 @@ const userReducer = (state, action) => {
         ...state,
         carts: [...action.payload],
       };
+    case GET_CUSTOMERORDERS:
+      return {
+        ...state,
+        customerOrders: [...action.payload],
+      };
+    case USER_ORDER:
+      return {
+        ...state,
+        order: action.payload,
+      };
+    case CHECK_OUT:
+      return {
+        ...state,
+        chapaPaymentURL: action.payload,
+      };
     case GET_CARTITEMS:
       return {
         ...state,
-        carts: action.payload.items,
+        carts: action.payload,
       };
     case UPDATE_CART:
       return {

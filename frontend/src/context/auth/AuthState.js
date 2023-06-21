@@ -118,9 +118,9 @@ const AuthState = (props) => {
       setAuthToken(localStorage.token);
     }
 
-    const res = await axios.get('/users/user');
-
+    
     try {
+      const res = await axios.get('/users/user');
       dispatch({
         type: USER_LOADED,
         payload: res.data,
@@ -170,10 +170,57 @@ const AuthState = (props) => {
     
   };
 
+  
+// reset password
+const resetForgotPassword = async (email) => {
+
+  try {
+    const resetPasswordPromise = new Promise((resolve, reject) => {
+      const res = axios.post('users/account/forgot-password', email)
+        .then((res) => {
+          dispatch({
+            type: UPDATE_USER,
+            payload: res.data.data,
+          });
+          console.log(res)
+
+          resolve(res);
+        })
+        .catch((err) => {
+          dispatch({
+            type: USER_ERROR,
+            payload: err
+          });
+          console.log(err)
+          reject(err);
+        });
+        console.log(res)
+    });
+
+    toast.promise(resetPasswordPromise, {
+      pending: 'Checking...',
+      success: 'Password reset link sent! Please check your email.',
+      error: `Update failed: ${state.error?state.error:" try again later!"}`,
+    });
+    state.error = null;
+  } catch (error) {
+    toast.error(`${state.error}`);
+  }
+ 
+  try {
+    const res = await axios.post('users/account/forgot-password', email);
+
+   console.log(res.data)
+  } catch (error) {
+    dispatch({
+      type: AUTH_ERROR,
+    });
+  }
+};
 
   // set current
   const setCurrent = (user) => {
-    dispatch({ type: SET_CURRENT, payload: user });
+    dispatch({ tpe: SET_CURRENT, payload: user });
   };
 
   // set token on initial app loading
@@ -198,6 +245,8 @@ const AuthState = (props) => {
         error: state.error,
         userLoading: state.userLoading,
         isUserAuthenticated: state.isUserAuthenticated,
+
+        resetForgotPassword,
         register,
         userLogin,
         updateUser,

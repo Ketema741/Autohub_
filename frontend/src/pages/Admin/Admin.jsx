@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 
 import {
   AdminNavbar,
@@ -19,8 +19,13 @@ import ServiceProviders from './ServiceProviders/ServiceProviders';
 import Orders from './Orders/Orders';
 import Experts from './Experts/Experts';
 import Jobs from './Jobs/Jobs';
+import UserContext from '../../context/user/userContext';
 
 const Admin = () => {
+  const userContext = useContext(UserContext);
+
+  const { customerOrders, getCustomerOrders } = userContext
+
   const {
     setCurrentColor,
     setCurrentMode,
@@ -33,6 +38,12 @@ const Admin = () => {
     setScreenSize,
     screenSize,
   } = useStateContext();
+
+
+  useEffect(() => {
+    getCustomerOrders()
+  }, [])
+  
 
   useEffect(() => {
     const currentThemeColor = localStorage.getItem('colorMode');
@@ -74,7 +85,7 @@ const Admin = () => {
             {isClicked.serviceProviders && <ServiceProviders />}
             {isClicked.experts && <Experts />}
             {isClicked.jobs && <Jobs />}
-            {isClicked.orders && <Orders />}
+            {isClicked.orders && <Orders customerOrders={customerOrders} />}
 
             {!isClicked.suppliers && !isClicked.drivers && !isClicked.serviceProviders && !isClicked.experts && !isClicked.jobs && !isClicked.orders && <AdminContent />}
 

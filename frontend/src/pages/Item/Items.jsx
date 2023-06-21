@@ -37,11 +37,11 @@ const Items = () => {
                         <Fragment>
                             {filtered !== null ?
                                 filtered?.map((item) => (
-                                    <ItemCard item={item} currentColor={currentColor} />
+                                    <ItemCard item={item} key={item._id} currentColor={currentColor} />
                                 ))
                                 :
                                 publicItems.map((item) => (
-                                    <ItemCard item={item} currentColor={currentColor} />
+                                    <ItemCard item={item} key={item._id} currentColor={currentColor} />
                                 ))
                             }
 
@@ -83,7 +83,7 @@ const Items = () => {
                             <Fragment>
                                 {cars !== null &&
                                     cars.map((car) => (
-                                        <CarCard item={car} currentColor={currentColor} />
+                                        <CarCard key={car._id} item={car} currentColor={currentColor} />
                                     ))
                                 }
                             </Fragment>

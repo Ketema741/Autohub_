@@ -11,6 +11,8 @@ import {
   GET_USER,
   ADD_USER,
   ADD_CART,
+  GET_CUSTOMERORDERS,
+  USER_ORDER,
   DELETE_CART,
   UPDATE_CART,
   DELETE_USER,
@@ -28,7 +30,7 @@ import {
 
   GET_SUPPLIERS, GET_PENDINGSUPPLIERS, GET_SUPPLIER, FILTER_SUPPLIERS,
 
-  GET_SERVISEPROVIDERS, GET_SERVISEPROVIDER, FILTER_SERVISEPROVIERS, APPROVE_SUPPLIER, APPROVE_EXPERT, REJECT_SUPPLIER, REJECT_EXPERT, GET_CARTITEMS
+  GET_SERVISEPROVIDERS, GET_SERVISEPROVIDER, FILTER_SERVISEPROVIERS, APPROVE_SUPPLIER, APPROVE_EXPERT, REJECT_SUPPLIER, REJECT_EXPERT, GET_CARTITEMS, CHECK_OUT
 } from '../Types';
 
 const UserState = (props) => {
@@ -40,7 +42,10 @@ const UserState = (props) => {
     customer: null,
     filteredUsers: null,
     error: null,
-    carts: null,
+    carts: [],
+    order: null,
+    chapaPaymentURL: null,
+    customerOrders: [],
 
     drivers: null,
     driver: null,
@@ -64,6 +69,8 @@ const UserState = (props) => {
     current: null,
     filteredDrivers: null,
     favourites: [],
+
+
   };
 
   const [state, dispatch] = useReducer(userReducer, initialState);
@@ -192,30 +199,7 @@ const UserState = (props) => {
     }
   };
 
-  // approve user
-  const rejectUser = async (_id, userType) => {
 
-    let get_user
-    if (userType === "supplier") {
-      get_user = REJECT_SUPPLIER;
-    }
-    else if (userType === "expert") {
-      get_user = REJECT_EXPERT;
-    }
-
-    try {
-      const res = await axios.get(`/users/reject/${userType}/${_id}`);
-      dispatch({
-        type: get_user,
-        payload: res.data,
-      });
-    } catch (err) {
-      dispatch({
-        type: USER_ERROR,
-        payload: err.response.msg,
-      });
-    }
-  };
 
   // add users
   const addUser = async (user) => {
@@ -280,10 +264,99 @@ const UserState = (props) => {
         type: GET_CARTITEMS,
         payload: res.data,
       });
+      console.log(err)
     } catch (error) {
       dispatch({ type: USER_ERROR });
     }
   };
+
+
+  // order 
+  const placeOrder = async (_id) => {
+
+    try {
+      const placeOrderPromise = new Promise((resolve, reject) => {
+        const res = axios.post(`orders/place-order/${_id}`)
+          .then((res) => {
+            dispatch({
+              type: USER_ORDER,
+              payload: res.data.order
+            });
+            resolve(res);
+          })
+          .catch((err) => {
+            dispatch({
+              type: USER_ERROR,
+              payload: err.response
+            });
+            console.log(err)
+            reject(err);
+          });
+        console.log(res)
+      });
+
+      toast.promise(placeOrderPromise, {
+        pending: 'Placing Order...',
+        success: 'Order placed successfully !',
+        error: `Place Order failed try again later!`,
+      });
+      state.error = null;
+    } catch (error) {
+      toast.error(`${state.error}`);
+    }
+  };
+
+
+  // Check Out 
+  const checkOutOrder = async (_id, data) => {
+    try {
+      const checkoutPromise = new Promise((resolve, reject) => {
+        const res = axios.post(`payment/checkout/orders/${_id}`, data)
+          .then((res) => {
+
+            dispatch({
+              type: CHECK_OUT,
+              payload: res.data
+            });
+            resolve(res);
+          })
+          .catch((err) => {
+            dispatch({
+              type: USER_ERROR,
+              payload: err.response
+            });
+            console.log(err)
+            reject(err);
+          });
+        console.log(res)
+      });
+
+      toast.promise(checkoutPromise, {
+        pending: 'Checkout...',
+        success: 'Order placed successfully !',
+        error: `Checkout failed try again later!`,
+      });
+      state.error = null;
+    } catch (error) {
+      toast.error(`${state.error}`);
+    }
+  };
+
+  const getCustomerOrders = async () => {
+    try {
+      const res = await axios.get(`/orders`);
+      dispatch({
+        type: GET_CUSTOMERORDERS,
+        payload: res.data,
+      });
+      return res.data
+    } catch (err) {
+      dispatch({
+        type: USER_ERROR,
+        payload: err.response.msg,
+      });
+    }
+  }
 
   // add To cart
   const addToCart = async (item) => {
@@ -291,6 +364,8 @@ const UserState = (props) => {
       productId: item._id,
       quantity: 1,
     }
+
+    console.log(item)
 
     const cartData = {
       productId: item,
@@ -305,6 +380,7 @@ const UserState = (props) => {
         payload: cartData,
       });
     } catch (error) {
+      console.log(error)
       dispatch({ type: USER_ERROR });
     }
   };
@@ -333,10 +409,10 @@ const UserState = (props) => {
 
   // load user cart on first run or refresh
   useEffect(() => {
-    if (isUserAuthenticated && authenticateduser) {
+    if (isUserAuthenticated) {
       getCartItems()
     }
-  }, [authenticateduser]);
+  }, [isUserAuthenticated]);
 
   // set current
   const setCurrent = (item) => {
@@ -445,6 +521,9 @@ const UserState = (props) => {
         current: state.current,
 
         carts: state.carts,
+        chapaPaymentURL: state.chapaPaymentURL,
+        order: state.order,
+        customerOrders: state.customerOrders,
 
         drivers: state.drivers,
         driver: state.driver,
@@ -463,6 +542,10 @@ const UserState = (props) => {
         pendingAficionados: state.pendingAficionados,
         aficionado: state.aficionado,
         filteredAficionados: state.filteredAficionados,
+
+        placeOrder,
+        checkOutOrder,
+        getCustomerOrders,
 
         getUsers,
         getPendingUsers,
