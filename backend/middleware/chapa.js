@@ -38,7 +38,6 @@ const chapaInit = async (req, res) => {
     const data = await response.data;
     if (data.status === "success") {
       await Order.updateOne({ _id: orderId }, { paymentId: tx_ref });
-      // decrement the quantity of item in the order and it quantity is zero mark that item as unavailable
       for (const item of order.items) {
         const updatedItem = await Item.findByIdAndUpdate(item.productId, {
           $inc: { quantity: -item.quantity },
@@ -46,7 +45,7 @@ const chapaInit = async (req, res) => {
         });
       }
     }
-    res.status(200).json({ order });
+    res.status(200).json({ payment_status_data: data, order });
   } catch (error) {
     console.log(error.message);
     res.status(500).json(error.message);
