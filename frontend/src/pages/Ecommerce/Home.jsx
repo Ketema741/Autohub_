@@ -6,6 +6,8 @@ import Items from '../Item/Items';
 import { useStateContext } from '../../context/ContextProvider';
 import ItemContext from '../../context/item/itemContext';
 
+
+
 const Home = () => {
 
 
@@ -62,6 +64,7 @@ const Home = () => {
           <Footer />
         </div>
       </div>
+      
     </div>
   );
 };

@@ -1,25 +1,10 @@
-import React, { useState } from 'react';
-import {
-    GridComponent,
-    ColumnsDirective,
-    ColumnDirective,
-    Page,
-    Inject,
-    Edit,
-    Resize,
-    ContextMenu,
-    Sort,
-    Filter,
-    PdfExport,
-    ExcelExport
-} from '@syncfusion/ej2-react-grids';
-import '../../../App.css';
-import Test from './Test';
-import { useStateContext } from '../../../context/ContextProvider';
-import { ordersData, ordersGrid, contextMenuItems } from './dummy';
-import { Header } from '../../../components';
+import React, { useState, useContext } from 'react';
 
-const Customers = () => {
+import '../../../App.css';
+import OrderTable from './OrderTable';
+import { useStateContext } from '../../../context/ContextProvider';
+
+const Orders = ({ customerOrders }) => {
     const editing = { allowDeleting: true, allowEditing: true };
     const toolbarOptions = ['Delete'];
 
@@ -41,12 +26,12 @@ const Customers = () => {
 
     return (
         <div>
-            
-            <Test />
+
+            <OrderTable customerOrders={customerOrders} />
         </div>
 
 
     );
 };
 
-export default Customers;
+export default Orders;

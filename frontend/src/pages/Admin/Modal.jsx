@@ -3,7 +3,18 @@ import { AiOutlineClose, AiOutlineUser } from 'react-icons/ai';
 import { Header } from '../../components';
 
 
-const Modal = ({ User, handleModalClose }) => {
+const Modal = ({ job, handleModalClose, acceptJobApplicant }) => {
+
+    const handleAccept = ( driver) =>{
+        const applicant = {
+            name:driver.firstName,
+            email:driver.email
+        }
+
+        acceptJobApplicant(job._id, applicant)
+    }
+    
+    
 
     return (
         <div className=" bg-half-transparent fixed inset-0  flex justify-center items-center overflow-y-auto">
@@ -30,78 +41,70 @@ const Modal = ({ User, handleModalClose }) => {
 
                     {/* Modal body */}
                     <div className="p-6 space-y-6">
-                        {User !== null ?
+                        {job !== null ?
                             <div className=" p-3 ">
+                                <div className="text-gray-700">
+                                    <div className="grid md:grid-cols-2 text-sm">
+                                        <div className="grid grid-cols-2">
+                                            <div className="px-4 py-2 font-semibold">Title</div>
+                                            <div className="px-4 py-2">{job.title} </div>
+                                        </div>
+                                        <div className="grid grid-cols-2">
+                                            <div className="px-4 py-2 font-semibold"> Address</div>
+                                            <div className="px-4 py-2">{job.address}</div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
                                 <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
                                     <span >
                                         <AiOutlineUser className="text-blue-800 h-5" />
                                     </span>
-                                    <span className="tracking-wide">About</span>
+                                    <span className="tracking-wide">Job Applicants</span>
                                 </div>
-                                <div className="text-gray-700">
-                                    <div className="grid md:grid-cols-2 text-sm">
-                                        <div className="grid grid-cols-2">
-                                            <div className="px-4 py-2 font-semibold">First Name</div>
-                                            <div className="px-4 py-2">{User.firstName} </div>
-                                        </div>
-                                        <div className="grid grid-cols-2">
-                                            <div className="px-4 py-2 font-semibold">Last Name</div>
-                                            <div className="px-4 py-2">{User.lastName}</div>
-                                        </div>
-                                        <div className="grid grid-cols-2">
-                                            <div className="px-4 py-2 font-semibold">Gender</div>
-                                            <div className="px-4 py-2">Male</div>
-                                        </div>
-                                        <div className="grid grid-cols-2">
-                                            <div className="px-4 py-2 font-semibold">Contact No.</div>
-                                            <div className="px-4 py-2">{User.phone}</div>
-                                        </div>
-                                        <div className="grid grid-cols-2">
-                                            <div className="px-4 py-2 font-semibold">Current Address</div>
-                                            <div className="px-4 py-2">{User.address}</div>
-                                        </div>
 
+                                {job.applicants.length > 0 && job.applicants.map((driver, index) => (
+
+                                    <div className="text-gray-700">
+                                        <div className="grid md:grid-cols-2 text-sm">
+                                            <div className="grid grid-cols-2">
+                                                <div className="px-4 py-2 font-semibold">{index + 1}.First Name</div>
+                                                <div className="px-4 py-2">{driver.applicant_info.firstName} </div>
+                                            </div>
+                                            <div className="grid grid-cols-2">
+                                                <div className="px-4 py-2 font-semibold">Last Name</div>
+                                                <div className="px-4 py-2">{driver.applicant_info.lastName}</div>
+                                            </div>
+
+                                            <div className="grid grid-cols-2">
+                                                <div className="px-4 py-2 font-semibold">Email</div>
+                                                <div className="px-4 py-2">{driver.applicant_info.email}</div>
+                                            </div>
+                                            <div className="grid grid-cols-2">
+                                                <div className="px-4 py-2 font-semibold">Contact No.</div>
+                                                <div className="px-4 py-2">{driver.applicant_info.phone}</div>
+                                            </div>
+                                            <div className="grid grid-cols-2">
+                                                <div className="px-4 py-2 font-semibold">Driver Address</div>
+                                                <div className="px-4 py-2">{driver.applicant_info.address}</div>
+                                            </div>
+
+                                        </div>
                                         <div className="grid grid-cols-2">
-                                            <div className="px-4 py-2 font-semibold">Email</div>
-                                            <div className="px-4 py-2">
-                                                <a className="text-blue-800" href={`mailto:${User.email}`}>{User.email}</a>
+                                            <div className="mt-4 flex justify-center">
+                                                <button
+                                                    onClick={()=>handleAccept(driver.applicant_info)}
+                                                    className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
+                                                >
+                                                    Accept
+                                                </button>
+                                                
                                             </div>
                                         </div>
-                                        {User.birthday &&
-                                            <div className="grid grid-cols-2">
-                                                <div className="px-4 py-2 font-semibold">Birthday</div>
-                                                <div className="px-4 py-2">{User.birthday}</div>
-                                            </div>
-                                        }
-                                        {User.role == "supplier" ?
-                                            <div className="grid grid-cols-2">
-                                                <div className="px-4 py-2 font-semibold">Company Name</div>
-                                                <div className="px-4 py-2">{User.companyName}</div>
-                                            </div>
-                                            : null
-                                        }
+                                        
                                     </div>
-                                    {User.role == "driver" ?
-                                        <div className='mt-4 flex flex-col space-y-2'>
-
-                                            <div className="px-4 py-2 font-semibold">Education</div>
-                                            <div className="px-4 py-2">{User.education}</div>
-                                            <div className="px-4 py-2 font-semibold">Experience</div>
-                                            <div className="px-4 py-2">{User.experience}</div>
-                                            <div className="px-4 py-2 font-semibold">Work History</div>
-                                            <div className="px-4 py-2">{User.workHistory}</div>
-
-                                        </div>
-                                        : null
-                                    }
-                                    {User.role == "supplier" ?
-                                        <div className='mt-4 flex flex-col space-y-2'>
-                                            <div className="px-4 py-2 font-semibold">Description</div>
-
-                                        </div>
-                                        : null
-                                    }
-                                </div>
+                                ))}
 
                             </div>
                             : <div> loading ...</div>

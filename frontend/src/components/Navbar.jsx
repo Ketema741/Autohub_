@@ -9,6 +9,7 @@ import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import { RxAvatar } from 'react-icons/rx'
 
 import Cart from './Cart';
+import Checkout from './Checkout';
 import Chat from './Chat';
 import Notification from './Notification';;
 import UserProfile from './UserProfile'
@@ -55,7 +56,6 @@ const Navbar = () => {
   const { isUserAuthenticated, user, logout } = authContext;
 
   const { carts } = userContext;
-
 
   const {
     currentColor,
@@ -124,7 +124,7 @@ const Navbar = () => {
                   style={{ background: "#FF5C8E" }}
                   className="absolute inline-flex items-center justify-center rounded-full h-4 w-4 right-2 top-2 text-white text-center"
                 >
-                  {carts ? carts.length : 0}
+                  {carts.items ? carts.items.length : 0}
                 </span>
               </div>
             }
@@ -177,8 +177,9 @@ const Navbar = () => {
               <MdKeyboardArrowDown className="text-gray-400 text-14" />
             </div>
 
-            {isClicked.cart && <Cart />}
+            {isClicked.cart && <Cart  user={user} />}
             {isClicked.chat && <Chat />}
+            {isClicked.checkout && <Checkout user={user} />}
             {isClicked.notification && <Notification />}
             {isClicked.userProfile && <UserProfile onLogout={onLogout} />}
           </Fragment>

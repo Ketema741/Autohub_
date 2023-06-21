@@ -13,15 +13,18 @@ import Modal from '../Modal'
 import PostForm from './PostForm';
 
 import UserContext from '../../../context/user/userContext';
-
+import JobContext from '../../../context/job/jobContext';
 
 const ActiveJobs = () => {
 
     const userContext = useContext(UserContext);
-    const { getUser, getUsers, drivers, driver, filteredDrivers, filterUsers, clearFilter } = userContext;
+    const jobContext = useContext(JobContext);
+
+    const {  driver } = userContext;
+    const { acceptJobApplicant,jobs, getJobs, filterJobs, filtered, clearFilter } = jobContext;
 
     useEffect(() => {
-        getUsers("drivers")
+        getJobs();
     }, [])
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -40,16 +43,16 @@ const ActiveJobs = () => {
 
     const PAGE_SIZE = 2;
     let totalAficionado = 0
-    if (drivers) {
-        totalAficionado = drivers.length;
+    if (jobs) {
+        totalAficionado = jobs.length;
     }
     const totalPages = Math.ceil(totalAficionado / PAGE_SIZE);
     const startIndex = (currentPage - 1) * PAGE_SIZE;
     const endIndex = startIndex + PAGE_SIZE;
 
-    let currentDrivers = []
-    if (drivers) {
-        currentDrivers = drivers.slice(startIndex, endIndex);
+    let currentJobs = []
+    if (jobs) {
+        currentJobs = jobs.slice(startIndex, endIndex);
     }
 
     const goToPage = (pageNumber) => {
@@ -64,12 +67,12 @@ const ActiveJobs = () => {
     const text = useRef('')
 
     useEffect(() => {
-        if (filteredDrivers == null) {
+        if (filtered == null) {
             text.current.value = ''
         }
-    }, [filteredDrivers])
+    }, [filtered])
 
-    const [showActions, setShowActions] = useState(Array(currentDrivers?.length).fill(false));
+    const [showActions, setShowActions] = useState(Array(currentJobs?.length).fill(false));
     const [openIndex, setOpenIndex] = useState(null); // Track the index of the currently open toggle
 
     const toggleActions = (index) => {
@@ -87,26 +90,28 @@ const ActiveJobs = () => {
 
     const onChange = (e) => {
         if (e.target.value !== '') {
-            filterUsers(e.target.value, "drivers");
+            filterJobs(e.target.value);
         } else {
             clearFilter();
         }
     };
 
-    const handleShow = (_id) => {
-        getUser(_id, "driver")
+    const [job, setJob] = useState(null)
+
+    const handleShow = (job) => {
+        setJob(job)
         setShowUserModal(true);
     }
 
-    
-    
+
+
     const [addJob, setAddJob] = useState(false);
-    
+
     const handleData = (data) => {
         setAddJob(!addJob)
-        
+
     };
-    
+
     const [showUserModal, setShowUserModal] = useState(null);
     const handleModalClose = () => {
         setShowUserModal(false);
@@ -157,10 +162,10 @@ const ActiveJobs = () => {
                                                 Registered Date
                                             </th>
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                                Aficionado Name
+                                                Job Title
                                             </th>
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                                Email
+                                                Address
                                             </th>
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                                 Actions
@@ -178,9 +183,9 @@ const ActiveJobs = () => {
                                             </th>
                                         </tr>
                                     </thead>
-                                    {filteredDrivers !== null ?
-                                        filteredDrivers.map((user, index) => (
-                                            <tbody key={user._id} className="bg-white divide-y divide-gray-300 dark:divide-gray-700 dark:bg-gray-900">
+                                    {filtered == null ?
+                                        currentJobs?.map((job, index) => (
+                                            <tbody key={job._id} className="bg-white divide-y divide-gray-300 dark:divide-gray-700 dark:bg-gray-900">
                                                 <tr>
                                                     <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                                                         <div className="inline-flex items-center gap-x-3">
@@ -188,17 +193,17 @@ const ActiveJobs = () => {
                                                         </div>
                                                     </td>
                                                     <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                        {moment(user.createdAt).format('MMMM Do YYYY, h:mm:ss a')}
+                                                        {moment(job.createdAt).format('MMMM Do YYYY, h:mm:ss a')}
                                                     </td>
 
                                                     <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                                         <div className="flex items-center gap-x-2">
-                                                            <img className="object-cover w-8 h-8 rounded-full" src={avatar} alt="user" />
-                                                            <h2 className="text-sm font-medium text-gray-800 dark:text-white ">{user.firstName}</h2>
+                                                            <img className="object-cover w-8 h-8 rounded-full" src={avatar} alt="job" />
+                                                            <h2 className="text-sm font-medium text-gray-800 dark:text-white ">{job.title}</h2>
                                                         </div>
                                                     </td>
                                                     <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                        {user.email}
+                                                        {job.address}
                                                     </td>
                                                     <td className="relative px-4 py-4 flex items-center justify-center">
 
@@ -208,18 +213,11 @@ const ActiveJobs = () => {
                                                             >
                                                                 <ul className="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="benq-ex2710q-dropdown-button">
                                                                     <li>
-                                                                        <button onClick={() => handleShow(user._id)} className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                                        <button onClick={() => handleShow(job)} className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                                                             Show
                                                                         </button>
                                                                     </li>
-                                                                    <li>
-                                                                        <button
-                                                                            onClick={() => handleRejectClick(user)}
-                                                                            className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                                                                        >
-                                                                            Freeze
-                                                                        </button>
-                                                                    </li>
+                                                                   
                                                                     <li>
                                                                         <a href="#"
                                                                             className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
@@ -243,8 +241,8 @@ const ActiveJobs = () => {
                                             </tbody>
                                         ))
                                         :
-                                        currentDrivers.map((user, index) => (
-                                            <tbody key={user._id} className="bg-white divide-y divide-gray-300 dark:divide-gray-700 dark:bg-gray-900">
+                                        filtered?.map((job, index) => (
+                                            <tbody key={job._id} className="bg-white divide-y divide-gray-300 dark:divide-gray-700 dark:bg-gray-900">
                                                 <tr>
                                                     <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                                                         <div className="inline-flex items-center gap-x-3">
@@ -252,17 +250,17 @@ const ActiveJobs = () => {
                                                         </div>
                                                     </td>
                                                     <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                        {moment(user.createdAt).format('MMMM Do YYYY, h:mm:ss a')}
+                                                        {moment(job.createdAt).format('MMMM Do YYYY, h:mm:ss a')}
                                                     </td>
 
                                                     <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                                         <div className="flex items-center gap-x-2">
-                                                            <img className="object-cover w-8 h-8 rounded-full" src={avatar} alt="user" />
-                                                            <h2 className="text-sm font-medium text-gray-800 dark:text-white ">{user.firstName}</h2>
+                                                            <img className="object-cover w-8 h-8 rounded-full" src={avatar} alt="job" />
+                                                            <h2 className="text-sm font-medium text-gray-800 dark:text-white ">{job.title}</h2>
                                                         </div>
                                                     </td>
                                                     <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                        {user.email}
+                                                        {job.address}
                                                     </td>
                                                     <td className="relative px-4 py-4 flex items-center justify-end">
 
@@ -272,16 +270,8 @@ const ActiveJobs = () => {
                                                             >
                                                                 <ul className="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="benq-ex2710q-dropdown-button">
                                                                     <li>
-                                                                        <button onClick={() => handleShow(user._id)} className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                                        <button onClick={() => handleShow(job)} className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                                                             Show
-                                                                        </button>
-                                                                    </li>
-                                                                    <li>
-                                                                        <button
-                                                                            onClick={() => handleRejectClick(user)}
-                                                                            className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                                                                        >
-                                                                            Freeze
                                                                         </button>
                                                                     </li>
                                                                     <li>
@@ -344,7 +334,7 @@ const ActiveJobs = () => {
             </div>
 
             {showUserModal && (
-                <Modal User={driver} handleModalClose={handleModalClose} />
+                <Modal job={job} acceptJobApplicant={acceptJobApplicant} handleModalClose={handleModalClose} />
             )}
             {showAlert && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
@@ -379,7 +369,7 @@ const ActiveJobs = () => {
             )}
 
             {addJob &&
-            <PostForm handleData={handleData} />}
+                <PostForm handleData={handleData} />}
         </div>
     )
 }

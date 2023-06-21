@@ -30,7 +30,10 @@ export const SET_ALERT = 'SET_ALERT';
 export const REMOVE_ALERT = 'REMOVE_ALERT';
 
 // alert
-export const ADD_TOCART = 'ADD_TOCART';
+export const ADD_TOCART = 'ADD_TOCART'; 
+export const GET_CUSTOMERORDERS = 'GET_CUSTOMERORDERS'; 
+export const CHECK_OUT = 'CHECK_OUT';
+export const USER_ORDER = 'USER_ORDER';
 export const GET_CARTITEMS = 'GET_CARTITEMS';
 export const UPDATE_CARTITEM = 'UPDATE_CARTiTEM';
 export const REMOVE_FROMCART = 'REMOVE_FROMCART';

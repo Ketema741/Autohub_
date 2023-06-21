@@ -9,10 +9,10 @@ import { Header } from '../../../components';
 import { AiOutlineClose } from 'react-icons/ai';
 import DownloadButton from '../Download'
 
-const OrderTable = () => {
-    const [orders, setOrders] = useState(ordersData);
+const OrderTable = ({ customerOrders }) => {
+    const [orders, setOrders] = useState(customerOrders);
     const [currentPage, setCurrentPage] = useState(1);
-    const PAGE_SIZE = 5;
+    const PAGE_SIZE = 10;
     const totalOrders = orders.length;
     const totalPages = Math.ceil(totalOrders / PAGE_SIZE);
     const startIndex = (currentPage - 1) * PAGE_SIZE;
@@ -67,7 +67,10 @@ const OrderTable = () => {
     };
 
     const [showItemModal, setShowItemModal] = useState(null);
-    const handleShow = (_id) => {
+    const [selectedOrder, setSelectedOrder] = useState([]);
+
+    const handleShow = (order) => {
+        setSelectedOrder(order)
         setShowItemModal(true);
     }
 
@@ -107,7 +110,7 @@ const OrderTable = () => {
                                     <thead className="bg-gray-50 dark:bg-gray-800">
                                         <tr>
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                                Image
+                                                Order Id
                                             </th>
 
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -126,7 +129,7 @@ const OrderTable = () => {
                                             </th>
 
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                                Order Id
+                                                Payment Id
                                             </th>
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                                 Location
@@ -139,56 +142,48 @@ const OrderTable = () => {
                                     {paginatedOrders.length > 0 &&
                                         paginatedOrders.map((order, index) => (
 
-                                            <tbody key={order.OrderID} className="bg-white divide-y divide-gray-300 dark:divide-gray-700 dark:bg-gray-900" >
+                                            <tbody key={order._id} className="bg-white divide-y divide-gray-300 dark:divide-gray-700 dark:bg-gray-900" >
                                                 <tr>
                                                     <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                                         <div className="flex-none">
-                                                            <img
-                                                                className="rounded-xl h-20 md:ml-3"
-                                                                src={order.ProductImage}
-                                                                alt="order-item"
-                                                            />
+
+                                                            {order.orderNumber}
                                                         </div>
                                                     </td>
 
 
                                                     <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                                                        <div className="inline-flex items-center gap-x-3">
-                                                            <span>{order.OrderItems}</span>
-                                                        </div>
+                                                        {order.items.length > 0 &&
+                                                            order.items.map((item) => (
+                                                                <div className="inline-flex items-center gap-x-3">
+                                                                    <span>{item.itemId.name}</span>
+                                                                </div>
+                                                            ))
+                                                        }
                                                     </td>
 
-
                                                     <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                        {order.CustomerName}
+                                                        {`${order.owner.firstName} ${order.owner.lastName}`}
                                                     </td>
                                                     <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                         <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 dark:bg-gray-800" style={{ color: '#977062', backgroundColor: '#EDE1DD' }}>
-                                                            <h2 className="text-sm font-normal">{order.TotalAmount}</h2>
+                                                            <h2 className="text-sm font-normal">{order.totalAmount}</h2>
                                                             ETB
                                                         </div>
                                                     </td>
 
-                                                    <td className="py-2 px-4 border-b">
-                                                        <select
-                                                            value={order.Status}
-                                                            onChange={(e) => handleStatusChange(order.OrderID, e.target.value)}
-                                                            className="bg-white border border-gray-300 rounded px-2 py-1"
-                                                        >
-                                                            <option value="Complete">Complete</option>
-                                                            <option value="Pending">Pending</option>
-                                                            <option value="Canceled">Canceled</option>
-                                                        </select>
+                                                    <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                        {order.isPaid ? "Paid" : "Not Paid"}
                                                     </td>
 
                                                     <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                                                         <div className="inline-flex items-center gap-x-3">
-                                                            <span>{order.OrderID}</span>
+                                                            <span>{order.paymentId}</span>
                                                         </div>
                                                     </td>
                                                     <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                                                         <div className="inline-flex items-center gap-x-3">
-                                                            <span>{order.Location}</span>
+                                                            <span>{order.owner.address}</span>
                                                         </div>
                                                     </td>
 
@@ -200,7 +195,7 @@ const OrderTable = () => {
                                                             >
                                                                 <ul className="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="benq-ex2710q-dropdown-button">
                                                                     <li>
-                                                                        <button onClick={handleShow} className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                                        <button onClick={() => handleShow(order)} className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                                                             Show
                                                                         </button>
                                                                     </li>
@@ -268,13 +263,13 @@ const OrderTable = () => {
                         <BsArrowRight className="w-5 h-5 rtl:-scale-x-100" />
                     </button>
                 </div>
-                
+
                 <DownloadButton filteredData={filteredOrdersData} fileName="user_order" />
 
                 {showItemModal &&
                     <div className=" bg-half-transparent fixed inset-0  flex justify-center items-center overflow-y-auto">
-            <div className="mt-24 float-right h-screen dark:text-gray-200 bg-white dark:bg-[#484B52] max-w-screen w-full sm:w-full md:w-full lg:w-full xl:w-1/2 2xl:w-1/3 overflow-y-auto rounded-lg" style={{ width: "70%", height: "90%" }}>
-                {/* Modal content */}
+                        <div className="mt-24 float-right h-screen dark:text-gray-200 bg-white dark:bg-[#484B52] max-w-screen w-full sm:w-full md:w-full lg:w-full xl:w-1/2 2xl:w-1/3 overflow-y-auto rounded-lg" style={{ width: "70%", height: "90%" }}>
+                            {/* Modal content */}
                             <div
                                 action="#"
                                 className="relative bg-white rounded-lg shadow dark:bg-gray-700"
@@ -296,14 +291,14 @@ const OrderTable = () => {
 
                                 {/* Modal body */}
                                 <div className="p-6 space-y-6">
-                                    {/* {User !== null ?
+                                    {selectedOrder.length > 0 ?
                                         <div className="grid grid-cols-6 gap-6">
                                             <div className="col-span-6 sm:col-span-3">
 
                                                 <p
                                                     className="text-gray-900 text-xl block w-full p-2.5 dark:text-white"
                                                 >
-                                                    {`${User.firstName}  ${User.lastName}`}
+                                                    {`${selectedOrder.owner.firstName}  ${selectedOrder.owner.lastName}`}
                                                 </p>
 
                                             </div>
@@ -311,14 +306,23 @@ const OrderTable = () => {
                                                 <p
                                                     className="text-gray-900 text-xl block w-full p-2.5 dark:text-white"
                                                 >
-                                                    {User.email}
+                                                    {selectedOrder.owner.firstName}
                                                 </p>
+
+                                            </div>
+                                            <div className="col-span-6 sm:col-span-3">
+                                                {selectedOrder.items.length > 0 &&
+                                                    selectedOrder.items.map((item) => (
+                                                        <div className="inline-flex items-center gap-x-3">
+                                                            <span>{item.itemId.name}</span>
+                                                        </div>
+                                                    ))
+                                                }
 
                                             </div>
                                         </div>
                                         : <div> loading ...</div>
-                                    } */}
-                                    loading...
+                                    }
                                 </div>
                             </div>
                         </div>

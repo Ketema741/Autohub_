@@ -269,7 +269,7 @@ const ActiveSuppliers = () => {
                     </button>
                 </div>
                 
-                <DownloadButton filteredData={data} fileName="supplier" />
+                <DownloadButton filteredData={suppliers} fileName="supplier" />
 
             </div>
 
