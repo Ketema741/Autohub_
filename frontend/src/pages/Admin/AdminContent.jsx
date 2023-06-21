@@ -9,12 +9,12 @@ import {
   LineChart,
   SparkLine
 } from '../../components';
+
 import {
   recentTransactions,
   dropdownData,
   SparklineAreaData,
   ecomPieChartData,
-  pieChartData,
 } from '../../data/dummy';
 
 import { useStateContext } from '../../context/ContextProvider';
@@ -34,34 +34,61 @@ const DropDown = ({ currentMode }) => (
 );
 
 
-const AdminContent = () => {
-  const {
-    currentMode,
-    currentColor,
-  } = useStateContext();
+const AdminContent = ({ customersByLocation }) => {
+  const { currentMode, currentColor } = useStateContext();
+  let pieChartData = "";
+
+  if (customersByLocation && customersByLocation.length >= 0) {
+    // Count the number of occurrences for each location
+    const locationCounts = customersByLocation.map((location) => ({
+      location: location._id,
+      count: location.count,
+    }));
+
+    // Calculate the total count
+    const totalCount = locationCounts.reduce((acc, curr) => acc + curr.count, 0);
+
+    // Calculate the percentage for each location
+    const locationPercentages = locationCounts.map((location) => ({
+      x: location.location,
+      y: (location.count / totalCount) * 100,
+      text: `${((location.count / totalCount) * 100).toFixed(2)}%`,
+    }));
+
+    pieChartData = locationPercentages.map((location) => ({
+      x: location.x,
+      y: location.y,
+      text: location.text,
+    }));
+    console.log(pieChartData)
+  }
+
 
   return (
     <div className="mt-24">
       <div className="flex gap-10 flex-wrap justify-center">
-        <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg   p-8 m-3 flex justify-center items-center gap-10 rounded-2xl md:w-804">
-          <div className='w-auto'>
-            <p className="text-2xl font-semibold ">AutoHub System Users</p>
-            <p className="text-gray-400">
-              A graphical representation of users.
+        {pieChartData &&
+          <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg   p-8 m-3 ml-10 flex justify-center items-center gap-1 rounded-2xl md:w-804">
+            <div className='w-auto'>
+              <p className="text-2xl font-bold mb-4 ">
+                AutoHub Users
+              </p>
+              <p className="text-gray-400 leading-8">
+                Mapping the Vibrant Customer Landscape: A Comprehensive Visual Representation of the Diverse Customer Groups and their Interactions within Addis Ababa Subcity.
+              </p>
+            </div>
 
-            </p>
+            <div className="">
+              <Pie
+                id="pie-chart"
+                data={pieChartData}
+                legendVisiblity={false}
+                height="420px"
+                name="System Users"
+              />
+            </div>
           </div>
-
-          <div className="">
-            <Pie
-              id="pie-chart"
-              data={pieChartData}
-              legendVisiblity={false}
-              height="420px"
-              name="System Users"
-            />
-          </div>
-        </div>
+        }
 
         <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg m-3 p-4 rounded-2xl md:w-780  ">
           <div className="flex justify-between">
@@ -109,11 +136,11 @@ const AdminContent = () => {
                   color={currentColor}
                 />
               </div>
-              <div className="mt-10">
+              {/* <div className="mt-10">
                 <button className='rounded-md p-3 bg-gradient-to-r from-sky-600 to-cyan-400 text-white'>
                   Download Report
                 </button>
-              </div>
+              </div> */}
             </div>
             <div>
               <Stacked currentMode={currentMode} width="320px" height="360px" />
@@ -149,7 +176,7 @@ const AdminContent = () => {
             </div>
           </div>
 
-          
+
         </div>
       </div>
 

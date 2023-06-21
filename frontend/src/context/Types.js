@@ -39,6 +39,10 @@ export const GET_CARTITEMS = 'GET_CARTITEMS';
 export const UPDATE_CARTITEM = 'UPDATE_CARTiTEM';
 export const REMOVE_FROMCART = 'REMOVE_FROMCART';
 
+// analytics
+export const GET_CUSTOMERBYLOCATION = 'GET_CUSTOMERBYLOCATION'; 
+
+
 // authentication
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_FAIL = 'REGISTER_FAIL';
