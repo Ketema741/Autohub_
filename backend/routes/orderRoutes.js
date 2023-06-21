@@ -21,7 +21,6 @@ router.put(
   "/update/:orderId",
   verifyToken,
   grantAccess("updateOwn", "order"),
-  
   updateOrder
 );
 
