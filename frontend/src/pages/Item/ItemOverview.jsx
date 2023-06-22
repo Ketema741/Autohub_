@@ -28,11 +28,11 @@ const ItemOverview = ({ item, car }) => {
     setCurrentImage(currentImage === images.length - 1 ? 0 : currentImage + 1);
   };
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (item) => {
     if (isUserAuthenticated) {
       if (user.role === "customer") {
         if (carts) {
-          const itemExistsInCart = carts.some((cartItem) => cartItem.productId._id === item._id);
+          const itemExistsInCart = carts.items.some((cartItem) => cartItem.itemId._id === item._id);
           if (itemExistsInCart) {
             toast.info("Item already exists in the cart.");
           } else {
@@ -133,7 +133,7 @@ const ItemOverview = ({ item, car }) => {
                   style={{ backgroundColor: currentColor }}
                   type="button"
                   className="h-14 px-6 py-2 font-semibold rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white"
-                  onClick={handleAddToCart}
+                  onClick={()=>handleAddToCart(item)}
                 >
                   Add to Cart
                 </button>

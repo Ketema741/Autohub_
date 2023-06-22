@@ -1,6 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react';
+
 import { MdOutlineCancel } from 'react-icons/md';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
+import { RiDeleteBinLine } from 'react-icons/ri';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -9,14 +11,18 @@ import { useStateContext } from '../context/ContextProvider';
 import Button from './Button';
 import UserContext from '../context/user/userContext';
 
-const Cart = () => {
+const Cart = ({ user }) => {
   const userContext = useContext(UserContext);
-  const { order, carts, placeOrder } = userContext;
+  const { order, carts, updateCart, deleteCart, addToCart, placeOrder } = userContext;
 
   const { currentColor, handleClick } = useStateContext();
   const [cartItems, setCartItems] = useState(carts.items);
   const [subTotal, setSubTotal] = useState(0);
   const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    setCartItems(carts.items)
+  }, [carts])
 
   useEffect(() => {
     // Calculate sub-total
@@ -42,26 +48,35 @@ const Cart = () => {
     setTotal(newTotal);
   }, [cartItems]);
 
-  const handleIncrement = (itemId, itemQuantity) => {
-    setCartItems((prevItems) => {
-      return prevItems.map((item) => {
-        if (item.itemId._id === itemId && item.quantity < itemQuantity) {
-          return { ...item, quantity: item.quantity + 1 };
-        }
-        return item;
-      });
-    });
+
+  // increment cart items
+  const handleIncrement = (order) => {
+    const itemId = order.itemId._id
+    const itemQuantity = order.itemId.quantity
+
+    if (order.quantity < itemQuantity) {
+      updateCart(order.itemId._id, { quantity: (order.quantity + 1) });
+
+    } else {
+      toast.info("Item quantity is out of range")
+      return
+    }
+
+
   };
 
-  const handleDecrement = (itemId) => {
-    setCartItems((prevItems) => {
-      return prevItems.map((item) => {
-        if (item.itemId._id === itemId && item.quantity > 1) {
-          return { ...item, quantity: item.quantity - 1 };
-        }
-        return item;
-      });
-    });
+  // decrement cart item
+  const handleDecrement = (order) => {
+    if (order.quantity == 1) {
+      toast.info("Item quantity Can not be less than 1")
+    }
+    updateCart(order.itemId._id, { quantity: (order.quantity - 1) });
+
+  };
+
+  // remove cart item
+  const handleDelete = (item) => {
+    deleteCart(item._id);
   };
 
   const handleCheckout = () => {
@@ -115,22 +130,20 @@ const Cart = () => {
                       {item.category}
                     </p>
                     <div className="flex gap-4 mt-2 items-center">
+                      <div className="flex items-center border-1 border-r-0 border-color rounded">
+                        <button onClick={() => handleDelete(item.itemId)}>
+                          <RiDeleteBinLine className='text-red' />
+                        </button>
+                      </div>
                       <p className="font-semibold text-lg">{item.price}</p>
                       <div className="flex items-center border-1 border-r-0 border-color rounded">
-                        <button onClick={() => handleDecrement(item.itemId._id)}>
+                        <button onClick={() => handleDecrement(item)}>
                           <AiOutlineMinus />
                         </button>
                         <p className="p-2 border-r-1 border-color dark:border-gray-600 text-green-600">
                           {item.quantity}
                         </p>
-                        <button
-                          onClick={() =>
-                            handleIncrement(
-                              item.itemId._id,
-                              item.itemId.quantity
-                            )
-                          }
-                        >
+                        <button onClick={() => handleIncrement(item)} >
                           <AiOutlinePlus />
                         </button>
                       </div>
@@ -145,7 +158,7 @@ const Cart = () => {
 
           {order &&
             <p className="font-semibold text-lg">
-            👏🏾👏🏾 Congratulations! You may proceed with the checkout process.👏🏾👏🏾
+              👏🏾👏🏾 Congratulations! You may proceed with the checkout process.👏🏾👏🏾
             </p>
           }
         </div>

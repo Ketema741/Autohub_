@@ -11,6 +11,7 @@ import AuthContext from "../../context/auth/authContext";
 import { useStateContext } from '../../context/ContextProvider';
 import ChatContext from "../../context/chat/chatContext";
 import UserContext from "../../context/user/userContext";
+const Parse = require('html-react-parser')
 
 
 const SVDetailCard = () => {
@@ -68,23 +69,8 @@ const SVDetailCard = () => {
         <div className="lg:flex" >
             <div className="relative mt-8 md:mt-16 space-y-8 sm:w-full sm:px-4 md:w-2/3 lg:ml-0 sm:mx-auto text-center lg:text-left lg:mr-auto lg:w-7/12">
                 <div className=" pt-6 pb-8 mb-4 py-8">
-                    <h2 className="text-3xl font-bold text-blue-800 mb-4">
-                        Service providers name
-                    </h2>
-                    <p className="text-grey-700 mb-4 font-bold">
-                        Service they give
-                    </p>
+                    {Parse(serviceProvider.bio)}
 
-                    <h2 className="text-2xl font-bold text-blue-800 mb-4">
-                        Extensive Range of Services                    </h2>
-                    <p className="text-gray-700 mb-4 ml-10 sm:ml-2 sm:mr-2 md:mr-32 text-justify" style={{ zIndex: 1000 }}>
-                        When choosing a vehicle service provider, it's important
-                        to consider the range of services they offer.
-                        At [Vehicle Service Provider Name], we pride ourselves on providing a comprehensive suite of automotive solutions. From routine maintenance tasks such as oil changes, tire rotations, and fluid checks to major repairs, diagnostics, and
-                        electrical work, our skilled technicians are equipped to handle it all. We understand the diverse needs of vehicle owners and strive to be your one-stop shop for all your automotive service requirements.
-                    </p>
-
-                    
                 </div>
 
             </div>

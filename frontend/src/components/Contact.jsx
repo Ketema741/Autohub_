@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { BsPersonCircle, BsCheck2Circle } from 'react-icons/bs';
 import axios from '../context/axiosConfig'
 
-const Contacts = ({ conversation, currentUser,currentChat }) => {
+const Contacts = ({ conversation, currentUser, currentChat }) => {
 
   const [friend, setFriend] = useState(null);
-  
+
   const [currentChatId, setCurrentChatId] = useState(null);
   const [selectedChatId, setSelectedChatId] = useState(null);
 
@@ -13,7 +13,7 @@ const Contacts = ({ conversation, currentUser,currentChat }) => {
     const _id = currentChat?.members?.find((m) => m !== currentUser._id);
     setSelectedChatId(_id)
   }, [currentChat])
-  
+
 
   useEffect(() => {
     const friendId = conversation.members.find((m) => m !== currentUser._id);
@@ -48,7 +48,11 @@ const Contacts = ({ conversation, currentUser,currentChat }) => {
           >
             <div className="flex flex-row items-center space-x-2">
               <BsCheck2Circle className="h-4 w-4" />
-              <div className="flex-grow text-md">{friend.firstName}</div>
+              {friend.vendorName ?
+                <div className="flex-grow text-md">{friend.vendorName}</div>
+                :
+                <div className="flex-grow text-md">{friend.firstName}</div>
+              }
               <div className="text-sm text-gray-600">4hr</div>
             </div>
             <div className="flex flex-row space-x-1 items-center">
