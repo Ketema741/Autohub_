@@ -1,167 +1,70 @@
-// import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom'
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import { toast } from 'react-toastify';
 
-// import { FaTrashAlt, FaEdit } from 'react-icons/fa';
 import { AiOutlinePlus } from 'react-icons/ai';
-
-// import { DeleteWarning } from '../../components';
-import { useStateContext } from '../../context/ContextProvider';
-
-// const ItemTable = ({ supplierItems }) => {
-//     const [showWarning, setShowWarning] = useState(false);
-// const {
-//     currentColor
-// } = useStateContext();
-
-//     // const handleDelete = () => {
-//     //   onDelete();
-//     //   setShowWarning(false);
-//     // };
-
-//     return (
-//         <div>
-//             <div className="mt-24  overflow-hidden rounded-lg border border-gray-200 shadow-md m-5">
-//                 <p className="p-5 font-semibold text-xl text-center">Supplier Items</p>
-//                 <div className="mx-2 mb-2 rounded-md table-container overflow-x-auto">
-//                     <table className="w-full border-collapse bg-white text-left text-sm text-gray-500">
-//                         <thead className="h-20 bg-gray-40">
-//                             <tr>
-//                                 <th scope="col" className="px-6 py-4 font-medium text-gray-900">Item Image</th>
-//                                 <th scope="col" className="px-6 py-4 font-medium text-gray-900">Item Name</th>
-//                                 <th scope="col" className="px-6 py-4 font-medium text-gray-900">Status</th>
-//                                 <th scope="col" className="px-6 py-4 font-medium text-gray-900">Item Price</th>
-//                                 <th scope="col" className="px-6 py-4 font-medium text-gray-900">Rating</th>
-//                                 <th scope="col" className="px-6 py-4 font-medium text-gray-900">
-//                                     <TooltipComponent content="Add Item" position="TopCenter">
-//                                         <Link to="/supplier/add-item" >
-//                                             <span className="text-white inline-flex items-center  rounded-full bg-violet-50 p-2 text-xs font-semibold" style={{ backgroundColor: currentColor }}>
-//                                                 <AiOutlinePlus />
-//                                             </span>
-//                                         </Link>
-//                                     </TooltipComponent>
-//                                 </th>
-//                             </tr>
-//                         </thead>
-//                         {supplierItems.map((item) => (
-//                             <tbody className="divide-y divide-gray-100 border-t border-gray-100">
-//                                 <tr className="hover:bg-gray-50">
-//                                     <th className="flex gap-3 px-6 py-4 font-normal text-gray-900">
-//                                         <div className="relative h-20 w-20">
-//                                             <img
-//                                                 className="h-full w-full rounded-md object-cover object-center"
-//                                                 src={item.ProductImage}
-//                                                 alt={item.ItemName}
-//                                             />
-//                                         </div>
-//                                     </th>
-//                                     <td className="px-6 py-4">{item.ItemName}</td>
-//                                     <td className="px-6 py-4">
-//                                         <span className="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-semibold text-green-600">
-//                                             <span className="h-1.5 w-1.5 rounded-full bg-green-600"></span>
-//                                             {item.Status}
-//                                         </span>
-//                                     </td>
-//                                     <td className="px-6 py-4">
-//                                         <div className="flex gap-2">
-//                                             <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-1 text-xs font-semibold text-blue-600">
-//                                                 {item.Price} ETB
-//                                             </span>
-//                                             <span className="inline-flex items-center gap-1 rounded-full bg-indigo-50 px-2 py-1 text-xs font-semibold text-indigo-600">
-//                                                 20% off
-//                                             </span>
-//                                         </div>
-//                                     </td>
-//                                     <td className="px-6 py-4">
-//                                         <div className="flex">
-//                                             <span className="inline-flex items-center gap-1 rounded-full bg-violet-50 px-2 py-1 text-xs font-semibold text-violet-600">
-//                                                 5
-//                                             </span>
-//                                         </div>
-//                                     </td>
-//                                     <td className="px-6 py-4">
-//                                         <div className="flex justify-end gap-4">
-//                                             <TooltipComponent content="Delete Item" position="LeftCenter">
-//                                                 <button type="button" style={{ color: currentColor }} onClick={() => setShowWarning(true)}>
-//                                                     <FaTrashAlt />
-//                                                 </button>
-//                                             </TooltipComponent>
-//                                             <TooltipComponent content="Edit Item" position="TopCenter">
-//                                                 <Link to="/supplier/edit-item-detail" style={{ color: currentColor }}>
-//                                                     <FaEdit />
-//                                                 </Link>
-//                                             </TooltipComponent>
-//                                         </div>
-//                                     </td>
-//                                 </tr>
-//                             </tbody>))}
-//                     </table>
-//                     {showWarning && <DeleteWarning setShowWarning={setShowWarning} />}
-//                 </div>
-//             </div>
-
-
-//         </div>
-//     )
-// }
-
-// export default ItemTable
-
-
-import React, { useState } from 'react';
-
 import { FiSearch } from 'react-icons/fi';
 import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';
 import { FiMoreVertical } from 'react-icons/fi';
+import { AiOutlineClose } from 'react-icons/ai';
 
+import { useStateContext } from '../../context/ContextProvider';
 import { ordersData } from './dummy';
 import { Header } from '../../components';
-import { AiOutlineClose } from 'react-icons/ai';
-import { toast } from 'react-toastify';
-
+import ItemEdit from './Edit/ItemEdit';
+import ItemContext from '../../context/item/itemContext';
+import AuthContext from '../../context/auth/authContext';
+const Parse = require('html-react-parser')
 
 const ItemTable = () => {
+    const itemContext = useContext(ItemContext)
+    const authContext = useContext(AuthContext)
+    const { user } = authContext;
+
+    const {
+        categories,
+        updateItem,
+        deleteItem,
+        supplierItems,
+        getPrivateItems,
+    } = itemContext;
+
     const {
         currentColor
     } = useStateContext();
 
-    const [orders, setOrders] = useState(ordersData);
+
+    const [orders, setOrders] = useState(supplierItems);
+
+    useEffect(() => {
+        setOrders(supplierItems);
+    }, [supplierItems])
+
+    useEffect(() => {
+        getPrivateItems(user?._id);
+    }, [])
+
     const [currentPage, setCurrentPage] = useState(1);
+
     const PAGE_SIZE = 5;
-    const totalOrders = orders.length;
+    const totalOrders = orders ? orders.length : 0;
     const totalPages = Math.ceil(totalOrders / PAGE_SIZE);
     const startIndex = (currentPage - 1) * PAGE_SIZE;
     const endIndex = Math.min(startIndex + PAGE_SIZE, totalOrders);
-    const paginatedOrders = orders.slice(startIndex, endIndex);
-
-    const handleStatusChange = (orderId, newStatus) => {
-        const updatedOrders = orders.map((order) =>
-            order.OrderID === orderId ? { ...order, Status: newStatus } : order
-        );
-        setOrders(updatedOrders);
-        console.log(newStatus);
-    };
+    const paginatedOrders = orders ? orders.slice(startIndex, endIndex) : [];
 
     const goToPage = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
+
     const filteredOrdersData = ordersData.map((order) => {
         const { StatusBg, ProductImage, ...filteredOrder } = order;
         return filteredOrder;
     });
 
 
-
-    const [currentItem, setItem] = useState(null)
-    const [showAlert, setShowAlert] = useState(false)
-
-    const handleRejectClick = (item) => {
-        setShowAlert(true);
-        setItem(item);
-        console.log(item)
-    };
-
-    const handleDelete = () => {
+    const handleDelete = (id) => {
         toast.dark(
             <div className="flex flex-col items-center">
                 <div className="mr-2">Are you sure you want to delete this item?</div>
@@ -169,8 +72,7 @@ const ItemTable = () => {
                     <button
                         className=" bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
                         onClick={() => {
-                            // Handle delete logic here
-                            console.log('Delete action triggered');
+                            deleteItem(id)
                             toast.dismiss();
                         }}
                     >
@@ -195,9 +97,13 @@ const ItemTable = () => {
         );
     };
 
+    const [editModal, setEditModal] = useState(false);
 
-    const handleCloseAlert = () => {
-        setShowAlert(false);
+    const [currentItem, setCurrentItem] = useState(null)
+
+    const showEditModal = (item) => {
+        setCurrentItem(item)
+        setEditModal(!editModal);
     };
 
     const [showActions, setShowActions] = useState(Array(filteredOrdersData?.length).fill(false));
@@ -217,10 +123,20 @@ const ItemTable = () => {
     };
 
     const [showItemModal, setShowItemModal] = useState(null);
-    const handleShow = (_id) => {
+    const handleShow = (item) => {
+        setCurrentItem(item)
         setShowItemModal(true);
     }
 
+    const handleData = (item, id) => {
+        if (item) {
+
+
+            updateItem(item, id, user._id)
+        } else {
+            toast.error("Somthing Want Wrong Try Again Later!")
+        }
+    }
 
     const handleModalClose = () => {
         setShowItemModal(false);
@@ -259,25 +175,17 @@ const ItemTable = () => {
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                                 Image
                                             </th>
-
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                                 Item
                                             </th>
-
-
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                                 Price
                                             </th>
-
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                                 Status
                                             </th>
-
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                                Item Id
-                                            </th>
-                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                                Location
+                                                Quantity
                                             </th>
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                                 <TooltipComponent content="Add Item" position="TopCenter">
@@ -291,15 +199,15 @@ const ItemTable = () => {
                                         </tr>
                                     </thead>
                                     {paginatedOrders.length > 0 &&
-                                        paginatedOrders.map((order, index) => (
+                                        paginatedOrders.map((item, index) => (
 
-                                            <tbody key={order.OrderID} className="bg-white divide-y divide-gray-300 dark:divide-gray-700 dark:bg-gray-900" >
+                                            <tbody key={item._id} className="bg-white divide-y divide-gray-300 dark:divide-gray-700 dark:bg-gray-900" >
                                                 <tr>
                                                     <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                                         <div className="flex-none">
                                                             <img
                                                                 className="rounded-xl h-20 md:ml-3"
-                                                                src={order.ProductImage}
+                                                                src={item.itemImages.length > 0 ? item.itemImages[0].url : ""}
                                                                 alt="order-item"
                                                             />
                                                         </div>
@@ -308,7 +216,7 @@ const ItemTable = () => {
 
                                                     <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                                                         <div className="inline-flex items-center gap-x-3">
-                                                            <span>{order.OrderItems}</span>
+                                                            <span>{item.name}</span>
                                                         </div>
                                                     </td>
 
@@ -316,25 +224,20 @@ const ItemTable = () => {
 
                                                     <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                         <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 dark:bg-gray-800" style={{ color: '#977062', backgroundColor: '#EDE1DD' }}>
-                                                            <h2 className="text-sm font-normal">{order.TotalAmount}</h2>
+                                                            <h2 className="text-sm font-normal">{item.price}</h2>
                                                             ETB
                                                         </div>
                                                     </td>
 
                                                     <td className="py-2 px-4 border-b">
                                                         <div className="inline-flex items-center gap-x-3">
-                                                            <span>Available</span>
+                                                            <span>{item.isAvailable ? "Available" : "Not Available"} </span>
                                                         </div>
                                                     </td>
 
                                                     <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                                                         <div className="inline-flex items-center gap-x-3">
-                                                            <span>{order.OrderID}</span>
-                                                        </div>
-                                                    </td>
-                                                    <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                                                        <div className="inline-flex items-center gap-x-3">
-                                                            <span>{order.Location}</span>
+                                                            <span>{item.quantity}</span>
                                                         </div>
                                                     </td>
 
@@ -346,13 +249,13 @@ const ItemTable = () => {
                                                             >
                                                                 <ul className="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="benq-ex2710q-dropdown-button">
                                                                     <li>
-                                                                        <button onClick={handleShow} className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                                        <button onClick={() => handleShow(item)} className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                                                             Show
                                                                         </button>
                                                                     </li>
                                                                     <li>
                                                                         <button
-                                                                            onClick={() => handleRejectClick(order)}
+                                                                            onClick={() => showEditModal(item)}
                                                                             className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                                                                         >
                                                                             Edit
@@ -360,7 +263,7 @@ const ItemTable = () => {
                                                                     </li>
                                                                     <li>
                                                                         <button
-                                                                            onClick={handleDelete}
+                                                                            onClick={() => handleDelete(item._id)}
                                                                             className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                                                                         >
                                                                             Delete
@@ -415,6 +318,17 @@ const ItemTable = () => {
                     </button>
                 </div>
 
+                {editModal &&
+                    <ItemEdit
+                        handleData={handleData}
+                        setEditModal={setEditModal}
+                        item={currentItem}
+                        user={user}
+                        categories={categories}
+                        updateItem={updateItem}
+                    />
+                }
+
 
                 {showItemModal &&
                     <div className=" bg-half-transparent fixed inset-0  flex justify-center items-center overflow-y-auto">
@@ -441,29 +355,82 @@ const ItemTable = () => {
 
                                 {/* Modal body */}
                                 <div className="p-6 space-y-6">
-                                    {/* {User !== null ?
-                                        <div className="grid grid-cols-6 gap-6">
+                                    {currentItem !== null ?
+                                        <div className="grid grid-cols-6 gap-x-6 gap-y-1">
                                             <div className="col-span-6 sm:col-span-3">
 
                                                 <p
                                                     className="text-gray-900 text-xl block w-full p-2.5 dark:text-white"
                                                 >
-                                                    {`${User.firstName}  ${User.lastName}`}
+                                                    Item Name
                                                 </p>
 
                                             </div>
                                             <div className="col-span-6 sm:col-span-3">
+
                                                 <p
                                                     className="text-gray-900 text-xl block w-full p-2.5 dark:text-white"
                                                 >
-                                                    {User.email}
+                                                    {currentItem.name}
+                                                </p>
+
+                                            </div>
+                                            <div className="col-span-6 sm:col-span-3">
+
+                                                <p
+                                                    className="text-gray-900 text-xl block w-full p-2.5 dark:text-white"
+                                                >
+                                                    Item Quantity
+                                                </p>
+
+                                            </div>
+                                            <div className="col-span-6 sm:col-span-3">
+
+                                                <p
+                                                    className="text-gray-900 text-xl block w-full p-2.5 dark:text-white"
+                                                >
+                                                    {currentItem.quantity}
+                                                </p>
+
+                                            </div>
+                                            <div className="col-span-6 sm:col-span-3">
+
+                                                <p
+                                                    className="text-gray-900 text-xl block w-full p-2.5 dark:text-white"
+                                                >
+                                                    Item Price
+                                                </p>
+
+                                            </div>
+                                            <div className="col-span-6 sm:col-span-3">
+
+                                                <p
+                                                    className="text-gray-900 text-xl block w-full p-2.5 dark:text-white"
+                                                >
+                                                    {currentItem.price}
+                                                </p>
+
+                                            </div>
+                                            <div className="col-span-6 sm:col-span-6">
+
+                                                <p
+                                                    className="text-gray-900 text-xl block w-full p-2.5 dark:text-white"
+                                                >
+                                                    Description
+                                                </p>
+
+                                            </div>
+                                            <div className="col-span-6 sm:col-span-6">
+                                                <p
+                                                    className="text-gray-900 text-xl block w-full p-2.5 dark:text-white"
+                                                >
+                                                    {Parse(currentItem.description)}
                                                 </p>
 
                                             </div>
                                         </div>
                                         : <div> loading ...</div>
-                                    } */}
-                                    loading...
+                                    }
                                 </div>
                             </div>
                         </div>

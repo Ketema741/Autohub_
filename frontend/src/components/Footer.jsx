@@ -1,6 +1,6 @@
 import React from 'react';
 import Logo from '../data/logo.svg';
-import { FaGithub, FaTwitter } from 'react-icons/fa';
+import { FaGithub, FaLinkedin  } from 'react-icons/fa';
 
 const Footer = () => (
   <div className="bg-white mt-24 border-t border-gray-100 ">
@@ -19,11 +19,11 @@ const Footer = () => (
                 <option value="fr" disabled>Amharic</option>
               </select>
               <div className="flex gap-6">
-                <a href="#" target="blank" aria-label="github" className="hover:text-primary">
+                <a href="https://github.com/Ketema741" target="blank" aria-label="github" className="hover:text-primary">
                   <FaGithub />
                 </a>
-                <a href="#" target="blank" aria-label="twitter" className="hover:text-primary">
-                  <FaTwitter />
+                <a href="https://www.linkedin.com/in/ketema-girma-608729228/" target="blank" aria-label="twitter" className="hover:text-primary">
+                  <FaLinkedin  />
                 </a>
               </div>
             </div>
@@ -79,8 +79,8 @@ const Footer = () => (
                     >+2519 1232 3811</a>
                   </li>
                   <li>
-                    <a href="mailto:meschacirung@gmail.com" className="transition hover:text-primary"
-                    >Autohub@gmail.com</a>
+                    <a href="mailto:autohubcarcare6@gmail.com" className="transition hover:text-primary"
+                    >autohubcarcare6@gmail.com</a>
                   </li>
                  
                 </ul>

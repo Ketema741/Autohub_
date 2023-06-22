@@ -6,6 +6,8 @@ import { HtmlEditor, Inject, Link, QuickToolbar, RichTextEditorComponent, Table,
 import { customToolbarSettings } from './Toolbar';
 import UserContext from '../../../context/user/userContext';
 import AuthContext from '../../../context/auth/authContext';
+const Parse = require('html-react-parser');
+
 
 const Edit = ({ handleModalClose, user }) => {
     const authContext = useContext(AuthContext);
@@ -136,9 +138,9 @@ const Edit = ({ handleModalClose, user }) => {
                                         />
                                     </div>
                                 </div>
-                                
+
                             </div>
-                            
+
                             <div className="mb-5">
                                 <label
                                     htmlFor="description"
@@ -147,6 +149,7 @@ const Edit = ({ handleModalClose, user }) => {
                                     Detail Description
                                 </label>
                                 <RichTextEditorComponent change={args => setContent(args.value)} toolbarSettings={customToolbarSettings}>
+                                    {Parse(formData.description)}
                                     <Inject services={[HtmlEditor, Toolbar, Link, QuickToolbar, Table]} />
                                 </RichTextEditorComponent>
                             </div>

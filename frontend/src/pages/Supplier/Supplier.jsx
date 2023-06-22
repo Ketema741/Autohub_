@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -10,12 +10,26 @@ import {
 } from '../../components';
 
 import { useStateContext } from '../../context/ContextProvider';
-import SupplierData from './SupplierData';
 import ItemTable from './ItemTable'
-import { supplierItems } from '../../data/dummy';
+import ItemContext from '../../context/item/itemContext';
+import AuthContext from '../../context/auth/authContext';
 
 
 const Supplier = () => {
+  const itemContext = useContext(ItemContext)
+  const authContext = useContext(AuthContext)
+
+  const {
+    categories,
+    getCategories,
+    updateItem,
+    supplierItems,
+    getPrivateItems
+  } = itemContext;
+
+  const { user } = authContext;
+
+
   const {
     setCurrentColor,
     setCurrentMode,
@@ -23,6 +37,14 @@ const Supplier = () => {
     activeMenu,
     currentColor,
   } = useStateContext();
+
+  useEffect(() => {
+    getCategories();
+  }, []);
+
+  useEffect(() => {
+    getPrivateItems(user?._id);
+  }, [supplierItems])
 
   useEffect(() => {
     const currentThemeColor = localStorage.getItem('colorMode');
@@ -58,9 +80,10 @@ const Supplier = () => {
           </div>
           <div>
 
-            <ItemTable supplierItems={supplierItems} />
+            {supplierItems &&
+              <ItemTable  />
+            }
 
-            <SupplierData />
           </div>
           <Footer />
         </div>

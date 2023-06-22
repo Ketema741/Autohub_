@@ -7,6 +7,7 @@ import {
   SET_CURRENT,
   CLEAR_CURRENT,
   UPDATE_ITEM,
+  UPDATESUPPLIER_ITEM,
   FILTER_ITEMS,
   CLEAR_ITEMS,
   CLEAR_FILTER,
@@ -15,6 +16,7 @@ import {
   GET_CATEGORIES,
   GET_CARS,
   GET_CAR,
+  GET_PRIVATEITEMS,
 } from '../Types';
 
 const itemReducer = (state, action) => {
@@ -39,6 +41,11 @@ const itemReducer = (state, action) => {
       return {
         ...state,
         publicItems: action.payload.data,
+      };
+    case GET_PRIVATEITEMS:
+      return {
+        ...state,
+        supplierItems: action.payload.data,
       };
     case GET_ITEM:
       return {
@@ -65,6 +72,13 @@ const itemReducer = (state, action) => {
       return {
         ...state,
         items: state.items.map((item) =>
+          item._id === action.payload._id ? action.payload : item,
+        ),
+      };
+    case UPDATESUPPLIER_ITEM:
+      return {
+        ...state,
+        privateItems: state.items.map((item) =>
           item._id === action.payload._id ? action.payload : item,
         ),
       };

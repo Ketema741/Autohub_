@@ -6,7 +6,7 @@ import { HtmlEditor, Inject, Link, QuickToolbar, RichTextEditorComponent, Table,
 import { customToolbarSettings } from './Toolbar';
 
 import AuthContext from '../../../context/auth/authContext';
-
+const Parse = require('html-react-parser');
 const Edit = ({ handleModalClose, user }) => {
     const authContext = useContext(AuthContext);
     const { updateUser } = authContext;
@@ -171,6 +171,7 @@ const Edit = ({ handleModalClose, user }) => {
                                     Bio
                                 </label>
                                 <RichTextEditorComponent change={args => setContent(args.value)} toolbarSettings={customToolbarSettings}>
+                                <div>{Parse(formData.bio)}</div>
                                     <Inject services={[HtmlEditor, Toolbar, Link, QuickToolbar, Table]} />
                                 </RichTextEditorComponent>
                             </div>

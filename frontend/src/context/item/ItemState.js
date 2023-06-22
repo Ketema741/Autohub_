@@ -20,14 +20,17 @@ import {
   GET_CATEGORIES,
   GET_CARS,
   GET_CAR,
+  GET_PRIVATEITEMS,
+  UPDATESUPPLIER_ITEM,
 } from '../Types';
 
 const Itemstate = (props) => {
   const initialState = {
     items: [],
     cars: [],
-    car:null,
+    car: null,
     publicItems: null,
+    supplierItems: [],
     item: null,
     error: null,
     current: null,
@@ -86,14 +89,28 @@ const Itemstate = (props) => {
   };
 
 
-
-
   // Get public items
   const getPublicItems = async () => {
     try {
       const res = await axios.get('/items');
       dispatch({
         type: GET_PUBLICITEMS,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: ITEM_ERROR,
+        payload: err.response.msg,
+      });
+    }
+  };
+
+  // Get supplier items
+  const getPrivateItems = async (id) => {
+    try {
+      const res = await axios.get(`/items/supplier/items/${id}`);
+      dispatch({
+        type: GET_PRIVATEITEMS,
         payload: res.data,
       });
     } catch (err) {
@@ -161,7 +178,7 @@ const Itemstate = (props) => {
 
   // add item
   const addItem = async (item, type) => {
-    
+
     try {
       const addPromise = new Promise((resolve, reject) => {
         const res = axios.post(`/items/${type}/add`, item)
@@ -180,35 +197,17 @@ const Itemstate = (props) => {
             console.log(err)
             reject(err);
           });
-          console.log(res)
+        console.log(res)
       });
 
       toast.promise(addPromise, {
         pending: 'Uploading...',
         success: 'Item uploaded successfully!',
-        error: `Item Uploading failed: ${state.error? state.error:" try again later!"} `,
+        error: `Item Uploading failed: ${state.error ? state.error : " try again later!"} `,
       });
       state.error = null;
     } catch (error) {
       toast.error(`${state.error}`);
-    }
-  };
-
-  const removeImage = async (public_id) => {
-    const id_obj = {
-      public_id: public_id,
-    };
-
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-
-    try {
-      const res = await axios.post(`api/items/image`, id_obj, config);
-    } catch (error) {
-      dispatch({ type: ITEM_ERROR });
     }
   };
 
@@ -220,32 +219,69 @@ const Itemstate = (props) => {
   // Delete item
   const deleteItem = async (_id) => {
     try {
-      await axios.delete(`api/items/${_id}`);
-      dispatch({
-        type: DELETE_ITEM,
-        payload: _id,
+      const deletePromise = new Promise((resolve, reject) => {
+        const res = axios.delete(`/items/delete/${_id}`)
+          .then((res) => {
+            dispatch({
+              type: UPDATESUPPLIER_ITEM,
+              payload: res.data,
+            });
+            resolve(res);
+          })
+          .catch((err) => {
+            dispatch({
+              type: ITEM_ERROR,
+              payload: err.response
+            });
+            console.log(err)
+            reject(err);
+          });
+        console.log(res)
       });
+
+      toast.promise(deletePromise, {
+        pending: 'Deleting...',
+        success: 'Item deleted successfully!',
+        error: 'Item deleting failed try again later!',
+      });
+      state.error = null;
     } catch (error) {
-      dispatch({ type: ITEM_ERROR });
+      toast.error(`${state.error}`);
     }
   };
 
   // update item
-  const updateitem = async (item) => {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-
+  const updateItem = async (item, id, userId) => {
     try {
-      const res = await axios.put(`api/items/${item._id}`, item, config);
-      dispatch({
-        type: UPDATE_ITEM,
-        payload: res.data,
+      const updatePromise = new Promise((resolve, reject) => {
+        const res = axios.put(`/items/update/${id}`, item)
+          .then((res) => {
+            getPrivateItems(userId)
+            dispatch({
+              type: UPDATESUPPLIER_ITEM,
+              payload: res.data,
+            });
+            resolve(res);
+          })
+          .catch((err) => {
+            dispatch({
+              type: ITEM_ERROR,
+              payload: err.response
+            });
+            console.log(err)
+            reject(err);
+          });
+        console.log(res)
       });
+
+      toast.promise(updatePromise, {
+        pending: 'Updating...',
+        success: 'Item updated successfully!',
+        error: 'Item updating failed try again later!',
+      });
+      state.error = null;
     } catch (error) {
-      dispatch({ type: ITEM_ERROR });
+      toast.error(`${state.error}`);
     }
   };
 
@@ -276,6 +312,7 @@ const Itemstate = (props) => {
         cars: state.cars,
         car: state.car,
         publicItems: state.publicItems,
+        supplierItems: state.supplierItems,
         categories: state.categories,
         item: state.item,
         current: state.current,
@@ -284,16 +321,16 @@ const Itemstate = (props) => {
         getCars,
         getCar,
         getPublicItems,
+        getPrivateItems,
         getItem,
         addItem,
         getCategories,
         createCategory,
         clearItems,
         deleteItem,
-        removeImage,
         setCurrent,
         clearCurrent,
-        updateitem,
+        updateItem,
         filterItems,
         clearFilter,
       }}

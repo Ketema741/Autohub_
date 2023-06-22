@@ -127,8 +127,6 @@ const EditItemDetail = () => {
 const EditDetail = () => {
     const { currentMode, activeMenu } = useStateContext();
 
-   
-
     return (
         <div className={currentMode === 'Dark' ? 'dark' : ''}>
             <div className="flex relative dark:bg-main-dark-bg">

@@ -3,7 +3,7 @@ import { MdOutlineCancel } from 'react-icons/md';
 import { HtmlEditor, Inject, Link, QuickToolbar, RichTextEditorComponent, Table, Toolbar } from '@syncfusion/ej2-react-richtexteditor';
 
 import { customToolbarSettings } from './Toolbar';
-
+const Parse = require("html-react-parser")
 const EditForm = ({ updateBlog, blog, setEditItem, currentColor }) => {
 
     const [formState, setFormState] = useState({
@@ -114,11 +114,10 @@ const EditForm = ({ updateBlog, blog, setEditItem, currentColor }) => {
                                     Detail Description
                                 </label>
                                 <RichTextEditorComponent
-                                    value={formState.description}
                                     change={(args) => setFormState({ ...formState, description: args.value })}
                                     toolbarSettings={customToolbarSettings}
                                 >
-                                    <div>{blog.description}</div>
+                                    <div>{Parse(blog.description)}</div>
                                     <Inject services={[HtmlEditor, Toolbar, Link, QuickToolbar, Table]} />
                                 </RichTextEditorComponent>
                             </div>

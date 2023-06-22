@@ -5,17 +5,30 @@ import ItemCard from './ItemCard'
 import { brands } from '../../data/dummy';
 import Loading from './Loading';
 import CarCard from './CarCard';
+import AuthContext from '../../context/auth/authContext';
 
 const Items = () => {
     const { currentColor } = useStateContext();
 
     const itemContext = useContext(ItemContext)
-    const { filtered, cars, publicItems, getPublicItems, getCars } = itemContext
+    const authContext = useContext(AuthContext)
+    const { user } = authContext;
+    const {
+        filtered,
+        cars,
+        publicItems,
+        getPublicItems,
+        getPrivateItems,
+        getCars
+    } = itemContext
 
 
     useEffect(() => {
         getPublicItems()
         getCars()
+        if (user?.role == "supplier") {
+            getPrivateItems(user._id)
+        }
 
     }, []);
 
