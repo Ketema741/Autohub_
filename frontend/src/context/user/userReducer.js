@@ -145,11 +145,7 @@ const userReducer = (state, action) => {
         ...state,
         customer: action.payload,
       };
-    case ADD_CART:
-      return {
-        ...state,
-        carts: [...action.payload],
-      };
+
     case GET_CUSTOMERORDERS:
       return {
         ...state,
@@ -175,17 +171,47 @@ const userReducer = (state, action) => {
         ...state,
         carts: action.payload,
       };
-    case UPDATE_CART:
+
+    case ADD_CART:
+      const newCarts = { ...state.carts, items: action.payload };
       return {
         ...state,
-        carts: [action.payload, ...state.carts],
+        carts: newCarts,
       };
+
+
+
+
+
+    case UPDATE_CART:
+      const itemIdToUpdate = action.payload;
+      const updatedItems = state.carts.items.map((item) => {
+        if (item._id === itemIdToUpdate) {
+          return {
+            ...item,
+            quantity: item.quantity - 1, // Decrement the quantity by 1
+          };
+        }
+        return item;
+      });
+
+      const updatedCarts = {
+        ...state.carts,
+        items: updatedItems,
+      };
+
+      return {
+        ...state,
+        carts: updatedCarts,
+      };
+
+
 
     case DELETE_CART:
       return {
         ...state,
         carts: state.carts.filter(
-          (favourite) => favourite._id !== action.payload,
+          (order) => order._id !== action.payload,
         ),
       };
     case DELETE_USER:

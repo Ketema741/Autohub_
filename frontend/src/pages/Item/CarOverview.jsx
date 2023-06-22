@@ -31,12 +31,13 @@ const CarOverview = () => {
   const handleNextImage = () => {
     setCurrentImage(currentImage === images.length - 1 ? 0 : currentImage + 1);
   };
-
+ 
   const handleAddToCart = () => {
+    console.log(carts)
     if (isUserAuthenticated) {
       if (user.role === "customer") {
         if (carts) {
-          const itemExistsInCart = carts.some((cartItem) => cartItem.productId._id === item._id);
+          const itemExistsInCart = carts.items.some((cartItem) => cartItem.itemId._id === item._id);
           if (itemExistsInCart) {
             toast.info("Item already exists in the cart.");
           } else {
@@ -52,6 +53,7 @@ const CarOverview = () => {
       toast.info("Please log in to add items to your cart.");
     }
   };
+  
 
   return (
     <div>

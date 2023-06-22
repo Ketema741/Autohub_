@@ -135,7 +135,7 @@ const Navbar = () => {
                 </span>
               </div>
             }
-            {(user?.role === "customer" || user?.role === "serviceProvider") && (
+            {(user?.role === "customer" || user?.role === "service provider") && (
               <div className="relative flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg">
                 <NavButton
                   title="Chat"

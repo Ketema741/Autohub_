@@ -257,19 +257,7 @@ const UserState = (props) => {
     }
   };
 
-  // add To cart
-  const getCartItems = async () => {
-    try {
-      const res = await axios.get(`/cart`);
-      dispatch({
-        type: GET_CARTITEMS,
-        payload: res.data,
-      });
-      console.log(err)
-    } catch (error) {
-      dispatch({ type: USER_ERROR });
-    }
-  };
+  
 
 
   // order 
@@ -399,34 +387,51 @@ const UserState = (props) => {
       quantity: 1,
     }
 
-    console.log(item)
-
-    const cartData = {
-      productId: item,
-      quantity: 1,
-      price: item.price,
-    }
-
     try {
       const res = await axios.post(`/cart/add`, data);
-      dispatch({
-        type: UPDATE_CART,
-        payload: cartData,
-      });
+      getCartItems()
     } catch (error) {
       console.log(error)
       dispatch({ type: USER_ERROR });
     }
   };
 
+  // add To cart
+  const getCartItems = async () => {
+    try {
+      const res = await axios.get(`/cart`);
+      dispatch({
+        type: GET_CARTITEMS,
+        payload: res.data,
+      });
+      console.log(err)
+    } catch (error) {
+      dispatch({ type: USER_ERROR });
+    }
+  };
+
+  // update cart
+  const updateCart = async (itemId, updateCartItem) => {
+    try {
+      await axios.put(`/cart/update/${itemId}`, updateCartItem);
+      getCartItems()
+
+    } catch (error) { 
+      dispatch({ type: USER_ERROR });
+    }
+  };
+  // delete cart
+  const deleteCart = async (itemId) => {
+    try {
+      await axios.delete(`/cart/remove/${itemId}`);
+      getCartItems();
+    } catch (error) {
+      dispatch({ type: USER_ERROR });
+    }
+  };
   // remove from cart
   const removeFromCart = async (userId, itemId) => {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-
+  
     try {
       await axios.put(
         `/users/removefromfart/${userId}`,
@@ -582,6 +587,7 @@ const UserState = (props) => {
         checkOutOrder,
         getCustomerOrders,
         verifyPayment,
+        deleteCart,
 
         getUsers,
         getPendingUsers,
@@ -595,6 +601,7 @@ const UserState = (props) => {
 
         addToCart,
         getCartItems,
+        updateCart,
         removeFromCart,
 
         clearUsers,
