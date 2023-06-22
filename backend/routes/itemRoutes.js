@@ -14,6 +14,7 @@ const {
   getCar,
   updateCar,
   deleteCar,
+  getItemsBySupplier,
   assignTagsToProduct,
 } = require("../controllers/itemsController");
 const { verifyToken } = require("../middleware/auth");
@@ -22,6 +23,7 @@ const { grantAccess } = require("../middleware/rolesMiddleware");
 
 router.get("/", getItems);
 router.get("/:id", getItem);
+router.get("/supplier/items/:supplierId", verifyToken, getItemsBySupplier);
 router.put(
   "/update/:id",
   verifyToken,

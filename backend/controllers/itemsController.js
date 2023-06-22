@@ -39,14 +39,8 @@ const addItem = async (req, res) => {
     //   uploadToCloudinary(img.path, "images")
     // );
     // const images_data = await Promise.all(imgs);
-    console.log("ERRR", req.body)
-    if (
-      !categoryId ||
-      !name ||
-      !price ||
-      !description ||
-      !itemImages
-    ) {
+    console.log("ERRR", req.body);
+    if (!categoryId || !name || !price || !description || !itemImages) {
       res.status(400);
       throw new Error("Please add all the required fields");
     }
@@ -99,6 +93,31 @@ const getItems = async (req, res) => {
     });
   }
 };
+
+const getItemsBySupplier = async (req, res) => {
+  try {
+    const { supplierId } = req.params;
+
+    const supplier = await Supplier.findById(supplierId);
+
+    const items = await Item.find({ supplier: supplierId });
+
+    if (items.length > 0) {
+      res.status(200).json({
+        data: items,
+      });
+    } else {
+      res.status(404).json({
+        message: "No available items found",
+      });
+    }
+  } catch (error) {
+    res.status(400).json({
+      message: error.message,
+    });
+  }
+};
+
 
 const getItem = async (req, res) => {
   try {
@@ -227,7 +246,7 @@ const createCar = async (req, res) => {
       engine,
       fuelType,
       seatingCapacity,
-      carImages
+      carImages,
     } = req.body;
 
     // const imageFiles = req.files;
@@ -332,6 +351,7 @@ module.exports = {
   addItem,
   getItems,
   getItem,
+  getItemsBySupplier,
   updateItem,
   deleteItem,
   getCar,
