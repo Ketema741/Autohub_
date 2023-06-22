@@ -181,7 +181,14 @@ const jobsAccptenceMail = async (req, res) => {
         AutoHub vehicles service`,
       from: process.env.MAIL_USER,
       to: email,
-      html: "<div>HTML version of the message</div>",
+      html: `<p>  
+        Thank you for your interest in our company and for submitting your application for the ${job.title} role. After careful consideration, we are pleased to inform you that your application has been accepted.
+        We were impressed by your qualifications, skills, and experience, and we believe that you would be a great addition to our company. We are excited to offer you the position and look forward to welcoming you to the company.
+        Please review this information carefully and let us know if you have any questions or concerns.
+        Once again, congratulations on being accepted for the ${job.title} role. We are thrilled to have you join our team and look forward to working with you.
+        
+        Best regards,
+        </p>`,
     };
     sendMail(mailOptions)
       .then((result) => {
