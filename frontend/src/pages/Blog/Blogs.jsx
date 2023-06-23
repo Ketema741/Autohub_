@@ -16,15 +16,6 @@ const Blogs = () => {
   const { blogs, filtered, filterBlogs, clearFilter, getBlogs } = blogContext
   const text = useRef('')
 
-  // useEffect(() => {
-  //   if (filtered == null) {
-  //     text.current.value = ''
-  //   }
-  // })
-
-
-
-
   const onChange = (e) => {
     if (e.target.value !== '') {
       filterBlogs(e.target.value);
@@ -33,7 +24,6 @@ const Blogs = () => {
       clearFilter();
     }
   };
-
 
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu } = useStateContext();
 
@@ -48,7 +38,6 @@ const Blogs = () => {
 
   useEffect(() => {
     getBlogs()
-
   }, [])
 
   const handleClear = () => {

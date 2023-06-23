@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment, useContext } from 'react';
+import React, { useEffect, Fragment, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { FiShoppingCart } from 'react-icons/fi';
@@ -7,16 +7,15 @@ import { RiNotification3Line } from 'react-icons/ri';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import { RxAvatar } from 'react-icons/rx'
-
+import { useNavigate } from 'react-router-dom';
 import Cart from './Cart';
 import Checkout from './Checkout';
 import Chat from './Chat';
 import Notification from './Notification';;
 import UserProfile from './UserProfile'
-import { ItemFilter } from '../pages';
 
-import AuthContext from "../context/auth/authContext";
-import UserContext from "../context/user/userContext";
+import AuthContext from '../context/auth/authContext';
+import UserContext from '../context/user/userContext';
 import { useStateContext } from '../context/ContextProvider';
 import ChatContext from '../context/chat/chatContext';
 
@@ -40,15 +39,13 @@ const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
       style={{ color }}
       className="h-12 w-12 rounded-xl border bg-gray-100 active:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:active:bg-gray-800"
     >
-
       {icon}
     </button>
-
   </TooltipComponent>
 );
 
-
 const Navbar = () => {
+  const navigate = useNavigate()
   const authContext = useContext(AuthContext);
   const userContext = useContext(UserContext);
   const chatContext = useContext(ChatContext);
@@ -71,18 +68,18 @@ const Navbar = () => {
     if (user) {
       getNotifications(user?._id)
     }
-  
-    
   }, [user])
-  
 
   useEffect(() => {
+    if (!isUserAuthenticated) {
+        navigate("/")
+    }
+}, [isUserAuthenticated])
+
+useEffect(() => {
     const handleResize = () => setScreenSize(window.innerWidth);
-
     window.addEventListener("resize", handleResize);
-
     handleResize();
-
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
@@ -103,19 +100,16 @@ const Navbar = () => {
 
   const handleChat = () => {
     handleClick("chat")
-    
   }
 
   return (
     <div className="flex justify-between bg-gray-100 dark:bg-gray-800 dark:border-gray-700 shadow-2xl relative ">
-
       <NavButton
         title="Menu"
         customFunc={handleActiveMenu}
         color={currentColor}
         icon={<AiOutlineMenu className="mx-auto w-6 h-6 text-gray-600 dark:text-gray-300" />}
       />
-
       <div className="flex">
         {isUserAuthenticated ?
           <Fragment>
@@ -144,16 +138,9 @@ const Navbar = () => {
                   color={currentColor}
                   icon={<BsChatLeft className="mx-auto w-6 h-6 text-gray-600 dark:text-gray-300" />}
                 />
-                {/* <span
-                  style={{ background: "#FF5C8E" }}
-                  className="absolute inline-flex items-center justify-center rounded-full h-4 w-4 right-2 top-2 text-white text-center"
-                >
-                  0
-                </span> */}
+               
               </div>
             )}
-
-
             <div className=" relative flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg">
               <NavButton
                 title="Notification"
@@ -183,7 +170,6 @@ const Navbar = () => {
               />
               <MdKeyboardArrowDown className="text-gray-400 text-14" />
             </div>
-
             {isClicked.cart && <Cart  user={user} />}
             {isClicked.chat && <Chat />}
             {isClicked.checkout && <Checkout user={user} />}
@@ -197,5 +183,4 @@ const Navbar = () => {
     </div>
   );
 };
-
 export default Navbar;

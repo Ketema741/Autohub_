@@ -265,8 +265,8 @@ const userReducer = (state, action) => {
     case FILTER_SERVISEPROVIERS:
       return {
         ...state,
-        filteredServiceProviders: state.serviceProviders.filter(({ firstName, address }) => {
-          const testString = `${firstName}${address}`.toLowerCase();
+        filteredServiceProviders: state.serviceProviders.filter(({ vendorName, address }) => {
+          const testString = `${vendorName}${address}`.toLowerCase();
           return testString.includes(action.payload.toLowerCase());
         }),
       };

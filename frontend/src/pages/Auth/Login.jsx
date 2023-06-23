@@ -1,16 +1,16 @@
-import React, { useState, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 import { MdLock } from 'react-icons/md';
 import { FaEnvelope } from 'react-icons/fa';
 import { FiUserPlus } from 'react-icons/fi';
 
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import AlertContext from "../../context/alert/alertContext";
-import AuthContext from "../../context/auth/authContext";
+import AlertContext from '../../context/alert/alertContext';
+import AuthContext from '../../context/auth/authContext';
 import loginsvg from '../../brands/undraw_access_account_re_8spm.svg'
 
 const Login = (props) => {
@@ -82,9 +82,9 @@ const Login = (props) => {
     }
 
     const handleResetPassword = (values) => {
-        if(values.email){
-        resetForgotPassword(values);
-    }
+        if (values.email) {
+            resetForgotPassword(values);
+        }
         console.log(values);
 
     };
@@ -101,19 +101,15 @@ const Login = (props) => {
                 <div className="md:flex w-full ">
                     <div className="hidden md:block w-1/2  py-10 px-10">
                         <img src={loginsvg} className="" />
-
                     </div>
                     <div className=" flex flex-col items-center justify-center">
                         <div className="flex flex-col px-4 sm:px-6 md:px-8 lg:px-10 rounded-md w-full max-w-md">
                             <div className="font-medium self-center text-xl sm:text-2xl uppercase text-gray-800">Login To Your Account</div>
                             <div className="relative mt-10 h-px bg-gray-300">
                                 <div className="absolute left-0 top-0 flex justify-center w-full -mt-2">
-                                    <span className="bg-gray-100 px-4 text-xs text-black uppercase"> Or Login With Email</span>
+                                    <span className="bg-gray-100 px-4 text-xs text-black uppercase"> Login With Email</span>
                                 </div>
                             </div>
-
-
-
                             {isLoading &&
                                 <div className="flex justify-center items-center">
                                     <div className="relative">
@@ -252,5 +248,3 @@ const Login = (props) => {
     )
 };
 export default Login
-
-
