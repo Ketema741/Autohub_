@@ -40,8 +40,6 @@ export { default as Chat } from './Chat/Chat';
 
 
 
-export { default as Employees } from './Employees';
-export { default as Customers } from './Supplier/Customers';
 export { default as Area } from './Charts/Area';
 export { default as Bar } from './Charts/Bar';
 export { default as Financial } from './Charts/Financial';

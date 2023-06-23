@@ -30,8 +30,6 @@ import {
   Login,
   Register,
   Profile,
-  Employees,
-  Customers,
   Line,
   Bar,
   Pie,
@@ -75,11 +73,7 @@ const App = () => {
                         <Route path="/supplier/edit-item-detail" element={<EditItemDetail />} />
                         <Route path="/supplier/add-item" element={<AddItem />} />
 
-                        {/* pages  */}
-                        {/* <Route path="/orders" element={<Orders />} /> */}
-                        <Route path="/employees" element={<Employees />} />
-                        <Route path="/customers" element={<Customers />} />
-
+                      
                         {/* charts  */}
                         <Route path="/line" element={<Line />} />
                         <Route path="/bar" element={<Bar />} />

@@ -120,6 +120,7 @@ export const DELETE_CART = 'DELETE_CART';
 // blog post
 export const GET_POSTS = 'GET_POSTS';
 export const POST_BLOG = 'POST_BLOG';
+export const SET_SERACHTEXT = 'SET_SERACHTEXT';
 export const GET_AUTHORPOSTS = 'GET_AUTHORPOSTS';
 export const GET_POST = 'GET_POST';
 export const DELETE_BLOG = 'DELETE_BLOG';

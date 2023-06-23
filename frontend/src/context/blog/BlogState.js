@@ -18,7 +18,8 @@ import {
   GET_AUTHORPOSTS,
   POST_BLOG,
   DELETE_BLOG,
-  GET_RELATEDPOSTS
+  GET_RELATEDPOSTS,
+  SET_SERACHTEXT
 } from '../Types';
 
 const Blogstate = (props) => {
@@ -30,6 +31,7 @@ const Blogstate = (props) => {
     current: null,
     filtered: null,
     relatedBlogs: null,
+    searchText:'',
   };
 
   const [state, dispatch] = useReducer(blogReducer, initialState);
@@ -70,6 +72,13 @@ const Blogstate = (props) => {
       console.log({ 'erro': err })
     }
   };
+
+  const setSearchText = (text) =>{
+    dispatch({
+      type: SET_SERACHTEXT,
+      payload: text,
+    });
+  }
   // Post blogs
   const postBlog = async (blog) => {
     try {
@@ -241,6 +250,7 @@ const Blogstate = (props) => {
         blog: state.blog,
         current: state.current,
         filtered: state.filtered,
+        searchText: state.searchText,
 
         getBlogs,
         getPrivateBlogs,
@@ -252,6 +262,7 @@ const Blogstate = (props) => {
         setCurrent,
         clearCurrent,
         filterBlogs,
+        setSearchText,
         getRelatedBlogs,
         clearFilter,
       }}

@@ -16,17 +16,20 @@ const Blogs = () => {
   const { blogs, filtered, filterBlogs, clearFilter, getBlogs } = blogContext
   const text = useRef('')
 
-  useEffect(() => {
-    if (filtered == null) {
-      text.current.value = ''
-    }
-  })
+  // useEffect(() => {
+  //   if (filtered == null) {
+  //     text.current.value = ''
+  //   }
+  // })
+
+
 
 
   const onChange = (e) => {
     if (e.target.value !== '') {
       filterBlogs(e.target.value);
     } else {
+      text.current.value = ''
       clearFilter();
     }
   };
@@ -48,8 +51,9 @@ const Blogs = () => {
 
   }, [])
 
-  console.log(blogs)
-
+  const handleClear = () => {
+    clearFilter();
+  }
   const RenderLoadings = () => {
     const loadings = [];
 
@@ -95,7 +99,7 @@ const Blogs = () => {
                     Unleash Your Inner Gearhead
                   </h2>
                   <p className="text-gray-600 dark:text-gray-300 lg:mx-auto lg:w-8/12">
-                  Exploring the Exciting World of Vehicles                    </p>
+                    Exploring the Exciting World of Vehicles                    </p>
                 </div>
 
                 <div className="mt-4 mr-0 mb-0 ml-0 sm:mt-0">
@@ -112,8 +116,16 @@ const Blogs = () => {
                       onChange={onChange}
                       className="block  pt-3 pr-0 pb-3 pl-24 lg:mx-auto lg:w-full py-3 border border-gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm"
                     />
-
                   </div>
+
+                  {filtered &&
+                    <button
+                      type="button"
+                      onClick={handleClear}
+                      className="  pt-3 pr-0 pb-3 lg:mx-auto lg:w-full py-3 border border-gray-300 rounded-lg sm:text-sm"
+                    >clear filter</button>
+                  }
+
                 </div>
               </div>
             </div>
@@ -124,7 +136,7 @@ const Blogs = () => {
                     {
                       filtered !== null ?
                         filtered.map(blog => (
-                          <BlogCard id={blog} />
+                          <BlogCard blogPost={blog} />
                         ))
                         :
                         blogs.map(blog => (
