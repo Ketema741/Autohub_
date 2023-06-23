@@ -1,5 +1,5 @@
 import React, { useEffect, Fragment, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { FiShoppingCart } from 'react-icons/fi';
 import { BsChatLeft } from 'react-icons/bs';
@@ -7,7 +7,6 @@ import { RiNotification3Line } from 'react-icons/ri';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import { RxAvatar } from 'react-icons/rx'
-import { useNavigate } from 'react-router-dom';
 import Cart from './Cart';
 import Checkout from './Checkout';
 import Chat from './Chat';

@@ -82,7 +82,7 @@ const AdminContent = ({ customersByLocation }) => {
               <Pie
                 id="pie-chart"
                 data={pieChartData}
-                legendVisiblity={false}
+                legendVisiblity
                 height="420px"
                 name="System Users"
               />
