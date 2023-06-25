@@ -3,6 +3,7 @@ import { Navbar, Footer, Sidebar } from '../../components';
 import { useStateContext } from '../../context/ContextProvider';
 import Ketema from '../../brands/me.png'
 import Gatwech from '../../data/avatar3.png'
+import Betsi from '../../assets/betsilot.jpg'
 import AboutUsCard from './AboutUsCard';
 
 const AboutUs = () => {
@@ -11,7 +12,7 @@ const AboutUs = () => {
     setCurrentMode,
     currentMode,
     activeMenu,
-    
+
   } = useStateContext();
 
   useEffect(() => {
@@ -27,7 +28,7 @@ const AboutUs = () => {
   return (
     <div className={currentMode === 'Dark' ? 'dark' : ''}>
       <div className=" flex relative dark:bg-main-dark-bg">
-        
+
         {activeMenu ? (
           <div className="w-52 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
             <Sidebar />
@@ -76,7 +77,7 @@ const AboutUs = () => {
                       <span className="block text-sm text-gray-500">CEO-Founder</span>
                     </div>
                     <p className="mt-8 text-gray-300 dark:text-gray-600">
-                      I am a computer science student with a passion for using technology to make a positive impact in society
+                      Computer Science Graduate | MERN Stack Developer | Algorithmic Problem Solver | Seeking Opportunities to Drive Technological Innovation
                     </p>
                   </div>
 
@@ -84,8 +85,8 @@ const AboutUs = () => {
                 <div className="group relative rounded-3xl  space-y-6 overflow-hidden">
                   <img
                     className="mx-auto h-[26rem] w-full grayscale object-cover object-top ransition duration-500 group-hover:scale-105 group-hover:grayscale-0"
-                    src={Gatwech}
-                    alt="Joseph"
+                    src={Betsi}
+                    alt="Betsi"
                     loading="lazy"
                     width="640"
                     height="805"
@@ -104,8 +105,8 @@ const AboutUs = () => {
                 <div className="group relative rounded-3xl  space-y-6 overflow-hidden">
                   <img
                     className="mx-auto h-[26rem] w-full grayscale object-cover object-top transition duration-500 group-hover:scale-105 group-hover:grayscale-0"
-                    src={Ketema}
-                    alt="Fitsum"
+                    src={Gatwech}
+                    alt="Gatwech"
                     loading="lazy"
                     width="640"
                     height="805"

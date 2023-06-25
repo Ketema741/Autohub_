@@ -187,7 +187,40 @@ const JobState = (props) => {
   // Delete job
   const deleteJob = async (_id) => {
     try {
-      await axios.delete(`/jobs/${_id}`);
+      const deletePromise = new Promise((resolve, reject) => {
+        axios
+          .delete(`/jobs/job/delete/${_id}`)
+          .then((res) => {
+            // getJobs();
+            dispatch({
+              type: DELETE_JOB,
+              payload: _id,
+            });
+            resolve(res);
+          })
+          .catch((err) => {
+            dispatch({
+              type: JOB_ERROR,
+              payload: err.response.data
+            });
+            console.log(err)
+            console.log(_id)
+
+            reject(err);
+          });
+      });
+
+      toast.promise(deletePromise, {
+        pending: 'Deleting...',
+        success: 'Job Deleted successfully! ',
+        error: `Deleting failed Try again!`,
+      });
+      state.error = null;
+    } catch (error) {
+      toast.error(`${state.error.error}`);
+    }
+    try {
+      await axios.delete(`/jobs/job/delete//${_id}`);
       dispatch({
         type: DELETE_JOB,
         payload: _id,

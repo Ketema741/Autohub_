@@ -3,8 +3,6 @@ import React, { useEffect } from "react";
 import { Navbar, Footer, Sidebar } from "../../components";
 import { useStateContext } from "../../context/ContextProvider";
 
-import { SiBookstack } from "react-icons/si";
-import Blog from "../../assets/undraw_job_offers_re_634p.svg";
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

@@ -14,14 +14,23 @@ import PostForm from './PostForm';
 
 import UserContext from '../../../context/user/userContext';
 import JobContext from '../../../context/job/jobContext';
+import { toast } from 'react-toastify';
 
 const ActiveJobs = () => {
 
     const userContext = useContext(UserContext);
     const jobContext = useContext(JobContext);
 
-    const {  driver } = userContext;
-    const { acceptJobApplicant,jobs, getJobs, filterJobs, filtered, clearFilter } = jobContext;
+    const { driver } = userContext;
+    const {
+        acceptJobApplicant,
+        jobs,
+        getJobs,
+        filterJobs,
+        filtered,
+        clearFilter,
+        deleteJob
+    } = jobContext;
 
     useEffect(() => {
         getJobs();
@@ -31,11 +40,6 @@ const ActiveJobs = () => {
 
     const [aficionado, setAficionado] = useState([]);
     const [showAlert, setShowAlert] = useState(null);
-
-    const handleRejectClick = (aficionado) => {
-        setShowAlert(true);
-        setAficionado(aficionado);
-    };
 
     const handleCloseAlert = () => {
         setShowAlert(false);
@@ -63,6 +67,39 @@ const ActiveJobs = () => {
         e.preventDefault();
         handleCloseAlert(false);
     }
+
+    const handleDelete = (id) => {
+        toast.dark(
+            <div className="flex flex-col items-center">
+                <div className="mr-2">Are you sure you want to delete this item?</div>
+                <div className="flex items-center">
+                    <button
+                        className=" bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
+                        onClick={() => {
+                            deleteJob(id)
+                            toast.dismiss();
+                        }}
+                    >
+                        Delete
+                    </button>
+                    <button
+                        className="marker:bg-gray-300 hover:bg-gray-400 bg-gray-300 text-gray-700 px-3 py-1 rounded ml-2"
+                        onClick={() => {
+                            toast.dismiss();
+                        }}
+                    >
+                        Cancel
+                    </button>
+                </div>
+            </div>,
+            {
+                position: toast.POSITION.TOP_CENTER,
+                closeButton: false,
+                autoClose: false,
+                draggable: false,
+            }
+        );
+    };
 
     const text = useRef('')
 
@@ -102,8 +139,6 @@ const ActiveJobs = () => {
         setJob(job)
         setShowUserModal(true);
     }
-
-
 
     const [addJob, setAddJob] = useState(false);
 
@@ -198,7 +233,6 @@ const ActiveJobs = () => {
 
                                                     <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                                         <div className="flex items-center gap-x-2">
-                                                            <img className="object-cover w-8 h-8 rounded-full" src={avatar} alt="job" />
                                                             <h2 className="text-sm font-medium text-gray-800 dark:text-white ">{job.title}</h2>
                                                         </div>
                                                     </td>
@@ -217,13 +251,15 @@ const ActiveJobs = () => {
                                                                             Show
                                                                         </button>
                                                                     </li>
-                                                                   
+
                                                                     <li>
-                                                                        <a href="#"
+                                                                        <button
+                                                                            type='button'
+                                                                            onClick={()=>handleDelete(job._id)}
                                                                             className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                                                                         >
                                                                             Delete
-                                                                        </a>
+                                                                        </button>
                                                                     </li>
                                                                 </ul>
 

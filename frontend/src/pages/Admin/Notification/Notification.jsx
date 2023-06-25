@@ -31,7 +31,7 @@ const Notification = () => {
     };
 
     return (
-        <div className="mt-24 container px-4 mx-auto overflow-hidden">
+        <div className="container px-4 mx-auto overflow-hidden">
             <div className="m-2 md:m-10 mt-4 p-2 md:p-10 bg-white rounded-3xl overflow-hidden">
                 <Header category="" title="Send Notification" />
                 <div className="flex flex-col">

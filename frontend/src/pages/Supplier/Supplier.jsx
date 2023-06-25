@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import {
   Navbar,
   Footer,
-  SupplierSidebar,
+  Sidebar,
 } from '../../components';
 
 import { useStateContext } from '../../context/ContextProvider';
@@ -20,9 +20,7 @@ const Supplier = () => {
   const authContext = useContext(AuthContext)
 
   const {
-    categories,
     getCategories,
-    updateItem,
     supplierItems,
     getPrivateItems
   } = itemContext;
@@ -35,7 +33,6 @@ const Supplier = () => {
     setCurrentMode,
     currentMode,
     activeMenu,
-    currentColor,
   } = useStateContext();
 
   useEffect(() => {
@@ -61,11 +58,11 @@ const Supplier = () => {
 
         {activeMenu ? (
           <div className="w-52 fixed sidebar dark:bg-secondary-dark-bg bg-white overflow-hidden ">
-            <SupplierSidebar />
+            <Sidebar />
           </div>
         ) : (
           <div className="w-0 dark:bg-secondary-dark-bg overflow-hidden">
-            <SupplierSidebar />
+            <Sidebar />
           </div>
         )}
         <div

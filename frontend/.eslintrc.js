@@ -24,10 +24,7 @@ module.exports = {
     'linebreak-style': 0,
     'react/state-in-constructor': 0,
     'import/prefer-default-export': 0,
-    'max-len': [
-      4,
-      550,
-    ],
+    'max-len': "off",
     'no-multiple-empty-lines': [
       'error',
       {

@@ -1,21 +1,15 @@
 import React, { useEffect, useState, useContext } from "react";
 
-
 import { Navbar, Footer, Sidebar } from '../../components';
 import DetailCard from './DetailCard';
 import CommentSection from './Comment'
 import { useStateContext } from '../../context/ContextProvider';
 import Carousel from './Carousel';
-import { Link } from 'react-router-dom'
 
 import blogbg from '../../assets/blog/bg7.jpg'
 // 2 7 11 16
 import resume from '../../assets/undraw_road_to_knowledge_m8s0.svg'
-import { GiGraduateCap, GiLifeSupport, GiOfficeChair } from 'react-icons/gi'
 import { CgCommunity } from 'react-icons/cg'
-import { FcCollaboration } from 'react-icons/fc'
-import { FaConnectdevelop } from 'react-icons/fa'
-import { SiBookstack } from 'react-icons/si'
 
 import Blog from '../../assets/undraw_career_progress_ivdb.svg'
 import BlogContext from './../../context/blog/blogContext';
@@ -29,7 +23,6 @@ const BlogDetail = () => {
   const navigate = useNavigate()
   const blogContext = useContext(BlogContext);
   const { blog, relatedBlogs, setCurrent, filterBlogs } = blogContext;
-
 
   const handleView = (post) => {
     setCurrent(post)

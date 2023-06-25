@@ -5,7 +5,7 @@ import {
   Footer,
   Sidebar,
 } from '../../components';
-import { DriverCard } from '../index';
+import DriverCard from './DriverCard';
 import { useStateContext } from '../../context/ContextProvider';
 
 import UserContext from '../../context/user/userContext';

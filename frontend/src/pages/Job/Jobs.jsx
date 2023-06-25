@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { FiX } from 'react-icons/fi';
 
 import JobCard from './JobCard';
 import Header from './Header'

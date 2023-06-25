@@ -3,7 +3,7 @@ import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { Navbar, Footer, SupplierSidebar } from '../../../components';
+import { Navbar, Footer, Sidebar } from '../../../components';
 import { useStateContext } from '../../../context/ContextProvider';
 
 import AddItemDetail from './AddItemDetail';
@@ -17,11 +17,11 @@ const AddItem = () => {
             <div className="flex relative dark:bg-main-dark-bg">
                 {activeMenu ? (
                     <div className="w-52 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
-                        <SupplierSidebar />
+                        <Sidebar />
                     </div>
                 ) : (
                     <div className="w-0 dark:bg-secondary-dark-bg">
-                        <SupplierSidebar />
+                        <Sidebar />
                     </div>
                 )}
 
