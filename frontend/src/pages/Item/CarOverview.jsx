@@ -65,10 +65,10 @@ const CarOverview = () => {
                 {car.carImages.map((image, index) => (
                   <img
                     key={image.public_id}
-                    className={`absolute inset-0 object-cover w-full h-full ${currentImage === index ? "opacity-100" : "opacity-0"
+                    className={`absolute object-contain inset-0 w-full h-full ${currentImage === index ? "opacity-100" : "opacity-0"
                       } transition-opacity duration-300`}
                     src={image.url}
-                    alt="Product Image"
+                    alt="item Image"
                   />
                 ))}
                 <div
@@ -112,12 +112,12 @@ const CarOverview = () => {
 
             <div className="md:flex-1 px-4">
               <h2 className="mb-2 leading-tight tracking-tight font-bold text-gray-800 text-2xl md:text-3xl">
-                {car.name}
+                {car.make}
               </h2>
               <p className="text-gray-500 text-sm">
                 By{" "}
                 <a href="#" className="text-indigo-600 hover:underline">
-                  ABC Company
+                  Autohub Company
                 </a>
               </p>
 
@@ -125,7 +125,7 @@ const CarOverview = () => {
                 <div>
                   <div className="rounded-lg bg-gray-100 flex py-2 px-3">
                     <span className="text-indigo-400 mr-1 mt-1">ETB</span>
-                    <span className="font-bold text-indigo-600 text-3xl">{item.price}</span>
+                    <span className="font-bold text-indigo-600 text-3xl">{car.price}</span>
                   </div>
                 </div>
                 <div className="flex-1">
@@ -142,7 +142,8 @@ const CarOverview = () => {
                   className="h-14 px-6 py-2 font-semibold rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white"
                   onClick={handleAddToCart}
                 >
-                  {car.isAvialable ? "Available":"Not Available"}
+                  {/* {car.isAvailable ? "Available":"Not Available"} */}
+                  Available
                 </button>
               </div>
             </div>

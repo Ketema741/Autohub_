@@ -31,7 +31,7 @@ const ItemOverview = ({ item, car }) => {
   const handleAddToCart = (item) => {
     if (isUserAuthenticated) {
       if (user.role === "customer") {
-        if (carts) {
+        if (carts && carts.items?.length > 0) {
           const itemExistsInCart = carts.items.some((cartItem) => cartItem.itemId._id === item._id);
           if (itemExistsInCart) {
             toast.info("Item already exists in the cart.");
@@ -209,12 +209,12 @@ const ItemOverview = ({ item, car }) => {
 
             <div className="md:flex-1 px-4">
               <h2 className="mb-2 leading-tight tracking-tight font-bold text-gray-800 text-2xl md:text-3xl">
-                {car.name}
+                {car.make}
               </h2>
               <p className="text-gray-500 text-sm">
                 By{" "}
                 <a href="#" className="text-indigo-600 hover:underline">
-                  ABC Company
+                  Autohub Company
                 </a>
               </p>
 
@@ -239,7 +239,7 @@ const ItemOverview = ({ item, car }) => {
                   className="h-14 px-6 py-2 font-semibold rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white"
                   onClick={handleAddToCart}
                 >
-                  {car.isAvialable ? "Available":"Not Available"}
+                  {car.isAvailable ? "Available":"Not Available"}
                 </button>
               </div>
             </div>

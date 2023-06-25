@@ -56,7 +56,7 @@ const AddItemDetail = () => {
         if(uploadType != 'cars' && images) {
             itemData.itemImages = images;
         }
-        if(itemData.itemImages){
+        if(itemData.itemImages || itemData.carImages){
             addItem(itemData, uploadType); // Update the itemData state
         } else{
             toast.error("upload image")

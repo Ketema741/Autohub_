@@ -192,21 +192,7 @@ const Drivers = () => {
                                                                             Show
                                                                         </button>
                                                                     </li>
-                                                                    {/* <li>
-                                                                        <button
-                                                                            onClick={() => handleRejectClick(user)}
-                                                                            className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                                                                        >
-                                                                            Freeze
-                                                                        </button>
-                                                                    </li> */}
-                                                                    {/* <li>
-                                                                        <a href="#"
-                                                                            className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                                                                        >
-                                                                            Delete
-                                                                        </a>
-                                                                    </li> */}
+                                                                    
                                                                 </ul>
 
                                                             </div>
@@ -254,21 +240,6 @@ const Drivers = () => {
                                                                         <button onClick={() => handleShow(user._id)} className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                                                             Show
                                                                         </button>
-                                                                    </li>
-                                                                    <li>
-                                                                        <button
-                                                                            onClick={() => handleRejectClick(user)}
-                                                                            className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                                                                        >
-                                                                            Freeze
-                                                                        </button>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="#"
-                                                                            className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                                                                        >
-                                                                            Delete
-                                                                        </a>
                                                                     </li>
                                                                 </ul>
 

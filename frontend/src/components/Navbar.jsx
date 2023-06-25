@@ -69,11 +69,11 @@ const Navbar = () => {
     }
   }, [user])
 
-  useEffect(() => {
-    if (!isUserAuthenticated) {
-        navigate("/")
-    }
-}, [isUserAuthenticated])
+//   useEffect(() => {
+//     if (!isUserAuthenticated) {
+//         navigate("/")
+//     }
+// }, [isUserAuthenticated])
 
 useEffect(() => {
     const handleResize = () => setScreenSize(window.innerWidth);
