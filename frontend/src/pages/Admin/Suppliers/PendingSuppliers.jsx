@@ -3,7 +3,7 @@ import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';
 import { FiSearch, FiMoreVertical } from 'react-icons/fi';
 import avatar from '../../../data/avatar.jpg';
 import { Header } from '../../../components';
-import Modal from '../Modal'
+import Modal from '../UserModal'
 import UserContext from '../../../context/user/userContext';
 
 import { ToastContainer } from 'react-toastify';

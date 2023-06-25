@@ -8,7 +8,7 @@ const Suppliers = () => {
     return (
         <div>
             <ActiveSuppliers />
-            <Pending />
+            {/* <Pending /> */}
         </div>
     )
 }

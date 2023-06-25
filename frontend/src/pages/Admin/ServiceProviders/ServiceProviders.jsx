@@ -9,7 +9,7 @@ import { FiMoreVertical } from 'react-icons/fi';
 import avatar from '../../../data/avatar.jpg';
 import { Header } from '../../../components';
 import UserContext from '../../../context/user/userContext';
-import Modal from '../Modal'
+import Modal from '../UserModal'
 import DownloadButton from '../Download'
 const ActiveServiceProviders = () => {
     const userContext = useContext(UserContext);
@@ -185,21 +185,21 @@ const ActiveServiceProviders = () => {
                                                                             Show
                                                                         </button>
                                                                     </li>
-                                                                    <li>
+                                                                    {/* <li>
                                                                         <button
                                                                             onClick={() => handleRejectClick(user)}
                                                                             className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                                                                         >
                                                                             Freeze
                                                                         </button>
-                                                                    </li>
-                                                                    <li>
+                                                                    </li> */}
+                                                                    {/* <li>
                                                                         <a href="#"
                                                                             className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                                                                         >
                                                                             Delete
                                                                         </a>
-                                                                    </li>
+                                                                    </li> */}
                                                                 </ul>
 
                                                             </div>

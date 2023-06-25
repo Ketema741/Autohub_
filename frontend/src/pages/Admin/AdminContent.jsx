@@ -28,7 +28,6 @@ const AdminContent = ({ customersByLocation }) => {
       y: location.y,
       text: location.text,
     }));
-    console.log(pieChartData)
   }
 
 

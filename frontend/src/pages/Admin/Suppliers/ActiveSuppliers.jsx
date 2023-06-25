@@ -9,7 +9,7 @@ import { AiOutlineDownload }  from 'react-icons/ai';
 
 import avatar from '../../../data/avatar.jpg';
 import { Header } from '../../../components';
-import Modal from '../Modal' 
+import Modal from '../UserModal' 
 import DownloadButton from '../Download'
 import UserContext from '../../../context/user/userContext';
 
@@ -182,7 +182,6 @@ const ActiveSuppliers = () => {
                                                 </td>
                                                 <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                                     <div className="flex items-center gap-x-2">
-                                                        <img className="object-cover w-8 h-8 rounded-full" src={avatar} alt="user" />
                                                         <div>
                                                             <h2 className="text-sm font-medium text-gray-800 dark:text-white ">{user.firstName}</h2>
                                                             <p className="text-xs font-normal text-gray-600 dark:text-gray-400">{user.email}</p>
@@ -200,11 +199,11 @@ const ActiveSuppliers = () => {
                                                         >
                                                             <ul className="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="benq-ex2710q-dropdown-button">
                                                                 <li>
-                                                                    <button onClick={() => handleShow(user.id)} className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                                    <button onClick={() => handleShow(user)} className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                                                         Show
                                                                     </button>
                                                                 </li>
-                                                                <li>
+                                                                {/* <li>
                                                                     <button
                                                                         onClick={() => handleRejectClick(user)}
                                                                         className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
@@ -218,7 +217,7 @@ const ActiveSuppliers = () => {
                                                                     >
                                                                         Delete
                                                                     </a>
-                                                                </li>
+                                                                </li> */}
                                                             </ul>
 
                                                         </div>
@@ -274,34 +273,7 @@ const ActiveSuppliers = () => {
             </div>
 
             {showUserModal && (
-                <Modal User={{
-                    ratings
-                        :
-                        [],
-                    _id
-                        :
-                        "6461d2f5fb38bfa51b8ece44",
-                    firstName
-                        :
-                        "ohana",
-                    lastName
-                        :
-                        "Girma",
-                    email
-                        :
-                        "ohana@gmail.com",
-                    phone
-                        :
-                        "+25199494945",
-                    role
-                        :
-                        "supplier",
-                    createdAt
-                        :
-                        "2023-05-15T06:36:37.331Z",
-                    updatedAt: "2023-05-15T06:36:37.331Z"
-
-                }} handleModalClose={handleModalClose} />
+                <Modal User={supplier} handleModalClose={handleModalClose} />
             )}
             {showAlert && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">

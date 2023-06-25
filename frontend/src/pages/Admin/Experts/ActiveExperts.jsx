@@ -10,7 +10,7 @@ import moment from 'moment';
 
 import avatar from '../../../data/avatar.jpg';
 import { Header } from '../../../components';
-import Modal from '../Modal'
+import Modal from '../UserModal'
 import UserContext from '../../../context/user/userContext';
 
 const Drivers = () => {
@@ -239,7 +239,6 @@ const Drivers = () => {
 
                                                     <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                                         <div className="flex items-center gap-x-2">
-                                                            <img className="object-cover w-8 h-8 rounded-full" src={avatar} alt="user" />
                                                             <h2 className="text-sm font-medium text-gray-800 dark:text-white ">{user.firstName}</h2>
                                                         </div>
                                                     </td>
@@ -258,21 +257,21 @@ const Drivers = () => {
                                                                             Show
                                                                         </button>
                                                                     </li>
-                                                                    <li>
+                                                                    {/* <li>
                                                                         <button
                                                                             onClick={() => handleRejectClick(user)}
                                                                             className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                                                                         >
                                                                             Freeze
                                                                         </button>
-                                                                    </li>
-                                                                    <li>
+                                                                    </li> */}
+                                                                    {/* <li>
                                                                         <a href="#"
                                                                             className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                                                                         >
                                                                             Delete
                                                                         </a>
-                                                                    </li>
+                                                                    </li> */}
                                                                 </ul>
 
                                                             </div>
