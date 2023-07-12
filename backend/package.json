@@ -5,7 +5,8 @@
   "main": "index.js",
   "repository":"https://github.com/Ketema741/Autohub",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "build": "node start"
     },
   "keywords": [],
   "author": "",
