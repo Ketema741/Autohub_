@@ -3,11 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "repository":"https://github.com/Ketema741/Autohub",
   "scripts": {
-    "start": "node server.js",
-    "build": "npm start"
-    },
+    "start": "nodemon server.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -29,8 +27,5 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.22"
-  },
-  "engines": {
-    "node": ">=14"
   }
 }
