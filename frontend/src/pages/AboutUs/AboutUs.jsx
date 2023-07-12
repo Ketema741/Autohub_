@@ -5,7 +5,7 @@ import Ketema from '../../brands/me.png'
 import Gatwech from '../../data/avatar3.png'
 import Betsi from '../../assets/betsilot.jpg'
 import AboutUsCard from './AboutUsCard';
-
+import Dema from '../../assets/dema.jpg'
 const AboutUs = () => {
   const {
     setCurrentColor,
@@ -125,8 +125,8 @@ const AboutUs = () => {
                 <div className="group relative rounded-3xl  space-y-6 overflow-hidden">
                   <img
                     className="mx-auto h-[26rem] w-full grayscale object-cover object-top ransition duration-500 group-hover:scale-105 group-hover:grayscale-0"
-                    src={Gatwech}
-                    alt="woman"
+                    src={Dema}
+                    alt="dema"
                     loading="lazy"
                     width="640"
                     height="805"
