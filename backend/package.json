@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "repository":"https://github.com/Ketema741/Autohub",
   "scripts": {
     "start": "node server.js"
     },
@@ -27,5 +28,8 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.22"
+  },
+  "engines": {
+    "node": ">=14"
   }
 }
