@@ -16,15 +16,15 @@ const SupplierRegistration = ({ onSubmit, handlePrev }) => {
     };
     const subcities = [
         'Arada Subcity',
-        'Akaki-Kality Subcity',
-        'Bole Subcity',
-        'Gulele Subcity',
-        'Kirkos Subcity',
-        'Kolfe Keranio Subcity',
-        'Lideta Subcity',
-        'Nifas Silk-Lafto Subcity',
-        'Yeka Subcity',
-        'Addis Ketema Subcity'
+        'Akaki-Kality',
+        'Bole',
+        'Gulele',
+        'Kirkos',
+        'Kolfe Keranio',
+        'Lideta',
+        'Nifas Silk-Lafto',
+        'Yeka',
+        'Addis Ketema'
     ];
 
     const validationSchema = Yup.object({
