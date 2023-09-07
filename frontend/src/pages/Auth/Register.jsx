@@ -17,7 +17,7 @@ const RegistrationForm = () => {
 
     const authContext = useContext(AuthContext);
 
-    const { error, isUserAuthenticated, user, loadUser, register, logout } = authContext;
+    const {user, register, logout } = authContext;
 
     const [step, setStep] = useState(1);
     const [userType, setUserType] = useState(null);
