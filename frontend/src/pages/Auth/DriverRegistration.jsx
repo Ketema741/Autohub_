@@ -13,16 +13,16 @@ const DriverRegistration = ({ onSubmit, handlePrev }) => {
     const alertContext = useContext(AlertContext)
     const { setAlert } = alertContext
     const subcities = [
-        'Arada Subcity',
-        'Akaki-Kality Subcity',
-        'Bole Subcity',
-        'Gulele Subcity',
-        'Kirkos Subcity',
-        'Kolfe Keranio Subcity',
-        'Lideta Subcity',
-        'Nifas Silk-Lafto Subcity',
-        'Yeka Subcity',
-        'Addis Ketema Subcity'
+        'Arada',
+        'Akaki-Kality',
+        'Bole',
+        'Gulele',
+        'Kirkos',
+        'Kolfe Keranio',
+        'Lideta',
+        'Nifas Silk-Lafto',
+        'Yeka',
+        'Addis Ketema'
       ];
     const initialValues = {
         licenseNumber: '',

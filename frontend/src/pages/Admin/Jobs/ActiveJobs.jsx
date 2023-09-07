@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
-import moment from 'moment';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import moment from 'moment';
+import { toast } from 'react-toastify';
 
 import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';
 import { FiSearch, FiMoreVertical } from 'react-icons/fi';
@@ -14,7 +15,6 @@ import PostForm from './PostForm';
 
 import UserContext from '../../../context/user/userContext';
 import JobContext from '../../../context/job/jobContext';
-import { toast } from 'react-toastify';
 
 const ActiveJobs = () => {
 

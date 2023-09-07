@@ -1,15 +1,14 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
+import moment from 'moment';
 
 import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';
 import { FiSearch } from 'react-icons/fi';
 import { FiMoreVertical } from 'react-icons/fi';
 
-
-import moment from 'moment';
-
 import avatar from '../../../data/avatar.jpg';
 import { Header } from '../../../components';
 import Modal from '../Modal'
+
 import UserContext from '../../../context/user/userContext';
 
 const Drivers = () => {

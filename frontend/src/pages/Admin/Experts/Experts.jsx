@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import Pending from './PendingExperts';
 import ActiveSuppliers from './ActiveExperts';
 
 const Suppliers = () => {

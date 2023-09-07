@@ -1,14 +1,13 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
+import moment from 'moment';
 
 import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';
 import { FiSearch } from 'react-icons/fi';
 import { FiMoreVertical } from 'react-icons/fi';
 
-
-import moment from 'moment';
-
 import { Header } from '../../../components';
 import Modal from '../UserModal'
+
 import UserContext from '../../../context/user/userContext';
 
 const Drivers = () => {
@@ -32,10 +31,6 @@ const Drivers = () => {
       getUsers("drivers");
     }, []);
     
-    const handleRejectClick = (selectedAficionado) => {
-      setShowAlert(true);
-      setAficionado(selectedAficionado);
-    };
     
     const handleCloseAlert = () => {
       setShowAlert(false);
