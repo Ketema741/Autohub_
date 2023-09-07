@@ -20,7 +20,7 @@ const Login = (props) => {
 
     const [isLoading, setIsLoading] = useState(false);
     const { setAlert } = alertContext;
-    const { user, userLogin, resetForgotPassword, error, isUserAuthenticated, loadUser, userLoading } = authContext;
+    const { userLogin, resetForgotPassword, error, isUserAuthenticated, loadUser } = authContext;
     const [resetPassword, setResetPassword] = useState(false);
 
     useEffect(() => {
